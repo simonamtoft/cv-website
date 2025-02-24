@@ -1,6 +1,6 @@
 {
   "name": "cv-website",
-  "homepage": "https://amtoft.dev/cv-website",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
