@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/cv-website/static/css/main.44f3f07b.css",
-    "main.js": "/cv-website/static/js/main.198aee32.js",
-    "static/media/UMD_logo.png": "/cv-website/static/media/UMD_logo.48b3413ecf4f290b0371.png",
-    "static/media/profile.jpeg": "/cv-website/static/media/profile.f0da6f58ce3224bdaf6a.jpeg",
-    "static/media/fa-solid-900.ttf": "/cv-website/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
-    "static/media/fa-brands-400.ttf": "/cv-website/static/media/fa-brands-400.1815e00441357e01619e.ttf",
-    "static/media/fa-solid-900.woff2": "/cv-website/static/media/fa-solid-900.2463b90d9a316e4e5294.woff2",
-    "static/media/fa-brands-400.woff2": "/cv-website/static/media/fa-brands-400.c210719e60948b211a12.woff2",
-    "static/media/DTU_logo.png": "/cv-website/static/media/DTU_logo.ea602c58a08a17384294.png",
-    "static/media/fa-regular-400.ttf": "/cv-website/static/media/fa-regular-400.914997e1bdfc990d0897.ttf",
-    "static/media/fa-regular-400.woff2": "/cv-website/static/media/fa-regular-400.89999bdf5d835c012025.woff2",
-    "static/media/fa-v4compatibility.ttf": "/cv-website/static/media/fa-v4compatibility.da94ef451f4969af06e6.ttf",
-    "static/media/fa-v4compatibility.woff2": "/cv-website/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
-    "index.html": "/cv-website/index.html",
-    "main.44f3f07b.css.map": "/cv-website/static/css/main.44f3f07b.css.map",
-    "main.198aee32.js.map": "/cv-website/static/js/main.198aee32.js.map"
+    "main.css": "./static/css/main.0513f5a1.css",
+    "main.js": "./static/js/main.aa3bfe0e.js",
+    "static/media/UMD_logo.png": "./static/media/UMD_logo.48b3413ecf4f290b0371.png",
+    "static/media/profile.jpeg": "./static/media/profile.f0da6f58ce3224bdaf6a.jpeg",
+    "static/media/fa-solid-900.ttf": "./static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
+    "static/media/fa-brands-400.ttf": "./static/media/fa-brands-400.1815e00441357e01619e.ttf",
+    "static/media/fa-solid-900.woff2": "./static/media/fa-solid-900.2463b90d9a316e4e5294.woff2",
+    "static/media/fa-brands-400.woff2": "./static/media/fa-brands-400.c210719e60948b211a12.woff2",
+    "static/media/DTU_logo.png": "./static/media/DTU_logo.ea602c58a08a17384294.png",
+    "static/media/fa-regular-400.ttf": "./static/media/fa-regular-400.914997e1bdfc990d0897.ttf",
+    "static/media/fa-regular-400.woff2": "./static/media/fa-regular-400.89999bdf5d835c012025.woff2",
+    "static/media/fa-v4compatibility.ttf": "./static/media/fa-v4compatibility.da94ef451f4969af06e6.ttf",
+    "static/media/fa-v4compatibility.woff2": "./static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
+    "index.html": "./index.html",
+    "main.0513f5a1.css.map": "./static/css/main.0513f5a1.css.map",
+    "main.aa3bfe0e.js.map": "./static/js/main.aa3bfe0e.js.map"
   },
   "entrypoints": [
-    "static/css/main.44f3f07b.css",
-    "static/js/main.198aee32.js"
+    "static/css/main.0513f5a1.css",
+    "static/js/main.aa3bfe0e.js"
   ]
 }
