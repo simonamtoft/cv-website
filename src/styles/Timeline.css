@@ -1,0 +1,96 @@
+:root {
+  --primary-color: #0073e6;
+  --text-color: #555;
+  --background-color: #fff;
+  --box-shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.timeline {
+  position: relative;
+  padding: 20px 0;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* controls the line itself */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 5px;
+  width: 2px;
+  background: var(--primary-color);
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 35px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  z-index: 2;
+  /* Adjust this value to align the dot with the line */
+  left: 0px;
+  /* Adjust the size of the dot */
+  width: 12px;
+  height: 12px;
+}
+
+.timeline-icon {
+  height: auto;
+  width: 50px;
+}
+
+.timeline-icon-container {
+
+  position: absolute;
+  /* Adjust the top position to align with the dot */
+  top: 20px;
+  /* Adjust the left position to be next to the dot */
+  left: 20px;
+  /* Ensure it is behind the dot */
+  z-index: 1;
+  /* Prevent the icon container from growing */
+  flex: 0 0 auto;
+  /* Add space between the icon and the text */
+  margin-right: 20px;
+  padding-left: 10px;
+}
+
+.timeline-item {
+  position: relative;
+  width: 100%;
+  padding-top: 15px;
+  box-sizing: border-box;
+}
+
+.timeline-number {
+  position: absolute;
+  top: 31px;
+  left: -90px;
+  font-size: 1em;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.timeline-content {
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+  position: relative;
+  z-index: 2;
+  /* margin-right: -80px; */
+  /* Add margin to create space between the line and the items */
+  margin-left: 80px;
+}
+
+.timeline-text {
+  flex: 1;
+  /* Allow the text container to grow */
+}
+
+.timeline-content p {
+  margin: 5px 0;
+  font-size: 1.2em;
+  color: var(--text-color);
+}
