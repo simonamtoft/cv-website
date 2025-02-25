@@ -6,8 +6,10 @@
 }
 
 .timeline {
+  min-height: 100vh;
   position: relative;
   padding: 20px 0;
+  padding-bottom: 5%;
   width: 80%;
   margin: 0 auto;
 }
@@ -42,7 +44,6 @@
 }
 
 .timeline-icon-container {
-
   position: absolute;
   /* Adjust the top position to align with the dot */
   top: 20px;
@@ -60,6 +61,8 @@
 .timeline-item {
   position: relative;
   width: 100%;
+  margin-top: 30px;
+  /* padding-top aligns text and icon */
   padding-top: 15px;
   box-sizing: border-box;
 }
