@@ -22,9 +22,6 @@ const About = () => {
           <p>
             For me, machine learning isn’t just about models and algorithms - it’s about impact. It’s about building systems that enhance decision-making, optimize data management, and ultimately, make technology more human-centered.
           </p>
-          <p>
-            Let’s connect and talk about AI, machine learning, and the exciting future ahead!
-          </p>
         </div>
       </div>
     </section>
