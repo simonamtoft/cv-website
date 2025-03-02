@@ -7,8 +7,6 @@
   background: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding-top: 2%;
-  padding-left: 10%;
-  padding-right: 10%;
   padding-bottom: 2%;
   min-height: 100vh;
 }
@@ -21,6 +19,7 @@
 .about-image {
   flex: 0 0 auto;
   margin-right: 60px;
+  padding-left: 5%;
 }
 
 .profile-picture {
@@ -31,6 +30,7 @@
 }
 
 .about-text {
+  padding-right: 10%;
   flex: 1;
   font-size: 1.2em;
 }
@@ -42,8 +42,13 @@
     align-items: center;
   }
 
+  .about-text {
+    padding-left: 10%;
+  }
+
   .about-image {
     margin-bottom: 20px;
-    margin-right: 0px;
+    padding-left: 0;
+    margin-right: 0;
   }
 }
