@@ -11,8 +11,7 @@
   padding: 20px 0;
   padding-top: 5%;
   padding-bottom: 5%;
-  width: 80%;
-  margin: 0 auto;
+  padding-left: calc(5% + 95px);
 }
 
 /* controls the line itself */
@@ -22,6 +21,7 @@
   top: 0;
   bottom: 0;
   left: 5px;
+  margin-left: calc(5% + 95px);
   width: 2px;
   background: var(--primary-color);
 }
@@ -64,6 +64,7 @@
   width: 100%;
   margin-top: 45px;
   margin-bottom: 45px;
+  padding-right: 5%;
   /* padding-top aligns text and icon */
   padding-top: 15px;
   box-sizing: border-box;
@@ -72,7 +73,8 @@
 .timeline-number {
   position: absolute;
   top: 31px;
-  left: -90px;
+  /* left puts the text to the left of the line */
+  left: -95px;
   font-size: 1em;
   color: var(--primary-color);
   font-weight: bold;
@@ -84,7 +86,6 @@
   padding-left: 25px;
   position: relative;
   z-index: 2;
-  /* margin-right: -80px; */
   /* Add margin to create space between the line and the items */
   margin-left: 80px;
 }
