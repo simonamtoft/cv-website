@@ -15,22 +15,21 @@ const education = [
     icon: DTU_logo
   }, {
     text: <>
-    During my exchange at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>, I took my first
-    machine learning course, sparking my passion for AI and data science.
+    Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>,
+    where I took my first machine learning course, sparking my interest in AI and data science. The experience opened
+    my eyes to new ideas and practical challenges, and I was honored to receive academic honors for the semester.
     </>,
     endYear: "2019 Fall",
     startYear: "2019 Fall",
     icon: UMD_logo
   }, {
     text: <>
-    BSc at the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a> in Electrical Engineering.
-    During my time at DTU, I built a strong foundation in physics, exploring the fundamental principles that underpin
-    electrical engineering. Along the way, I was introduced to programming, which quickly became a key area of interest.
-    This exposure sparked my passion for software development, ultimately leading me to pursue it further.
-    My studies not only provided me with technical knowledge but also shaped my problem-solving mindset, bridging the
-    gap between hardware and software. I concluded my bachelor's degree with a thesis on the design and implementation 
-    of Chora, a web-based instruction set simulator
-    of <a href="https://backend.orbit.dtu.dk/ws/portalfiles/portal/145805464/patmos.pdf" target="_blank" rel="noopener noreferrer">patmos</a>.
+    BSc in Electrical Engineering from the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>.
+    During my studies at DTU, I developed a strong foundation in physics and engineering principles while being
+    introduced to programming - a field that quickly captured my interest. I also had the opportunity to serve as a
+    teaching assistant in engineering mathematics for a year, which enriched my understanding and communication of
+    complex concepts. I concluded my bachelor's degree with a thesis on the design and implementation of Chora, a
+    web-based instruction set simulator of <a href="https://backend.orbit.dtu.dk/ws/portalfiles/portal/145805464/patmos.pdf" target="_blank" rel="noopener noreferrer">patmos</a>.
     </>,
     endYear: "2020",
     startYear: "2017",
