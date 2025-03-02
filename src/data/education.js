@@ -8,7 +8,7 @@ const education = [
     MSc at the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>, where I specialized in
     machine learning for computer vision and latent variable models. As an honorary student under <a href="https://www.dtu.dk/person/ole-winther?id=10167&entity=profile" target="_blank" rel="noopener noreferrer">Ole Winther</a>,
     I collaborated with Giorgio Giannone, gaining hands-on experience in advanced probabilistic modeling and machine learning techniques.
-    My masters thesis focused on optimizing the infernece time of generative models for image generation, specifically the denoising diffusion probabilistic models.
+    My masters thesis focused on optimizing the inference time of generative models for image generation, specifically the denoising diffusion probabilistic models.
     </>,
     endYear: "2022",
     startYear: "2020",
@@ -29,7 +29,7 @@ const education = [
     This exposure sparked my passion for software development, ultimately leading me to pursue it further.
     My studies not only provided me with technical knowledge but also shaped my problem-solving mindset, bridging the
     gap between hardware and software. I concluded my bachelor's degree with a thesis on the design and implementation 
-    of <a href='https://amtoft.dev' target="_blank" rel="noopener noreferrer">Chora</a>, a web-based instruction set simulator
+    of Chora, a web-based instruction set simulator
     of <a href="https://backend.orbit.dtu.dk/ws/portalfiles/portal/145805464/patmos.pdf" target="_blank" rel="noopener noreferrer">patmos</a>.
     </>,
     endYear: "2020",

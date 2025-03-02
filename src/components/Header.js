@@ -60,7 +60,7 @@ const Header = () => {
           </ul>
         </nav>
         <h1>Simon Amtoft Pedersen</h1>
-        <p>Mathematical Engineer | Data Scientist | Wine Enthusiast</p>
+        <p>MSc Engineering | Data Scientist </p>
       </div>
     </header>
   );

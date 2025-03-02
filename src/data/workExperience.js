@@ -10,10 +10,11 @@ const workExperience = [
     endYear: "now",
     startYear: "2022",
     text: <>
-    Joined as a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a> in the
-    Product Innovation team, where I focused on natural language processing for text classification and ranking,
-    and fine-grained classification problems. Heavily focused on joint projects with our customers to design and
-    implement cutting-edge machine learning solutions to solve their business needs.
+    I started my career as a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a> in the
+    Product Innovation team, where I specialized in natural language processing for text classification, ranking,
+    and fine-grained classification challenges. My role involved collaborating closely with customers to design and
+    implement cutting-edge machine learning solutions tailored to their business needs. This hands-on experience
+    deepened my expertise in applied AI while reinforcing my passion for solving real-world problems with data.
     </>,
     icon: Stibo_logo
   }, {
@@ -24,7 +25,7 @@ const workExperience = [
     text: <>
     As a student developer in the AI team at <a href="https://www.terma.com/" target="_blank" rel="noopener noreferrer">Terma</a>, I worked on
     multiple projects, including developing ETL pipelines for data ingestion, creating a React-based website for
-    visualizing live ship positions and directions using live GIS data, establishing a proof of concept for
+    visualizing live ship positions and directions using live GIS data, establishing a proof of concept for what later became
     the <a href="https://www.terma.com/news-events/news/news-archive/2023/ai-surveillance-spacecraft-successfully-passes-design-review/" target="_blank" rel="noopener noreferrer">BIFROST project</a>,
     and evaluating sensory data for anomaly detection.
     </>,

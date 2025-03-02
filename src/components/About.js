@@ -14,13 +14,27 @@ const About = () => {
         </div>
         <div className='about-text'>
           <p>
-            My journey into AI and machine learning wasn’t just about crunching numbers - it was about solving real-world challenges with intelligent solutions. With a background in engineering mathematics, I’ve always been drawn to the intersection of logic and creativity. Today, as a Machine Learning Specialist at Stibo Systems, I transform complex business problems into scalable AI-driven solutions that power both internal operations and enterprise software.
+            Growing up, my dad sparked my interest in mathematics and technology. I remember solving my first pair of
+            simultaneous equations with him in 6th grade and later taking apart small electronic toys to see how they
+            worked. That curiosity later led me to assembling my own PC and keyboards, giving me a better understanding
+            of how different components work together.
           </p>
           <p>
-            Beyond my work, I’m deeply embedded in Denmark’s data science community. Whether it’s participating in DDSC events, mentoring at ReDI School to help underrepresented groups break into tech, or curating thought-provoking discussions for the IDA Driving AI event, I thrive on sharing knowledge and shaping the future of AI. I also collaborate with top universities like Aarhus University and Georgia Tech, guiding thesis students through real-world AI challenges.
+            My early fascination led me to pursue a bachelor's degree in electrical engineering - a journey through math, 
+            physics, and programming that eventually inspired me to complete a master’s in engineering mathematical
+            modelling. This academic path taught me how to translate complex systems into practical, data-driven solutions.
           </p>
           <p>
-            For me, machine learning isn’t just about models and algorithms - it’s about impact. It’s about building systems that enhance decision-making, optimize data management, and ultimately, make technology more human-centered.
+            Today, I work as a Machine Learning Specialist at Stibo Systems, where I combine technical expertise with
+            creative problem solving to develop scalable AI solutions. My role involves translating complex business
+            challenges into efficient, AI-driven strategies that improve both internal operations and enterprise software.
+          </p>
+          <p>
+            Alongside my professional work, I’ve become increasingly involved in Denmark’s data science community.
+            Whether it’s mentoring at ReDI School, participating in DDSC events, or organizing the IDA Driving AI event,
+            I’m committed to sharing knowledge and fostering a collaborative tech environment. Collaborating with
+            institutions like Aarhus University, VIA University College, and Georgia Tech further allows me to guide
+            students through real-world AI challenges, bridging the gap between academia and industry.
           </p>
         </div>
       </div>
