@@ -14,10 +14,9 @@ const About = () => {
         </div>
         <div className='about-text'>
           <p>
-            Growing up, my dad sparked my interest in mathematics and technology, which led me to pursue a bachelor's
-            degree in electrical engineering - a journey through math, physics, and programming that eventually inspired
-            me to complete a master’s in engineering mathematical modelling. This academic path taught me how to
-            translate complex systems into practical, data-driven solutions.
+            My early passion for mathematics and technology led me to pursue a bachelor's degree in electrical
+            engineering, where I took courses in programming and machine learning. This sparked my interest in the
+            field and led me to complete a master’s in mathematical modeling & computing, focusing on machine learning. 
           </p>
           <p>
             Today, I work as a Machine Learning Specialist at Stibo Systems, where I combine technical expertise with
