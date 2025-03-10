@@ -25,7 +25,9 @@ const About = () => {
           </p>
           <p>
             Alongside my professional work, I’ve become increasingly involved in Denmark’s data science community.
-            Whether it’s mentoring at ReDI School, participating in DDSC events, or organizing the IDA Driving AI event,
+            Whether it’s mentoring at <a href="https://www.redi-school.org/redi-school-aarhus" target="_blank" rel="noopener noreferrer">ReDI School Aarhus</a>,
+            participating in <a href="https://ddsc.io/" target="_blank" rel="noopener noreferrer">DDSC</a> events, or
+            organizing the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">IDA Driving AI event</a>,
             I’m committed to sharing knowledge and fostering a collaborative tech environment. Collaborating with
             institutions like Aarhus University, VIA University College, and Georgia Tech further allows me to guide
             students through real-world AI challenges, bridging the gap between academia and industry.
