@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ab284a7c.css",
-    "main.js": "/static/js/main.e9e7b580.js",
+    "main.js": "/static/js/main.d532646f.js",
     "static/media/UMD_logo.png": "/static/media/UMD_logo.48b3413ecf4f290b0371.png",
     "static/media/profile.jpeg": "/static/media/profile.f0da6f58ce3224bdaf6a.jpeg",
     "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
@@ -15,10 +15,10 @@
     "static/media/fa-v4compatibility.woff2": "/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
     "index.html": "/index.html",
     "main.ab284a7c.css.map": "/static/css/main.ab284a7c.css.map",
-    "main.e9e7b580.js.map": "/static/js/main.e9e7b580.js.map"
+    "main.d532646f.js.map": "/static/js/main.d532646f.js.map"
   },
   "entrypoints": [
     "static/css/main.ab284a7c.css",
-    "static/js/main.e9e7b580.js"
+    "static/js/main.d532646f.js"
   ]
 }
