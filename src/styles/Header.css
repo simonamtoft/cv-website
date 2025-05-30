@@ -57,5 +57,5 @@ nav a {
 }
 
 nav a:hover {
-  opacity: 0.7;
+  color: var(--accent-orange);
 }

@@ -5,6 +5,7 @@
   --dark-grey: #333;
   --white: #fff;
   --medium-grey: #555;
+  --accent-orange: #ea850b; /* Warm orange accent color */
 }
 
 * {
@@ -36,4 +37,13 @@ body {
 
 .main-content section {
   padding: 80px 0; /* Consistent vertical padding between sections */
+}
+
+a {
+  color: var(--accent-orange); /* Use accent orange for links */
+  text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+  color: var(--medium-grey); /* Lighter on hover */
 }

@@ -34,10 +34,6 @@
 }
 
 .contact a {
-  color: var(--medium-grey);
+  color: var(--accent-orange);
   text-decoration: none;
-}
-
-.contact a:hover {
-  text-decoration: underline;
 }
