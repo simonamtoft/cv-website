@@ -16,3 +16,6 @@ Run deployment
 ```
 npm run deploy
 ```
+
+## Resources
+- https://favicon.io/favicon-generator/
