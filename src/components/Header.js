@@ -1,7 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import '../styles/Header.css';
 
 const Header = () => {
+  const [isNavFixed, setIsNavFixed] = useState(false);
+  const navRef = useRef(null);
+
   const smoothScroll = useCallback((event) => {
     event.preventDefault();
     const targetId = event.currentTarget.getAttribute('href').substring(1);
@@ -26,10 +29,29 @@ const Header = () => {
     };
   }, [smoothScroll]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (navRef.current) {
+        const offset = navRef.current.offsetTop;
+        if (window.scrollY > offset) {
+          setIsNavFixed(true);
+        } else {
+          setIsNavFixed(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <header className="header">
       <div className="header-content">
-        <nav>
+        <nav ref={navRef} className={isNavFixed ? 'fixed-nav' : ''}>
           <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#timeline">Resume</a></li>
