@@ -24,12 +24,18 @@
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid var(--accent-orange);
 }
 
 .about-text {
   padding-right: 10%;
   flex: 1;
   font-size: 1.2em;
+}
+
+.about-text p {
+  line-height: 1.6;
+  margin-bottom: 1em;
 }
 
 /* New styles for responsive design */
