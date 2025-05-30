@@ -6,11 +6,11 @@ const Header = () => {
     event.preventDefault();
     const targetId = event.currentTarget.getAttribute('href').substring(1);
     const targetElement = document.getElementById(targetId);
-    const headerOffset = 0;
-    const elementPosition = targetElement.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    scrollTo(offsetPosition, 800); // Adjust the duration (in milliseconds) as needed
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -25,29 +25,6 @@ const Header = () => {
       });
     };
   }, [smoothScroll]);
-
-  const scrollTo = (targetPosition, duration) => {
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    let startTime = null;
-
-    const animation = (currentTime) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = ease(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    };
-
-    const ease = (t, b, c, d) => {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
-    };
-
-    requestAnimationFrame(animation);
-  };
 
   return (
     <header className="header">

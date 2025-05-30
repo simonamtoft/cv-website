@@ -1,4 +1,10 @@
 # Personal Website
+Run locally
+```
+npm start
+```
+
+## Deployment
 Following this guide: https://github.com/gitname/react-gh-pages
 
 Install github pages package

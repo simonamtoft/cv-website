@@ -1,7 +1,7 @@
 .header {
   height: 100vh;
-  background: #333;
-  color: #fff;
+  background: var(--dark-grey);
+  color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,11 +19,13 @@
 .header h1 {
   font-size: 3em;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .header p {
   font-size: 1.5em;
   margin: 10px 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
 nav {
@@ -48,11 +50,12 @@ nav ul li {
 }
 
 nav a {
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
   font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
 }
 
 nav a:hover {
-  opacity: 0.4;
+  opacity: 0.7;
 }

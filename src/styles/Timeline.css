@@ -1,40 +1,36 @@
-:root {
-  --primary-color: #555;
-  --text-color: #555;
-  --background-color: #fff;
-  --box-shadow-color: rgba(0, 0, 0, 0.1);
-}
-
 .timeline {
-  min-height: 100vh;
   position: relative;
   padding: 20px 0;
-  padding-top: 5%;
-  padding-bottom: 5%;
-  padding-left: calc(5% + 95px);
+  overflow: hidden; /* Hide potential overflow during positioning adjustments */
+  /* New Grid styles */
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr; /* Left content, 40px central column, Right content */
+  /* Remove gap, spacing will be controlled by item padding */
+  /* gap: 10px; */
 }
 
 /* controls the line itself */
 .timeline::before {
   content: '';
+  /* Revert to absolute positioning relative to the container */
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 5px;
-  margin-left: calc(5% + 95px);
+  left: 50%; /* Center horizontally within the container */
+  transform: translateX(-1px); /* Adjust for the line's own width */
   width: 2px;
-  background: var(--primary-color);
+  background: var(--medium-grey);
+  z-index: 0; /* Ensure line is behind content */
 }
 
 .timeline-dot {
   position: absolute;
-  top: 35px;
-  background: var(--primary-color);
+  top: 5px; /* Adjusted to align vertically with date */
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--medium-grey);
   border-radius: 50%;
-  z-index: 2;
-  /* Adjust this value to align the dot with the line */
-  left: 0px;
-  /* Adjust the size of the dot */
+  z-index: 3;
   width: 12px;
   height: 12px;
 }
@@ -44,59 +40,102 @@
   width: 50px;
 }
 
-.timeline-icon-container {
-  position: absolute;
-  /* Adjust the top position to align with the dot */
-  top: 20px;
-  /* Adjust the left position to be next to the dot */
-  left: 20px;
-  /* Ensure it is behind the dot */
-  z-index: 1;
-  /* Prevent the icon container from growing */
-  flex: 0 0 auto;
-  /* Add space between the icon and the text */
-  margin-right: 20px;
-  padding-left: 10px;
-}
-
 .timeline-item {
-  position: relative;
-  width: 100%;
+  position: relative; /* Needed for absolute positioning of dot */
+  /* Items span all three columns in the grid */
+  grid-column: 1 / -1;
+  display: grid; /* Use grid within the item to position date and content areas */
+  grid-template-columns: subgrid; /* Inherit columns from parent grid */
   margin-top: 45px;
   margin-bottom: 45px;
-  padding-right: 5%;
-  /* padding-top aligns text and icon */
-  padding-top: 15px;
   box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  /* Remove horizontal padding */
+  /* padding-left: 30px; */
+  /* padding-right: 30px; */
+}
+
+.timeline-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Positioning of elements within the Grid layout --- */
+
+.timeline-date-text-container {
+    grid-row: 1;
+    z-index: 2;
+    position: static;
+    transform: none;
+    top: auto;
+    /* Keep padding to space text from central column */
+    /* padding-right: 20px; */
+    /* padding-left: 20px; */
+    /* Remove margin */
+    /* margin-right: 20px; */
+    /* margin-left: 20px; */
 }
 
 .timeline-number {
-  position: absolute;
-  top: 31px;
-  /* left puts the text to the left of the line */
-  left: -95px;
   font-size: 1em;
-  color: var(--primary-color);
+  color: var(--medium-grey);
   font-weight: bold;
+  margin-bottom: 5px; /* Space between date and text */
+}
+
+.timeline-icon-container {
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center icon horizontally within its container */
+    z-index: 1;
+    position: static;
+    transform: none;
+    top: auto;
+     /* Remove padding */
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
+     /* Remove margin */
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
 }
 
 .timeline-content {
-  display: flex;
-  align-items: center;
-  padding-left: 25px;
-  position: relative;
-  z-index: 2;
-  /* Add margin to create space between the line and the items */
-  margin-left: 80px;
+  /* No flex-grow needed here */
 }
 
-.timeline-text {
-  flex: 1;
-  /* Allow the text container to grow */
-}
-
-.timeline-content p {
-  margin: 5px 0;
+.timeline-text p {
+  margin: 0;
   font-size: 1.2em;
-  color: var(--text-color);
+  color: var(--medium-grey);
+}
+
+/* Styles for items on the right side */
+.timeline-item.right .timeline-date-text-container {
+  grid-column: 1; /* Date and text on the left */
+  text-align: right; /* Align text to the right */
+  padding-right: 20px; /* Add padding to the right to create space from central column */
+}
+
+.timeline-item.right .timeline-icon-container {
+  grid-column: 3; /* Icon on the right */
+  justify-self: start; /* Align icon container to the start (left) of grid cell */
+  margin-left: 10px; /* Add margin to push away from central column */
+  padding-left: 0; /* Ensure no left padding interfering */
+}
+
+/* Styles for items on the left side */
+.timeline-item.left .timeline-date-text-container {
+  grid-column: 3; /* Date and text on the right */
+  text-align: left; /* Align text to the left */
+  padding-left: 20px; /* Add padding to the left to create space from central column */
+}
+
+.timeline-item.left .timeline-icon-container {
+  grid-column: 1; /* Icon on the left */
+  justify-self: end; /* Align icon container to the end (right) of grid cell */
+  margin-right: 10px; /* Add margin to push away from central column */
+  padding-right: 0; /* Ensure no right padding interfering */
 }
