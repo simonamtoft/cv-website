@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d6f4405e.css",
-    "main.js": "/static/js/main.adb2c6fb.js",
+    "main.css": "/static/css/main.3d97f3bd.css",
+    "main.js": "/static/js/main.7415b32c.js",
     "static/media/UMD_logo.png": "/static/media/UMD_logo.48b3413ecf4f290b0371.png",
     "static/media/profile.jpeg": "/static/media/profile.f0da6f58ce3224bdaf6a.jpeg",
     "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
@@ -10,15 +10,18 @@
     "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.c210719e60948b211a12.woff2",
     "static/media/DTU_logo.png": "/static/media/DTU_logo.ea602c58a08a17384294.png",
     "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.914997e1bdfc990d0897.ttf",
+    "static/media/ReDI_logo.png": "/static/media/ReDI_logo.afb1ebd619197f2c28a0.png",
     "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.89999bdf5d835c012025.woff2",
+    "static/media/IDA_logo.jpg": "/static/media/IDA_logo.40baf6dec99fa3985ae2.jpg",
     "static/media/fa-v4compatibility.ttf": "/static/media/fa-v4compatibility.da94ef451f4969af06e6.ttf",
     "static/media/fa-v4compatibility.woff2": "/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
+    "static/media/Terma_logo.svg": "/static/media/Terma_logo.5e0a4cbfa0bf883b87f73b5528c4c210.svg",
     "index.html": "/index.html",
-    "main.d6f4405e.css.map": "/static/css/main.d6f4405e.css.map",
-    "main.adb2c6fb.js.map": "/static/js/main.adb2c6fb.js.map"
+    "main.3d97f3bd.css.map": "/static/css/main.3d97f3bd.css.map",
+    "main.7415b32c.js.map": "/static/js/main.7415b32c.js.map"
   },
   "entrypoints": [
-    "static/css/main.d6f4405e.css",
-    "static/js/main.adb2c6fb.js"
+    "static/css/main.3d97f3bd.css",
+    "static/js/main.7415b32c.js"
   ]
 }
