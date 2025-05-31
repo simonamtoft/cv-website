@@ -14,8 +14,16 @@ const displayYear = (startYear, endYear) => {
 
 
 const Timeline = () => {
+  const getNumericalYear = (yearString) => {
+    if (yearString === 'now') {
+      return new Date().getFullYear();
+    }
+    return parseInt(yearString, 10);
+  };
+
+  // sort earliest to latest
   const timelineItems = [...workExperience, ...education]
-    .sort((a, b) => new Date(b.endYear) - new Date(a.endYear));
+    .sort((a, b) => getNumericalYear(a.startYear) - getNumericalYear(b.startYear));
 
   const itemRefs = useRef([]);
 
