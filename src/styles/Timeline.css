@@ -1,6 +1,7 @@
 .timeline {
   position: relative;
   padding: 20px 0;
+  padding-top: 15vh;
   overflow: hidden; /* Hide potential overflow during positioning adjustments */
   display: grid;
   grid-template-columns: 1fr 40px 1fr; /* Left content, 40px central column, Right content */
@@ -16,6 +17,20 @@
   width: 2px;
   background: var(--medium-grey);
   z-index: 0; /* Ensure line is behind content */
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--medium-grey); /* Downward pointing triangle */
+  z-index: 2;
 }
 
 .timeline-dot {
