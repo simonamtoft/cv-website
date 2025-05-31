@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useRef } from 'react';
 import '../styles/Timeline.css';
 import workExperience from '../data/workExperience';
 import education from '../data/education';
+import volunteering from '../data/volunteering';
 
 
 const displayYear = (startYear, endYear) => {
@@ -18,11 +19,25 @@ const Timeline = () => {
     if (yearString === 'now') {
       return new Date().getFullYear();
     }
-    return parseInt(yearString, 10);
+    
+    // Check for semester suffix
+    const yearParts = yearString.split(' ');
+    const year = parseInt(yearParts[0], 10);
+    
+    if (yearParts.length > 1) {
+      const semester = yearParts[1].toLowerCase();
+      if (semester === 'spring') {
+        return year + 0.0;
+      } else if (semester === 'fall') {
+        return year + 0.5;
+      }
+    }
+    
+    return year;
   };
 
   // sort earliest to latest
-  const timelineItems = [...workExperience, ...education]
+  const timelineItems = [...workExperience, ...education, ...volunteering]
     .sort((a, b) => getNumericalYear(a.startYear) - getNumericalYear(b.startYear));
 
   const itemRefs = useRef([]);
