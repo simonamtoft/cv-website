@@ -14,23 +14,20 @@ const About = () => {
         </div>
         <div className='about-text'>
           <p>
-            My early passion for mathematics and technology led me to pursue a bachelor's degree in electrical
-            engineering, where I took courses in programming and machine learning. This sparked my interest in the
-            field and led me to complete a master’s in mathematical modeling & computing, focusing on machine learning. 
+            My journey into technology began with a fascination for mathematics and engineering, leading me to an electrical engineering background.
+            My exposure to programming and machine learning during these studies ignited a strong interest in AI and data science, which I further
+            pursued with a master's degree focused on the field.
           </p>
           <p>
-            Today, I work as a Machine Learning Specialist at Stibo Systems, where I combine technical expertise with
-            creative problem solving to develop scalable AI solutions. My role involves translating complex business
-            challenges into efficient, AI-driven strategies that improve both internal operations and enterprise software.
+            Today, I apply this foundation as a Data Scientist at Stibo Systems, where I focus on developing practical,
+            scalable AI solutions that address real-world business challenges. My work involves leveraging technical expertise to translate complex
+            requirements into effective strategies within an enterprise context.
           </p>
           <p>
-            Alongside my professional work, I’ve become increasingly involved in Denmark’s data science community.
-            Whether it’s mentoring at <a href="https://www.redi-school.org/redi-school-aarhus" target="_blank" rel="noopener noreferrer">ReDI School Aarhus</a>,
-            participating in <a href="https://ddsc.io/" target="_blank" rel="noopener noreferrer">DDSC</a> events, or
-            organizing the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">IDA Driving AI event</a>,
-            I’m committed to sharing knowledge and fostering a collaborative tech environment. Collaborating with
-            institutions like Aarhus University, VIA University College, and Georgia Tech further allows me to guide
-            students through real-world AI challenges, bridging the gap between academia and industry.
+            Beyond my professional role, I am actively involved in the Danish data science community. I am passionate about sharing knowledge and
+            fostering growth, whether through mentoring at organizations like ReDI School, participating in community events, contributing to open
+            source projects, or contributing to the organization of conferences. I also engage with academic institutions to help bridge the gap
+            between theoretical learning and industry practice.
           </p>
         </div>
       </div>
