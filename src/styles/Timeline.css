@@ -11,7 +11,7 @@
   content: '';
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 5px; /* Make the line 5px shorter from the bottom */
   left: 50%; /* Center horizontally within the container */
   transform: translateX(-1px); /* Adjust for the line's own width */
   width: 2px;
@@ -133,4 +133,18 @@
   justify-self: end; /* Align icon container to the end (right) of grid cell */
   margin-right: 10px; /* Add margin to push away from central column */
   padding-right: 0; /* Ensure no right padding interfering */
+}
+
+.timeline-item:last-child::after {
+  content: '';
+  position: absolute;
+  bottom: -65px; /* Adjust this value to control the distance from the last item */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--medium-grey); /* Downward pointing triangle */
+  z-index: 2;
 }
