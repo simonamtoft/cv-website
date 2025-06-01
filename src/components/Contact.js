@@ -6,7 +6,9 @@ const Contact = () => {
     <div className="contact">
       <h2>Reach Out!</h2>
       <p>
-        AI and machine learning are evolving fast, and the best ideas come from collaboration. Whether you’re exploring AI-driven solutions, looking for a speaker, or just want to chat about the future of data science, I’d love to hear from you!
+        AI and machine learning are evolving fast, and the best ideas come from collaboration.
+        Whether you're exploring AI-driven solutions, wanting to participate in next year's Driving AI event, or just want to chat
+        about the future of data science, I'd love to hear from you!
       </p>
       <div className="contact-info">
         <p>
@@ -17,7 +19,7 @@ const Contact = () => {
         </p>
       </div>
       <p>
-        Let’s connect and build something exciting together!
+        Let's connect and build something exciting together!
       </p>
     </div>
   );

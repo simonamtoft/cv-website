@@ -39,6 +39,12 @@ body {
   padding: 80px 0; /* Consistent vertical padding between sections */
 }
 
+/* Make footer closer to bottom of page */
+.main-content section#footer {
+  padding-bottom: 10px;
+  padding-top: 0px;
+}
+
 a {
   color: var(--accent-orange); /* Use accent orange for links */
   text-decoration: none; /* Remove underline */
