@@ -74,6 +74,8 @@
 .timeline-item .timeline-date-text-container {
     grid-row: 1;
     z-index: 2;
+    box-sizing: border-box;
+    min-width: 0; /* Allow container to shrink in grid */
 }
 
 .timeline-number {
@@ -89,6 +91,7 @@
     justify-content: center; /* Center icon horizontally within its container */
     z-index: 1;
     align-self: start; /* Align icon container to the top of its grid row */
+    min-width: 0; /* Allow container to shrink in grid */
 }
 
 .timeline-content {
