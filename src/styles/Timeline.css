@@ -148,3 +148,114 @@
   border-top: 8px solid var(--medium-grey); /* Downward pointing triangle */
   z-index: 2;
 }
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .timeline {
+    grid-template-columns: 1fr; /* Single column layout for content */
+    padding-top: 5vh;
+    padding-left: 20px; /* Add padding on the left for content */
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 5px;
+    left: auto;
+    transform: none;
+    width: 2px;
+    background: var(--medium-grey);
+    z-index: 0;
+    display: block;
+    right: 60px; /* Position line to align with the dot */
+  }
+
+  .timeline::after {
+    display: none;
+  }
+
+  .timeline-item {
+    grid-column: 1;
+    display: flex; /* Use flexbox */
+    flex-direction: row; /* Arrange in a row */
+    align-items: flex-start; /* Align items to the top */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 90px; /* Remove padding on the item */
+    position: relative; /* Needed for absolute positioning of dot and icon */
+  }
+
+  .timeline-dot {
+    position: absolute; /* Position absolutely relative to timeline-item */
+    top: 5px; /* Align dot to the top of the item */
+    transform: none;
+    background: var(--medium-grey);
+    border-radius: 50%;
+    z-index: 3;
+    width: 12px;
+    height: 12px;
+    left: auto;
+    right: 55px;
+  }
+
+  .timeline-left-content-group {
+    flex: 1; /* Allow content group to take up remaining space */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align elements to the right */
+    text-align: right; /* Align text within the group to the right */
+    padding-right: 20px; /* Add space between content and dot */
+  }
+
+  .timeline-number {
+    font-size: 1em;
+    color: var(--medium-grey);
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .timeline-content {
+    grid-column: 1;
+    padding: 0;
+    width: 100%;
+    text-align: right; /* Ensure text within content is right-aligned */
+  }
+
+  .timeline-icon-container {
+    position: absolute; /* Position absolutely relative to timeline-item */
+    top: 5px; /* Align icon container to the top of the item */
+    margin: 0;
+    padding: 0;
+    z-index: 3; /* Ensure icon is above the line */
+    right: 0; /* Position icon container at the right edge of the timeline item */
+    display: flex; /* Use flexbox to center the image */
+    align-items: flex-start; /* Align items to the top */
+    justify-content: center; /* Center content horizontally */
+    width: 40px; /* Set container width */
+  }
+
+  .timeline-icon {
+    width: 40px; /* Fixed width for icon */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Remove specific left/right styles in mobile view */
+  .timeline-item.right .timeline-date-text-container,
+  .timeline-item.left .timeline-date-text-container,
+  .timeline-item.right .timeline-number,
+  .timeline-item.left .timeline-number,
+  .timeline-item.right .timeline-icon-container,
+  .timeline-item.left .timeline-icon-container {
+    grid-column: 1;
+    padding: 0;
+    margin: 0;
+    text-align: right; /* Align text to the right */
+    justify-self: end; /* Align to the end */
+  }
+
+  .timeline-item:last-child::after {
+    display: none;
+  }
+}
