@@ -59,7 +59,7 @@ const Header = () => {
           </ul>
         </nav>
         <h1>Simon Amtoft Pedersen</h1>
-        <p>MSc Engineering | Data Scientist </p>
+        <p>MSc Engineering | Senior Data Scientist </p>
       </div>
     </header>
   );

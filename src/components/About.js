@@ -19,7 +19,7 @@ const About = () => {
             pursued with a master's degree focused on the field.
           </p>
           <p>
-            Today, I apply this foundation as a Data Scientist at Stibo Systems, where I focus on developing practical,
+            Today, I apply this foundation as a Senior Data Scientist at Stibo Systems, where I focus on developing practical,
             scalable AI solutions that address real-world business challenges. My work involves leveraging technical expertise to translate complex
             requirements into effective strategies within an enterprise context.
           </p>
