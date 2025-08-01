@@ -5,15 +5,26 @@ import Terma_logo from '../assets/Terma_logo.svg';
 
 const workExperience = [
   {
-    jobTitle: "Data Scientist",
+    jobTitle: "Senior Data Scientist",
     companyName: "Stibo Systems",
     endYear: "now",
+    startYear: "2025",
+    text: <>
+    In my role as Senior Data Scientist, I lead AI projects and contribute to the company's machine learning strategy. My responsibilities
+    include architecting solutions and providing technical mentorship to junior data scientists.
+    </>,
+    icon: Stibo_logo
+  }, {
+    jobTitle: "Data Scientist",
+    companyName: "Stibo Systems",
+    endYear: "2025",
     startYear: "2022",
     text: <>
-    I started my career as a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a> in
-    the Product Innovation team, specializing in natural language processing for text classification, ranking, and fine-grained classification challenges.
-    I collaborated closely with customers to design and implement cutting-edge machine learning solutions tailored to their business needs. 
-    This hands-on experience deepened my expertise in applied AI while reinforcing my passion for solving real-world problems with data.
+    As a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a>,
+    I developed AI-driven solutions as part of innovation projects with our customers and internal stakeholders.
+    My responsibilities included data engineering, deploying machine learning models, and implementing MLOps best practices with tools like MLflow,
+    Azure, and GitLab CI/CD. I also contributed to the Stibo Systems Accelerator, supporting university students with their theses and
+    the <a href="https://www.analytics.gatech.edu/curriculum/applied-analytics-practicum"  target="_blank" rel="noopener noreferrer">Georgia Tech advanced analytics practicum</a>.
     </>,
     icon: Stibo_logo
   }, {

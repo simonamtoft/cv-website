@@ -14,20 +14,20 @@ const About = () => {
         </div>
         <div className='about-text'>
           <p>
-            My journey into technology began with a fascination for mathematics and engineering, leading me to an electrical engineering background.
-            My exposure to programming and machine learning during these studies ignited a strong interest in AI and data science, which I further
-            pursued with a master's degree focused on the field.
+            Driven by a fascination for mathematics and engineering, my journey into technology began with an electrical engineering background.
+            The programming and machine learning I encountered during my studies sparked a passion for AI and data science, which I pursued with
+            a specialized master's degree.
           </p>
           <p>
-            Today, I apply this foundation as a Senior Data Scientist at Stibo Systems, where I focus on developing practical,
-            scalable AI solutions that address real-world business challenges. My work involves leveraging technical expertise to translate complex
-            requirements into effective strategies within an enterprise context.
+            As a Senior Data Scientist at Stibo Systems, I now apply this foundation to develop practical, scalable AI solutions for
+            real-world business challenges. I leverage deep technical expertise to translate complex requirements into effective,
+            enterprise-level strategies. I also mentor team members to foster a culture of innovation and excellence.
           </p>
           <p>
             Beyond my professional role, I am actively involved in the Danish data science community. I am passionate about sharing knowledge and
-            fostering growth, whether through mentoring at organizations like ReDI School, participating in community events, contributing to open
-            source projects, or contributing to the organization of conferences. I also engage with academic institutions to help bridge the gap
-            between theoretical learning and industry practice.
+            fostering growth, whether through organizing conferences like IDA's Driving AI and Driving IT, participating in community events,
+            or contributing to open-source projects. I also engage with academic institutions to help bridge the gap between theoretical
+            learning and industry practice.
           </p>
         </div>
       </div>
