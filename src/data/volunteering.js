@@ -21,7 +21,8 @@ const volunteering = [
     startYear: "2025",
     text: <>
     Voted in as an alternate member of the Board of Representatives at <a href="https://ida.dk/english" target="_blank" rel="noopener noreferrer">IDA</a>,
-    and part of organizing the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> conference
+    and part of organizing the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and 
+    <a href="https://ida.dk/driving-it" target="_blank"rel="noopener noreferrer">Driving IT</a> conferences
     within <a href='https://english.ida.dk/ida-it' target="_blank" rel="noopener noreferrer">IDA IT</a>.
     </>,
     icon: IDA_logo
