@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../styles/Timeline.css';
 import workExperience from '../data/workExperience';
 import education from '../data/education';
@@ -43,6 +43,7 @@ const Timeline = () => {
   const itemRefs = useRef([]);
 
   useEffect(() => {
+    const currentItemRefs = itemRefs.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -58,14 +59,14 @@ const Timeline = () => {
       }
     );
 
-    itemRefs.current.forEach((ref) => {
+    currentItemRefs.forEach((ref) => {
       if (ref) {
         observer.observe(ref);
       }
     });
 
     return () => {
-      itemRefs.current.forEach((ref) => {
+      currentItemRefs.forEach((ref) => {
         if (ref) {
           observer.unobserve(ref);
         }
