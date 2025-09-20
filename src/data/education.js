@@ -10,8 +10,8 @@ const education = [
     I collaborated with Giorgio Giannone, gaining hands-on experience in advanced probabilistic modeling and machine learning techniques.
     My master's thesis focused on optimizing the inference time of denoising diffusion probabilistic models for image generation.
     </>,
-    endYear: "2022",
-    startYear: "2020",
+    start: "2020 Aug",
+    end: "2022 Jun",
     icon: DTU_logo
   }, {
     text: <>
@@ -19,8 +19,8 @@ const education = [
     Here, I took my first machine learning course, sparking my interest in AI and data science. The experience opened my eyes to new ideas and
     practical challenges, and I was honored to receive academic honors for the semester.
     </>,
-    endYear: "2019 Fall",
-    startYear: "2019 Fall",
+    start: "2019 Sep",
+    end: "2019 Dec",
     icon: UMD_logo
   }, {
     text: <>
@@ -30,8 +30,8 @@ const education = [
     and communication of complex concepts. My bachelor's thesis was on the design and implementation of Chora, a web-based instruction set simulator
     of <a href="https://backend.orbit.dtu.dk/ws/portalfiles/portal/145805464/patmos.pdf" target="_blank" rel="noopener noreferrer">patmos</a>.
     </>,
-    endYear: "2020",
-    startYear: "2017",
+    start: "2017 Aug",
+    end: "2020 Jul",
     icon: DTU_logo
   }
 ]

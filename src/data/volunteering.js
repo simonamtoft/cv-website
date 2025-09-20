@@ -6,8 +6,8 @@ const volunteering = [
   {
     jobTitle: "Volunteer Teacher",
     companyName: "ReDI School of Digital Integration",
-    endYear: "2023",
-    startYear: "2023",
+    start: "2023 Apr",
+    end: "2023 Dec",
     text: <>
     As a volunteer at <a href="https://www.redi-school.org/" target="_blank" rel="noopener noreferrer">ReDI School of Digital Integration</a>, 
     I taught the Data Analytics with Python track, where I was part of developing the curriculum and learning materials. Separately, I provided
@@ -17,8 +17,8 @@ const volunteering = [
   }, {
     jobTitle: "Volunteer",
     companyName: "IDA",
-    endYear: "Now",
-    startYear: "2025",
+    start: "2025 Jan",
+    end: "Now",
     text: <>
     Voted in as an alternate member of the Board of Representatives at <a href="https://ida.dk/english" target="_blank" rel="noopener noreferrer">IDA</a>,
     and part of organizing the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and <a href="https://ida.dk/driving-it" target="_blank"rel="noopener noreferrer">Driving IT</a> conferences

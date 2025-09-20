@@ -7,8 +7,8 @@ const workExperience = [
   {
     jobTitle: "Senior Data Scientist",
     companyName: "Stibo Systems",
-    endYear: "now",
-    startYear: "2025",
+    start: "2025 May",
+    end: "now",
     text: <>
     In my role as Senior Data Scientist, I lead AI projects and contribute to the company's machine learning strategy. My responsibilities
     include architecting solutions and providing technical mentorship to junior data scientists.
@@ -17,8 +17,8 @@ const workExperience = [
   }, {
     jobTitle: "Data Scientist",
     companyName: "Stibo Systems",
-    endYear: "2025",
-    startYear: "2022",
+    start: "2022 Nov",
+    end: "2025 Apr",
     text: <>
     As a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a>,
     I developed AI-driven solutions as part of innovation projects with our customers and internal stakeholders.
@@ -30,8 +30,8 @@ const workExperience = [
   }, {
     jobTitle: "Student Developer",
     companyName: "TERMA Group",
-    endYear: "2022",
-    startYear: "2020",
+    start: "2020 Jul",
+    end: "2022 Jun",
     text: <>
     As a student developer in the AI team at <a href="https://www.terma.com/" target="_blank" rel="noopener noreferrer">Terma</a>,
     I worked on multiple projects, including developing ETL pipelines for data ingestion, creating a React-based website for visualizing live ship
