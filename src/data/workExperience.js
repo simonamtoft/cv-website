@@ -10,8 +10,9 @@ const workExperience = [
     start: "2025 May",
     end: "now",
     text: <>
-    In my role as Senior Data Scientist, I lead AI projects and contribute to the company's machine learning strategy. My responsibilities
-    include architecting solutions and providing technical mentorship to junior data scientists.
+    Today, I lead AI projects and help shape Stibo Systems' machine learning strategy.
+    My focus is on architecting end-to-end solutions that deliver measurable business impact while fostering a culture of technical excellence.
+    I continue to mentor, guide innovation initiatives, and ensure our AI products scale effectively across global enterprises.
     </>,
     icon: Stibo_logo
   }, {
@@ -20,11 +21,11 @@ const workExperience = [
     start: "2022 Nov",
     end: "2025 Apr",
     text: <>
-    As a Data Scientist at <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a>,
-    I developed AI-driven solutions as part of innovation projects with our customers and internal stakeholders.
-    My responsibilities included data engineering, deploying machine learning models, and implementing MLOps best practices with tools like MLflow,
-    Azure, and GitLab CI/CD. I also contributed to the Stibo Systems Accelerator, supporting university students with their theses and
-    the <a href="https://www.analytics.gatech.edu/curriculum/applied-analytics-practicum"  target="_blank" rel="noopener noreferrer">Georgia Tech advanced analytics practicum</a>.
+    At <a href="https://www.stibosystems.com/" target="_blank" rel="noopener noreferrer">Stibo Systems</a>, I shifted into a role focused on delivering AI-driven solutions for enterprise clients.
+    I partnered with stakeholders to frame business challenges and rapidly prototype high-impact use cases.
+    I led the implementation of a centralized Feature Store to accelerate model deployment and standardized ML pipelines using MLflow and GitLab CI/CD,
+    improving reproducibility and scalability. Alongside technical delivery, I mentored junior data scientists and collaborated with universities
+    through the Stibo Systems Accelerator, advancing innovation and talent development.
     </>,
     icon: Stibo_logo
   }, {
@@ -33,11 +34,9 @@ const workExperience = [
     start: "2020 Jul",
     end: "2022 Jun",
     text: <>
-    As a student developer in the AI team at <a href="https://www.terma.com/" target="_blank" rel="noopener noreferrer">Terma</a>,
-    I worked on multiple projects, including developing ETL pipelines for data ingestion, creating a React-based website for visualizing live ship
-    positions and directions using live GIS data, establishing a proof of concept for what later became
-    the <a href="https://www.terma.com/news-events/news/news-archive/2023/ai-surveillance-spacecraft-successfully-passes-design-review/" target="_blank" rel="noopener noreferrer">BIFROST project</a>,
-    and evaluating sensory data for anomaly detection.
+    I started my career in <a href="https://www.terma.com/" target="_blank" rel="noopener noreferrer">Terma</a>'s AI team, where I worked on projects that blended data engineering, visualization, and machine learning.
+    I built ETL pipelines for anomaly detection, designed GIS-integrated dashboards to visualize live ship positions, and deployed computer
+    vision models on edge devices for real-time detection. These experiences taught me how to move from concept to operational solutions and sparked my passion for AI systems.
     </>,
     icon: Terma_logo
   }
