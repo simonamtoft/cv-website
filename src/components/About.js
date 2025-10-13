@@ -15,7 +15,8 @@ const About = () => {
         <div className='about-text'>
           <p>
             I love tackling complex problems with data, machine learning and software engineering.
-            My journey started in electrical engineering, but I quickly found my passion in building smart systems that make a real difference for businesses.
+            My journey began in electrical engineering, where I discovered a growing interest in software engineering - the ability to quickly iterate, experiment, and see immediate results. 
+            That curiosity led me to machine learning, where I became fascinated by designing algorithms that learn from data and reveal insights beyond traditional approaches.
           </p>
           <p>
             As a Senior Data Scientist at Stibo Systems, I design and deliver scalable AI solutions that optimize processes and improve data quality
