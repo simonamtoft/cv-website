@@ -14,20 +14,16 @@ const About = () => {
         </div>
         <div className='about-text'>
           <p>
-            Driven by a fascination for mathematics and engineering, my journey into technology began with an electrical engineering background.
-            The programming and machine learning I encountered during my studies sparked a passion for AI and data science, which I pursued with
-            a specialized master's degree.
+            I love tackling complex problems with data, machine learning and software engineering.
+            My journey started in electrical engineering, but I quickly found my passion in building smart systems that make a real difference for businesses.
           </p>
           <p>
-            As a Senior Data Scientist at Stibo Systems, I now apply this foundation to develop practical, scalable AI solutions for
-            real-world business challenges. I leverage deep technical expertise to translate complex requirements into effective,
-            enterprise-level strategies. I also mentor team members to foster a culture of innovation and excellence.
+            As a Senior Data Scientist at Stibo Systems, I design and deliver scalable AI solutions that optimize processes and improve data quality
+            for global enterprises. I enjoy turning complex challenges into practical results, and I am always looking for ways to help my team and clients succeed.
           </p>
           <p>
-            Beyond my professional role, I am actively involved in the Danish data science community. I am passionate about sharing knowledge and
-            fostering growth, whether through organizing conferences like IDA's Driving AI and Driving IT, participating in community events,
-            or contributing to open-source projects. I also engage with academic institutions to help bridge the gap between theoretical
-            learning and industry practice.
+            Outside of work, I actively participate in the Danish data science community - organizing events, sharing ideas, and connecting with others who are curious about AI.
+            Whether it is mentoring, collaborating on open-source projects, or bridging the gap between academia and industry, I am passionate about learning and helping others grow.
           </p>
         </div>
       </div>
