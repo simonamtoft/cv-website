@@ -17,7 +17,7 @@ const publicationsEvents = [
     date: "2025 Jan",
     link: "https://pro.ing.dk/datatech/holdning/ais-klimaaftryk-hvad-ved-vi-og-hvad-gaetter-vi-os-til",
     venue: "Ingeniøren",
-    authors: ["Kasper Groes Albin Ludvigsen", "Danni Dromi", "Simon Amtoft Pedersen"],
+    authors: ["Kasper Groes Albin Ludvigsen", "Danni Dromi", "Kenneth Enevoldsen", "Simon Amtoft Pedersen"],
   },
   {
     type: "conference",
