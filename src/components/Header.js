@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import '../styles/Header.css';
+import config from '../config';
 
 const Header = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
@@ -30,6 +31,15 @@ const Header = () => {
   }, [smoothScroll]);
 
   useEffect(() => {
+    // Debounce function for performance optimization
+    const debounce = (func, wait) => {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), wait);
+      };
+    };
+
     const handleScroll = () => {
       if (navRef.current) {
         const offset = navRef.current.offsetTop;
@@ -41,25 +51,35 @@ const Header = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const debouncedHandleScroll = debounce(handleScroll, 100);
+    window.addEventListener('scroll', debouncedHandleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', debouncedHandleScroll);
     };
   }, []);
 
   return (
     <header className="header">
+      <a href="#about" className="skip-link">Skip to main content</a>
       <div className="header-content">
         <nav ref={navRef} className={isNavFixed ? 'fixed-nav' : ''}>
           <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#timeline">Resume</a></li>
-            <li><a href="#contact">Contact</a></li>
+            {config.navigation.map((item) => (
+              <li key={item.href}><a href={item.href}>{item.label}</a></li>
+            ))}
           </ul>
         </nav>
-        <h1>Simon Amtoft Pedersen</h1>
-        <p>MSc Engineering | Senior Data Scientist </p>
+        <h1>{config.personalInfo.name}</h1>
+        <p>{config.personalInfo.subtitle}</p>
+        <div className="social-links">
+          <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+            <i className="fab fa-linkedin"></i>
+          </a>
+          <a href={config.personalInfo.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+            <i className="fab fa-github"></i>
+          </a>
+        </div>
       </div>
     </header>
   );

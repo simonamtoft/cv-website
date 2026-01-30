@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../styles/Contact.css';
+import config from '../config';
 
 const Contact = () => {
+  const contactRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = contactRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
-    <div className="contact">
+    <div className="contact" ref={contactRef}>
       <h2>Reach Out!</h2>
       <p>
         AI and machine learning are evolving fast, and the best ideas come from collaboration.
@@ -12,10 +39,10 @@ const Contact = () => {
       </p>
       <div className="contact-info">
         <p>
-          📩 Email: <a href="mailto:simon@amtoft.dev">simon@amtoft.dev</a>
+          <i className="fas fa-envelope" aria-label="Email"></i> Email: <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
         </p>
         <p>
-          🔗 LinkedIn: <a href="https://linkedin.com/in/simonamtoft" target="_blank" rel="noopener noreferrer">simonamtoft</a>
+          <i className="fab fa-linkedin" aria-label="LinkedIn"></i> LinkedIn: <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">{config.personalInfo.linkedIn.handle}</a>
         </p>
       </div>
       <p>

@@ -1,0 +1,96 @@
+.skills {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: var(--light-grey);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2xl) 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.skills.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills h2 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-xl);
+  color: var(--dark-grey);
+  font-family: 'Poppins', sans-serif;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 var(--space-lg);
+}
+
+.skill-category {
+  background: var(--white);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.skill-category:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.skill-category h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-md);
+  color: var(--dark-grey);
+  font-family: 'Poppins', sans-serif;
+  font-weight: var(--font-weight-semibold);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  row-gap: var(--space-xs);
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--accent-orange);
+  color: var(--white);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  transition: background var(--transition-fast);
+  white-space: nowrap;
+}
+
+.skill-tag:hover {
+  background: var(--color-hover);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .skills-container {
+    grid-template-columns: 1fr;
+    padding: 0 var(--space-md);
+  }
+
+  .skills h2 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .skill-category h3 {
+    font-size: var(--font-size-lg);
+  }
+}

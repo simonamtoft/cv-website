@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../styles/About.css';
 import ProfilePicture from '../assets/profile.jpeg'
 
 const About = () => {
+  const aboutRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = aboutRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
-    <section className="about">
+    <section className="about" ref={aboutRef}>
       <div>
         <h2>About Me</h2>
       </div>
       <div className='about-content'>
         <div className='about-image'>
-          <img src={ProfilePicture} alt="profile" className='profile-picture'/>
+          <img src={ProfilePicture} alt="Simon Amtoft Pedersen - Senior Data Scientist" className='profile-picture' loading="lazy"/>
         </div>
         <div className='about-text'>
           <p>
