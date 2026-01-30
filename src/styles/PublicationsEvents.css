@@ -61,6 +61,11 @@
   border-left-color: var(--medium-grey);
 }
 
+.work-card-conference:focus {
+  outline: 2px solid var(--medium-grey);
+  outline-offset: 2px;
+}
+
 .work-card-header {
   display: flex;
   justify-content: space-between;
