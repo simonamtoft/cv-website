@@ -63,6 +63,8 @@ nav ul {
   margin: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 nav ul li {
@@ -102,6 +104,8 @@ nav a:hover {
   margin: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .fixed-nav ul li {
