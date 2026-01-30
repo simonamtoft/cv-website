@@ -7,23 +7,6 @@ const skills = {
     "Agentic AI",
     "Prompt Engineering"
   ],
-  "Machine Learning & Classical AI": [
-    "PyTorch",
-    "Scikit-learn",
-    "XGBoost",
-    "Gradient Boosting",
-    "Deep Learning",
-    "CNN",
-    "Anomaly Detection",
-    "SHAP"
-  ],
-  "NLP & Document Processing": [
-    "NLP",
-    "Semantic Modeling",
-    "Document Extraction",
-    "Transformers",
-    "Text Classification"
-  ],
   "MLOps, Cloud & Infrastructure": [
     "MLflow",
     "Feature Store",
@@ -44,7 +27,24 @@ const skills = {
     "REST APIs",
     "Data Modeling"
   ],
-  "Data Science Foundations": [
+  "Machine Learning & AI": [
+    "PyTorch",
+    "Scikit-learn",
+    "XGBoost",
+    "Gradient Boosting",
+    "Deep Learning",
+    "CNN",
+    "Anomaly Detection",
+    "SHAP"
+  ],
+  "NLP & Document Processing": [
+    "NLP",
+    "Semantic Modeling",
+    "Document Extraction",
+    "Transformers",
+    "Text Classification"
+  ],
+  "Statistical Foundations": [
     "Statistics",
     "Mathematics",
     "Probability Theory",
