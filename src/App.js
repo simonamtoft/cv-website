@@ -3,6 +3,7 @@ import Header from './components/Header';
 import About from './components/About';
 import Skills from './components/Skills';
 import Timeline from './components/Timeline';
+import PublicationsEvents from './components/PublicationsEvents';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import './styles/App.css';
@@ -20,6 +21,9 @@ function App() {
         </section>
         <section id="timeline">
           <Timeline />
+        </section>
+        <section id="publications-events">
+          <PublicationsEvents />
         </section>
         <section id="contact">
           <Contact />

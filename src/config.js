@@ -24,6 +24,7 @@ export const config = {
   navigation: [
     { label: "About", href: "#about" },
     { label: "Resume", href: "#timeline" },
+    { label: "Publications & Events", href: "#publications-events" },
     { label: "Contact", href: "#contact" }
   ]
 };
