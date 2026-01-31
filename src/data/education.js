@@ -4,7 +4,7 @@ import UMD_logo from '../assets/UMD_logo.png';
 
 const education = [
   {
-    degree: "MSc in Electrical Engineering",
+    degree: "MSc in Mathematical Modelling and Computation",
     institution: "Technical University of Denmark (DTU)",
     text: <>
     MSc at the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>,
@@ -70,16 +70,20 @@ const education = [
     courses: [
       {
         number: "CMSC 422",
-        name: "Introduction to Machine Learning"
+        name: "Introduction to Machine Learning",
+        description: "Machine Learning studies representations and algorithms that allow machines to improve their performance on a task from experience. Broad overview of existing methods for machine learning and introduction to adaptive systems with emphasis on practical aspects of machine learning and data mining."
       }, {
         number: "ENEE 324",
-        name: "Engineering Probability"
+        name: "Engineering Probability",
+        description: "Axioms of probability, conditional probability and Bayes' rules, random variables, probability distribution and densities, functions of random variables, weak law of large numbers and central limit theorem. Introduction to random processes, correlation functions, spectral densities, and linear systems."
       }, {
         number: "ENEE 222",
-        name: "Discrete Signal Analysis"
+        name: "Discrete Signal Analysis",
+        description: "Discrete- and continuous-time signals, sampling of sinusoids, Discrete Fourier transform properties and applications, periodic signals and Fourier series, discrete-time linear filters in time and frequency domains."
       }, {
         number: "ENCE 320",
-        name: "Introduction to Project Management"
+        name: "Introduction to Project Management",
+        description: "Principles and techniques of managing engineering projects from initiation through planning, execution, monitoring & control, and closeout. Topics include estimating, budgeting, scheduling, resource allocation, quality management, leadership, and professional responsibility."
       }
     ]
   }, {
