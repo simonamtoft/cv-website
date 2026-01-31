@@ -27,7 +27,7 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/driving-ai",
     venue: "IDA",
-    description: "I'm currently organizing this AI-focused conference, recruiting speakers and curating technical content on the latest models, practical case studies, and real-world deployment challenges",
+    description: "I'm currently organizing this practitioner-focused AI conference, having recruited 50% of the speaker lineup and curating technical content on the latest models, practical case studies, and real-world deployment challenges",
   },
   {
     type: "conference",
@@ -35,7 +35,7 @@ const publicationsEvents = [
     date: "2025 Nov",
     link: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
     venue: "IDA",
-    description: "Denmark's premier IT conference spanning software development, AI, security, UX, and sustainability. As session chair for the AI track, I brought in roughly 18% of the conference speakers",
+    description: "Denmark's premier IT conference spanning software development, AI, security, UX, and sustainability. As session chair for the AI track, I brought in roughly 18% of speakers for this 600+ attendee conference",
   },
   {
     type: "conference",
@@ -43,7 +43,7 @@ const publicationsEvents = [
     date: "2025 May",
     link: "https://videos.ida.dk/playlist/dedicated/1_i5sq6z3e/1_g71c2wiu",
     venue: "IDA",
-    description: "I played a key role in shaping this practitioner-focused AI conference, sourcing nearly half of the speaker lineup and chairing one of the technical tracks",
+    description: "I played a key role in shaping this inaugural practitioner-focused AI conference, sourcing nearly half of the speaker lineup and chairing one of the technical tracks",
   }
 ];
 

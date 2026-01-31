@@ -4,6 +4,7 @@ import workExperience from '../data/workExperience';
 import education from '../data/education';
 import volunteering from '../data/volunteering';
 import { formatDisplayRange, getComparableTime } from '../utils/dateFormatter';
+import TimelineDetailModal from './TimelineDetailModal';
 
 const Timeline = () => {
 
@@ -21,6 +22,16 @@ const Timeline = () => {
 
   const itemRefs = useRef([]);
   const [visibleItems, setVisibleItems] = useState(new Set());
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleItemClick = (item) => {
+    if ((item.projects && item.projects.length > 0) ||
+        (item.courses && item.courses.length > 0)) {
+      setSelectedItem(item);
+      setModalOpen(true);
+    }
+  };
 
   useEffect(() => {
     const currentItemRefs = itemRefs.current;
@@ -63,28 +74,44 @@ const Timeline = () => {
   }, [timelineItems]); // Re-run effect if timelineItems change
 
   return (
-    <div className="timeline">
-      {timelineItems.map((item, index) => (
-        <div
-          key={`${item.start ?? item.startYear}-${item.companyName || item.text?.toString().substring(0, 20)}`}
-          className={`timeline-item ${index % 2 === 0 ? 'right' : 'left'} ${visibleItems.has(index) ? 'is-visible' : ''}`}
-          ref={el => itemRefs.current[index] = el}
-        >
-          <div className="timeline-dot"></div>
-          <div className="timeline-date-text-container">
-          <div className="timeline-number">
-            {formatDisplayRange(item.start ?? item.startYear, item.end ?? item.endYear)}
-          </div>
-            <div className="timeline-content">
-              <p>{item.text}</p>
+    <>
+      <div className="timeline">
+        {timelineItems.map((item, index) => {
+          const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
+          return (
+            <div
+              key={`${item.start ?? item.startYear}-${item.companyName || item.text?.toString().substring(0, 20)}`}
+              className={`timeline-item ${index % 2 === 0 ? 'right' : 'left'} ${visibleItems.has(index) ? 'is-visible' : ''} ${hasDetails ? 'has-details' : ''}`}
+              ref={el => itemRefs.current[index] = el}
+              onClick={hasDetails ? () => handleItemClick(item) : undefined}
+              style={{ cursor: hasDetails ? 'pointer' : 'default' }}
+            >
+              <div className="timeline-dot"></div>
+              <div className="timeline-date-text-container">
+                <div className="timeline-number">
+                  {formatDisplayRange(item.start ?? item.startYear, item.end ?? item.endYear)}
+                </div>
+                <div className="timeline-content">
+                  <p>{item.text}</p>
+                  {hasDetails && <span className="view-details-hint">Click to view details</span>}
+                </div>
+              </div>
+              <div className="timeline-icon-container">
+                <img src={item.icon} alt="Icon" className="timeline-icon" loading="lazy" />
+              </div>
             </div>
-          </div>
-          <div className="timeline-icon-container">
-            <img src={item.icon} alt="Icon" className="timeline-icon" loading="lazy" />
-          </div>
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+
+      {modalOpen && (
+        <TimelineDetailModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          item={selectedItem}
+        />
+      )}
+    </>
   );
 };
 

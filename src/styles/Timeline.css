@@ -98,6 +98,34 @@
   text-align: justify; /* Make text content justify */
 }
 
+/* Clickable timeline items */
+.timeline-item.has-details {
+  transition: opacity var(--transition-slow) ease-out, transform var(--transition-slow) ease-out, box-shadow 0.2s ease;
+}
+
+.timeline-item.has-details:hover .timeline-date-text-container {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
+
+.timeline-item.has-details:hover {
+  filter: brightness(1.05);
+}
+
+.view-details-hint {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--primary-color, #007bff);
+  font-style: italic;
+  margin-top: var(--space-xs);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.timeline-item.has-details:hover .view-details-hint {
+  opacity: 1;
+}
+
 .timeline-text p {
   margin: 0;
   font-size: var(--font-size-xl);
