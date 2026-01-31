@@ -107,9 +107,119 @@ const education = [
         description: "Basic notions and techniques in AI, focusing on symbolic AI, search algorithms, knowledge representation in logic, and inference techniques"
       },
       {
-        number: "01005/01006",
-        name: "Engineering Mathematics 1 & 2",
-        description: "Advanced calculus, linear algebra, and differential equations. Served as teaching assistant for one year"
+        number: "02105",
+        name: "Algorithms and Data Structures 1",
+        description: "Introduction to fundamental algorithms and data structures with focus on construction and analysis of efficient algorithms."
+      },
+      {
+        number: "02161",
+        name: "Software Engineering 1",
+        description: "Introduction to software development covering requirements, UML design, testing, and small project implementation."
+      },
+      {
+        number: "B01",
+        name: "Bachelor Project",
+        description: "Bachelor thesis project developing a Patmos instruction set simulator."
+      },
+      {
+        number: "42611",
+        name: "Philosophy of Science in Engineering",
+        description: "Course covering philosophical and scientific foundations of engineering practice."
+      },
+      {
+        number: "02601",
+        name: "Introduction to Numerical Algorithms",
+        description: "Introduction to numerical algorithms covering linear equations, interpolation, integration, and differential equations in Python."
+      },
+      {
+        number: "10024",
+        name: "Physics 1",
+        description: "Foundational mechanics course covering kinematics, forces, Newton's laws, work, energy, and momentum."
+      },
+      {
+        number: "31015",
+        name: "Project - Electrical Engineering",
+        description: "Project-based course involving hands-on electrical engineering work and technical implementation."
+      },
+      {
+        number: "31300",
+        name: "Applied Control Engineering",
+        description: "Fundamental control engineering covering PID control, system modeling, stability analysis, and MATLAB/Simulink."
+      },
+      {
+        number: "31605",
+        name: "Continuous-Time Signals and Linear Systems",
+        description: "Analysis of linear systems and AC circuits in time, Fourier, and Laplace domains with focus on filters and measurement systems."
+      },
+      {
+        number: "01035",
+        name: "Advanced Engineering Mathematics 2",
+        description: "Advanced mathematics covering infinite series, Fourier series, and systems of differential equations."
+      },
+      {
+        number: "02155",
+        name: "Computer Architecture and Engineering",
+        description: "In-depth study of processor organization, pipelines, cache memory, and runtime optimization."
+      },
+      {
+        number: "02633",
+        name: "Introduction to Programming and Data Processing",
+        description: "Introductory programming course using Python covering fundamentals and data processing with NumPy."
+      },
+      {
+        number: "31400",
+        name: "Electromagnetism",
+        description: "Fundamental electromagnetics covering electro- and magnetostatics, Maxwell's equations, and plane waves."
+      },
+      {
+        number: "01005",
+        name: "Advanced Engineering Mathematics 1",
+        description: "Two-semester foundation course covering linear algebra, differential equations, multivariable calculus, and vector analysis. Served as teaching assistant for one year."
+      },
+      {
+        number: "02102",
+        name: "Introductory Programming",
+        description: "Basic imperative and object-oriented programming concepts with focus on design and implementation."
+      },
+      {
+        number: "02139",
+        name: "Digital Electronics 2",
+        description: "Design and implementation of digital circuits using hardware description languages (Chisel) and FPGA technology."
+      },
+      {
+        number: "26027",
+        name: "Basic Chemistry",
+        description: "Foundational general chemistry course covering fundamental chemical concepts and principles."
+      },
+      {
+        number: "30010",
+        name: "Programming Project",
+        description: "Practical microcontroller programming in C with focus on building and testing programs for embedded systems."
+      },
+      {
+        number: "31003",
+        name: "Electric Circuits 2",
+        description: "Alternating current circuits, analog signals, passive components, filters, amplifiers, and transfer functions."
+      },
+      {
+        number: "02138",
+        name: "Digital Electronics 1",
+        description: "Introduction to digital electronics covering combinatorial logic, finite state machines, and VHDL."
+      },
+      {
+        number: "31001",
+        name: "Electric Circuits 1",
+        description: "Fundamentals of circuit analysis including Kirchhoff's laws, Thévenin's theorem, transients, and operational amplifiers."
+      },
+      {
+        number: "31011",
+        name: "Engineering Work - Electrical Engineering",
+        description: "Practical engineering work and project-based learning in electrical engineering."
+      },
+      {
+        number: "31012",
+        name: "Engineering Work 2 - Electrical Engineering",
+        description: "Continuation of practical engineering work with advanced electrical engineering projects."
       }
     ]
   }
