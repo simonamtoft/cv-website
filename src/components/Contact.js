@@ -35,7 +35,7 @@ const Contact = () => {
       <p>
         AI and machine learning are evolving fast, and the best ideas come from collaboration.
         Whether you're exploring AI-driven solutions, wanting to participate in next year's Driving AI event, or just want to chat
-        about the future of data science, I'd love to hear from you!
+        about the future of AI, I'd love to hear from you!
       </p>
       <div className="contact-info">
         <p>
