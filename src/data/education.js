@@ -18,19 +18,39 @@ const education = [
     icon: DTU_logo,
     courses: [
       {
+        number: "E01",
+        name: "Inference and Generative Architectures for Shallow and Deep Generative Models",
+        description: "Master's thesis on inference methods and generative architectures for both shallow and deep probabilistic generative models, supervised by Ole Winther"
+      },
+      {
         number: "02460",
         name: "Advanced Machine Learning",
         description: "Advanced course covering current research topics in generative modeling, deep generative models, geometric representations, and graph neural networks with focus on theoretical foundations"
       },
       {
-        number: "02458",
-        name: "Cognitive Modelling",
-        description: "Probabilistic models of cognitive processes with proficiency in analyzing behavioral psychophysical experiments using signal detection theory and Bayesian modeling frameworks"
+        number: "02514",
+        name: "Deep Learning in Computer Vision",
+        description: "Advanced deep learning methods and models for computer vision applications including image recognition, sequential data, generative models, and video understanding"
       },
       {
-        number: "S01",
-        name: "Convergence in Deep Generative Models",
-        description: "Independent study course on convergence properties and theoretical foundations of deep generative models (honorary student work with Ole Winther)"
+        number: "02506",
+        name: "Advanced Image Analysis",
+        description: "Advanced topics in image analysis including machine learning and neural networks for images, scale space methods, feature-based methods, deformable template models, and Markov Random Fields"
+      },
+      {
+        number: "02901",
+        name: "Advanced Topics in Machine Learning",
+        description: "Five-day intensive course covering cutting-edge topics in machine learning including self-supervised learning, fairness, graph methods, and physics-informed machine learning"
+      },
+      {
+        number: "42101",
+        name: "Introduction to Operations Research",
+        description: "Mathematical optimization methods for decision-making, with emphasis on linear programming, the Simplex method, integer programming, transportation and assignment problems, and sensitivity analysis"
+      },
+      {
+        number: "02180",
+        name: "Introduction to Artificial Intelligence",
+        description: "Basic notions and techniques in AI, focusing on symbolic AI, search algorithms, knowledge representation in logic, and inference techniques"
       },
       {
         number: "S01",
@@ -38,9 +58,24 @@ const education = [
         description: "Independent study course on recurrent architectures and attention mechanisms in latent variable models for sequential data (honorary student work with Ole Winther)"
       },
       {
-        number: "02514",
-        name: "Deep Learning in Computer Vision",
-        description: "Advanced deep learning methods and models for computer vision applications including image recognition, sequential data, generative models, and video understanding"
+        number: "02458",
+        name: "Cognitive Modelling",
+        description: "Probabilistic models of cognitive processes with proficiency in analyzing behavioral psychophysical experiments using signal detection theory and Bayesian modeling frameworks"
+      },
+      {
+        number: "02805",
+        name: "Social Graphs and Interactions",
+        description: "Accessing and analyzing user-generated data and text, analyzing and modeling social relations using network theory and graph analysis techniques"
+      },
+      {
+        number: "02807",
+        name: "Computational Tools for Data Science",
+        description: "Intensive introduction to state-of-the-art computational tools and techniques for massive datasets, including Python, streaming, parallel computation, databases, and cloud computing"
+      },
+      {
+        number: "S01",
+        name: "Convergence in Deep Generative Models",
+        description: "Independent study course on convergence properties and theoretical foundations of deep generative models (honorary student work with Ole Winther)"
       },
       {
         number: "01617",
@@ -56,6 +91,16 @@ const education = [
         number: "02502",
         name: "Image Analysis",
         description: "Fundamental tools and techniques in image analysis with examples from industrial and medical domains, taught using Python for practical implementation"
+      },
+      {
+        number: "02614",
+        name: "High-Performance Computing",
+        description: "Working with large-scale problems in mathematical modeling and their implementation on high-performance computers, covering compiler optimization, tuning, and OpenMP parallel programming"
+      },
+      {
+        number: "42490",
+        name: "Technology, Economics, Management & Organization",
+        description: "Intersection of technology, economics, management and organizational models, developing solutions for implementing technological innovation strategies in companies and public authorities"
       }
     ]
   }, {
@@ -104,11 +149,6 @@ const education = [
         number: "B01",
         name: "Bachelor Project",
         description: "Bachelor thesis project developing a Patmos instruction set simulator."
-      },
-      {
-        number: "02180",
-        name: "Introduction to Artificial Intelligence",
-        description: "Basic notions and techniques in AI, focusing on symbolic AI, search algorithms, knowledge representation in logic, and inference techniques"
       },
       {
         number: "02105",
