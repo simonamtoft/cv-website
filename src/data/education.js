@@ -101,9 +101,9 @@ const education = [
     icon: DTU_logo,
     courses: [
       {
-        number: "02450",
-        name: "Introduction to Machine Learning and Data Mining",
-        description: "Foundational course covering supervised and unsupervised learning, data preprocessing, and model evaluation"
+        number: "B01",
+        name: "Bachelor Project",
+        description: "Bachelor thesis project developing a Patmos instruction set simulator."
       },
       {
         number: "02180",
@@ -119,11 +119,6 @@ const education = [
         number: "02161",
         name: "Software Engineering 1",
         description: "Introduction to software development covering requirements, UML design, testing, and small project implementation."
-      },
-      {
-        number: "B01",
-        name: "Bachelor Project",
-        description: "Bachelor thesis project developing a Patmos instruction set simulator."
       },
       {
         number: "42611",
