@@ -1,5 +1,5 @@
 /**
- * Central configuration file for personal information and site metadata
+ * Central configuration file for personal information
  */
 
 export const config = {
@@ -13,13 +13,6 @@ export const config = {
       handle: "simonamtoft"
     },
     github: "https://github.com/SimonAmtoft"
-  },
-  siteMetadata: {
-    title: "Simon Amtoft Pedersen - Senior Data Scientist & ML Engineer",
-    description: "Senior Data Scientist at Stibo Systems specializing in machine learning, AI solutions, and data engineering. Building scalable ML systems for global enterprises.",
-    keywords: ["Data Science", "Machine Learning", "AI", "Python", "MLOps", "Deep Learning", "Simon Amtoft Pedersen"],
-    url: "https://amtoft.dev",
-    image: "https://amtoft.dev/profile.jpeg"
   },
   navigation: [
     { label: "About", href: "#about" },

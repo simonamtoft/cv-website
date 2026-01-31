@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import '../styles/About.css';
-import ProfilePicture from '../assets/profile.jpeg'
+import ProfilePicture from '../assets/profile.jpeg';
+import config from '../config';
 
 const About = () => {
   const aboutRef = useRef(null);
@@ -36,7 +37,7 @@ const About = () => {
       </div>
       <div className='about-content'>
         <div className='about-image'>
-          <img src={ProfilePicture} alt="Simon Amtoft Pedersen - Senior Data Scientist" className='profile-picture' loading="lazy"/>
+          <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' loading="lazy"/>
         </div>
         <div className='about-text'>
           <p>
