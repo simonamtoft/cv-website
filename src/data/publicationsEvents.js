@@ -14,6 +14,15 @@ const publicationsEvents = [
   // }
   {
     type: "article",
+    title: "Open source is a strategic necessity in AI: This is how we join the race",
+    originalTitle: "Open source er en strategisk nødvendighed i AI: Sådan kommer vi med i kapløbet",
+    date: "2026 Feb",
+    link: "https://pro.ing.dk/datatech/holdning/open-source-er-en-strategisk-noedvendighed-i-ai-saadan-kommer-vi-med-i-kaploebet",
+    venue: "Ingeniøren",
+    authors: ["Danni Dromi", "Kenneth Enevoldsen", "Kasper Groes Albin Ludvigsen", "Rasmus Aagaard", config.personalInfo.name, "Lishuai Jing"],
+  },
+  {
+    type: "article",
     title: "AI's carbon footprint: What do we know, and what are we guessing",
     originalTitle: "AI's klimaaftryk: Hvad ved vi, og hvad gætter vi os til",
     date: "2025 Jan",
