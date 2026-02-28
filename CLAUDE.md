@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website built with React, deployed to GitHub Pages at https://amtoft.dev. The site showcases professional experience, education, volunteering activities, skills, and publications/events in an interactive format with a chronological timeline.
+This is a personal portfolio website built with React, deployed to GitHub Pages at https://amtoft.dev. The site showcases professional experience, education, volunteering activities, and publications/events in an interactive format with a chronological timeline.
 
 ## Development Commands
 
@@ -30,17 +30,16 @@ The `npm run deploy` command automatically builds the site and pushes to the gh-
 
 The app follows a simple single-page layout architecture:
 
-- **App.js**: Main container that orchestrates all sections (Header, About, Skills, Timeline, PublicationsEvents, Contact, Footer)
+- **App.js**: Main container that orchestrates all sections (Header, About, Timeline, PublicationsEvents, Contact, Footer)
 - **ErrorBoundary.js**: Wraps components to catch and handle React errors gracefully
 - **Timeline.js**: Core component that merges and displays chronological data from three sources (work experience, education, volunteering). Renders clickable timeline items that can open modals when they contain detailed information.
 - **TimelineDetailModal.js**: Modal component that displays detailed information for timeline items, including key projects (for work experience) and coursework tables (for education). Supports keyboard navigation (Escape to close) and click-outside-to-close functionality.
-- **Skills.js**: Displays technical skills and competencies
 - **PublicationsEvents.js**: Showcases publications and speaking events
 - **Header.js**: Navigation header with links to different sections
 - **About.js**: About section with personal information
 - **Contact.js**: Contact section with email and social links
 - **Footer.js**: Site footer
-- **Data files** (`src/data/`): Content is separated from presentation logic in dedicated data files (workExperience.js, education.js, volunteering.js, skills.js, publicationsEvents.js)
+- **Data files** (`src/data/`): Content is separated from presentation logic in dedicated data files (workExperience.js, education.js, volunteering.js, publicationsEvents.js)
 - **config.js**: Central configuration file containing personal information (name, title, email, LinkedIn, GitHub) and navigation items
 
 ### Timeline System
@@ -148,9 +147,6 @@ To update site content:
    - For work experience: add a `projects` array with project details
    - For education: add a `courses` array with course information
    - Timeline items with these arrays will automatically become clickable and open a modal
-
-**Skills** (skills.js):
-- Edit `src/data/skills.js` to add or modify skill categories and items
 
 **Publications & Events** (publicationsEvents.js):
 - Edit `src/data/publicationsEvents.js` to add publications or speaking events

@@ -1,7 +1,5 @@
-import React from 'react';
 import Header from './components/Header';
 import About from './components/About';
-import Skills from './components/Skills';
 import Timeline from './components/Timeline';
 import PublicationsEvents from './components/PublicationsEvents';
 import Contact from './components/Contact';
@@ -15,9 +13,6 @@ function App() {
       <main className="main-content" id="main-content">
         <section id="about">
           <About />
-        </section>
-        <section id="skills">
-          <Skills />
         </section>
         <section id="timeline">
           <Timeline />
