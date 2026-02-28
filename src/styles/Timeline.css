@@ -48,6 +48,9 @@
 .timeline-icon {
   height: 100px;
   width: auto;
+  max-width: 250px;
+  object-fit: contain;
+  object-position: top center;
 }
 
 .timeline-item {
@@ -92,6 +95,7 @@
     z-index: 1;
     align-self: start; /* Align icon container to the top of its grid row */
     min-width: 0; /* Allow container to shrink in grid */
+    height: 100px;
 }
 
 .timeline-content {
@@ -264,12 +268,15 @@
     display: flex; /* Use flexbox to center the image */
     align-items: flex-start; /* Align items to the top */
     justify-content: center; /* Center content horizontally */
-    width: 40px; /* Set container width */
+    height: 40px;
   }
 
   .timeline-icon {
-    width: 40px; /* Fixed width for icon */
-    height: auto; /* Maintain aspect ratio */
+    height: 40px;
+    width: auto;
+    max-width: 80px;
+    object-fit: contain;
+    object-position: top center;
   }
 
   /* Remove specific left/right styles in mobile view */
