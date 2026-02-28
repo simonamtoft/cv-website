@@ -1,9 +1,18 @@
-import React from 'react';
 import Stibo_logo from '../assets/Stibo_logo.png';
 import Terma_logo from '../assets/Terma_logo.svg';
-
+import TTC_logo from '../assets/TTC_logo.svg'
 
 const workExperience = [
+  {
+    jobTitle: "Senior AI Consultant",
+    companyName: "The Tech Collective",
+    start: "2026 Mar",
+    end: "Now",
+    text: <>
+    </>,
+    icon: TTC_logo,
+    projects: []
+  },
   {
     jobTitle: "Senior Data Scientist",
     companyName: "Stibo Systems",
