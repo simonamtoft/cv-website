@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import '../styles/About.css';
 import ProfilePicture from '../assets/profile.jpeg';
 import config from '../config';
+import aboutText from '../data/aboutText.js'
 
 const About = () => {
   const aboutRef = useRef(null);
@@ -40,19 +41,7 @@ const About = () => {
           <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' loading="lazy"/>
         </div>
         <div className='about-text'>
-          <p>
-            I love tackling complex problems with data, machine learning and software engineering.
-            My journey began in electrical engineering, where I discovered a growing interest in software engineering - the ability to quickly iterate, experiment, and see immediate results. 
-            That curiosity led me to machine learning, where I became fascinated by designing algorithms that learn from data and reveal insights beyond traditional approaches.
-          </p>
-          <p>
-            As a Senior Data Scientist at Stibo Systems, I design and deliver scalable AI solutions that optimize processes and improve data quality
-            for global enterprises. I enjoy turning complex challenges into practical results, and I am always looking for ways to help my team and clients succeed.
-          </p>
-          <p>
-            Outside of work, I actively participate in the Danish data science community - organizing events, sharing ideas, and connecting with others who are curious about AI.
-            Whether it is mentoring, collaborating on open-source projects, or bridging the gap between academia and industry, I am passionate about learning and helping others grow.
-          </p>
+          {aboutText}
         </div>
       </div>
     </section>
