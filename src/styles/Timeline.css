@@ -53,6 +53,41 @@
   object-position: top center;
 }
 
+/* Icon wrapper to stack icon + badge */
+.timeline-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Category badge */
+.timeline-category-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.category-work {
+  background: var(--accent-orange);
+  color: var(--white);
+}
+
+.category-education {
+  background: var(--medium-grey);
+  color: var(--white);
+}
+
+.category-community {
+  background: var(--dark-grey);
+  color: var(--white);
+}
+
 .timeline-item {
   position: relative; /* Needed for absolute positioning of dot */
   /* Items span all three columns in the grid */
@@ -88,6 +123,26 @@
   margin-bottom: var(--space-xs); /* Space between date and text */
 }
 
+/* Inline title + org name block */
+.timeline-title-block {
+  margin-bottom: var(--space-xs);
+}
+
+.timeline-job-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  font-family: 'Poppins', sans-serif;
+  color: var(--dark-grey);
+  line-height: var(--line-height-tight);
+}
+
+.timeline-org-name {
+  font-size: var(--font-size-base);
+  color: var(--medium-grey);
+  font-weight: var(--font-weight-normal);
+  margin-top: 2px;
+}
+
 .timeline-item .timeline-icon-container {
     grid-row: 1;
     display: flex;
@@ -95,7 +150,8 @@
     z-index: 1;
     align-self: start; /* Align icon container to the top of its grid row */
     min-width: 0; /* Allow container to shrink in grid */
-    height: 100px;
+    height: auto;
+    min-height: 100px;
 }
 
 .timeline-content {
@@ -119,7 +175,7 @@
 .view-details-hint {
   display: block;
   font-size: var(--font-size-sm);
-  color: var(--primary-color, #007bff);
+  color: var(--accent-orange);
   font-style: italic;
   margin-top: var(--space-xs);
   opacity: 0.7;
@@ -218,7 +274,7 @@
     align-items: flex-start; /* Align items to the top */
     margin-top: var(--space-lg);
     margin-bottom: var(--space-lg);
-    padding-right: 90px; /* Remove padding on the item */
+    padding-right: 95px; /* Space for icon + badge area */
     position: relative; /* Needed for absolute positioning of dot and icon */
   }
 
@@ -268,7 +324,18 @@
     display: flex; /* Use flexbox to center the image */
     align-items: flex-start; /* Align items to the top */
     justify-content: center; /* Center content horizontally */
-    height: 40px;
+    height: auto;
+    width: 80px;
+  }
+
+  .timeline-icon-wrapper {
+    align-items: center;
+    gap: 4px;
+  }
+
+  .timeline-category-badge {
+    font-size: 10px;
+    padding: 1px 6px;
   }
 
   .timeline-icon {
@@ -291,6 +358,18 @@
     margin: 0;
     text-align: right; /* Align text to the right */
     justify-self: end; /* Align to the end */
+  }
+
+  .timeline-title-block {
+    text-align: right;
+  }
+
+  .timeline-job-title {
+    font-size: var(--font-size-base);
+  }
+
+  .timeline-org-name {
+    font-size: var(--font-size-sm);
   }
 
   .timeline-item:last-child::after {

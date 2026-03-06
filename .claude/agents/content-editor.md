@@ -73,6 +73,11 @@ The tone should be confident and direct, without being stiff or
 self-promotional. Write as someone who knows their craft and communicates
 clearly, not someone trying to impress.
 
+### 6. Punctuation conventions
+- **No em dashes (`—`).** Use a regular hyphen-minus (`-`) instead. This
+  applies everywhere: inline asides, parenthetical phrases, list separators.
+- Avoid smart/curly quotes in JSX — use straight quotes only.
+
 ### 4. Confidentiality-aware
 Most project work is confidential. Content should convey depth of experience
 without exposing client-specific details. Describe the *type* of problem solved,
@@ -207,16 +212,17 @@ patterns.
 
 ## Common Critical Mistakes
 
-1. **Date format**: `"now"` (lowercase) won't work — Use `"Now"` (capital N)
-2. **Text format**: Plain string won't render — Use JSX fragment `<>...</>`
-3. **Link attributes**: Missing target/rel attributes — Security/UX issue
-4. **Icon references**: String path won't work — Must import then reference
+1. **Date format**: `"now"` (lowercase) won't work - use `"Now"` (capital N)
+2. **Text format**: Plain string won't render - use JSX fragment `<>...</>`
+3. **Link attributes**: Missing target/rel attributes - security/UX issue
+4. **Icon references**: String path won't work - must import then reference
    variable
-5. **Generic content**: Vague descriptions — Name specific technologies and
+5. **Generic content**: Vague descriptions - name specific technologies and
    outcomes
-6. **Passive voice**: "Was responsible for" — Use active "I implemented"
-7. **Confidentiality breach**: Naming clients or proprietary systems — Describe
+6. **Passive voice**: "Was responsible for" - use active "I implemented"
+7. **Confidentiality breach**: Naming clients or proprietary systems - describe
    the problem type and approach instead
+8. **Em dashes**: Do not use `—` anywhere in copy - use a regular `-` instead
 
 ---
 

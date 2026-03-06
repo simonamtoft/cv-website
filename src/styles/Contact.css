@@ -33,6 +33,15 @@
   color: var(--medium-grey);
 }
 
+.contact-lead {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--dark-grey);
+  max-width: 640px;
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-sm);
+}
+
 .contact-info {
   margin: var(--space-lg) 0;
 }

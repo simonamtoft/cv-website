@@ -93,6 +93,7 @@ Check all content against VISION.md principles:
 - Client or project details that should remain confidential
 - Content that reads as an employee CV rather than an independent expert's hub
 - Self-promotional tone that undermines credibility
+- **Em dashes (`—`)** anywhere in copy - the site convention is regular hyphens (`-`)
 
 ## Review Process
 

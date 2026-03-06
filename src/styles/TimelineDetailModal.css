@@ -81,7 +81,7 @@
 }
 
 .modal-close:focus {
-  outline: 2px solid var(--primary-color, #007bff);
+  outline: 2px solid var(--accent-orange);
   outline-offset: 2px;
 }
 
@@ -131,13 +131,13 @@
   font-size: 20px;
   margin: 0 0 16px 0;
   color: var(--heading-color, #1a1a1a);
-  border-bottom: 2px solid var(--primary-color, #007bff);
+  border-bottom: 2px solid var(--accent-orange);
   padding-bottom: 8px;
 }
 
 .project-card {
   background: var(--card-background, #f8f9fa);
-  border-left: 4px solid var(--primary-color, #007bff);
+  border-left: 4px solid var(--accent-orange);
   padding: 16px;
   margin-bottom: 16px;
   border-radius: 4px;
@@ -184,8 +184,8 @@
 
 .tech-tag {
   display: inline-block;
-  background: var(--tag-background, #e3f2fd);
-  color: var(--tag-color, #1976d2);
+  background: rgba(234, 133, 11, 0.12);
+  color: var(--accent-orange);
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 13px;
@@ -201,7 +201,7 @@
   font-size: 20px;
   margin: 0 0 16px 0;
   color: var(--heading-color, #1a1a1a);
-  border-bottom: 2px solid var(--primary-color, #007bff);
+  border-bottom: 2px solid var(--accent-orange);
   padding-bottom: 8px;
 }
 

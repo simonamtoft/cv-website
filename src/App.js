@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import About from './components/About';
+import Services from './components/Services';
 import Timeline from './components/Timeline';
 import PublicationsEvents from './components/PublicationsEvents';
 import Contact from './components/Contact';
@@ -13,6 +14,9 @@ function App() {
       <main className="main-content" id="main-content">
         <section id="about">
           <About />
+        </section>
+        <section id="services">
+          <Services />
         </section>
         <section id="timeline">
           <Timeline />

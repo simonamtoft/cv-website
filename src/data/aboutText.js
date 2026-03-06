@@ -1,13 +1,13 @@
 const aboutText = <>
-My path into AI started in electrical engineering - but it was software that hooked me. The ability to iterate fast, test ideas, and see immediate results felt like a superpower. That led me to machine learning, where I became fascinated by building systems that learn from data and surface insights traditional approaches simply can't.
+I work at the intersection of machine learning and real-world business problems - helping organisations move from "we have data" to "AI that actually works in production."
 <p></p>
-I hold an MSc in mathematical modelling and computing from DTU, with a focus on machine learning. Today I work as a Senior AI Engineer at The Tech Collective - Implement Consulting Group's Data & AI practice - building AI solutions that go from prototype to production.
+As a Senior Consultant in the Data & AI practice at <a href="https://thetechcollective.eu/what-we-do/data-ai-and-analytics" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group - I work on the full arc: framing the right problem, designing the solution, and getting it into the hands of users. My background is technical (MSc in Mathematical Modelling and Computation from DTU, with a focus on machine learning), but what I find most valuable is the client-facing work - translating complex, messy business problems into AI that people actually adopt.
 <p></p>
-What drives me is the client-facing side - translating complex, messy business problems into AI that people actually adopt and use.
+Before consulting, I spent over three years at Stibo Systems building production ML systems for enterprise clients: classification models, transformer-based semantic matching, agentic pipelines, RAG systems, and the MLOps infrastructure to run them at scale.
 <p></p>
-Outside of client work, I publish articles with the Danish Data Science Community, serve on the IDA AI steering committee, and help organise the yearly Driving AI and Driving IT conferences.
+Outside of client work, I'm active in the Danish data and AI community. I co-author articles with the Danish Data Science Community, sit on the IDA AI Steering Committee, and help organise the annual Driving AI and Driving IT conferences - having sourced or chaired sessions at all three editions so far.
 <p></p>
-I'm always open to conversations about where AI can make a real difference.
+If you're working on a data or AI challenge and want a straight conversation about what's realistic and what's not, feel free to reach out.
 </>
 
 export default aboutText

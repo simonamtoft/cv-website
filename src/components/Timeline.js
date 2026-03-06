@@ -8,11 +8,15 @@ import TimelineDetailModal from './TimelineDetailModal';
 
 const Timeline = () => {
 
-  // sort earliest to latest, prefer month-aware start/end if provided
+  // Merge data sources and tag each item with its category
   // Memoized to prevent unnecessary re-sorts on every render
   const timelineItems = useMemo(
     () =>
-      [...workExperience, ...education, ...volunteering].sort((a, b) => {
+      [
+        ...workExperience.map(item => ({ ...item, category: 'work' })),
+        ...education.map(item => ({ ...item, category: 'education' })),
+        ...volunteering.map(item => ({ ...item, category: 'community' })),
+      ].sort((a, b) => {
         const aStart = a.start ?? a.startYear;
         const bStart = b.start ?? b.startYear;
         return getComparableTime(aStart) - getComparableTime(bStart);
@@ -73,14 +77,22 @@ const Timeline = () => {
     };
   }, [timelineItems]); // Re-run effect if timelineItems change
 
+  const categoryLabel = {
+    work: 'Work',
+    education: 'Education',
+    community: 'Community',
+  };
+
   return (
     <>
       <div className="timeline">
         {timelineItems.map((item, index) => {
           const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
+          const title = item.jobTitle || item.degree;
+          const org = item.companyName || item.institution;
           return (
             <div
-              key={`${item.start ?? item.startYear}-${item.companyName || item.text?.toString().substring(0, 20)}`}
+              key={`${item.start ?? item.startYear}-${item.companyName || item.institution || item.text?.toString().substring(0, 20)}`}
               className={`timeline-item ${index % 2 === 0 ? 'right' : 'left'} ${visibleItems.has(index) ? 'is-visible' : ''} ${hasDetails ? 'has-details' : ''}`}
               ref={el => itemRefs.current[index] = el}
               onClick={hasDetails ? () => handleItemClick(item) : undefined}
@@ -91,13 +103,24 @@ const Timeline = () => {
                 <div className="timeline-number">
                   {formatDisplayRange(item.start ?? item.startYear, item.end ?? item.endYear)}
                 </div>
+                {(title || org) && (
+                  <div className="timeline-title-block">
+                    {title && <div className="timeline-job-title">{title}</div>}
+                    {org && <div className="timeline-org-name">{org}</div>}
+                  </div>
+                )}
                 <div className="timeline-content">
                   <p>{item.text}</p>
                   {hasDetails && <span className="view-details-hint">Click to view details</span>}
                 </div>
               </div>
               <div className="timeline-icon-container">
-                <img src={item.icon} alt="Icon" className="timeline-icon" loading="lazy" />
+                <div className="timeline-icon-wrapper">
+                  <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
+                  <span className={`timeline-category-badge category-${item.category}`}>
+                    {categoryLabel[item.category]}
+                  </span>
+                </div>
               </div>
             </div>
           );

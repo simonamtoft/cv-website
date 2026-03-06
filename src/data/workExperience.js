@@ -4,7 +4,7 @@ import TTC_logo from '../assets/TTC_logo.svg'
 
 const workExperience = [
   {
-    jobTitle: "Senior AI Consultant",
+    jobTitle: "Senior Consultant, Data & AI",
     companyName: "The Tech Collective",
     start: "2026 Mar",
     end: "Now",
