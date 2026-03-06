@@ -5,8 +5,8 @@
 export const config = {
   personalInfo: {
     name: "Simon Amtoft Pedersen",
-    title: "Senior Consultant, Data & AI",
-    subtitle: "MSc Engineering | Senior Consultant, Data & AI",
+    title: "Senior AI Engineer",
+    subtitle: "MSc Engineering | Senior AI Engineer",
     email: "simon@amtoft.dev",
     linkedIn: {
       url: "https://www.linkedin.com/in/simonamtoft/",
@@ -16,7 +16,6 @@ export const config = {
   },
   navigation: [
     { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
     { label: "Background", href: "#timeline" },
     { label: "Writing & Talks", href: "#publications-events" },
     { label: "Contact", href: "#contact" }

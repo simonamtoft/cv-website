@@ -19,10 +19,13 @@ represents Simon as an individual — independent of any single organisation.
 
 The site should convey:
 
-- **Deep expertise** in machine learning, data science, and MLOps — grounded in
-  real-world experience and engineering rigour.
-- **A consulting mindset** — the ability to bridge complex business problems and
-  AI solutions that actually get adopted.
+- **Hands-on technical depth** in ML Engineering, Data Science, and MLOps —
+  grounded in real-world experience and engineering rigour. This is the core.
+- **Generative AI and agents** as a secondary but real capability area — applied
+  in production, not just as a talking point.
+- **A consulting and advisory mindset** — the ability to bridge complex business
+  problems and AI solutions that actually get adopted, acting as a trusted
+  technical advisor who also does the hands-on work.
 - **Active community involvement** — publishing, speaking, organising, and
   contributing to the broader data and AI community.
 

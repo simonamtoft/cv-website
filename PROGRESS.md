@@ -28,12 +28,16 @@ Started: 2026-02-28
 - [x] Rename "Publications & Events" → "Writing & Talks"
 - [x] Rewrite Contact section with strong single CTA
 - [x] Update page section order: About → Services → Background → Writing & Talks → Contact
+- [x] Remove Services section (consulting-framed service cards don't fit technical practitioner positioning)
+- [x] Update positioning framing: ML Engineer & Data Scientist as primary identity, consulting/advisory as context
 
 ## In Progress
 
 ## Up Next
 
-### Content & Polish
+### Positioning & Content
+- [ ] Revise About section to carry technical practitioner positioning (ML/MLOps primary, GenAI secondary, consulting framing throughout)
+- [ ] Update metadata (title, meta description, Schema.org jobTitle) with technical practitioner framing
 - [ ] Add content to The Tech Collective role (currently blank — deferred until ready)
 - [ ] Review and update all existing content for vision alignment (content-editor)
 - [ ] Full content review before relaunch (cv-content-reviewer)
@@ -46,3 +50,5 @@ Started: 2026-02-28
 - **Separate Writing and Talks sections**: Kept combined as "Writing & Talks" — volume doesn't yet justify splitting; revisit when content grows
 - **Skills taxonomy display**: Orphaned skills.js data not surfaced as a standalone section — service areas convey expertise more effectively; revisit if client demand requires it
 - **Navigation restructuring beyond relabelling**: Single-page scroll architecture retained; no routing added
+- **Services/Expertise section**: Built then removed — consulting-offerings framing (5 service cards) reads as a services menu, not a demonstration of technical expertise; About section carries positioning weight instead
+- **React Router v6**: Deferred indefinitely — single-page scroll serves due-diligence readers well at current content volume; revisit if sections grow significantly

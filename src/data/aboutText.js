@@ -7,7 +7,7 @@ Before consulting, I spent over three years at Stibo Systems building production
 <p></p>
 Outside of client work, I'm active in the Danish data and AI community. I co-author articles with the Danish Data Science Community, sit on the IDA AI Steering Committee, and help organise the annual Driving AI and Driving IT conferences - having sourced or chaired sessions at all three editions so far.
 <p></p>
-If you're working on a data or AI challenge and want a straight conversation about what's realistic and what's not, feel free to reach out.
+If you're working on a data or AI challenge and want a straight conversation about what's realistic and what's not, feel free to <a href="#contact">reach out</a>.
 </>
 
 export default aboutText

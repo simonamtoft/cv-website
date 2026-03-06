@@ -74,12 +74,9 @@ and components will be added incrementally as the migration progresses. See
 PROGRESS.md for the current state.
 
 Anticipated additions include:
-- Enhanced About section (expert narrative, not just a bio)
-- Services/Expertise section (consulting positioning)
-- Community section (speaking, organising, volunteering reframed)
-- Writing/Insights section (thought leadership)
-- Stronger contact/CTA section (inbound opportunity generation)
-- Navigation restructuring to support the above
+- Community section (speaking, organising, volunteering reframed) if content warrants
+- Writing/Insights section (thought leadership) as content grows
+- Note: Services section was built and removed — About carries positioning weight
 
 The existing architecture documentation below reflects the **current** codebase.
 Update it as code changes.
@@ -95,15 +92,18 @@ The app follows a simple single-page layout architecture:
 - **Timeline.js**: Core component that merges and displays chronological data
   from three sources (work experience, education, volunteering). Renders
   clickable timeline items that can open modals when they contain detailed
-  information.
+  information. Cards display inline `.timeline-job-title` and
+  `.timeline-org-name`, plus category badges (Work / Education / Community).
 - **TimelineDetailModal.js**: Modal component that displays detailed information
   for timeline items, including key projects (for work experience) and
   coursework tables (for education). Supports keyboard navigation (Escape to
   close) and click-outside-to-close functionality.
-- **PublicationsEvents.js**: Showcases publications and speaking events
-- **Header.js**: Navigation header with links to different sections
-- **About.js**: About section with personal information
-- **Contact.js**: Contact section with email and social links
+- **PublicationsEvents.js**: "Writing & Talks" section — showcases publications
+  and speaking/organiser events
+- **Header.js**: Navigation header with links to sections (About / Background /
+  Writing & Talks / Contact)
+- **About.js**: About section — carries technical practitioner positioning
+- **Contact.js**: Contact section with "Let's Talk" heading, email and social links
 - **Footer.js**: Site footer
 - **Data files** (`src/data/`): Content is separated from presentation logic in
   dedicated data files (workExperience.js, education.js, volunteering.js,

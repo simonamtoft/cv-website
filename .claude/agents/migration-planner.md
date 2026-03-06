@@ -18,9 +18,10 @@ your primary inputs.
 ## Purpose
 
 The site is transitioning from a single-page CV layout (chronological timeline
-of employment, education, volunteering) to a professional hub that positions
-Simon as a trusted expert in data science and AI — one that generates inbound
-opportunities from clients, collaborators, and the community.
+of employment, education, volunteering) to a technical consultant hub that
+positions Simon as a trusted ML Engineer and Data Scientist - one that generates
+inbound opportunities from clients who need both strategic guidance and
+hands-on technical delivery.
 
 This migration must be:
 - **Incremental**: The site must remain deployable and professional at every
@@ -103,10 +104,13 @@ Understand the current site thoroughly before changing it.
 - Review all existing content for vision alignment (cv-content-reviewer)
 
 ### Phase 3: Structure
-Reshape the site's skeleton to support a professional hub.
+Reshape the site's skeleton to support a technical consultant hub.
 - Rethink navigation structure and labels
-- Redesign the About section as an expert narrative
-- Plan and scaffold new sections (Services, Community, Writing)
+- Redesign the About section as a technical practitioner narrative (ML/MLOps
+  primary, GenAI secondary, consulting/advisory framing throughout)
+- Plan and scaffold new sections (Community, Writing) as content warrants
+  Note: Services section was built and removed - consulting-framed service
+  cards don't fit technical practitioner positioning; About carries this weight
 
 ### Phase 4: Content
 Fill the new structure with vision-aligned content.

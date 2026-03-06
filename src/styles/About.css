@@ -16,6 +16,10 @@
   transform: translateY(0);
 }
 
+.about h2 {
+  font-size: var(--font-size-4xl);
+}
+
 .about-content {
   display: flex;
   align-items: center;

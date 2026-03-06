@@ -15,8 +15,8 @@ PROGRESS.md for the current state of the migration from CV to professional hub.
 
 ## About the Author
 - **Name**: Simon Amtoft Pedersen
-- **Positioning**: Independent expert in data science, machine learning, and AI
-  — with a consulting mindset and active community involvement
+- **Positioning**: ML Engineer and Data Scientist, working as a consultant and
+  trusted advisor - specialising in traditional ML, MLOps, and generative AI
 - **Site**: https://amtoft.dev
 - **LinkedIn**: https://www.linkedin.com/in/simonamtoft/
 - **Key strengths**: AI/ML engineering, MLOps, generative AI, bridging complex
