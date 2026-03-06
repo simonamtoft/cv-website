@@ -1,7 +1,7 @@
 # Design & Content Overhaul — Status & Plan
 
 ## Status
-**Phase 0 complete. Phase 1 not started.**
+**Phases 0, 1, 4, 5 (partial), 6 complete. Phase 7 (test regeneration) pending.**
 
 - `specs/ux-audit.md` produced (audited 2026-03-01, 275 lines)
 - Key decision outstanding: navigation model (see Open Questions)
@@ -55,16 +55,18 @@ structure rethink + navigation model change.
 **Output:** `specs/ux-audit.md` (audited 2026-03-01, 275 lines)
 **Key findings:** See Audit Summary section below.
 
-### Phase 1 — Design token overhaul (`src/styles/App.css`)
-New CSS custom properties:
-- Dark colour system (backgrounds, surfaces, borders, text hierarchy)
-- Amber accent replacing orange
-- Add Inter to Google Fonts import
-- Spacing/radius minor adjustments
+### Phase 1 — Design token overhaul (`src/styles/App.css`) ✓ COMPLETE
+- Dark colour system: --color-bg (#1a1d27), --color-surface (#21253a), --color-surface-raised (#282d42), --color-border (#2e334d), --color-text (#e8e8e0), --color-text-muted (#9a9aaa)
+- Amber accent (#f59e0b) replacing orange (#ea850b) — all CSS files updated
+- Inter font added (replaces Open Sans) — all font-family refs updated
+- All component CSS files updated: Header, About, Timeline, Modal, PublicationsEvents, Contact, Footer
 
-### Phase 2 — Add React Router v6
-~~DEFERRED — decision in PROGRESS.md. Single-page scroll retained; React Router
-not needed at current content volume.~~
+### Phase 2 — Add React Router v6 ✓ COMPLETE
+- BrowserRouter with routes: `/` (Hero + About), `/background`, `/writing`, `/contact`
+- Nav extracted to standalone Nav.js using NavLink with active-link highlighting
+- ScrollToTop component fires on route change
+- GitHub Pages deep-link workaround: public/404.html + sessionStorage redirect restore in index.html
+- `.page-content` padding-top clears fixed pill nav on sub-pages
 
 ### Phase 3 — Landing page (`/`)
 Design and build the home/landing page. Content TBD pending audit, but likely:
@@ -74,22 +76,32 @@ Design and build the home/landing page. Content TBD pending audit, but likely:
 - Recent writing/talks (1-2 items, linked to /writing)
 - Contact CTA
 
-### Phase 4 — Hero redesign
-- New deep background treatment
-- Stronger positioning tagline (one line: what Simon does and for whom)
-- Refined typography scale (larger name, clearer hierarchy)
-- Social links refined
+### Phase 4 — Hero redesign ✓ COMPLETE
+- Dark background (#1a1d27) — clean, not harsh
+- Tagline added: "I help organisations move from 'we have data' to AI that actually works in production."
+- CTA button added linking to #contact
+- GitHub removed from hero (LinkedIn only, muted secondary)
+- Fixed nav updated: blur backdrop, dark border, Inter font
+- config.js subtitle updated to "Senior ML Engineer | The Tech Collective"
 
-### Phase 5 — Content & structure revisions (post-audit)
-Address specific issues from the Phase 0 audit output.
+### Phase 5 — Content & structure revisions (post-audit) PARTIAL
+Done:
+- Background H2 heading added (was missing)
+- Timeline reversed to newest-first (descending chronological)
+- config.js title/subtitle updated
 
-### Phase 6 — Section-by-section visual polish
+Remaining:
+- Add anonymised client outcome to Taxonomy Classification project (modal)
+- Fix "reach out" link in About (already links to #contact - OK)
+- Writing & Talks: section titled "Talks" but no talk entries — only organiser roles
+- Contact: no calendar booking link (Calendly/Cal.com)
+
+### Phase 6 — Section-by-section visual polish ✓ COMPLETE
 Each page/section styled for the dark system:
-- About
-- Services (dark cards, amber accents)
-- Background/Timeline (dark surface, amber accent on dots/line, improved
-  scannability)
-- Modal (full dark treatment)
+- About: dark bg, Poppins h2, muted body text
+- Background/Timeline: amber dots, dark border line, Poppins heading
+- Modal: full dark treatment (surface colours, amber accents, border)
+- Modal: full dark treatment
 - Writing & Talks (card redesign)
 - Contact (strong CTA visual weight)
 - Footer

@@ -4,8 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: var(--light-grey);
-  box-shadow: var(--shadow-md);
+  background: var(--color-bg);
   padding: var(--space-2xl) 0;
   opacity: 0;
   transform: translateY(20px);
@@ -20,7 +19,7 @@
 .publications-events h2 {
   font-size: var(--font-size-4xl);
   margin-bottom: var(--space-xl);
-  color: var(--dark-grey);
+  color: var(--color-text);
   font-family: 'Poppins', sans-serif;
   font-weight: var(--font-weight-bold);
   text-align: center;
@@ -140,7 +139,7 @@
 }
 
 .work-separator {
-  color: var(--light-grey);
+  color: var(--color-border);
 }
 
 .work-venue {

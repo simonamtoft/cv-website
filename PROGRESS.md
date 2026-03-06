@@ -30,6 +30,7 @@ Started: 2026-02-28
 - [x] Update page section order: About → Services → Background → Writing & Talks → Contact
 - [x] Remove Services section (consulting-framed service cards don't fit technical practitioner positioning)
 - [x] Update positioning framing: ML Engineer & Data Scientist as primary identity, consulting/advisory as context
+- [x] Add React Router v6 — multi-page routing with separate URLs (/background, /writing, /contact); GitHub Pages deep-link workaround via 404.html
 
 ## In Progress
 
@@ -49,6 +50,5 @@ Started: 2026-02-28
 ## Decided Against / Deferred
 - **Separate Writing and Talks sections**: Kept combined as "Writing & Talks" — volume doesn't yet justify splitting; revisit when content grows
 - **Skills taxonomy display**: Orphaned skills.js data not surfaced as a standalone section — service areas convey expertise more effectively; revisit if client demand requires it
-- **Navigation restructuring beyond relabelling**: Single-page scroll architecture retained; no routing added
+- **Navigation restructuring beyond relabelling**: Single-page scroll architecture retained for home; routing added for sub-pages
 - **Services/Expertise section**: Built then removed — consulting-offerings framing (5 service cards) reads as a services menu, not a demonstration of technical expertise; About section carries positioning weight instead
-- **React Router v6**: Deferred indefinitely — single-page scroll serves due-diligence readers well at current content volume; revisit if sections grow significantly

@@ -25,9 +25,10 @@
 
 /* Modal content container */
 .modal-content {
-  background: var(--background-color, #ffffff);
+  background: var(--color-surface);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   max-width: 800px;
   width: 100%;
   max-height: 90vh;
@@ -65,7 +66,7 @@
   font-size: 32px;
   line-height: 1;
   cursor: pointer;
-  color: var(--text-color, #333333);
+  color: var(--color-text-muted);
   padding: 0;
   width: 32px;
   height: 32px;
@@ -73,41 +74,43 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .modal-close:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
 }
 
 .modal-close:focus {
-  outline: 2px solid var(--accent-orange);
+  outline: 2px solid var(--accent-amber);
   outline-offset: 2px;
 }
 
 /* Modal header */
 .modal-header {
   padding: 32px 32px 16px 32px;
-  border-bottom: 1px solid var(--border-color, #e0e0e0);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .modal-header h2 {
   margin: 0 0 8px 0;
   font-size: 28px;
-  color: var(--heading-color, #1a1a1a);
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
 }
 
 .modal-header h3 {
   margin: 0 0 8px 0;
   font-size: 20px;
-  color: var(--subheading-color, #555555);
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .modal-dates {
   margin: 0;
   font-size: 14px;
-  color: var(--text-muted, #777777);
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -119,7 +122,7 @@
 .modal-description {
   margin-bottom: 24px;
   line-height: 1.6;
-  color: var(--text-color, #333333);
+  color: var(--color-text);
 }
 
 /* Projects section */
@@ -130,14 +133,15 @@
 .modal-projects h3 {
   font-size: 20px;
   margin: 0 0 16px 0;
-  color: var(--heading-color, #1a1a1a);
-  border-bottom: 2px solid var(--accent-orange);
+  color: var(--color-text);
+  border-bottom: 2px solid var(--accent-amber);
   padding-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .project-card {
-  background: var(--card-background, #f8f9fa);
-  border-left: 4px solid var(--accent-orange);
+  background: var(--color-surface-raised);
+  border-left: 4px solid var(--accent-amber);
   padding: 16px;
   margin-bottom: 16px;
   border-radius: 4px;
@@ -146,7 +150,7 @@
 
 .project-card:hover {
   transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .project-header {
@@ -161,19 +165,20 @@
 .project-card h4 {
   margin: 0;
   font-size: 18px;
-  color: var(--heading-color, #1a1a1a);
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
 }
 
 .project-years {
   font-size: 14px;
-  color: var(--text-muted, #777777);
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .project-card p {
   margin: 0 0 12px 0;
   line-height: 1.6;
-  color: var(--text-color, #333333);
+  color: var(--color-text-muted);
 }
 
 .project-technologies {
@@ -184,8 +189,8 @@
 
 .tech-tag {
   display: inline-block;
-  background: rgba(234, 133, 11, 0.12);
-  color: var(--accent-orange);
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 13px;
@@ -200,30 +205,31 @@
 .modal-courses h3 {
   font-size: 20px;
   margin: 0 0 16px 0;
-  color: var(--heading-color, #1a1a1a);
-  border-bottom: 2px solid var(--accent-orange);
+  color: var(--color-text);
+  border-bottom: 2px solid var(--accent-amber);
   padding-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .courses-table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--background-color, #ffffff);
-  border: 1px solid var(--border-color, #e0e0e0);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .courses-table thead {
-  background: var(--table-header-background, #f5f5f5);
+  background: var(--color-surface-raised);
 }
 
 .courses-table th {
   padding: 12px 16px;
   text-align: left;
   font-weight: 600;
-  color: var(--heading-color, #1a1a1a);
-  border-bottom: 2px solid var(--border-color, #e0e0e0);
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-border);
 }
 
 .courses-table th:nth-child(1) {
@@ -240,27 +246,28 @@
 
 .courses-table td {
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color, #e0e0e0);
-  color: var(--text-color, #333333);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 
 .courses-table td.course-number {
   font-family: 'Courier New', monospace;
-  color: var(--text-muted, #777777);
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .courses-table td:nth-child(2) {
   font-weight: 500;
+  color: var(--color-text);
 }
 
 .courses-table tbody tr:nth-child(even) {
-  background: var(--table-row-alt, #fafafa);
+  background: var(--color-surface-raised);
 }
 
 .courses-table tbody tr:hover {
-  background: var(--table-row-hover, #f0f0f0);
+  background: rgba(245, 158, 11, 0.06);
 }
 
 .courses-table tbody tr:last-child td {
@@ -309,7 +316,6 @@
     font-size: 16px;
   }
 
-  /* Adjust table on smaller screens */
   @media (max-width: 600px) {
     .courses-table th:nth-child(1) {
       width: 15%;
@@ -324,7 +330,6 @@
     }
   }
 
-  /* Stack table on very small screens */
   @media (max-width: 480px) {
     .courses-table {
       font-size: 13px;

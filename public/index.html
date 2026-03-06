@@ -45,6 +45,15 @@
     </script>
 
 <link rel="icon" href="/favicon.ico" sizes="any">
+<script>
+  (function() {
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect !== window.location.href) {
+      history.replaceState(null, null, redirect);
+    }
+  })();
+</script>
 </head>
 <body>
     <div id="root"></div>

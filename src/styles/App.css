@@ -1,18 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap');
 
 :root {
-  /* Color palette */
-  --light-grey: #f4f4f4;
-  --dark-grey: #333;
-  --white: #fff;
-  --medium-grey: #555;
-  --accent-orange: #ea850b;
+  /* Dark colour system */
+  --color-bg: #1a1d27;
+  --color-surface: #21253a;
+  --color-surface-raised: #282d42;
+  --color-border: #2e334d;
+  --color-text: #e8e8e0;
+  --color-text-muted: #9a9aaa;
+
+  /* Amber accent (replaces orange) */
+  --accent-amber: #f59e0b;
+  --accent-amber-hover: #d97706;
+  --accent-amber-active: #b45309;
+
+  /* Legacy aliases — values updated for dark theme */
+  --light-grey: #1a1d27;
+  --dark-grey: #e8e8e0;
+  --white: #21253a;
+  --medium-grey: #9a9aaa;
+  --accent-orange: #f59e0b;
 
   /* State colors */
-  --color-hover: #d67609;
-  --color-active: #c66808;
-  --color-focus: #ea850b;
-  --color-disabled: #999;
+  --color-hover: #d97706;
+  --color-active: #b45309;
+  --color-focus: #f59e0b;
+  --color-disabled: #5a5d71;
 
   /* Spacing scale (8px base) */
   --space-xs: 0.5rem;    /* 8px */
@@ -35,6 +48,7 @@
 
   /* Font weights */
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
@@ -50,11 +64,11 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  /* Shadows — stronger on dark backgrounds */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -82,36 +96,30 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: var(--light-grey);
-  color: var(--dark-grey); /* Use dark grey for default text color */
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .main-content {
-  max-width: 1200px; /* Maximum width for content */
-  margin: 0 auto; /* Center the content */
-  padding: 0 var(--space-lg); /* Add some horizontal padding */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
 
-.main-content section {
-  padding: var(--space-3xl) 0; /* Consistent vertical padding between sections */
-}
-
-/* Make footer closer to bottom of page */
-.main-content section#footer {
-  padding-bottom: var(--space-xs);
-  padding-top: 0;
+.page-content {
+  padding-top: 80px;
 }
 
 a {
-  color: var(--accent-orange); /* Use accent orange for links */
-  text-decoration: none; /* Remove underline */
+  color: var(--accent-amber);
+  text-decoration: none;
 }
 
 a:hover {
-  color: var(--medium-grey); /* Lighter on hover */
+  color: var(--accent-amber-hover);
 }
 
 a:focus, button:focus {
@@ -124,8 +132,8 @@ a:focus, button:focus {
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--accent-orange);
-  color: var(--white);
+  background: var(--accent-amber);
+  color: var(--color-bg);
   padding: var(--space-xs) var(--space-md);
   text-decoration: none;
   z-index: 9999;

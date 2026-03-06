@@ -19,7 +19,7 @@ const Timeline = () => {
       ].sort((a, b) => {
         const aStart = a.start ?? a.startYear;
         const bStart = b.start ?? b.startYear;
-        return getComparableTime(aStart) - getComparableTime(bStart);
+        return getComparableTime(bStart) - getComparableTime(aStart); // newest first
       }),
     []
   );
@@ -85,6 +85,7 @@ const Timeline = () => {
 
   return (
     <>
+      <h2 className="timeline-heading">Background</h2>
       <div className="timeline">
         {timelineItems.map((item, index) => {
           const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
