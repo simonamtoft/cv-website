@@ -1,31 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap');
 
 :root {
-  /* Dark colour system */
-  --color-bg: #1a1d27;
-  --color-surface: #21253a;
-  --color-surface-raised: #282d42;
-  --color-border: #2e334d;
-  --color-text: #e8e8e0;
-  --color-text-muted: #9a9aaa;
+  /* Warm fall colour system */
+  --color-bg: #fdf6ec;
+  --color-surface: #f5e6d0;
+  --color-surface-raised: #eedcc0;
+  --color-border: #d4b896;
+  --color-text: #3d2b1a;
+  --color-text-muted: #7a5c40;
 
-  /* Amber accent (replaces orange) */
-  --accent-amber: #f59e0b;
-  --accent-amber-hover: #d97706;
-  --accent-amber-active: #b45309;
+  /* Terracotta / burnt sienna accent */
+  --accent-amber: #c85a1a;
+  --accent-amber-hover: #a84815;
+  --accent-amber-active: #8a3a10;
 
-  /* Legacy aliases — values updated for dark theme */
-  --light-grey: #1a1d27;
-  --dark-grey: #e8e8e0;
-  --white: #21253a;
-  --medium-grey: #9a9aaa;
-  --accent-orange: #f59e0b;
+  /* Legacy aliases — values updated for warm theme */
+  --light-grey: #fdf6ec;
+  --dark-grey: #3d2b1a;
+  --white: #f5e6d0;
+  --medium-grey: #7a5c40;
+  --accent-orange: #c85a1a;
 
   /* State colors */
-  --color-hover: #d97706;
-  --color-active: #b45309;
-  --color-focus: #f59e0b;
-  --color-disabled: #5a5d71;
+  --color-hover: #a84815;
+  --color-active: #8a3a10;
+  --color-focus: #c85a1a;
+  --color-disabled: #b8a090;
 
   /* Spacing scale (8px base) */
   --space-xs: 0.5rem;    /* 8px */
@@ -64,11 +64,11 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows — stronger on dark backgrounds */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+  /* Shadows — warm-toned for light background */
+  --shadow-sm: 0 1px 2px rgba(61, 43, 26, 0.08);
+  --shadow-md: 0 4px 6px rgba(61, 43, 26, 0.12);
+  --shadow-lg: 0 10px 15px rgba(61, 43, 26, 0.16);
+  --shadow-xl: 0 20px 25px rgba(61, 43, 26, 0.22);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -101,6 +101,16 @@ body {
   padding: 0;
   background-color: var(--color-bg);
   color: var(--color-text);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-routes {
+  flex: 1;
 }
 
 .main-content {

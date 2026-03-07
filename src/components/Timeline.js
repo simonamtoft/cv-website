@@ -24,6 +24,7 @@ const Timeline = () => {
     []
   );
 
+  const containerRef = useRef(null);
   const itemRefs = useRef([]);
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,6 +37,20 @@ const Timeline = () => {
       setModalOpen(true);
     }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      },
+      { threshold: 0.05 }
+    );
+    const el = containerRef.current;
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, []);
 
   useEffect(() => {
     const currentItemRefs = itemRefs.current;
@@ -86,7 +101,7 @@ const Timeline = () => {
   return (
     <>
       <h2 className="timeline-heading">Background</h2>
-      <div className="timeline">
+      <div className="timeline" ref={containerRef}>
         {timelineItems.map((item, index) => {
           const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
           const title = item.jobTitle || item.degree;

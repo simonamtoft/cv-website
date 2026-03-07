@@ -15,7 +15,7 @@ export const config = {
     github: "https://github.com/SimonAmtoft"
   },
   navigation: [
-    { label: "About", href: "/" },
+    { label: "About", href: "/about" },
     { label: "Background", href: "/background" },
     { label: "Writing & Talks", href: "/writing" },
     { label: "Contact", href: "/contact" }

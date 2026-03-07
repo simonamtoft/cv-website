@@ -14,14 +14,13 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Nav />
+      <div className="app-routes">
       <Routes>
-        <Route path="/" element={
-          <>
-            <Header />
-            <main className="main-content" id="main-content">
-              <About />
-            </main>
-          </>
+        <Route path="/" element={<Header />} />
+        <Route path="/about" element={
+          <main className="main-content page-content" id="main-content">
+            <About />
+          </main>
         } />
         <Route path="/background" element={
           <main className="main-content page-content" id="main-content">
@@ -40,6 +39,7 @@ function App() {
         } />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </div>
       <Footer />
     </BrowserRouter>
   );

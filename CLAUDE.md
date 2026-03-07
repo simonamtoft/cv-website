@@ -64,6 +64,46 @@ npm run deploy
 The `npm run deploy` command automatically builds the site and pushes to the
 gh-pages branch.
 
+## Visual Verification with Playwright
+
+After making visual changes (colors, layout, components), take screenshots to
+verify correctness. The dev server must be running on localhost:3000 first.
+
+Use system Chrome (Playwright browsers may not be installed):
+
+```js
+// Run with: node -e "<contents>"
+const { chromium } = require('playwright');
+(async () => {
+  const browser = await chromium.launch({
+    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+  });
+  const page = await browser.newPage();
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [route, name] of [['/', 'home'], ['/background', 'bg'], ['/writing', 'writing'], ['/contact', 'contact']]) {
+    await page.goto('http://localhost:3000' + route);
+    await page.waitForTimeout(1500);
+    await page.screenshot({ path: '/tmp/cv-' + name + '.png' });
+  }
+  // Modal check
+  await page.goto('http://localhost:3000/background');
+  await page.waitForTimeout(1500);
+  await page.click('.timeline-item.has-details');
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '/tmp/cv-modal.png' });
+  await browser.close();
+})();
+```
+
+Then read each `/tmp/cv-*.png` with the Read tool to visually inspect.
+
+**What to check after style changes:**
+- Correct background, text, and accent colors on all pages
+- Nav pill renders with correct glassmorphism and active link color
+- Timeline center line, dots, and category badges look correct
+- Modal: correct surface color, backdrop, and tech tag tints
+- No layout breakage — check mobile too with `setViewportSize({ width: 390, height: 844 })`
+
 ## Architecture
 
 ### Migration Context

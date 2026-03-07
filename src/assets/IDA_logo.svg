@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 100">
+  <!-- I: rounded rectangle -->
+  <rect x="0" y="0" width="46" height="100" rx="9" fill="#555"/>
+
+  <!-- D: thick arc with flat end-caps, hollow C-shape -->
+  <path
+    fill="none"
+    stroke="#555"
+    stroke-width="22"
+    stroke-linecap="butt"
+    d="M 91 11 A 39 39 0 1 1 91 89"
+  />
+
+  <!-- A: two strokes, no crossbar, rounded join/caps -->
+  <path
+    fill="none"
+    stroke="#555"
+    stroke-width="21"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M 170 100 L 240 2 L 310 100"
+  />
+</svg>

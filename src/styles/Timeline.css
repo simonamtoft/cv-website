@@ -10,10 +10,18 @@
 .timeline {
   position: relative;
   padding: var(--space-lg) 0;
-  padding-top: 15vh;
+  padding-top: var(--space-xl);
   overflow: hidden; /* Hide potential overflow during positioning adjustments */
   display: grid;
   grid-template-columns: 1fr 40px 1fr; /* Left content, 40px central column, Right content */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.timeline.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .timeline::before {
@@ -83,19 +91,21 @@
 }
 
 .category-work {
-  background: var(--accent-orange);
-  color: var(--white);
+  background: rgba(200, 90, 26, 0.15);
+  color: #c85a1a;
+  border: 1px solid rgba(200, 90, 26, 0.3);
 }
 
 .category-education {
-  background: var(--medium-grey);
-  color: var(--white);
+  background: rgba(212, 168, 67, 0.15);
+  color: #9a7020;
+  border: 1px solid rgba(212, 168, 67, 0.3);
 }
 
 .category-community {
-  background: var(--color-surface-raised);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  background: rgba(100, 120, 80, 0.12);
+  color: #5a6e40;
+  border: 1px solid rgba(100, 120, 80, 0.25);
 }
 
 .timeline-item {
@@ -254,7 +264,7 @@
 @media (max-width: 768px) {
   .timeline {
     grid-template-columns: 1fr; /* Single column layout for content */
-    padding-top: 5vh;
+    padding-top: var(--space-lg);
     padding-left: var(--space-lg); /* Add padding on the left for content */
     position: relative;
   }

@@ -43,6 +43,9 @@ Started: 2026-02-28
 - [ ] Review and update all existing content for vision alignment (content-editor)
 - [ ] Full content review before relaunch (cv-content-reviewer)
 
+### Navigation
+- [ ] Investigate navigation options - user prefers pill at top of page on home rather than bottom; explore: always-visible top pill (fixed from load), scroll-triggered top pill, or other patterns
+
 ### Potential Enhancements
 - [ ] Dedicated Community section (if volunteering/IDA role grows significantly)
 - [ ] Case studies or project spotlights (if client confidentiality allows)

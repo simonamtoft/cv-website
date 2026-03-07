@@ -5,6 +5,7 @@
   width: 100%;
   flex-direction: column;
   background: var(--color-bg);
+  padding-top: var(--space-xl);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity var(--transition-slow), transform var(--transition-slow);

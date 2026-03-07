@@ -34,21 +34,21 @@ const Nav = () => {
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [isHome]);
 
+  const navLinks = config.navigation.map((item) => (
+    <li key={item.href}>
+      <NavLink
+        to={item.href}
+        className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}
+        end={item.href === '/'}
+      >
+        {item.label}
+      </NavLink>
+    </li>
+  ));
+
   return (
-    <nav className={isFixed ? 'nav-pill nav-pill--fixed' : 'nav-pill'}>
-      <ul>
-        {config.navigation.map((item) => (
-          <li key={item.href}>
-            <NavLink
-              to={item.href}
-              className={({ isActive }) => isActive ? 'nav-link nav-link--active' : 'nav-link'}
-              end={item.href === '/'}
-            >
-              {item.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+    <nav className={`nav-pill${isFixed ? ' nav-pill--fixed' : ''}`}>
+      <ul>{navLinks}</ul>
     </nav>
   );
 };
