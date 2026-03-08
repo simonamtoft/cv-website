@@ -3,7 +3,8 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
-  padding-left: 4%; /* Consider if this margin is still desired with a full-width background */
-  background-color: var(--light-grey);
-  color: var(--dark-grey);
+  padding-left: 4%;
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
 }

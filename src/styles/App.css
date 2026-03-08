@@ -1,18 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap');
 
 :root {
-  /* Color palette */
-  --light-grey: #f4f4f4;
-  --dark-grey: #333;
-  --white: #fff;
-  --medium-grey: #555;
-  --accent-orange: #ea850b;
+  /* Warm fall colour system */
+  --color-bg: #fdf6ec;
+  --color-surface: #f5e6d0;
+  --color-surface-raised: #eedcc0;
+  --color-border: #d4b896;
+  --color-text: #3d2b1a;
+  --color-text-muted: #7a5c40;
+
+  /* Terracotta / burnt sienna accent */
+  --accent-amber: #c85a1a;
+  --accent-amber-hover: #a84815;
+  --accent-amber-active: #8a3a10;
+
+  /* Legacy aliases — values updated for warm theme */
+  --light-grey: #fdf6ec;
+  --dark-grey: #3d2b1a;
+  --white: #f5e6d0;
+  --medium-grey: #7a5c40;
+  --accent-orange: #c85a1a;
 
   /* State colors */
-  --color-hover: #d67609;
-  --color-active: #c66808;
-  --color-focus: #ea850b;
-  --color-disabled: #999;
+  --color-hover: #a84815;
+  --color-active: #8a3a10;
+  --color-focus: #c85a1a;
+  --color-disabled: #b8a090;
 
   /* Spacing scale (8px base) */
   --space-xs: 0.5rem;    /* 8px */
@@ -35,6 +48,7 @@
 
   /* Font weights */
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
@@ -50,11 +64,11 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  /* Shadows — warm-toned for light background */
+  --shadow-sm: 0 1px 2px rgba(61, 43, 26, 0.08);
+  --shadow-md: 0 4px 6px rgba(61, 43, 26, 0.12);
+  --shadow-lg: 0 10px 15px rgba(61, 43, 26, 0.16);
+  --shadow-xl: 0 20px 25px rgba(61, 43, 26, 0.22);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -82,36 +96,40 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: var(--light-grey);
-  color: var(--dark-grey); /* Use dark grey for default text color */
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-routes {
+  flex: 1;
 }
 
 .main-content {
-  max-width: 1200px; /* Maximum width for content */
-  margin: 0 auto; /* Center the content */
-  padding: 0 var(--space-lg); /* Add some horizontal padding */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
 
-.main-content section {
-  padding: var(--space-3xl) 0; /* Consistent vertical padding between sections */
-}
-
-/* Make footer closer to bottom of page */
-.main-content section#footer {
-  padding-bottom: var(--space-xs);
-  padding-top: 0;
+.page-content {
+  padding-top: 80px;
 }
 
 a {
-  color: var(--accent-orange); /* Use accent orange for links */
-  text-decoration: none; /* Remove underline */
+  color: var(--accent-amber);
+  text-decoration: none;
 }
 
 a:hover {
-  color: var(--medium-grey); /* Lighter on hover */
+  color: var(--accent-amber-hover);
 }
 
 a:focus, button:focus {
@@ -124,8 +142,8 @@ a:focus, button:focus {
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--accent-orange);
-  color: var(--white);
+  background: var(--accent-amber);
+  color: var(--color-bg);
   padding: var(--space-xs) var(--space-md);
   text-decoration: none;
   z-index: 9999;

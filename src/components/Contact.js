@@ -31,23 +31,23 @@ const Contact = () => {
 
   return (
     <div className="contact" ref={contactRef}>
-      <h2>Reach Out!</h2>
+      <h2>Let's Talk</h2>
+      <p className="contact-lead">
+        Working on a data or AI challenge? I'm happy to have a direct conversation about
+        what's feasible, what's not, and where to start.
+      </p>
       <p>
-        AI and machine learning are evolving fast, and the best ideas come from collaboration.
-        Whether you're exploring AI-driven solutions, wanting to participate in next year's Driving AI event, or just want to chat
-        about the future of AI, I'd love to hear from you!
+        Whether you're scoping a new initiative, evaluating technical approaches, or looking
+        for a speaker or collaborator - reach out.
       </p>
       <div className="contact-info">
         <p>
-          <i className="fas fa-envelope" aria-label="Email"></i> Email: <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
+          <i className="fas fa-envelope" aria-label="Email"></i> <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
         </p>
         <p>
-          <i className="fab fa-linkedin" aria-label="LinkedIn"></i> LinkedIn: <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">{config.personalInfo.linkedIn.handle}</a>
+          <i className="fab fa-linkedin" aria-label="LinkedIn"></i> <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">linkedin.com/in/{config.personalInfo.linkedIn.handle}</a>
         </p>
       </div>
-      <p>
-        Let's connect and build something exciting together!
-      </p>
     </div>
   );
 };

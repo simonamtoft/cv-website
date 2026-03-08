@@ -1,4 +1,5 @@
 .contact {
+  padding-top: var(--space-xl);
   padding-left: 10%;
   padding-right: 10%;
   padding-bottom: var(--space-xl);
@@ -6,9 +7,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--light-grey);
+  background: var(--color-surface);
   text-align: center;
-  box-shadow: var(--shadow-md);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity var(--transition-slow), transform var(--transition-slow);
@@ -21,8 +21,8 @@
 
 .contact h2 {
   font-size: var(--font-size-4xl);
-  margin-bottom: var(--space-lg);
-  color: var(--dark-grey);
+  margin-bottom: var(--space-xl);
+  color: var(--color-text);
   font-family: 'Poppins', sans-serif;
   font-weight: var(--font-weight-bold);
 }
@@ -31,6 +31,15 @@
   font-size: var(--font-size-xl);
   margin: var(--space-xs) 0;
   color: var(--medium-grey);
+}
+
+.contact-lead {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  max-width: 640px;
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-sm);
 }
 
 .contact-info {

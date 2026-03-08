@@ -1,6 +1,6 @@
 import React from 'react';
 import ReDI_logo from '../assets/ReDI_logo.png';
-import IDA_logo from '../assets/IDA_logo.jpg';
+import IDA_logo from '../assets/IDA_logo.svg';
 
 const volunteering = [
   {

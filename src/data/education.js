@@ -104,6 +104,8 @@ const education = [
       }
     ]
   }, {
+    degree: "Exchange Semester",
+    institution: "University of Maryland, College Park",
     text: <>
     Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>.
     Here, I took my first machine learning course, sparking my interest in AI and data science. The experience opened my eyes to new ideas and
