@@ -150,6 +150,9 @@ The app uses a multi-page routing architecture:
   highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
   on all other routes always fixed. Links: About (`/about`) / Background
   (`/background`) / Writing & Talks (`/writing`) / Contact (`/contact`).
+- **PageNav.js**: Prev/next navigation rendered at the bottom of each sub-page.
+  Accepts `prev` and `next` props (`{ label, path }`). About has next only;
+  Contact has prev only; Background and Writing & Events have both.
 - **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
 - **Header.js**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
   link. Rendered only at the root route.

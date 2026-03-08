@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Writing & Talks Section', () => {
-  test('Section heading reads "Writing & Talks"', async ({ page }) => {
+test.describe('Writing & Events Section', () => {
+  test('Section heading reads "Writing & Events"', async ({ page }) => {
     await page.goto('/writing');
 
     const section = page.locator('section.publications-events');
 
-    await expect(section.getByRole('heading', { name: 'Writing & Talks' })).toBeVisible();
+    await expect(section.getByRole('heading', { name: 'Writing & Events' })).toBeVisible();
     await expect(section.getByRole('heading', { name: 'Publications & Events' })).not.toBeAttached();
   });
 

@@ -153,7 +153,7 @@ const Timeline = () => {
       )}
       <PageNav
         prev={{ label: 'About', path: '/about' }}
-        next={{ label: 'Writing & Talks', path: '/writing' }}
+        next={{ label: 'Writing & Events', path: '/writing' }}
       />
     </>
   );

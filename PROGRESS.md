@@ -35,20 +35,23 @@ Started: 2026-02-28
 - [x] Timeline.css padding cleanup — removed redundant top padding after routing restructure
 - [x] Playwright test suite regenerated for multi-page routing — all 24 tests passing against new routes
 - [x] playwright.config.js switched to system Chrome (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`)
+- [x] Add PageNav prev/next navigation to all sub-pages
+- [x] Remove keywords meta tag from public/index.html (no SEO value; title/description/OG already aligned)
+- [x] Revise About paragraph 3 to carry consulting/advisory framing ("hands-on technical partner", bridging engineering and decision guidance)
 
 ## In Progress
 
 ## Up Next
 
 ### Positioning & Content
-- [ ] Revise About section to carry technical practitioner positioning (ML/MLOps primary, GenAI secondary, consulting framing throughout)
-- [ ] Update metadata (title, meta description, Schema.org jobTitle) with technical practitioner framing
 - [ ] Add content to The Tech Collective role (currently blank — deferred until ready)
 - [ ] Review and update all existing content for vision alignment (content-editor)
 - [ ] Full content review before relaunch (cv-content-reviewer)
 
 ### Navigation
-- [ ] Would like additionaly ways of navigating to the "next" page
+- [ ] Refactor PageNav to derive prev/next from `config.navigation` dynamically
+- [ ] Add nav links to Footer
+- [ ] Add category filter to Timeline (Background page)
 
 ### Potential Enhancements
 - [ ] Dedicated Community section (if volunteering/IDA role grows significantly)

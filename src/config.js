@@ -8,6 +8,7 @@ export const config = {
     title: "Senior ML Engineer",
     subtitle: "Senior ML Engineer | The Tech Collective",
     email: "simon@amtoft.dev",
+    workEmail: "siap@thetechcollective.eu",
     linkedIn: {
       url: "https://www.linkedin.com/in/simonamtoft/",
       handle: "simonamtoft"
@@ -17,7 +18,7 @@ export const config = {
   navigation: [
     { label: "About", href: "/about" },
     { label: "Background", href: "/background" },
-    { label: "Writing & Talks", href: "/writing" },
+    { label: "Writing & Events", href: "/writing" },
     { label: "Contact", href: "/contact" }
   ]
 };

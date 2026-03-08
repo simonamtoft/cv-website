@@ -81,7 +81,7 @@ const PublicationsEvents = () => {
   return (
     <>
       <section className="publications-events" ref={publicationsEventsRef}>
-        <h2>Writing & Talks</h2>
+        <h2>Writing & Events</h2>
         <div className="publications-events-container">
           {sortedWork.map((item, index) => (
             <a

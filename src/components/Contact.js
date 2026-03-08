@@ -47,11 +47,14 @@ const Contact = () => {
             <i className="fas fa-envelope" aria-label="Email"></i> <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
           </p>
           <p>
+            <i className="fas fa-envelope" aria-label="Work Email"></i> <a href={`mailto:${config.personalInfo.workEmail}`}>{config.personalInfo.workEmail}</a>
+          </p>
+          <p>
             <i className="fab fa-linkedin" aria-label="LinkedIn"></i> <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">linkedin.com/in/{config.personalInfo.linkedIn.handle}</a>
           </p>
         </div>
       </div>
-      <PageNav prev={{ label: 'Writing & Talks', path: '/writing' }} />
+      <PageNav prev={{ label: 'Writing & Events', path: '/writing' }} />
     </>
   );
 };

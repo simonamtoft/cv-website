@@ -15,7 +15,7 @@ test.describe('Header & Navigation', () => {
 
     await expect(nav.getByRole('link', { name: 'About' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Background' })).toBeVisible();
-    await expect(nav.getByRole('link', { name: 'Writing & Talks' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Writing & Events' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Contact' })).toBeVisible();
 
     // Services was removed
@@ -25,16 +25,18 @@ test.describe('Header & Navigation', () => {
   test('Navigation links route to correct pages', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('link', { name: 'About' }).click();
+    const nav = page.locator('nav.nav-pill');
+
+    await nav.getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about/);
 
-    await page.getByRole('link', { name: 'Background' }).click();
+    await nav.getByRole('link', { name: 'Background' }).click();
     await expect(page).toHaveURL(/\/background/);
 
-    await page.getByRole('link', { name: 'Writing & Talks' }).click();
+    await nav.getByRole('link', { name: 'Writing & Events' }).click();
     await expect(page).toHaveURL(/\/writing/);
 
-    await page.getByRole('link', { name: 'Contact' }).click();
+    await nav.getByRole('link', { name: 'Contact' }).click();
     await expect(page).toHaveURL(/\/contact/);
   });
 
