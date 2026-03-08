@@ -69,6 +69,19 @@
   margin: 0 var(--space-sm);
 }
 
+.nav-home-item {
+  margin-right: var(--space-xs);
+  padding-right: var(--space-sm);
+  border-right: 1px solid var(--color-border);
+}
+
+.nav-home-link {
+  font-size: var(--font-size-base);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .nav-link {

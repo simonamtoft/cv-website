@@ -80,7 +80,7 @@ const { chromium } = require('playwright');
   });
   const page = await browser.newPage();
   await page.setViewportSize({ width: 1280, height: 900 });
-  for (const [route, name] of [['/', 'home'], ['/background', 'bg'], ['/writing', 'writing'], ['/contact', 'contact']]) {
+  for (const [route, name] of [['/', 'home'], ['/about', 'about'], ['/background', 'bg'], ['/writing', 'writing'], ['/contact', 'contact']]) {
     await page.goto('http://localhost:3000' + route);
     await page.waitForTimeout(1500);
     await page.screenshot({ path: '/tmp/cv-' + name + '.png' });
@@ -121,35 +121,64 @@ Anticipated additions include:
 The existing architecture documentation below reflects the **current** codebase.
 Update it as code changes.
 
+### Routing
+
+The site uses React Router v6 with `BrowserRouter`. Routes:
+
+| Path | Component rendered | Nav label |
+|---|---|---|
+| `/` | `<Header />` (hero only) | - |
+| `/about` | `<About />` | About |
+| `/background` | `<Timeline />` | Background |
+| `/writing` | `<PublicationsEvents />` | Writing & Talks |
+| `/contact` | `<Contact />` | Contact |
+
+Unknown paths redirect to `/` via a catch-all `<Navigate to="/" replace />` route.
+
+GitHub Pages deep-link workaround: `public/404.html` stores the requested path
+in sessionStorage; `public/index.html` restores it via `history.replaceState`
+so React Router sees the correct URL on first load.
+
 ### Component Structure
 
-The app follows a simple single-page layout architecture:
+The app uses a multi-page routing architecture:
 
-- **App.js**: Main container that orchestrates all sections (Header, About,
-  Timeline, PublicationsEvents, Contact, Footer)
-- **ErrorBoundary.js**: Wraps components to catch and handle React errors
-  gracefully
-- **Timeline.js**: Core component that merges and displays chronological data
-  from three sources (work experience, education, volunteering). Renders
-  clickable timeline items that can open modals when they contain detailed
-  information. Cards display inline `.timeline-job-title` and
+- **App.js**: Root container — mounts `BrowserRouter`, `ScrollToTop`, `Nav`,
+  the route tree, and `Footer`. Does not render page content directly; each
+  route renders its own component.
+- **Nav.js**: Fixed pill navigation bar — uses `NavLink` for active-link
+  highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
+  on all other routes always fixed. Links: About (`/about`) / Background
+  (`/background`) / Writing & Talks (`/writing`) / Contact (`/contact`).
+- **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
+- **Header.js**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
+  link. Rendered only at the root route.
+- **About.js**: About page (`/about`) — carries technical practitioner
+  positioning.
+- **Timeline.js**: Background page (`/background`) — merges and displays
+  chronological data from three sources (work experience, education,
+  volunteering). Renders clickable timeline items that can open modals when they
+  contain detailed information. Cards display inline `.timeline-job-title` and
   `.timeline-org-name`, plus category badges (Work / Education / Community).
 - **TimelineDetailModal.js**: Modal component that displays detailed information
   for timeline items, including key projects (for work experience) and
   coursework tables (for education). Supports keyboard navigation (Escape to
   close) and click-outside-to-close functionality.
-- **PublicationsEvents.js**: "Writing & Talks" section — showcases publications
-  and speaking/organiser events
-- **Header.js**: Navigation header with links to sections (About / Background /
-  Writing & Talks / Contact)
-- **About.js**: About section — carries technical practitioner positioning
-- **Contact.js**: Contact section with "Let's Talk" heading, email and social links
-- **Footer.js**: Site footer
+- **PublicationsEvents.js**: Writing page (`/writing`) — showcases publications
+  and speaking/organiser events.
+- **Contact.js**: Contact page (`/contact`) — "Let's Talk" heading, email and
+  social links.
+- **Footer.js**: Site footer — rendered on all routes outside the route tree.
+- **ErrorBoundary.js**: Wraps components to catch and handle React errors
+  gracefully.
 - **Data files** (`src/data/`): Content is separated from presentation logic in
   dedicated data files (workExperience.js, education.js, volunteering.js,
   publicationsEvents.js)
 - **config.js**: Central configuration file containing personal information
   (name, title, email, LinkedIn, GitHub) and navigation items
+
+Sub-pages are wrapped in `<main className="main-content page-content">` which
+applies `padding-top: 80px` (defined in `App.css`) to clear the fixed nav.
 
 ### Timeline System
 
@@ -297,8 +326,9 @@ To update site content:
 - Timeline items with detailed information (`projects` or `courses` arrays) are
   automatically made clickable
 - Custom domain configured via CNAME file: amtoft.dev
-- Testing setup is present (React Testing Library, Jest) but no test files
-  currently exist in the codebase
+- Playwright test suite exists in `tests/` and targets the multi-page routing
+  structure; `playwright.config.js` is configured to use system Chrome
+  (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`)
 - **Migration in progress**: The site is transitioning from a CV layout to a
   professional hub. Check PROGRESS.md for current status before making
   significant architectural decisions.

@@ -18,6 +18,9 @@ const Header = () => {
           <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
             <i className="fab fa-linkedin"></i>
           </a>
+          <a href={config.personalInfo.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+            <i className="fab fa-github"></i>
+          </a>
         </div>
       </div>
     </header>

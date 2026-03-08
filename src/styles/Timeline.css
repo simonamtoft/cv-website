@@ -9,8 +9,7 @@
 
 .timeline {
   position: relative;
-  padding: var(--space-lg) 0;
-  padding-top: var(--space-xl);
+  padding: var(--space-xl) 0 var(--space-lg);
   overflow: hidden; /* Hide potential overflow during positioning adjustments */
   display: grid;
   grid-template-columns: 1fr 40px 1fr; /* Left content, 40px central column, Right content */

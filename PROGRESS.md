@@ -31,6 +31,10 @@ Started: 2026-02-28
 - [x] Remove Services section (consulting-framed service cards don't fit technical practitioner positioning)
 - [x] Update positioning framing: ML Engineer & Data Scientist as primary identity, consulting/advisory as context
 - [x] Add React Router v6 — multi-page routing with separate URLs (/background, /writing, /contact); GitHub Pages deep-link workaround via 404.html
+- [x] Restore `/about` as a distinct route — `<About />` moved off `/` to `/about`; `/` now renders hero only
+- [x] Timeline.css padding cleanup — removed redundant top padding after routing restructure
+- [x] Playwright test suite regenerated for multi-page routing — all 24 tests passing against new routes
+- [x] playwright.config.js switched to system Chrome (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`)
 
 ## In Progress
 

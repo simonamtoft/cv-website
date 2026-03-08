@@ -1,6 +1,3 @@
-// spec: specs/plan.md
-// seed: tests/seed.spec.ts
-
 import { test, expect } from '@playwright/test';
 
 test.describe('Page Load & Structure', () => {
@@ -8,25 +5,29 @@ test.describe('Page Load & Structure', () => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
-    // Navigate to the home page
     await page.goto('/');
 
-    // Verify the page title contains Simon's name
     await expect(page).toHaveTitle(/Simon Amtoft Pedersen/);
-
-    // Verify no JS errors occurred
     expect(errors).toHaveLength(0);
   });
 
-  test('All main sections are present', async ({ page }) => {
-    // Navigate to the home page
-    await page.goto('/');
+  test('All routes render without errors', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (err) => errors.push(err.message));
 
-    // Verify all section anchors exist
-    await expect(page.locator('#about')).toBeAttached();
-    await expect(page.locator('#services')).toBeAttached();
-    await expect(page.locator('#timeline')).toBeAttached();
-    await expect(page.locator('#publications-events')).toBeAttached();
-    await expect(page.locator('#contact')).toBeAttached();
+    for (const route of ['/', '/background', '/writing', '/contact']) {
+      await page.goto(route);
+      await expect(page).toHaveTitle(/Simon Amtoft Pedersen/);
+    }
+
+    expect(errors).toHaveLength(0);
+  });
+
+  test('Home page shows hero; about page shows about section', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('header.header')).toBeVisible();
+
+    await page.goto('/about');
+    await expect(page.locator('section.about')).toBeAttached();
   });
 });

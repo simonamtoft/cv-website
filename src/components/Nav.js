@@ -48,7 +48,16 @@ const Nav = () => {
 
   return (
     <nav className={`nav-pill${isFixed ? ' nav-pill--fixed' : ''}`}>
-      <ul>{navLinks}</ul>
+      <ul>
+        {!isHome && (
+          <li className="nav-home-item">
+            <NavLink to="/" className="nav-link nav-home-link" title="Home">
+              <i className="fas fa-house" aria-hidden="true" />
+            </NavLink>
+          </li>
+        )}
+        {navLinks}
+      </ul>
     </nav>
   );
 };
