@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.917e3a68.css",
-    "main.js": "/static/js/main.6a27b77e.js",
+    "main.css": "/static/css/main.ab44f0f5.css",
+    "main.js": "/static/js/main.a984e6f8.js",
     "static/media/UMD_logo.png": "/static/media/UMD_logo.48b3413ecf4f290b0371.png",
     "static/media/profile.jpeg": "/static/media/profile.f0da6f58ce3224bdaf6a.jpeg",
     "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.2582b0e4bcf85eceead0.ttf",
@@ -12,16 +12,17 @@
     "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.914997e1bdfc990d0897.ttf",
     "static/media/ReDI_logo.png": "/static/media/ReDI_logo.afb1ebd619197f2c28a0.png",
     "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.89999bdf5d835c012025.woff2",
-    "static/media/IDA_logo.jpg": "/static/media/IDA_logo.40baf6dec99fa3985ae2.jpg",
     "static/media/fa-v4compatibility.ttf": "/static/media/fa-v4compatibility.da94ef451f4969af06e6.ttf",
+    "static/media/TTC_logo.svg": "/static/media/TTC_logo.51d0abbcdacd2aafa605ed855287d1b2.svg",
     "static/media/fa-v4compatibility.woff2": "/static/media/fa-v4compatibility.ea8f94e1d22e0d35ccd4.woff2",
     "static/media/Terma_logo.svg": "/static/media/Terma_logo.5e0a4cbfa0bf883b87f73b5528c4c210.svg",
     "index.html": "/index.html",
-    "main.917e3a68.css.map": "/static/css/main.917e3a68.css.map",
-    "main.6a27b77e.js.map": "/static/js/main.6a27b77e.js.map"
+    "static/media/IDA_logo.svg": "/static/media/IDA_logo.04edfb2d752ed202799419c8f663133c.svg",
+    "main.ab44f0f5.css.map": "/static/css/main.ab44f0f5.css.map",
+    "main.a984e6f8.js.map": "/static/js/main.a984e6f8.js.map"
   },
   "entrypoints": [
-    "static/css/main.917e3a68.css",
-    "static/js/main.6a27b77e.js"
+    "static/css/main.ab44f0f5.css",
+    "static/js/main.a984e6f8.js"
   ]
 }
