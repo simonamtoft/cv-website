@@ -62,12 +62,19 @@
   height: 12px;
 }
 
+/* Fixed-height frame keeps badge snug below logo regardless of logo aspect ratio */
+.timeline-icon-frame {
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
 .timeline-icon {
-  height: 100px;
+  height: 72px;
   width: auto;
-  max-width: 250px;
+  max-width: 240px;
   object-fit: contain;
-  object-position: top center;
+  object-position: center;
 }
 
 /* Icon wrapper to stack icon + badge */
@@ -171,7 +178,7 @@
     align-self: start; /* Align icon container to the top of its grid row */
     min-width: 0; /* Allow container to shrink in grid */
     height: auto;
-    min-height: 100px;
+    min-height: 0;
 }
 
 .timeline-content {
@@ -358,12 +365,16 @@
     padding: 1px 6px;
   }
 
+  .timeline-icon-frame {
+    height: 40px;
+  }
+
   .timeline-icon {
     height: 40px;
     width: auto;
-    max-width: 80px;
+    max-width: 70px;
     object-fit: contain;
-    object-position: top center;
+    object-position: center;
   }
 
   /* Remove specific left/right styles in mobile view */

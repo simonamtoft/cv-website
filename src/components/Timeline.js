@@ -125,6 +125,9 @@ const Timeline = () => {
                     {org && <div className="timeline-org-name">{org}</div>}
                   </div>
                 )}
+                <span className={`timeline-category-badge category-${item.category}`}>
+                  {categoryLabel[item.category]}
+                </span>
                 <div className="timeline-content">
                   <p>{item.text}</p>
                   {hasDetails && <span className="view-details-hint">Click to view details</span>}
@@ -132,7 +135,9 @@ const Timeline = () => {
               </div>
               <div className="timeline-icon-container">
                 <div className="timeline-icon-wrapper">
-                  <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
+                  <div className="timeline-icon-frame">
+                    <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
+                  </div>
                   <span className={`timeline-category-badge category-${item.category}`}>
                     {categoryLabel[item.category]}
                   </span>
