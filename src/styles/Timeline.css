@@ -77,14 +77,6 @@
   object-position: center;
 }
 
-/* Icon wrapper to stack icon + badge */
-.timeline-icon-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
 /* Category badge */
 .timeline-category-badge {
   display: inline-block;
@@ -95,6 +87,8 @@
   letter-spacing: 0.4px;
   text-transform: uppercase;
   white-space: nowrap;
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xs);
 }
 
 .category-work {
@@ -182,7 +176,11 @@
 }
 
 .timeline-content {
-  text-align: justify; /* Make text content justify */
+  text-align: justify;
+}
+
+.timeline-item.right .timeline-content {
+  text-align: justify;
 }
 
 /* Clickable timeline items */
@@ -223,6 +221,7 @@
 .timeline-item.right .timeline-date-text-container {
   grid-column: 1; /* Date and text on the left */
   padding-right: var(--space-lg); /* Add padding to the right to create space from central column */
+  text-align: right;
 }
 
 .timeline-item.right .timeline-number {
@@ -353,11 +352,6 @@
     justify-content: center; /* Center content horizontally */
     height: auto;
     width: 80px;
-  }
-
-  .timeline-icon-wrapper {
-    align-items: center;
-    gap: 4px;
   }
 
   .timeline-category-badge {

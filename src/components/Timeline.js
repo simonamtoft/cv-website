@@ -134,13 +134,8 @@ const Timeline = () => {
                 </div>
               </div>
               <div className="timeline-icon-container">
-                <div className="timeline-icon-wrapper">
-                  <div className="timeline-icon-frame">
-                    <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
-                  </div>
-                  <span className={`timeline-category-badge category-${item.category}`}>
-                    {categoryLabel[item.category]}
-                  </span>
+                <div className="timeline-icon-frame">
+                  <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
                 </div>
               </div>
             </div>
