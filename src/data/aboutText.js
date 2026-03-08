@@ -1,13 +1,13 @@
 const aboutText = <>
-I work at the intersection of machine learning and real-world business problems - helping organisations move from "we have data" to "AI that actually works in production."
+I'm an ML engineer and data scientist with a focus on getting models into production - building the systems, pipelines, and infrastructure that make ML reliable at scale.
 <p></p>
-As a Senior Consultant at <a href="https://thetechcollective.eu/what-we-do/data-ai-and-analytics" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group - I work on AI and ML projects across the full arc: framing the right problem, designing the solution, and getting it into the hands of users. My background is technical (MSc in Mathematical Modelling and Computation from DTU, with a focus on machine learning), but what I find most valuable is the client-facing work - translating complex, messy business problems into AI that people actually adopt.
+My work centers on traditional ML and MLOps: classification models, semantic matching, RAG pipelines, and agentic workflows, along with the tooling to run them consistently over time. I've been working with LLM-based systems since they became practically useful, but my foundation is in the engineering that makes ML work reliably, not just impressively in a demo.
 <p></p>
-Before consulting, I spent over three years at Stibo Systems building production ML systems for enterprise clients: classification models, transformer-based semantic matching, agentic pipelines, RAG systems, and the MLOps infrastructure to run them at scale.
+I work through <a href="https://thetechcollective.eu/what-we-do/data-ai-and-analytics" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group - taking on projects where the technical complexity is real. My background is mathematical and computational (MSc from DTU, focus on machine learning), and I spent over three years at Stibo Systems before that, building production ML systems for enterprise clients.
 <p></p>
-Outside of client work, I'm active in the Danish data and AI community. I co-author articles with the Danish Data Science Community, sit on the IDA AI Steering Committee, and help organise the annual Driving AI and Driving IT conferences - having sourced or chaired sessions at all three editions so far.
+Outside client work, I'm active in the Danish data and AI community. I co-author articles with the Danish Data Science Community, sit on the IDA AI Steering Committee, and help organise the annual Driving AI and Driving IT conferences.
 <p></p>
-If you're working on a data or AI challenge and want a straight conversation about what's realistic and what's not, feel free to reach out.
+If you're working on a data or AI challenge, reach out.
 </>
 
 export default aboutText

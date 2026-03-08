@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import '../styles/Timeline.css';
+import PageNav from './PageNav';
 import workExperience from '../data/workExperience';
 import education from '../data/education';
 import volunteering from '../data/volunteering';
@@ -150,6 +151,10 @@ const Timeline = () => {
           item={selectedItem}
         />
       )}
+      <PageNav
+        prev={{ label: 'About', path: '/about' }}
+        next={{ label: 'Writing & Talks', path: '/writing' }}
+      />
     </>
   );
 };

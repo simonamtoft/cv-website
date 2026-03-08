@@ -3,6 +3,7 @@ import '../styles/About.css';
 import ProfilePicture from '../assets/profile.jpeg';
 import config from '../config';
 import aboutText from '../data/aboutText.js'
+import PageNav from './PageNav';
 
 const About = () => {
   const aboutRef = useRef(null);
@@ -32,19 +33,22 @@ const About = () => {
   }, []);
 
   return (
-    <section className="about" ref={aboutRef}>
-      <div>
-        <h2>About</h2>
-      </div>
-      <div className='about-content'>
-        <div className='about-image'>
-          <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' loading="lazy"/>
+    <>
+      <section className="about" ref={aboutRef}>
+        <div>
+          <h2>About</h2>
         </div>
-        <div className='about-text'>
-          {aboutText}
+        <div className='about-content'>
+          <div className='about-image'>
+            <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' loading="lazy"/>
+          </div>
+          <div className='about-text'>
+            {aboutText}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <PageNav next={{ label: 'Background', path: '/background' }} />
+    </>
   );
 };
 

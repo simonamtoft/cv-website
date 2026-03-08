@@ -44,7 +44,7 @@ const publicationsEvents = [
     date: "2025 Nov",
     link: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
     venue: "IDA",
-    description: "Denmark's premier IT conference spanning software development, AI, security, UX, and sustainability. As session chair for the AI track, I brought in roughly 18% of speakers for this 600+ attendee conference",
+    description: "Denmark's premier IT conference spanning software development, AI, security, UX, and sustainability. As session chair for the AI track, I brought in roughly 18% of speakers for this 300+ attendee conference",
   },
   {
     type: "conference",

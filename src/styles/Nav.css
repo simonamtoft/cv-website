@@ -96,6 +96,16 @@
 
 @media (max-width: 480px) {
   .nav-pill--fixed {
+    width: min(max-content, calc(100vw - 2rem));
     padding: var(--space-xs) var(--space-sm);
+    justify-content: center;
+  }
+  .nav-pill--fixed ul {
+    justify-content: center;
+    gap: 0;
+  }
+  .nav-pill--fixed a {
+    font-size: var(--font-size-xs);
+    padding: 0.35rem 0.6rem;
   }
 }

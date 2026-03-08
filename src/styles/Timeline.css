@@ -4,7 +4,7 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
   text-align: center;
-  margin: 0 0 var(--space-xl);
+  margin: var(--space-xl) 0 var(--space-xl);
 }
 
 .timeline {

@@ -121,6 +121,7 @@ body {
 
 .page-content {
   padding-top: 80px;
+  padding-bottom: var(--space-xl);
 }
 
 a {

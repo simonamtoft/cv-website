@@ -48,7 +48,7 @@ Started: 2026-02-28
 - [ ] Full content review before relaunch (cv-content-reviewer)
 
 ### Navigation
-- [ ] Investigate navigation options - user prefers pill at top of page on home rather than bottom; explore: always-visible top pill (fixed from load), scroll-triggered top pill, or other patterns
+- [ ] Would like additionaly ways of navigating to the "next" page
 
 ### Potential Enhancements
 - [ ] Dedicated Community section (if volunteering/IDA role grows significantly)

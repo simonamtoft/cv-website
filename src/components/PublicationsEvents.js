@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import '../styles/PublicationsEvents.css';
 import publicationsEvents from '../data/publicationsEvents';
+import PageNav from './PageNav';
 
 const PublicationsEvents = () => {
   const publicationsEventsRef = useRef(null);
@@ -78,58 +79,64 @@ const PublicationsEvents = () => {
   });
 
   return (
-    <section className="publications-events" ref={publicationsEventsRef}>
-      <h2>Writing & Talks</h2>
-      <div className="publications-events-container">
-        {sortedWork.map((item, index) => (
-          <a
-            key={index}
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`work-card work-card-${item.type}`}
-          >
-            <div className="work-card-header">
-              <div className={`work-type-badge work-type-${item.type}`}>
-                <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : 'fa-chalkboard-teacher'}`}></i>
-                <span>{item.type === 'article' ? 'Article' : 'Conference'}</span>
+    <>
+      <section className="publications-events" ref={publicationsEventsRef}>
+        <h2>Writing & Talks</h2>
+        <div className="publications-events-container">
+          {sortedWork.map((item, index) => (
+            <a
+              key={index}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`work-card work-card-${item.type}`}
+            >
+              <div className="work-card-header">
+                <div className={`work-type-badge work-type-${item.type}`}>
+                  <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : 'fa-chalkboard-teacher'}`}></i>
+                  <span>{item.type === 'article' ? 'Article' : 'Conference'}</span>
+                </div>
+                <div className="work-link-indicator">
+                  <i className="fas fa-external-link-alt"></i>
+                </div>
               </div>
-              <div className="work-link-indicator">
-                <i className="fas fa-external-link-alt"></i>
+
+              <div className="work-title-container">
+                <h3 className="work-title">{item.title}</h3>
+                {item.originalTitle && (
+                  <p className="work-original-title">{item.originalTitle}</p>
+                )}
               </div>
-            </div>
 
-            <div className="work-title-container">
-              <h3 className="work-title">{item.title}</h3>
-              {item.originalTitle && (
-                <p className="work-original-title">{item.originalTitle}</p>
+              <div className="work-metadata">
+                <span className="work-date">{item.date}</span>
+                {item.venue && (
+                  <>
+                    <span className="work-separator">|</span>
+                    <span className="work-venue">{item.venue}</span>
+                  </>
+                )}
+              </div>
+
+              {item.description && (
+                <p className="work-description">{item.description}</p>
               )}
-            </div>
 
-            <div className="work-metadata">
-              <span className="work-date">{item.date}</span>
-              {item.venue && (
-                <>
-                  <span className="work-separator">|</span>
-                  <span className="work-venue">{item.venue}</span>
-                </>
+              {item.authors && (
+                <p className="work-authors">
+                  <span className="authors-label">Authors: </span>
+                  {formatAuthors(item.authors)}
+                </p>
               )}
-            </div>
-
-            {item.description && (
-              <p className="work-description">{item.description}</p>
-            )}
-
-            {item.authors && (
-              <p className="work-authors">
-                <span className="authors-label">Authors: </span>
-                {formatAuthors(item.authors)}
-              </p>
-            )}
-          </a>
-        ))}
-      </div>
-    </section>
+            </a>
+          ))}
+        </div>
+      </section>
+      <PageNav
+        prev={{ label: 'Background', path: '/background' }}
+        next={{ label: 'Contact', path: '/contact' }}
+      />
+    </>
   );
 };
 
