@@ -60,9 +60,44 @@
   border-left-color: var(--medium-grey);
 }
 
-.work-card-conference:focus {
+.work-card-webinar {
+  border-left-color: #2d7a8a;
+}
+
+.work-card-conference:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--medium-grey);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.filter-btn.active {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: var(--white);
 }
 
 .work-card-header {
@@ -94,6 +129,12 @@
   background: rgba(122, 92, 64, 0.15);
   color: #7a5c40;
   border: 1px solid rgba(122, 92, 64, 0.3);
+}
+
+.work-type-webinar {
+  background: rgba(45, 122, 138, 0.15);
+  color: #2d7a8a;
+  border: 1px solid rgba(45, 122, 138, 0.3);
 }
 
 .work-link-indicator {

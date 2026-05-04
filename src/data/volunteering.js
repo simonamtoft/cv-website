@@ -15,8 +15,8 @@ const volunteering = [
     </>,
     icon: ReDI_logo
   }, {
-    jobTitle: "Volunteer",
-    companyName: "IDA",
+    jobTitle: "Steering Committee Member",
+    companyName: "IDA AI",
     start: "2025 Jan",
     end: "Now",
     text: <>

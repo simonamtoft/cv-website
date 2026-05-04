@@ -13,6 +13,33 @@ const publicationsEvents = [
   //   authors: ["First Author", "Second Author"], // Optional - array of author names
   // }
   {
+    type: "webinar",
+    title: "Agentic Coding (3): Autonomous Coding Agents",
+    originalTitle: "Kod med AI (3): Autonomous coding agents",
+    date: "2026 Jun",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-3-autonomous-coding-agents-366416",
+    venue: "IDA AI",
+    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background — Ralph loops, orchestration strategies, and building systems that run unattended in production.",
+  },
+  {
+    type: "webinar",
+    title: "Agentic Coding (2): From Idea to Prototype",
+    originalTitle: "Kod med AI (2): Fra idé til prototype",
+    date: "2026 May",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-2-fra-ide-til-prototype-366415",
+    venue: "IDA AI",
+    description: "Second session in the Agentic Coding series. Facilitated a practical session on accelerating the journey from concept to working prototype using AI tools.",
+  },
+  {
+    type: "webinar",
+    title: "Agentic Coding (1): Workflows That Actually Work",
+    originalTitle: "Kod med AI (1): Workflows That Actually Work",
+    date: "2026 May",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-1-workflows-that-actually-work-366414",
+    venue: "IDA AI",
+    description: "First session in the Agentic Coding series, hosted for IDA AI. Brought 339 registered practitioners through practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling.",
+  },
+  {
     type: "article",
     title: "Open source is a strategic necessity in AI: This is how we join the race",
     originalTitle: "Open source er en strategisk nødvendighed i AI: Sådan kommer vi med i kapløbet",

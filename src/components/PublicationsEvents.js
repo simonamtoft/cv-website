@@ -1,10 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/PublicationsEvents.css';
 import publicationsEvents from '../data/publicationsEvents';
 import PageNav from './PageNav';
 
+const FILTERS = [
+  { label: 'All', value: 'all' },
+  { label: 'Webinars', value: 'webinar' },
+  { label: 'Conferences', value: 'conference' },
+  { label: 'Articles', value: 'article' },
+];
+
 const PublicationsEvents = () => {
   const publicationsEventsRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState('all');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,17 +79,25 @@ const PublicationsEvents = () => {
     return new Date(year, month - 1);
   };
 
-  // Sort items by date (most recent first)
-  const sortedWork = [...publicationsEvents].sort((a, b) => {
-    const dateA = parseDate(a.date);
-    const dateB = parseDate(b.date);
-    return dateB - dateA;
-  });
+  const sortedWork = [...publicationsEvents]
+    .sort((a, b) => parseDate(b.date) - parseDate(a.date))
+    .filter(item => activeFilter === 'all' || item.type === activeFilter);
 
   return (
     <>
       <section className="publications-events" ref={publicationsEventsRef}>
-        <h2>Writing & Events</h2>
+        <h2>Writing & Talks</h2>
+        <div className="filter-bar">
+          {FILTERS.map(f => (
+            <button
+              key={f.value}
+              className={`filter-btn${activeFilter === f.value ? ' active' : ''}`}
+              onClick={() => setActiveFilter(f.value)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
         <div className="publications-events-container">
           {sortedWork.map((item, index) => (
             <a
@@ -93,8 +109,8 @@ const PublicationsEvents = () => {
             >
               <div className="work-card-header">
                 <div className={`work-type-badge work-type-${item.type}`}>
-                  <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : 'fa-chalkboard-teacher'}`}></i>
-                  <span>{item.type === 'article' ? 'Article' : 'Conference'}</span>
+                  <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : item.type === 'webinar' ? 'fa-video' : 'fa-chalkboard-teacher'}`}></i>
+                  <span>{item.type === 'article' ? 'Article' : item.type === 'webinar' ? 'Webinar' : 'Conference'}</span>
                 </div>
                 <div className="work-link-indicator">
                   <i className="fas fa-external-link-alt"></i>

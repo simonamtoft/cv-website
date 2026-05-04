@@ -4,16 +4,15 @@ import TTC_logo from '../assets/TTC_logo.svg'
 
 const workExperience = [
   {
-    jobTitle: "Senior ML Engineer",
+    jobTitle: "Senior Consultant",
     companyName: "The Tech Collective",
     start: "2026 Mar",
     end: "Now",
     text: <>
-    At <a href="https://www.thetechcollective.dk/" target="_blank" rel="noopener noreferrer">The Tech Collective</a>, part of Implement Consulting Group, I work with clients to move from AI ambition to working solutions.
-    My work spans both sides of that journey: advising on AI strategy and helping organisations understand where machine learning can create real value, and hands-on engineering to build and deliver those solutions.
+    At <a href="https://www.thetechcollective.dk/" target="_blank" rel="noopener noreferrer">The Tech Collective</a> — part of Implement Consulting Group's Digital Transformation practice — I combine hands-on engineering with AI advisory.
+    I build end-to-end AI solutions across the full stack, from data pipelines and model training to application layers, while advising clients on AI strategy: where it fits, what to prioritise, and how to move from idea to production.
     </>,
-    icon: TTC_logo,
-    projects: []
+    icon: TTC_logo
   },
   {
     jobTitle: "Senior Data Scientist",

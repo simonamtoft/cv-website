@@ -5,8 +5,8 @@
 export const config = {
   personalInfo: {
     name: "Simon Amtoft Pedersen",
-    title: "Senior ML Engineer",
-    subtitle: "Senior ML Engineer | The Tech Collective",
+    title: "Senior Consultant",
+    subtitle: "Senior Consultant | The Tech Collective",
     email: "simon@amtoft.dev",
     workEmail: "siap@thetechcollective.eu",
     linkedIn: {
@@ -18,7 +18,7 @@ export const config = {
   navigation: [
     { label: "About", href: "/about" },
     { label: "Background", href: "/background" },
-    { label: "Writing & Events", href: "/writing" },
+    { label: "Writing & Talks", href: "/writing" },
     { label: "Contact", href: "/contact" }
   ]
 };
