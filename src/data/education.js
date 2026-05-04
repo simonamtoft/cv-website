@@ -8,10 +8,9 @@ const education = [
     institution: "Technical University of Denmark (DTU)",
     text: <>
     MSc at the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>,
-    specializing in machine learning for computer vision and latent variable models. As an honorary student under <a href="https://www.dtu.dk/person/ole-winther?id=10167&entity=profile" target="_blank" rel="noopener noreferrer">Ole Winther</a>,
-    I took three research-level courses (30 ECTS), earning top grades (12/A) in all. I collaborated closely with Giorgio Giannone throughout my honorary student work,
-    gaining hands-on experience in advanced probabilistic modeling and machine learning techniques.
-    My master's thesis developed novel optimization techniques to accelerate inference in denoising diffusion probabilistic models for image generation.
+    specialising in machine learning for computer vision and latent variable models. As an honorary student under <a href="https://www.dtu.dk/person/ole-winther?id=10167&entity=profile" target="_blank" rel="noopener noreferrer">Ole Winther</a>,
+    I took three research-level courses (30 ECTS), earning top grades (12/A) in all. I worked closely with Giorgio Giannone throughout, gaining hands-on experience in advanced probabilistic modelling and deep generative models.
+    My master's thesis developed optimisation techniques to accelerate inference in denoising diffusion probabilistic models for image generation.
     </>,
     start: "2020 Aug",
     end: "2022 Jun",
@@ -107,9 +106,7 @@ const education = [
     degree: "Exchange Semester",
     institution: "University of Maryland, College Park",
     text: <>
-    Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>.
-    Here, I took my first machine learning course, sparking my interest in AI and data science. The experience opened my eyes to new ideas and
-    practical challenges, and I was honored to receive academic honors for the semester.
+    Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>, where I took my first machine learning course - the one that pulled me toward AI and data science. I finished the semester with academic honors.
     </>,
     start: "2019 Sep",
     end: "2019 Dec",

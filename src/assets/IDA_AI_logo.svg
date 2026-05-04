@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 150">
+  <!-- I -->
+  <rect x="5" y="0" width="38" height="100" rx="10" fill="#555"/>
+
+  <!-- D -->
+  <path
+    fill="none"
+    stroke="#555"
+    stroke-width="22"
+    stroke-linecap="butt"
+    d="M 78 11 A 39 39 0 1 1 78 89"
+  />
+
+  <!-- A -->
+  <path
+    fill="none"
+    stroke="#555"
+    stroke-width="21"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M 143 100 L 187 2 L 232 100"
+  />
+
+  <!-- AI sub-label -->
+  <text
+    x="5"
+    y="142"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="36"
+    font-weight="700"
+    fill="#555"
+    text-anchor="start"
+    letter-spacing="6"
+  >AI</text>
+</svg>

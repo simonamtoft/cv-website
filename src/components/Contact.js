@@ -54,7 +54,7 @@ const Contact = () => {
           </p>
         </div>
       </div>
-      <PageNav prev={{ label: 'Writing & Events', path: '/writing' }} />
+      <PageNav prev={{ label: 'Writing & Talks', path: '/writing' }} />
     </>
   );
 };

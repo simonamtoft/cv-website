@@ -19,7 +19,7 @@ const publicationsEvents = [
     date: "2026 Jun",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-3-autonomous-coding-agents-366416",
     venue: "IDA AI",
-    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background — Ralph loops, orchestration strategies, and building systems that run unattended in production.",
+    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background - Ralph loops, orchestration strategies, and building systems that run unattended in production.",
   },
   {
     type: "webinar",
@@ -37,7 +37,7 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-1-workflows-that-actually-work-366414",
     venue: "IDA AI",
-    description: "First session in the Agentic Coding series, hosted for IDA AI. Brought 339 registered practitioners through practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling.",
+    description: "First session in the Agentic Coding series, hosted for IDA AI. Walked 339 registered practitioners through practical AI-assisted coding workflows - context engineering, structured agent instructions, and concrete tooling.",
   },
   {
     type: "article",
@@ -63,7 +63,7 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/driving-ai",
     venue: "IDA",
-    description: "I'm currently organizing this practitioner-focused AI conference, having recruited 50% of the speaker lineup and curating technical content on the latest models, practical case studies, and real-world deployment challenges",
+    description: "Co-organising this practitioner-focused AI conference. Recruited around half of the speaker lineup and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
   },
   {
     type: "conference",
@@ -71,7 +71,7 @@ const publicationsEvents = [
     date: "2025 Nov",
     link: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
     venue: "IDA",
-    description: "Denmark's premier IT conference spanning software development, AI, security, UX, and sustainability. As session chair for the AI track, I brought in roughly 18% of speakers for this 300+ attendee conference",
+    description: "Denmark's main IT conference, spanning software development, AI, security, UX, and sustainability. Served as session chair for the AI track and brought in a portion of the speakers for this 300+ attendee event.",
   },
   {
     type: "conference",
@@ -79,7 +79,7 @@ const publicationsEvents = [
     date: "2025 May",
     link: "https://videos.ida.dk/playlist/dedicated/1_i5sq6z3e/1_g71c2wiu",
     venue: "IDA",
-    description: "I played a key role in shaping this inaugural practitioner-focused AI conference, sourcing nearly half of the speaker lineup and chairing one of the technical tracks",
+    description: "Helped shape this inaugural practitioner-focused AI conference - sourcing close to half of the speaker lineup and chairing one of the technical tracks.",
   }
 ];
 

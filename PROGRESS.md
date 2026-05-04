@@ -38,19 +38,15 @@ Started: 2026-02-28
 - [x] Add PageNav prev/next navigation to all sub-pages
 - [x] Remove keywords meta tag from public/index.html (no SEO value; title/description/OG already aligned)
 - [x] Revise About paragraph 3 to carry consulting/advisory framing ("hands-on technical partner", bridging engineering and decision guidance)
+- [x] Add content to The Tech Collective role (Senior Consultant entry in workExperience.js)
+- [x] Full content review before relaunch (cv-content-reviewer): tone tightened, buzzwords removed, UK English normalised, PageNav labels fixed, trailing punctuation standardised
 
 ## In Progress
 
 ## Up Next
 
-### Positioning & Content
-- [ ] Add content to The Tech Collective role (currently blank — deferred until ready)
-- [ ] Review and update all existing content for vision alignment (content-editor)
-- [ ] Full content review before relaunch (cv-content-reviewer)
-
 ### Navigation
 - [ ] Refactor PageNav to derive prev/next from `config.navigation` dynamically
-- [ ] Add nav links to Footer
 - [ ] Add category filter to Timeline (Background page)
 
 ### Potential Enhancements
@@ -61,4 +57,5 @@ Started: 2026-02-28
 - **Separate Writing and Talks sections**: Kept combined as "Writing & Talks" — volume doesn't yet justify splitting; revisit when content grows
 - **Skills taxonomy display**: Orphaned skills.js data not surfaced as a standalone section — service areas convey expertise more effectively; revisit if client demand requires it
 - **Navigation restructuring beyond relabelling**: Single-page scroll architecture retained for home; routing added for sub-pages
+- **Footer nav links**: Fixed top nav is always visible; PageNav handles bottom-of-page navigation — footer nav would be redundant
 - **Services/Expertise section**: Built then removed — consulting-offerings framing (5 service cards) reads as a services menu, not a demonstration of technical expertise; About section carries positioning weight instead
