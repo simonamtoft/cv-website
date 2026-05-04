@@ -148,10 +148,7 @@ const PublicationsEvents = () => {
           ))}
         </div>
       </section>
-      <PageNav
-        prev={{ label: 'Background', path: '/background' }}
-        next={{ label: 'Contact', path: '/contact' }}
-      />
+      <PageNav />
     </>
   );
 };

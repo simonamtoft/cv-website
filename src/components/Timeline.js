@@ -25,6 +25,13 @@ const Timeline = () => {
     []
   );
 
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const filteredItems = useMemo(
+    () => activeFilter === 'all' ? timelineItems : timelineItems.filter(item => item.category === activeFilter),
+    [timelineItems, activeFilter]
+  );
+
   const containerRef = useRef(null);
   const itemRefs = useRef([]);
   const [visibleItems, setVisibleItems] = useState(new Set());
@@ -91,7 +98,12 @@ const Timeline = () => {
       });
       observer.disconnect();
     };
-  }, [timelineItems]); // Re-run effect if timelineItems change
+  }, [filteredItems]); // Re-run effect if displayed items change
+
+  // Reset visibility state when filter changes so IntersectionObserver re-fires cleanly
+  useEffect(() => {
+    setVisibleItems(new Set());
+  }, [activeFilter]);
 
   const categoryLabel = {
     work: 'Work',
@@ -99,11 +111,30 @@ const Timeline = () => {
     community: 'Community',
   };
 
+  const filters = [
+    { value: 'all', label: 'All' },
+    { value: 'work', label: 'Work' },
+    { value: 'education', label: 'Education' },
+    { value: 'community', label: 'Community' },
+  ];
+
   return (
     <>
       <h2 className="timeline-heading">Background</h2>
+      <div className="timeline-filter" role="group" aria-label="Filter by category">
+        {filters.map(f => (
+          <button
+            key={f.value}
+            className={`timeline-filter-btn${f.value !== 'all' ? ` filter-${f.value}` : ''}${activeFilter === f.value ? ' active' : ''}`}
+            onClick={() => setActiveFilter(f.value)}
+            aria-pressed={activeFilter === f.value}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
       <div className="timeline" ref={containerRef}>
-        {timelineItems.map((item, index) => {
+        {filteredItems.map((item, index) => {
           const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
           const title = item.jobTitle || item.degree;
           const org = item.companyName || item.institution;
@@ -151,10 +182,7 @@ const Timeline = () => {
           item={selectedItem}
         />
       )}
-      <PageNav
-        prev={{ label: 'About', path: '/about' }}
-        next={{ label: 'Writing & Talks', path: '/writing' }}
-      />
+      <PageNav />
     </>
   );
 };

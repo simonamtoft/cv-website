@@ -5,8 +5,8 @@
 export const config = {
   personalInfo: {
     name: "Simon Amtoft Pedersen",
-    title: "Senior Consultant",
-    subtitle: "Senior Consultant | The Tech Collective",
+    title: "ML Engineer & Data Scientist",
+    subtitle: "ML Engineer & Data Scientist",
     email: "simon@amtoft.dev",
     workEmail: "siap@thetechcollective.eu",
     linkedIn: {

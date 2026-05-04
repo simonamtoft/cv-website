@@ -47,7 +47,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      <PageNav next={{ label: 'Background', path: '/background' }} />
+      <PageNav />
     </>
   );
 };
