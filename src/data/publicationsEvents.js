@@ -37,7 +37,7 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-1-workflows-that-actually-work-366414",
     venue: "IDA AI",
-    description: "First session in the Agentic Coding series, hosted for IDA AI. Walked 339 registered practitioners through practical AI-assisted coding workflows - context engineering, structured agent instructions, and concrete tooling.",
+    description: "First session in the Agentic Coding series, hosted for IDA AI. Facilitated a session with speaker Jeppe Rasmussen covering practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling. 340+ registered; around 200 joined live.",
   },
   {
     type: "article",
