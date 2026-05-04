@@ -1,8 +1,7 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with
-code in this repository. Refer to VISION.md for the site's purpose and direction,
-and PROGRESS.md for current migration status.
+code in this repository. Refer to VISION.md for the site's purpose and direction.
 
 ## Project Overview
 
@@ -12,9 +11,8 @@ establish a strong, coherent professional presence that positions Simon as a
 trusted expert in data science and AI — generating inbound opportunities from
 clients, collaborators, and the broader professional community.
 
-The site originated as a digital CV and is currently being migrated toward the
-vision defined in VISION.md. See PROGRESS.md for what has been completed and
-what is next.
+The site originated as a digital CV and has been migrated to a professional hub
+as defined in VISION.md.
 
 ## Vision Alignment
 
@@ -106,20 +104,14 @@ Then read each `/tmp/cv-*.png` with the Read tool to visually inspect.
 
 ## Architecture
 
-### Migration Context
+### Architecture Notes
 
-The site is transitioning from a single-page CV layout to a professional hub.
-The current architecture (described below) is the starting point. New sections
-and components will be added incrementally as the migration progresses. See
-PROGRESS.md for the current state.
-
-Anticipated additions include:
-- Community section (speaking, organising, volunteering reframed) if content warrants
-- Writing/Insights section (thought leadership) as content grows
+Potential future additions:
+- Community section (if volunteering/IDA role grows significantly)
+- Case studies or project spotlights (if client confidentiality allows)
 - Note: Services section was built and removed — About carries positioning weight
 
-The existing architecture documentation below reflects the **current** codebase.
-Update it as code changes.
+The architecture documentation below reflects the current codebase. Update it as code changes.
 
 ### Routing
 
@@ -332,6 +324,3 @@ To update site content:
 - Playwright test suite exists in `tests/` and targets the multi-page routing
   structure; `playwright.config.js` is configured to use system Chrome
   (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`)
-- **Migration in progress**: The site is transitioning from a CV layout to a
-  professional hub. Check PROGRESS.md for current status before making
-  significant architectural decisions.
