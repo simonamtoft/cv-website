@@ -1,8 +1,7 @@
 const aboutText = <>
-I grew up tinkering with electronics and spending far too long on playing  video games. The electronics part led somewhere predictable — a BSc in electrical engineering — but the real turn came during my MSc in mathematical modelling at DTU, where I loaded up on ML courses and got properly hooked. The idea that you could point a system at enough data and have it figure something out is still what I find interesting.
-<p></p>
-My work spans traditional ML and MLOps, generative AI, agents, and the infrastructure to run them reliably in production. My focus is on the engineering that makes things work consistently, not just impressively in a demo.
-
+  <p>My interest in maths started at a kitchen table in 4th grade, when my dad and I sat down and worked through two equations with two unknowns together. Something clicked. That curiosity led me to DTU, where I picked Electrical Engineering deliberately — a good mix of theory and practice, and the broadest path into the master's tracks I cared about: autonomous systems, machine learning, software engineering. An intro course in ML sealed it. The idea that you could point a system at data and have it surface patterns no human would spot still fascinates me. I ended up in the honors programme, which gave me the freedom to overload on ML courses and run special projects with my advisor.</p>
+  <p>After DTU, I joined a B2B software company's innovation team as the only person with ML experience. By week two I was already out on my first client project. I later built solutions end-to-end on my own — from training pipelines to deployment — that are in production today, including at a Fortune 500 company. I moved to my current role because I wanted to follow projects from strategy through to operations; by day three, I was already on my first client engagement.</p>
+  <p>What originally pulled me into ML was the idea of solving problems you otherwise couldn't solve — not automating the obvious, but unlocking something new. My strongest area is building ML end-to-end: training pipelines, data pipelines, inference, and cloud deployment. The projects that really light me up are the ones where the problem itself is the hard part.</p>
 </>
 
 export default aboutText
