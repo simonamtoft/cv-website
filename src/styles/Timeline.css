@@ -326,7 +326,7 @@
     background: var(--color-border);
     z-index: 0;
     display: block;
-    right: 60px; /* Position line to align with the dot */
+    right: 90px; /* Position line to the left of the icon area */
   }
 
   .timeline::after {
@@ -340,7 +340,7 @@
     align-items: flex-start; /* Align items to the top */
     margin-top: var(--space-lg);
     margin-bottom: var(--space-lg);
-    padding-right: 95px; /* Space for icon + badge area */
+    padding-right: 100px; /* Space for icon (80px) + line clearance */
     position: relative; /* Needed for absolute positioning of dot and icon */
   }
 
@@ -354,7 +354,7 @@
     width: 12px;
     height: 12px;
     left: auto;
-    right: 55px;
+    right: 85px; /* Center dot on the line at right: 90px */
   }
 
   .timeline-left-content-group {
