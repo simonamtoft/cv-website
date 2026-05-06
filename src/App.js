@@ -5,7 +5,6 @@ import About from './components/About';
 import Timeline from './components/Timeline';
 import PublicationsEvents from './components/PublicationsEvents';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
 import ReadingProgress from './components/ReadingProgress';
@@ -54,7 +53,6 @@ function AppContent() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
-      {location.pathname !== '/' && <Footer />}
       <BackToTop />
     </>
   );

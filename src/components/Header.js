@@ -48,8 +48,8 @@ const Header = () => {
           </a>
         </div>
       </div>
-      <Link to="/about" className="hero-scroll-hint" aria-label="Go to About page">
-        <i className="fas fa-chevron-down" aria-hidden="true" />
+      <Link to="/about" className="hero-scroll-hint">
+        About <i className="fas fa-arrow-right" aria-hidden="true" />
       </Link>
     </header>
   );
