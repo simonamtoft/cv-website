@@ -99,3 +99,44 @@
     font-size: var(--font-size-2xl);
   }
 }
+
+/* Character reveal */
+.char {
+  opacity: 0;
+}
+
+.char--visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char { opacity: 1; }
+}
+
+/* Hero scroll indicator */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xl);
+  text-decoration: none;
+  animation: hero-bounce 1.6s ease-in-out infinite;
+  transition: color var(--transition-fast);
+}
+
+.hero-scroll-hint:hover {
+  color: var(--accent-amber);
+}
+
+@keyframes hero-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-hint {
+    animation: none;
+  }
+}

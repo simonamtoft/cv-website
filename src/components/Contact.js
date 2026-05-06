@@ -1,7 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Contact.css';
 import config from '../config';
 import PageNav from './PageNav';
+
+const CopyButton = ({ text }) => {
+  const [copied, setCopied] = useState(false);
+  const timer = useRef(null);
+
+  const handleCopy = async () => {
+    try { await navigator.clipboard.writeText(text); } catch { return; }
+    setCopied(true);
+    timer.current = setTimeout(() => setCopied(false), 2000);
+  };
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  if (!navigator.clipboard) return null;
+  return (
+    <button
+      className={`copy-btn${copied ? ' copy-btn--copied' : ''}`}
+      onClick={handleCopy}
+      aria-label={copied ? 'Copied!' : 'Copy to clipboard'}
+    >
+      <i className={`fas ${copied ? 'fa-check' : 'fa-copy'}`} aria-hidden="true" />
+      <span className="copy-btn-label">{copied ? 'Copied!' : 'Copy'}</span>
+    </button>
+  );
+};
 
 const Contact = () => {
   const contactRef = useRef(null);
@@ -45,9 +70,11 @@ const Contact = () => {
         <div className="contact-info">
           <p>
             <i className="fas fa-envelope" aria-label="Email"></i> <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
+            <CopyButton text={config.personalInfo.email} />
           </p>
           <p>
             <i className="fas fa-envelope" aria-label="Work Email"></i> <a href={`mailto:${config.personalInfo.workEmail}`}>{config.personalInfo.workEmail}</a>
+            <CopyButton text={config.personalInfo.workEmail} />
           </p>
           <p>
             <i className="fab fa-linkedin" aria-label="LinkedIn"></i> <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">linkedin.com/in/{config.personalInfo.linkedIn.handle}</a>

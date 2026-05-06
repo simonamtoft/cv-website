@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 import config from '../config';
 
+const TAGLINE = 'I help organisations ship AI that actually works in production.';
+const CHARS = TAGLINE.split('');
+
 const Header = () => {
+  const [revealed, setRevealed] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setRevealed(CHARS.length);
+      return;
+    }
+    let i = 0;
+    const iv = setInterval(() => {
+      i++;
+      setRevealed(i);
+      if (i >= CHARS.length) clearInterval(iv);
+    }, 18);
+    return () => clearInterval(iv);
+  }, []);
+
   return (
     <header className="header">
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <div className="header-content">
         <h1>{config.personalInfo.name}</h1>
         <p className="header-subtitle">{config.personalInfo.subtitle}</p>
-        <p className="header-tagline">
-          I help organisations move from &ldquo;we have data&rdquo; to AI that actually works in production.
+        <p className="header-tagline" aria-label={TAGLINE}>
+          <span aria-hidden="true">
+            {CHARS.map((char, i) => (
+              <span key={i} className={i < revealed ? 'char char--visible' : 'char'}>
+                {char}
+              </span>
+            ))}
+          </span>
         </p>
         <Link to="/contact" className="header-cta">Let&rsquo;s Talk</Link>
         <div className="social-links">
@@ -23,6 +48,9 @@ const Header = () => {
           </a>
         </div>
       </div>
+      <Link to="/about" className="hero-scroll-hint" aria-label="Go to About page">
+        <i className="fas fa-chevron-down" aria-hidden="true" />
+      </Link>
     </header>
   );
 };
