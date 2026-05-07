@@ -82,7 +82,12 @@
   align-items: center;
 }
 
-/* Responsive design */
+/* Mobile bottom tab bar — hidden on desktop */
+.nav-mobile {
+  display: none;
+}
+
+/* Tablet: tighten label spacing on the pill */
 @media (max-width: 768px) {
   .nav-link {
     font-size: var(--font-size-base);
@@ -94,18 +99,79 @@
   }
 }
 
-@media (max-width: 480px) {
-  .nav-pill--fixed {
-    width: min(max-content, calc(100vw - 2rem));
-    padding: var(--space-xs) var(--space-sm);
-    justify-content: center;
+/* Phone: replace pill with a bottom tab bar */
+@media (max-width: 640px) {
+  .nav-pill {
+    display: none;
   }
-  .nav-pill--fixed ul {
-    justify-content: center;
-    gap: 0;
+
+  .nav-mobile {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(253, 246, 236, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(212, 184, 150, 0.6);
+    box-shadow: 0 -4px 14px rgba(61, 43, 26, 0.08);
+    padding-bottom: env(safe-area-inset-bottom);
   }
-  .nav-pill--fixed a {
-    font-size: var(--font-size-xs);
-    padding: 0.35rem 0.6rem;
+
+  .nav-mobile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+  }
+
+  .nav-mobile li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .nav-mobile-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.22rem;
+    padding: 0.55rem 0.25rem 0.65rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-mobile-link i {
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: transform var(--transition-fast);
+  }
+
+  .nav-mobile-label {
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-mobile-link--active {
+    color: var(--accent-amber);
+  }
+
+  .nav-mobile-link--active i {
+    transform: translateY(-1px);
+  }
+
+  .nav-mobile-link:active i {
+    transform: scale(0.92);
   }
 }
