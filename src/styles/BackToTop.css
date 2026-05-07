@@ -31,6 +31,14 @@
   background: var(--accent-amber-hover);
 }
 
+@media (max-width: 640px) {
+  .back-to-top {
+    /* Sit above the fixed bottom tab bar (~64px + safe-area) */
+    bottom: calc(var(--space-2xl) + 0.75rem + env(safe-area-inset-bottom));
+    right: 1rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .back-to-top {
     transition: opacity var(--transition-fast);

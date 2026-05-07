@@ -120,6 +120,15 @@ body {
   padding-bottom: var(--space-xl);
 }
 
+/* On phones the fixed bottom tab bar takes ~64px; reserve room so content
+   isn't covered. The bar itself adds env(safe-area-inset-bottom) padding,
+   so we only add the bar height here. */
+@media (max-width: 640px) {
+  .page-content {
+    padding-bottom: calc(var(--space-2xl) + var(--space-md));
+  }
+}
+
 a {
   color: var(--accent-amber);
   text-decoration: none;
