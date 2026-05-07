@@ -19,7 +19,7 @@ const Header = () => {
       i++;
       setRevealed(i);
       if (i >= CHARS.length) clearInterval(iv);
-    }, 18);
+    }, 24);
     return () => clearInterval(iv);
   }, []);
 
