@@ -100,6 +100,26 @@
   }
 }
 
+/* Phone: top nav-pill is replaced by a fixed bottom tab bar.
+   Drop the top offset (no top nav to clear) and reserve room at the
+   bottom so social icons and the scroll hint don't sit under the bar. */
+@media (max-width: 640px) {
+  .header {
+    height: auto;
+    min-height: calc(100vh - 64px - env(safe-area-inset-bottom));
+    padding-bottom: var(--space-lg);
+  }
+
+  .header-content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .hero-scroll-hint {
+    display: none;
+  }
+}
+
 /* Character reveal */
 .char {
   opacity: 0;
