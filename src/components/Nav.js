@@ -44,6 +44,29 @@ const Nav = () => {
     return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [isHome]);
 
+  // Keep the fixed mobile tab bar pinned to the visual viewport bottom on
+  // iOS Safari/Chrome. WebKit anchors `position: fixed` to the layout
+  // viewport, so when the URL bar collapses the visual viewport extends
+  // below it and the bar appears to "hover" above the actual screen edge.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+
+    const root = document.documentElement;
+    const update = () => {
+      const vv = window.visualViewport;
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+      root.style.setProperty('--visual-viewport-bottom-offset', `${offset}px`);
+    };
+
+    update();
+    window.visualViewport.addEventListener('resize', update);
+    window.visualViewport.addEventListener('scroll', update);
+    return () => {
+      window.visualViewport.removeEventListener('resize', update);
+      window.visualViewport.removeEventListener('scroll', update);
+    };
+  }, []);
+
   const navLinks = config.navigation.map((item) => (
     <li key={item.href}>
       <NavLink

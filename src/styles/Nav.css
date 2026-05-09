@@ -108,7 +108,10 @@
   .nav-mobile {
     display: block;
     position: fixed;
-    bottom: 0;
+    /* Track the visual viewport bottom: WebKit anchors fixed elements to the
+       layout viewport, so when the URL bar collapses the bar otherwise floats
+       above the actual screen edge. The CSS variable is updated by Nav.js. */
+    bottom: var(--visual-viewport-bottom-offset, 0);
     left: 0;
     right: 0;
     z-index: 1000;
