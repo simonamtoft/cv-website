@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import '../styles/TimelineDetailModal.css';
 
 const TimelineDetailModal = ({ isOpen, onClose, item }) => {
@@ -19,7 +20,7 @@ const TimelineDetailModal = ({ isOpen, onClose, item }) => {
 
   if (!isOpen || !item) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className="modal-backdrop"
       onClick={onClose}
@@ -96,7 +97,8 @@ const TimelineDetailModal = ({ isOpen, onClose, item }) => {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

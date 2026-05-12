@@ -1,5 +1,6 @@
 .header {
-  height: 100vh;
+  height: 100vh; /* fallback for older browsers */
+  height: 100dvh; /* tracks URL bar show/hide on mobile */
   background: var(--color-bg);
   color: var(--color-text);
   display: flex;
@@ -116,8 +117,8 @@
 /* Hero next-page hint — matches PageNav link style */
 .hero-scroll-hint {
   position: absolute;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
+  bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+  right: calc(var(--space-lg) + env(safe-area-inset-right, 0px));
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
