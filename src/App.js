@@ -10,11 +10,13 @@ import BackToTop from './components/BackToTop';
 import ReadingProgress from './components/ReadingProgress';
 import PageTransition from './components/PageTransition';
 import { useKeyboardNav } from './hooks/useKeyboardNav';
+import { useSwipeNav } from './hooks/useSwipeNav';
 import './styles/App.css';
 
 function AppContent() {
   const location = useLocation();
   useKeyboardNav();
+  useSwipeNav();
   return (
     <>
       <ReadingProgress />
