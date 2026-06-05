@@ -45,22 +45,40 @@ The site serves these groups, in priority order:
 
 ## Development Commands
 
-```bash
-# Start development server (runs on localhost:3000)
-npm start
+The site is built with [Vite](https://vitejs.dev/) (migrated from Create React
+App).
 
-# Build production bundle
+```bash
+# Start the Vite dev server (runs on localhost:3000)
+npm start          # alias: npm run dev
+
+# Build production bundle (output goes to build/)
 npm run build
 
-# Run tests
+# Preview the production build locally (localhost:3000)
+npm run preview
+
+# Run the Playwright end-to-end tests
 npm test
 
 # Deploy to GitHub Pages
 npm run deploy
 ```
 
-The `npm run deploy` command automatically builds the site and pushes to the
-gh-pages branch.
+The `npm run deploy` command automatically builds the site and pushes the
+`build/` folder to the gh-pages branch.
+
+### Vite notes
+
+- Source files keep JSX inside `.js` files (a Create React App convention).
+  `vite.config.js` opts `src/**/*.js` into esbuild's JSX loader so this keeps
+  working — new components can use `.js` or `.jsx`.
+- `vite.config.js` pins the dev/preview port to `3000` and sets `build.outDir`
+  to `build/` so the GitHub Pages workflow, `gh-pages -d build` deploy script,
+  and `.gitignore` are unchanged.
+- The HTML entry point is `index.html` in the repo root (not `public/`); static
+  assets in `public/` (CNAME, 404.html, robots.txt, favicon) are copied to the
+  build root verbatim.
 
 ## Visual Verification with Playwright
 
@@ -313,7 +331,7 @@ To update site content:
 
 - The site has no backend - all content is static React components
 - Images and assets are stored in `src/assets/`
-- The site uses Create React App configuration (react-scripts)
+- The site is built and bundled with Vite (`vite.config.js`)
 - Utility functions are organized in `src/utils/` (currently contains
   `dateFormatter.js`)
 - Modal system uses keyboard navigation (Escape key) and click-outside-to-close
