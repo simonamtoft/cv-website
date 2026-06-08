@@ -99,22 +99,32 @@ const PublicationsEvents = () => {
           ))}
         </div>
         <div className="publications-events-container">
-          {sortedWork.map((item, index) => (
-            <a
+          {sortedWork.map((item, index) => {
+            const showRecordingLink = !!item.recording;
+            return (
+            <div
               key={index}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
               className={`work-card work-card-${item.type}`}
             >
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="work-card-link"
+                  aria-label={item.title}
+                ></a>
+              )}
               <div className="work-card-header">
                 <div className={`work-type-badge work-type-${item.type}`}>
                   <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : item.type === 'webinar' ? 'fa-video' : 'fa-chalkboard-teacher'}`}></i>
                   <span>{item.type === 'article' ? 'Article' : item.type === 'webinar' ? 'Webinar' : 'Conference'}</span>
                 </div>
-                <div className="work-link-indicator">
-                  <i className="fas fa-external-link-alt"></i>
-                </div>
+                {item.link && (
+                  <div className="work-link-indicator">
+                    <i className="fas fa-external-link-alt"></i>
+                  </div>
+                )}
               </div>
 
               <div className="work-title-container">
@@ -134,8 +144,31 @@ const PublicationsEvents = () => {
                 )}
               </div>
 
+              {item.metrics && item.metrics.length > 0 && (
+                <div className="work-metrics">
+                  {item.metrics.map((metric, mIndex) => (
+                    <span key={mIndex} className="work-metric">
+                      <i className={`fas ${metric.icon}`}></i>
+                      <span>{metric.value}</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+
               {item.description && (
                 <p className="work-description">{item.description}</p>
+              )}
+
+              {showRecordingLink && (
+                <a
+                  href={item.recording}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="work-recording-link"
+                >
+                  <i className="fas fa-play-circle"></i>
+                  <span>Watch recording</span>
+                </a>
               )}
 
               {item.authors && (
@@ -144,8 +177,9 @@ const PublicationsEvents = () => {
                   {formatAuthors(item.authors)}
                 </p>
               )}
-            </a>
-          ))}
+            </div>
+            );
+          })}
         </div>
       </section>
       <PageNav />
