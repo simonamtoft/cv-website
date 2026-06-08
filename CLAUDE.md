@@ -60,13 +60,11 @@ npm run preview
 
 # Run the Playwright end-to-end tests
 npm test
-
-# Deploy to GitHub Pages
-npm run deploy
 ```
 
-The `npm run deploy` command automatically builds the site and pushes the
-`build/` folder to the gh-pages branch.
+Deployment is automatic: pushing to `main` triggers the GitHub Actions
+workflow in `.github/workflows/static.yml`, which builds the site and
+publishes it to GitHub Pages.
 
 ### Vite notes
 
@@ -74,8 +72,7 @@ The `npm run deploy` command automatically builds the site and pushes the
   `vite.config.js` opts `src/**/*.js` into esbuild's JSX loader so this keeps
   working — new components can use `.js` or `.jsx`.
 - `vite.config.js` pins the dev/preview port to `3000` and sets `build.outDir`
-  to `build/` so the GitHub Pages workflow, `gh-pages -d build` deploy script,
-  and `.gitignore` are unchanged.
+  to `build/` so the GitHub Pages workflow and `.gitignore` are unchanged.
 - The HTML entry point is `index.html` in the repo root (not `public/`); static
   assets in `public/` (CNAME, 404.html, robots.txt, favicon) are copied to the
   build root verbatim.
@@ -291,12 +288,10 @@ Styles are organized by component in `src/styles/`:
 
 ## Deployment
 
-The site uses two deployment mechanisms:
-
-1. **Manual deployment**: `npm run deploy` (uses gh-pages package)
-2. **Automatic deployment**: GitHub Actions workflow
-   (`.github/workflows/static.yml`) builds the project and deploys the build
-   folder on push to main branch
+The site is deployed by the GitHub Actions workflow
+(`.github/workflows/static.yml`), which builds the project and publishes the
+`build/` folder to GitHub Pages on every push to `main`. The Pages source is
+configured as "GitHub Actions" (not "Deploy from a branch").
 
 ## Content Updates
 

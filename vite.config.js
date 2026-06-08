@@ -17,8 +17,7 @@ export default defineConfig({
       loader: { '.js': 'jsx' },
     },
   },
-  // Output to build/ so the existing GitHub Pages workflow, the
-  // `gh-pages -d build` deploy script, and .gitignore continue to work unchanged.
+  // Output to build/ so the GitHub Pages workflow and .gitignore stay unchanged.
   build: {
     outDir: 'build',
   },

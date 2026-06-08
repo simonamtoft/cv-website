@@ -1,21 +1,15 @@
 # Personal Website
+
 Run locally
 ```
 npm start
 ```
 
 ## Deployment
-Following this guide: https://github.com/gitname/react-gh-pages
 
-Install github pages package
-```
-npm install gh-pages --save-dev
-```
-
-Run deployment
-```
-npm run deploy
-```
+The site is deployed automatically by GitHub Actions
+(`.github/workflows/static.yml`) on every push to `main`. The Pages source is
+set to "GitHub Actions" in repo settings.
 
 ## Resources
 - https://favicon.io/favicon-generator/
