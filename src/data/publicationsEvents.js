@@ -19,7 +19,11 @@ const publicationsEvents = [
     date: "2026 Jun",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-3-autonomous-coding-agents-366416",
     venue: "IDA AI",
-    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background - Ralph loops, orchestration strategies, and building systems that run unattended in production.",
+    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background - Ralph loops, orchestration strategies, and building systems that run unattended in production. The Kod med AI series set a new IDA record for participants in a technical webinar.",
+    metrics: [
+      { icon: "fa-star", value: "8.4/10" },
+      { icon: "fa-users", value: "440 participants" },
+    ],
   },
   {
     type: "webinar",
@@ -28,7 +32,12 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-2-fra-ide-til-prototype-366415",
     venue: "IDA AI",
-    description: "Second session in the Agentic Coding series. Facilitated a practical session on accelerating the journey from concept to working prototype using AI tools.",
+    description: "Second session in the Agentic Coding series. Facilitated a practical session on accelerating the journey from concept to working prototype using AI tools. Attendees specifically called out the facilitation as good at bringing audience questions into the conversation.",
+    metrics: [
+      { icon: "fa-star", value: "7.6/10" },
+      { icon: "fa-users", value: "250 participants" },
+    ],
+    recording: "https://videos.ida.dk/media/Kod%20med%20AI%20(2)%3A%20Fra%20id%C3%A9%20til%20prototype/1_vnb7u59n",
   },
   {
     type: "webinar",
@@ -37,7 +46,12 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-1-workflows-that-actually-work-366414",
     venue: "IDA AI",
-    description: "First session in the Agentic Coding series, hosted for IDA AI. Facilitated a session with speaker Jeppe Rasmussen covering practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling. 340+ registered; around 200 joined live.",
+    description: "First session in the Agentic Coding series, hosted for IDA AI. Facilitated a session with speaker Jeppe Rasmussen covering practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling.",
+    metrics: [
+      { icon: "fa-star", value: "8.7/10" },
+      { icon: "fa-users", value: "340 participants" },
+    ],
+    recording: "https://videos.ida.dk/media/Kod+med+AI+%281%29%3A+Workflows+That+Actually+Work/1_e43bk1om",
   },
   {
     type: "article",
@@ -63,13 +77,18 @@ const publicationsEvents = [
     date: "2026 May",
     link: "https://ida.dk/driving-ai",
     venue: "IDA",
-    description: "Co-organising this practitioner-focused AI conference. Recruited around half of the speaker lineup and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
+    description: "Co-organised this practitioner-focused AI conference. Recruited around a third of the speaker lineup — agreeing topics, scoping talks — and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
+    metrics: [
+      { icon: "fa-star", value: "9.0/10" },
+      { icon: "fa-users", value: "240 participants" },
+      { icon: "fa-microphone", value: "31 speakers" },
+    ],
   },
   {
     type: "conference",
     title: "Driving IT",
     date: "2025 Nov",
-    link: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
     venue: "IDA",
     description: "Denmark's main IT conference, spanning software development, AI, security, UX, and sustainability. Served as session chair for the AI track and brought in a portion of the speakers for this 300+ attendee event.",
   },
@@ -77,7 +96,7 @@ const publicationsEvents = [
     type: "conference",
     title: "Driving AI",
     date: "2025 May",
-    link: "https://videos.ida.dk/playlist/dedicated/1_i5sq6z3e/1_g71c2wiu",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_i5sq6z3e/1_g71c2wiu",
     venue: "IDA",
     description: "Helped shape this inaugural practitioner-focused AI conference - sourcing close to half of the speaker lineup and chairing one of the technical tracks.",
   }
