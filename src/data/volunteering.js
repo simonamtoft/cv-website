@@ -19,7 +19,7 @@ const volunteering = [
     start: "2025 Apr",
     end: "Now",
     text: <>
-    Elected as an alternate member of the Board of Representatives at <a href="https://ida.dk/en" target="_blank" rel="noopener noreferrer">IDA</a> — Denmark's largest engineering association.
+    Elected as an alternate member of the Board of Representatives at <a href="https://ida.dk/en" target="_blank" rel="noopener noreferrer">IDA</a> - Denmark's largest engineering association.
     </>,
     icon: IDA_logo
   }, {
@@ -29,7 +29,7 @@ const volunteering = [
     end: "Now",
     text: <>
     Part of the team organising the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and <a href="https://ida.dk/driving-it" target="_blank" rel="noopener noreferrer">Driving IT</a> conferences within <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-it" target="_blank" rel="noopener noreferrer">IDA IT</a> since January 2025.
-    I joined the Steering Committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a> in December 2025 and now chair its board.
+    I joined the Steering Committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a> in December 2025 and have since taken over as chair of its board.
     </>,
     icon: IDA_AI_logo
   }
