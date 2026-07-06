@@ -23,13 +23,13 @@ const volunteering = [
     </>,
     icon: IDA_logo
   }, {
-    jobTitle: "Steering Committee Member",
+    jobTitle: "Chairman of the Board",
     companyName: "IDA AI",
     start: "2025 Jan",
     end: "Now",
     text: <>
     Part of the team organising the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and <a href="https://ida.dk/driving-it" target="_blank" rel="noopener noreferrer">Driving IT</a> conferences within <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-it" target="_blank" rel="noopener noreferrer">IDA IT</a> since January 2025.
-    In December 2025, I joined the Steering Committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a>.
+    I joined the Steering Committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a> in December 2025 and now chair its board.
     </>,
     icon: IDA_AI_logo
   }

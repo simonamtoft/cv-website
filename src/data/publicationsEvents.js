@@ -76,6 +76,7 @@ const publicationsEvents = [
     title: "Driving AI",
     date: "2026 May",
     link: "https://ida.dk/driving-ai",
+    recording: "https://ida.dk/driving-ai/driving-ai-genoplev-aarets-oplaeg",
     venue: "IDA",
     description: "Co-organised this practitioner-focused AI conference. Recruited around a third of the speaker lineup — agreeing topics, scoping talks — and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
     metrics: [
