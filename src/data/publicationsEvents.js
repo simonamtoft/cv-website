@@ -24,6 +24,7 @@ const publicationsEvents = [
       { icon: "fa-star", value: "8.4/10" },
       { icon: "fa-users", value: "440 participants" },
     ],
+    recording: "https://videos.ida.dk/media/Kod%20med%20AI%20(3)%3A%20Lad%20agenten%20k%C3%B8re/1_dapgezhw",
   },
   {
     type: "webinar",
@@ -81,7 +82,7 @@ const publicationsEvents = [
     description: "Co-organised this practitioner-focused AI conference. Recruited around a third of the speaker lineup — agreeing topics, scoping talks — and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
     metrics: [
       { icon: "fa-star", value: "9.0/10" },
-      { icon: "fa-users", value: "240 participants" },
+      { icon: "fa-users", value: "243 participants" },
       { icon: "fa-microphone", value: "31 speakers" },
     ],
   },
@@ -92,6 +93,11 @@ const publicationsEvents = [
     recording: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
     venue: "IDA",
     description: "Denmark's main IT conference, spanning software development, AI, security, UX, and sustainability. Served as session chair for the AI track and brought in a portion of the speakers for this 300+ attendee event.",
+    metrics: [
+      { icon: "fa-star", value: "9.0/10" },
+      { icon: "fa-users", value: "351 participants" },
+      { icon: "fa-microphone", value: "35 speakers" },
+    ]
   },
   {
     type: "conference",

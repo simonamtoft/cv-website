@@ -1,7 +1,7 @@
 import React from 'react';
 import ReDI_logo from '../assets/ReDI_logo.png';
 import IDA_logo from '../assets/IDA_logo.svg';
-import IDA_AI_logo from '../assets/IDA_AI_logo.svg';
+import IDA_AI_logo from '../assets/IDA_AI_logo.jpeg';
 
 const volunteering = [
   {
