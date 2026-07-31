@@ -71,7 +71,10 @@ publishes it to GitHub Pages.
 - Source files keep JSX inside `.js` files (a Create React App convention).
   `vite.config.js` opts `src/**/*.js` into esbuild's JSX loader so this keeps
   working — new components can use `.js` or `.jsx`. Route modules use `.jsx`.
-- The app runs in **React Router v7 framework mode** (`@react-router/dev`).
+- The app runs in **React Router v8 framework mode** (`@react-router/dev`).
+  v8 requires React 19 and Node 22+, and it removes the `react-router-dom`
+  package — import everything from `react-router` (browser-only entry points
+  like `HydratedRouter` come from `react-router/dom`).
   `vite.config.js` uses the `reactRouter()` plugin (not `@vitejs/plugin-react`);
   `react-router.config.js` sets `ssr: false`, `appDirectory: "src"`,
   `buildDirectory: "build"`, and the `prerender` route list.
@@ -135,7 +138,7 @@ The architecture documentation below reflects the current codebase. Update it as
 
 ### Routing
 
-The site uses React Router v7 in **framework mode** (SPA, `ssr: false`): the route
+The site uses React Router v8 in **framework mode** (SPA, `ssr: false`): the route
 table is in `src/routes.js` with one route module per page under `src/routes/`.
 Routes:
 

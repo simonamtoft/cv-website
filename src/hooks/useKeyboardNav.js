@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router';
 import config from '../config';
 
 const ALL_ROUTES = ['/', ...config.navigation.map(n => n.href)];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import '../styles/Header.css';
 import config from '../config';
 import useTypewriter from '../utils/useTypewriter';
