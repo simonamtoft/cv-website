@@ -17,6 +17,9 @@ export function useKeyboardNav() {
       if (document.activeElement?.isContentEditable) return;
 
       const idx = ALL_ROUTES.indexOf(pathname);
+      // Non-nav routes (article reading + present deck) own their own arrow
+      // keys; without this guard idx === -1 would navigate to ALL_ROUTES[0].
+      if (idx === -1) return;
       if (e.key === 'ArrowRight' && idx < ALL_ROUTES.length - 1) navigate(ALL_ROUTES[idx + 1]);
       if (e.key === 'ArrowLeft' && idx > 0) navigate(ALL_ROUTES[idx - 1]);
     };

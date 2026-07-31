@@ -8,6 +8,7 @@ const ROUTE_META = {
   '/about': { icon: 'fa-user', mobileLabel: 'About' },
   '/background': { icon: 'fa-briefcase', mobileLabel: 'Background' },
   '/writing': { icon: 'fa-feather', mobileLabel: 'Writing' },
+  '/talks': { icon: 'fa-microphone', mobileLabel: 'Talks' },
   '/contact': { icon: 'fa-envelope', mobileLabel: 'Contact' },
 };
 

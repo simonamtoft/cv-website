@@ -25,6 +25,29 @@
   text-align: center;
 }
 
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto var(--space-xl);
+  padding: 0 var(--space-lg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
 .publications-events-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));

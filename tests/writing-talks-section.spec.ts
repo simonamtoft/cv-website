@@ -1,34 +1,54 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Writing & Events Section', () => {
-  test('Section heading reads "Writing & Events"', async ({ page }) => {
+test.describe('Writing / Talks split', () => {
+  test('Writing page heading reads "Writing"', async ({ page }) => {
     await page.goto('/writing');
 
     const section = page.locator('section.publications-events');
-
-    await expect(section.getByRole('heading', { name: 'Writing & Events' })).toBeVisible();
-    await expect(section.getByRole('heading', { name: 'Publications & Events' })).not.toBeAttached();
+    await expect(section.getByRole('heading', { name: 'Writing', exact: true })).toBeVisible();
   });
 
-  test('Cards are present', async ({ page }) => {
+  test('Writing page shows the "Also published elsewhere" divider', async ({ page }) => {
+    await page.goto('/writing');
+
+    await expect(page.locator('.section-divider')).toContainText('Also published elsewhere');
+  });
+
+  test('Writing lists only external article cards', async ({ page }) => {
     await page.goto('/writing');
 
     const cards = page.locator('.work-card');
-    await expect(cards.first()).toBeVisible();
+    expect(await cards.count()).toBeGreaterThan(0);
+    // Everything under /writing is an article; no talks leak in.
+    await expect(page.locator('.work-card:not(.work-card-article)')).toHaveCount(0);
   });
 
-  test('Cards link to external HTTPS URLs with target="_blank"', async ({ page }) => {
+  test('Writing article cards link to external HTTPS URLs in a new tab', async ({ page }) => {
     await page.goto('/writing');
 
-    const cards = page.locator('.work-card');
-    const count = await cards.count();
+    const links = page.locator('.work-card .work-card-link');
+    const count = await links.count();
     expect(count).toBeGreaterThan(0);
 
     for (let i = 0; i < count; i++) {
-      const card = cards.nth(i);
-      const href = await card.getAttribute('href');
-      expect(href).toMatch(/^https:\/\//);
-      await expect(card).toHaveAttribute('target', '_blank');
+      const link = links.nth(i);
+      expect(await link.getAttribute('href')).toMatch(/^https:\/\//);
+      await expect(link).toHaveAttribute('target', '_blank');
     }
+  });
+
+  test('Talks page heading reads "Talks"', async ({ page }) => {
+    await page.goto('/talks');
+
+    const section = page.locator('section.publications-events');
+    await expect(section.getByRole('heading', { name: 'Talks' })).toBeVisible();
+  });
+
+  test('Talks shows webinar and conference cards, but no articles', async ({ page }) => {
+    await page.goto('/talks');
+
+    await expect(page.locator('.work-card-webinar').first()).toBeVisible();
+    await expect(page.locator('.work-card-conference').first()).toBeVisible();
+    await expect(page.locator('.work-card-article')).toHaveCount(0);
   });
 });

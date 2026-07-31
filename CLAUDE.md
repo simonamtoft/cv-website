@@ -70,12 +70,17 @@ publishes it to GitHub Pages.
 
 - Source files keep JSX inside `.js` files (a Create React App convention).
   `vite.config.js` opts `src/**/*.js` into esbuild's JSX loader so this keeps
-  working — new components can use `.js` or `.jsx`.
-- `vite.config.js` pins the dev/preview port to `3000` and sets `build.outDir`
-  to `build/` so the GitHub Pages workflow and `.gitignore` are unchanged.
-- The HTML entry point is `index.html` in the repo root (not `public/`); static
-  assets in `public/` (CNAME, 404.html, robots.txt, favicon) are copied to the
-  build root verbatim.
+  working — new components can use `.js` or `.jsx`. Route modules use `.jsx`.
+- The app runs in **React Router v7 framework mode** (`@react-router/dev`).
+  `vite.config.js` uses the `reactRouter()` plugin (not `@vitejs/plugin-react`);
+  `react-router.config.js` sets `ssr: false`, `appDirectory: "src"`,
+  `buildDirectory: "build"`, and the `prerender` route list.
+- `vite.config.js` pins the dev/preview port to `3000`. The build emits the
+  deployable SPA to `build/client` (each prerendered route as static HTML), which
+  the GitHub Pages workflow uploads.
+- There is no root `index.html` entry: the document shell lives in `src/root.jsx`
+  (its `Layout` renders `<head>`/`<body>`). Static assets in `public/` (CNAME,
+  404.html, robots.txt, favicon) are copied to the build root verbatim.
 
 ## Visual Verification with Playwright
 
@@ -130,36 +135,77 @@ The architecture documentation below reflects the current codebase. Update it as
 
 ### Routing
 
-The site uses React Router v6 with `BrowserRouter`. Routes:
+The site uses React Router v7 in **framework mode** (SPA, `ssr: false`): the route
+table is in `src/routes.js` with one route module per page under `src/routes/`.
+Routes:
 
 | Path | Component rendered | Nav label |
 |---|---|---|
 | `/` | `<Header />` (hero only) | - |
 | `/about` | `<About />` | About |
 | `/background` | `<Timeline />` | Background |
-| `/writing` | `<PublicationsEvents />` | Writing & Talks |
+| `/writing` | `<Writing />` | Writing |
+| `/writing/:slug` | `<ArticleReadingView />` | - |
+| `/talks` | `<Talks />` | Talks |
 | `/contact` | `<Contact />` | Contact |
 
-Unknown paths redirect to `/` via a catch-all `<Navigate to="/" replace />` route.
+Unknown paths redirect to `/` via a catch-all route module
+(`src/routes/catchall.jsx`) whose `clientLoader` throws `redirect("/")`.
 
-GitHub Pages deep-link workaround: `public/404.html` stores the requested path
-in sessionStorage; `public/index.html` restores it via `history.replaceState`
-so React Router sees the correct URL on first load.
+All routes are prerendered to static HTML at build time, so deep links load
+directly and social scrapers get per-route meta. The fixed routes are listed in
+`react-router.config.js`; article routes (`/writing/:slug`) are appended to the
+prerender list by enumerating the MDX filenames in `src/content/articles/` (each
+article's frontmatter `slug` must equal its filename). `public/404.html` is
+retained only as a fallback for non-prerendered paths on GitHub Pages.
+
+Per-route `<head>` tags (title, description, OG/Twitter) come from each route
+module's `meta()` export, built via the shared `buildMeta()` helper
+(`src/utils/meta.js`); `root.jsx`'s shell holds no OG/description literals so
+per-route (and per-article) tags are authoritative and not duplicated.
+
+### Article system (self-hosted essays)
+
+Long-form essays are self-hosted MDX. The pipeline (see `vite.config.js`):
+`@mdx-js/rollup` compiles `.mdx` at build; `remark-frontmatter` +
+`remark-mdx-frontmatter` parse YAML frontmatter into a `frontmatter` export;
+`@shikijs/rehype` highlights code blocks at build (no runtime highlighter;
+`react-markdown` is deliberately not used because it cannot host inline
+interactive React components).
+
+- Content lives in `src/content/articles/*.mdx`. Frontmatter schema: `title`,
+  `dek`, `slug`, `series`, `lastUpdated`, `sources: [{ title, url, note? }]`.
+  An MDX file may `import` and embed interactive React visuals inline.
+- `src/data/articles.js` auto-discovers articles via `import.meta.glob` (eager),
+  sorts newest-first by `lastUpdated`, and exposes `getArticleBySlug`.
+- `routes/article.jsx` renders `<ArticleReadingView>` for `/writing/:slug` and
+  exports `meta()` (title/OG from frontmatter, `og:type: article`).
+- `/writing` (`Writing.js`) lists discovered essays as an editorial vertical
+  stack (title, dek, "`<series>` - Living doc - Updated `<month year>`") above
+  the "Also published elsewhere" external op-eds.
 
 ### Component Structure
 
 The app uses a multi-page routing architecture:
 
-- **App.js**: Root container — mounts `BrowserRouter`, `ScrollToTop`, `Nav`,
-  the route tree, and `Footer`. Does not render page content directly; each
-  route renders its own component.
+- **root.jsx**: The framework-mode root. `Layout` renders the document shell
+  (`<head>` with SEO/OG/JSON-LD, fonts, favicon, plus `<Meta/>`/`<Links/>` for
+  per-route exports); the default export renders the persistent app shell
+  (`ReadingProgress`, `Nav`, `BackToTop`, keyboard/swipe nav, `ErrorBoundary`)
+  around `<Outlet/>`. `<ScrollRestoration/>` handles scroll on navigation
+  (replacing the old `ScrollToTop`). Route modules in `src/routes/` render each
+  page.
 - **Nav.js**: Fixed pill navigation bar — uses `NavLink` for active-link
   highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
   on all other routes always fixed. Links: About (`/about`) / Background
-  (`/background`) / Writing & Talks (`/writing`) / Contact (`/contact`).
+  (`/background`) / Writing (`/writing`) / Talks (`/talks`) / Contact
+  (`/contact`). Nav order is driven by `config.navigation`; the fixed pill
+  centres via `margin:auto` + `width:fit-content` (not `left:50%`, which capped
+  its width at half the viewport and wrapped the links).
 - **PageNav.js**: Prev/next navigation rendered at the bottom of each sub-page.
-  Accepts `prev` and `next` props (`{ label, path }`). About has next only;
-  Contact has prev only; Background and Writing & Events have both.
+  Derives prev/next from `config.navigation` order by matching the current
+  `pathname`. About has next only; Contact has prev only; Background, Writing,
+  and Talks have both.
 - **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
 - **Header.js**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
   link. Rendered only at the root route.
@@ -174,8 +220,22 @@ The app uses a multi-page routing architecture:
   for timeline items, including key projects (for work experience) and
   coursework tables (for education). Supports keyboard navigation (Escape to
   close) and click-outside-to-close functionality.
-- **PublicationsEvents.js**: Writing page (`/writing`) — showcases publications
-  and speaking/organiser events.
+- **Writing.js**: Writing page (`/writing`) — lists the self-hosted essays
+  (discovered from `src/data/articles.js`) as an editorial vertical stack linking
+  to `/writing/:slug`, then an "Also published elsewhere" divider above the
+  external op-eds (type `article`) rendered via `WorkCardGrid`.
+- **articles/ArticleReadingView.js**: Reading view for `/writing/:slug` — an
+  editorial header (kicker meta line, title, dek) from frontmatter, the compiled
+  MDX body, and a `Sources` section. Styles in `styles/Article.css`.
+- **articles/HarnessController.js**: The seven-lever interactive visual embedded
+  inline in the flagship essay's MDX (React port of the throwaway prototype).
+- **articles/Sources.js**: Renders the `sources` frontmatter as an ordered list.
+- **Talks.js**: Talks page (`/talks`) — webinars and conferences (type
+  `webinar` / `conference`) rendered via `WorkCardGrid`.
+- **WorkCardGrid.js**: Shared card grid used by both `/talks` and `/writing`'s
+  external block. Takes an `items` array, sorts newest-first, and renders each
+  as a `.work-card`. Reveal-on-scroll fade-in is provided by the
+  `useRevealOnScroll` hook (`src/utils/`).
 - **Contact.js**: Contact page (`/contact`) — "Let's Talk" heading, email and
   social links.
 - **Footer.js**: Site footer — rendered on all routes outside the route tree.
@@ -281,7 +341,7 @@ timeline items:
 Styles are organized by component in `src/styles/`:
 - Component-specific CSS files match component names (e.g., `Timeline.css`,
   `TimelineDetailModal.css`, `Header.css`)
-- FontAwesome icons are loaded globally in `index.js`
+- FontAwesome icons are loaded globally in `src/root.jsx`
 - Uses custom CSS with responsive design patterns
 - Modal styling includes backdrop blur effects, smooth transitions, and
   responsive layouts
