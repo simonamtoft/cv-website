@@ -8,7 +8,7 @@ test.describe('Responsive Design', () => {
     const hasOverflow = await page.evaluate(() => document.body.scrollWidth > window.innerWidth);
     expect(hasOverflow).toBe(false);
 
-    await expect(page.locator('nav')).toBeVisible();
+    await expect(page.locator('nav.nav-mobile')).toBeVisible();
   });
 
   test('Mobile viewport renders without horizontal overflow on background', async ({ page }) => {

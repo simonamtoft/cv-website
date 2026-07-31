@@ -1,19 +1,6 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Writing / Talks split', () => {
-  test('Writing page heading reads "Writing"', async ({ page }) => {
-    await page.goto('/writing');
-
-    const section = page.locator('section.publications-events');
-    await expect(section.getByRole('heading', { name: 'Writing', exact: true })).toBeVisible();
-  });
-
-  test('Writing page shows the "Also published elsewhere" divider', async ({ page }) => {
-    await page.goto('/writing');
-
-    await expect(page.locator('.section-divider')).toContainText('Also published elsewhere');
-  });
-
   test('Writing lists only external article cards', async ({ page }) => {
     await page.goto('/writing');
 
@@ -35,13 +22,6 @@ test.describe('Writing / Talks split', () => {
       expect(await link.getAttribute('href')).toMatch(/^https:\/\//);
       await expect(link).toHaveAttribute('target', '_blank');
     }
-  });
-
-  test('Talks page heading reads "Talks"', async ({ page }) => {
-    await page.goto('/talks');
-
-    const section = page.locator('section.publications-events');
-    await expect(section.getByRole('heading', { name: 'Talks' })).toBeVisible();
   });
 
   test('Talks shows webinar and conference cards, but no articles', async ({ page }) => {

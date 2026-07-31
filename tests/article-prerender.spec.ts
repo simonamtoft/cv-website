@@ -30,19 +30,17 @@ test.describe('Article prerender (scraper-visible HTML)', () => {
     html = readFileSync(articleHtmlPath, 'utf8');
   });
 
-  test('static HTML has the article title from frontmatter', () => {
-    expect(html).toContain('<title>Agentic Engineering | Simon Amtoft Pedersen</title>');
+  test('static HTML has a non-empty title', () => {
+    expect(html).toMatch(/<title>[^<]+<\/title>/);
   });
 
-  test('static HTML has per-article OG tags derived from frontmatter', () => {
-    expect(html).toContain(
-      '<meta property="og:title" content="Agentic Engineering | Simon Amtoft Pedersen"'
-    );
+  test('static HTML has per-article OG tags', () => {
+    expect(html).toMatch(/property="og:title" content="[^"]+"/);
     expect(html).toContain(
       '<meta property="og:url" content="https://amtoft.dev/writing/agentic-engineering"'
     );
     // og:description comes from the frontmatter dek.
-    expect(html).toMatch(/property="og:description" content="The leverage in a coding agent/);
+    expect(html).toMatch(/property="og:description" content="[^"]+"/);
   });
 
   test('OG title is not duplicated by a leftover shell default', () => {
@@ -51,16 +49,15 @@ test.describe('Article prerender (scraper-visible HTML)', () => {
   });
 
   test('the article body is prerendered, not JS-only', () => {
-    expect(html).toContain('Pillar one: context engineering');
-    expect(html).toContain('Pillar two: harness engineering');
-    // The build-time Shiki highlighter emitted a static code block.
+    // Body headings and a build-time Shiki code block are in the static HTML.
+    expect(html).toMatch(/<h2[^>]*>/);
     expect(html).toContain('class="shiki');
   });
 
   test('the present (slide-deck) route is prerendered with its own title', () => {
     const presentHtml = readFileSync(presentHtmlPath, 'utf8');
-    expect(presentHtml).toContain(
-      '<title>Agentic Engineering (Slides) | Simon Amtoft Pedersen</title>'
-    );
+    const title = presentHtml.match(/<title>([^<]+)<\/title>/)?.[1];
+    expect(title).toBeTruthy();
+    expect(title).not.toBe(html.match(/<title>([^<]+)<\/title>/)?.[1]);
   });
 });

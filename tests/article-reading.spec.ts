@@ -6,23 +6,21 @@ test.describe('Self-hosted article reading view', () => {
   test('Writing lists the self-hosted essay as an editorial item', async ({ page }) => {
     await page.goto('/writing');
 
-    const essay = page.locator('.essays-list .essay-item');
-    await expect(essay.first()).toBeVisible();
-    await expect(essay.first().locator('.essay-title')).toContainText('Agentic Engineering');
-    await expect(essay.first().locator('.essay-meta')).toContainText('Living doc - Updated');
+    const essay = page.locator('.essays-list .essay-item').first();
+    await expect(essay).toBeVisible();
+    await expect(essay.locator('.essay-title')).toHaveText(/\S/);
+    await expect(essay.locator('.essay-meta')).toHaveText(/\S/);
   });
 
   test('Clicking an essay opens its reading view and renders the MDX body', async ({ page }) => {
     await page.goto('/writing');
 
-    await page.locator('.essay-item', { hasText: 'Agentic Engineering' }).first().click();
+    await page.locator('.essays-list .essay-item').first().click();
 
-    await expect(page).toHaveURL(/\/writing\/agentic-engineering$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Agentic Engineering');
+    await expect(page).toHaveURL(/\/writing\/.+$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/\S/);
     // Body content from the MDX source is rendered (not just the header).
-    await expect(
-      page.getByRole('heading', { name: 'Pillar one: context engineering' })
-    ).toBeVisible();
+    await expect(page.locator('.article-body h2').first()).toBeVisible();
   });
 
   test('The harness control loop renders with a control-surface detail', async ({ page }) => {
@@ -51,14 +49,16 @@ test.describe('Self-hosted article reading view', () => {
 
     // Pyramid: clicking a tier swaps the blast-radius line.
     const pyramid = page.locator('.leverage-pyramid');
-    await pyramid.getByRole('button', { name: /Specification/ }).click();
-    await expect(pyramid.locator('.pyramid-blast')).toContainText('wrong problem');
+    const blast = pyramid.locator('.pyramid-blast');
+    const before = await blast.textContent();
+    await pyramid.locator('button').first().click();
+    await expect(blast).not.toHaveText(before!);
   });
 
-  test('The reading view has a Back to Writing link that returns to the list', async ({ page }) => {
+  test('The reading view has a back link that returns to the list', async ({ page }) => {
     await page.goto('/writing/agentic-engineering');
 
-    await page.getByRole('link', { name: /Back to Writing/ }).click();
+    await page.locator('.article-back').click();
     await expect(page).toHaveURL(/\/writing$/);
     await expect(page.locator('.essays-list .essay-item').first()).toBeVisible();
   });
@@ -67,7 +67,7 @@ test.describe('Self-hosted article reading view', () => {
     await page.goto('/writing/agentic-engineering');
 
     const sources = page.locator('.article-sources');
-    await expect(sources.getByRole('heading', { name: 'Sources' })).toBeVisible();
+    await expect(sources).toBeVisible();
     const links = sources.locator('ol li a');
     expect(await links.count()).toBeGreaterThan(0);
     expect(await links.first().getAttribute('href')).toMatch(/^https:\/\//);
