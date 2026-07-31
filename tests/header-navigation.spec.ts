@@ -11,11 +11,12 @@ test.describe('Header & Navigation', () => {
   test('Navigation contains correct labels', async ({ page }) => {
     await page.goto('/');
 
-    const nav = page.locator('nav');
+    const nav = page.locator('nav.nav-pill');
 
     await expect(nav.getByRole('link', { name: 'About' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Background' })).toBeVisible();
-    await expect(nav.getByRole('link', { name: 'Writing & Events' })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Writing', exact: true })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Talks' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Contact' })).toBeVisible();
 
     // Services was removed
@@ -33,8 +34,11 @@ test.describe('Header & Navigation', () => {
     await nav.getByRole('link', { name: 'Background' }).click();
     await expect(page).toHaveURL(/\/background/);
 
-    await nav.getByRole('link', { name: 'Writing & Events' }).click();
+    await nav.getByRole('link', { name: 'Writing', exact: true }).click();
     await expect(page).toHaveURL(/\/writing/);
+
+    await nav.getByRole('link', { name: 'Talks' }).click();
+    await expect(page).toHaveURL(/\/talks/);
 
     await nav.getByRole('link', { name: 'Contact' }).click();
     await expect(page).toHaveURL(/\/contact/);

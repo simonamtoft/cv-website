@@ -41,9 +41,14 @@
 .nav-pill--fixed {
   position: fixed;
   top: var(--space-xs);
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
+  /* Centre with margin auto rather than left:50% + translateX: on a fixed
+     element left:50% caps the shrink-to-fit width at half the viewport, which
+     forced the links to wrap once a fifth nav item was added. */
+  left: 0;
+  right: 0;
+  width: fit-content;
+  max-width: calc(100% - var(--space-lg));
+  margin: 0 auto;
   padding: var(--space-xs) var(--space-lg);
   background-color: rgba(253, 246, 236, 0.92);
   backdrop-filter: blur(8px);

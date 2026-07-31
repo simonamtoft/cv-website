@@ -18,7 +18,8 @@ export const config = {
   navigation: [
     { label: "About", href: "/about" },
     { label: "Background", href: "/background" },
-    { label: "Writing & Talks", href: "/writing" },
+    { label: "Writing", href: "/writing" },
+    { label: "Talks", href: "/talks" },
     { label: "Contact", href: "/contact" }
   ]
 };

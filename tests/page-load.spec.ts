@@ -15,7 +15,7 @@ test.describe('Page Load & Structure', () => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
-    for (const route of ['/', '/background', '/writing', '/contact']) {
+    for (const route of ['/', '/background', '/writing', '/talks', '/contact']) {
       await page.goto(route);
       await expect(page).toHaveTitle(/Simon Amtoft Pedersen/);
     }

@@ -41,7 +41,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build'
+          # RR7 framework-mode (ssr:false) emits the deployable SPA into build/client.
+          path: './build/client'
 
   deploy:
     needs: build

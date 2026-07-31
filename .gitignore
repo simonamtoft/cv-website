@@ -12,6 +12,9 @@
 # production
 /build
 
+# React Router (framework mode) generated types/cache
+/.react-router/
+
 # misc
 .DS_Store
 .env.local
@@ -29,3 +32,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+.playwright-mcp/
+/*.png
+
+# Fiberplane local issue tracking
+.fp/

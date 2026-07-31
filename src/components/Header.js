@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 import config from '../config';
+import useTypewriter from '../utils/useTypewriter';
 
 const TAGLINE = 'I help organisations ship AI that actually works in production.';
 const CHARS = TAGLINE.split('');
 
 const Header = () => {
-  const [revealed, setRevealed] = useState(0);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRevealed(CHARS.length);
-      return;
-    }
-    let i = 0;
-    const iv = setInterval(() => {
-      i++;
-      setRevealed(i);
-      if (i >= CHARS.length) clearInterval(iv);
-    }, 24);
-    return () => clearInterval(iv);
-  }, []);
+  const { revealed } = useTypewriter(TAGLINE);
 
   return (
     <header className="header">

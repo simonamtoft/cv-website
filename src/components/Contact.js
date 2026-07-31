@@ -5,6 +5,10 @@ import PageNav from './PageNav';
 
 const CopyButton = ({ text }) => {
   const [copied, setCopied] = useState(false);
+  // Gate the clipboard button behind a post-mount check so server prerender and
+  // the first client render agree (both render nothing), avoiding a hydration
+  // mismatch. The button is revealed after hydration where clipboard exists.
+  const [canCopy, setCanCopy] = useState(false);
   const timer = useRef(null);
 
   const handleCopy = async () => {
@@ -13,9 +17,12 @@ const CopyButton = ({ text }) => {
     timer.current = setTimeout(() => setCopied(false), 2000);
   };
 
-  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) setCanCopy(true);
+    return () => clearTimeout(timer.current);
+  }, []);
 
-  if (!navigator.clipboard) return null;
+  if (!canCopy) return null;
   return (
     <button
       className={`copy-btn${copied ? ' copy-btn--copied' : ''}`}
