@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import '../styles/About.css';
 import ProfilePicture from '../assets/profile.jpg';
 import config from '../config';
-import aboutText from '../data/aboutText.js'
+import aboutText from '../data/aboutText'
 import PageNav from './PageNav';
 
 const About = () => {

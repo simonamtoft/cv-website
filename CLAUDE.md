@@ -68,9 +68,14 @@ publishes it to GitHub Pages.
 
 ### Vite notes
 
-- Source files keep JSX inside `.js` files (a Create React App convention).
-  `vite.config.js` opts `src/**/*.js` into esbuild's JSX loader so this keeps
-  working — new components can use `.js` or `.jsx`. Route modules use `.jsx`.
+- **Any file containing JSX must use the `.jsx` extension.** Vite 8 replaced
+  esbuild with Oxc/Rolldown, which derives the parser language from the file
+  extension and offers no way to force JSX parsing in `.js` (Vite's `oxc` option
+  deliberately omits `lang`). The old CRA convention of JSX-in-`.js` was
+  therefore retired: the 21 affected files were renamed, and `vite.config.js`
+  needs no JSX loader configuration at all now. Plain-JS modules (`config.js`,
+  `utils/*`, `routes.js`, hooks without JSX) stay `.js`.
+  Note the data files carry JSX (`text: <>...</>`), so they are `.jsx` too.
 - The app runs in **React Router v8 framework mode** (`@react-router/dev`).
   v8 requires React 19 and Node 22+, and it removes the `react-router-dom`
   package — import everything from `react-router` (browser-only entry points
@@ -183,7 +188,7 @@ interactive React components).
   sorts newest-first by `lastUpdated`, and exposes `getArticleBySlug`.
 - `routes/article.jsx` renders `<ArticleReadingView>` for `/writing/:slug` and
   exports `meta()` (title/OG from frontmatter, `og:type: article`).
-- `/writing` (`Writing.js`) lists discovered essays as an editorial vertical
+- `/writing` (`Writing.jsx`) lists discovered essays as an editorial vertical
   stack (title, dek, "`<series>` - Living doc - Updated `<month year>`") above
   the "Also published elsewhere" external op-eds.
 
@@ -198,54 +203,54 @@ The app uses a multi-page routing architecture:
   around `<Outlet/>`. `<ScrollRestoration/>` handles scroll on navigation
   (replacing the old `ScrollToTop`). Route modules in `src/routes/` render each
   page.
-- **Nav.js**: Fixed pill navigation bar — uses `NavLink` for active-link
+- **Nav.jsx**: Fixed pill navigation bar — uses `NavLink` for active-link
   highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
   on all other routes always fixed. Links: About (`/about`) / Background
   (`/background`) / Writing (`/writing`) / Talks (`/talks`) / Contact
   (`/contact`). Nav order is driven by `config.navigation`; the fixed pill
   centres via `margin:auto` + `width:fit-content` (not `left:50%`, which capped
   its width at half the viewport and wrapped the links).
-- **PageNav.js**: Prev/next navigation rendered at the bottom of each sub-page.
+- **PageNav.jsx**: Prev/next navigation rendered at the bottom of each sub-page.
   Derives prev/next from `config.navigation` order by matching the current
   `pathname`. About has next only; Contact has prev only; Background, Writing,
   and Talks have both.
 - **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
-- **Header.js**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
+- **Header.jsx**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
   link. Rendered only at the root route.
-- **About.js**: About page (`/about`) — carries technical practitioner
+- **About.jsx**: About page (`/about`) — carries technical practitioner
   positioning.
-- **Timeline.js**: Background page (`/background`) — merges and displays
+- **Timeline.jsx**: Background page (`/background`) — merges and displays
   chronological data from three sources (work experience, education,
   volunteering). Renders clickable timeline items that can open modals when they
   contain detailed information. Cards display inline `.timeline-job-title` and
   `.timeline-org-name`, plus category badges (Work / Education / Community).
-- **TimelineDetailModal.js**: Modal component that displays detailed information
+- **TimelineDetailModal.jsx**: Modal component that displays detailed information
   for timeline items, including key projects (for work experience) and
   coursework tables (for education). Supports keyboard navigation (Escape to
   close) and click-outside-to-close functionality.
-- **Writing.js**: Writing page (`/writing`) — lists the self-hosted essays
+- **Writing.jsx**: Writing page (`/writing`) — lists the self-hosted essays
   (discovered from `src/data/articles.js`) as an editorial vertical stack linking
   to `/writing/:slug`, then an "Also published elsewhere" divider above the
   external op-eds (type `article`) rendered via `WorkCardGrid`.
-- **articles/ArticleReadingView.js**: Reading view for `/writing/:slug` — an
+- **articles/ArticleReadingView.jsx**: Reading view for `/writing/:slug` — an
   editorial header (kicker meta line, title, dek) from frontmatter, the compiled
   MDX body, and a `Sources` section. Styles in `styles/Article.css`.
 - **articles/HarnessController.js**: The seven-lever interactive visual embedded
   inline in the flagship essay's MDX (React port of the throwaway prototype).
-- **articles/Sources.js**: Renders the `sources` frontmatter as an ordered list.
-- **Talks.js**: Talks page (`/talks`) — webinars and conferences (type
+- **articles/Sources.jsx**: Renders the `sources` frontmatter as an ordered list.
+- **Talks.jsx**: Talks page (`/talks`) — webinars and conferences (type
   `webinar` / `conference`) rendered via `WorkCardGrid`.
-- **WorkCardGrid.js**: Shared card grid used by both `/talks` and `/writing`'s
+- **WorkCardGrid.jsx**: Shared card grid used by both `/talks` and `/writing`'s
   external block. Takes an `items` array, sorts newest-first, and renders each
   as a `.work-card`. Reveal-on-scroll fade-in is provided by the
   `useRevealOnScroll` hook (`src/utils/`).
-- **Contact.js**: Contact page (`/contact`) — "Let's Talk" heading, email and
+- **Contact.jsx**: Contact page (`/contact`) — "Let's Talk" heading, email and
   social links.
 - **Footer.js**: Site footer — rendered on all routes outside the route tree.
-- **ErrorBoundary.js**: Wraps components to catch and handle React errors
+- **ErrorBoundary.jsx**: Wraps components to catch and handle React errors
   gracefully.
 - **Data files** (`src/data/`): Content is separated from presentation logic in
-  dedicated data files (workExperience.js, education.js, volunteering.js,
+  dedicated data files (workExperience.jsx, education.jsx, volunteering.jsx,
   publicationsEvents.js)
 - **config.js**: Central configuration file containing personal information
   (name, title, email, LinkedIn, GitHub) and navigation items
@@ -257,8 +262,8 @@ applies `padding-top: 80px` (defined in `App.css`) to clear the fixed nav.
 
 The Timeline component is the most complex part of the codebase. Key features:
 
-1. **Data Consolidation**: Merges arrays from `workExperience.js`,
-   `education.js`, and `volunteering.js`
+1. **Data Consolidation**: Merges arrays from `workExperience.jsx`,
+   `education.jsx`, and `volunteering.jsx`
 2. **Flexible Date Parsing**: Date utilities are centralized in
    `utils/dateFormatter.js` and support multiple date formats:
    - ISO format: `YYYY-MM` or `YYYY-MM-DD`
@@ -364,7 +369,7 @@ To update site content:
 - Edit `src/config.js` to update name, title, subtitle, email, LinkedIn handle,
   GitHub URL, and navigation items
 
-**Timeline content** (workExperience.js, education.js, or volunteering.js):
+**Timeline content** (workExperience.jsx, education.jsx, or volunteering.jsx):
 1. Edit the relevant data file in `src/data/`
 2. Add/import logo images to `src/assets/` if needed
 3. Follow the flexible date format - the parser handles various formats
