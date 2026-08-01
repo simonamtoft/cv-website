@@ -11,7 +11,7 @@ const articleRoutes = readdirSync('src/content/articles', { withFileTypes: true 
     return [`/writing/${slug}`, `/writing/${slug}/present`];
   });
 
-// React Router v7 framework-mode config.
+// React Router v8 framework-mode config.
 // SPA mode (ssr:false): routes are prerendered to static HTML at build time so
 // GitHub Pages (static-only) serves per-route HTML with correct meta/OG for
 // social scrapers. appDirectory stays "src" to avoid moving the existing tree.

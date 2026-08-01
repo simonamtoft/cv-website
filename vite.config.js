@@ -23,20 +23,6 @@ export default defineConfig({
     // plugin provides the React transform + Fast Refresh).
     reactRouter(),
   ],
-  // This project (migrated from Create React App) keeps JSX inside .js files.
-  // Vite/esbuild only treats .jsx as JSX by default, so opt the source .js
-  // files into the JSX loader for both dev transform and dependency pre-bundling.
-  esbuild: {
-    loader: 'jsx',
-    // Cover both .js (legacy CRA convention) and .jsx (route modules / root).
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: { '.js': 'jsx' },
-    },
-  },
   server: {
     // Keep the legacy CRA dev port so Playwright (baseURL :3000) and docs stay valid.
     port: 3000,
