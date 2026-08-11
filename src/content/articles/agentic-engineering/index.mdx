@@ -110,7 +110,9 @@ applied as a way of working. For work items too big to hold in one board, tools 
 as [Fiberplane](https://fp.dev/) and [Backlog.md](https://github.com/MrLesk/Backlog.md)
 are starting to formalise the same idea - CLI-native trackers the agent itself
 creates, edits, and updates, so the board stays a live source of truth instead of a
-manually updated doc.
+manually updated doc. When that backlog lives in the repository, the rationale and
+gotchas travel with the code: Git makes completed tasks durable and searchable,
+without a separate system quietly drifting away from the implementation.
 
 What lets that loop run on its own is grounding: giving the agent a way to check
 its work without a human standing over it. Tests, linters, and type-checkers, fed
@@ -236,7 +238,10 @@ nothing kept between turns - so give it a filesystem and Git and it gains a
 workspace, somewhere to offload context that will not fit the window, memory
 across sessions, and versioning for free. It can only emit text, never act - so
 give it tools, and above all bash and code execution, and it writes the tools it
-needs instead of waiting for you to build them. Running arbitrary code is unsafe
+needs instead of waiting for you to build them. That suggests a useful boundary:
+when the work itself is deterministic, have the model write or invoke an inspectable,
+testable tool rather than ask a probabilistic model to produce the answer directly.
+Running arbitrary code is unsafe
 and does not scale - so put it in a sandbox that isolates it and ships the default
 tooling (test runners, a browser, logs, screenshots) it needs to observe its own
 work. Its knowledge is frozen at training time - so hand it memory files and
@@ -388,12 +393,12 @@ this rot - unused skills, slow hooks, a `CLAUDE.md` that has bloated past its
 usefulness - and nothing stops you writing your own skill to prune on your terms.
 My own [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is
 public if you want a worked example: context files, hooks, and skills grown and
-pruned against exactly the failure modes above.
-This is why the naive prediction, that better models make harnesses obsolete,
-keeps missing. Harnesses do not shrink as
-models improve; they move. A better model retires specific scaffolding and, in
-the same step, unlocks harder tasks that arrive with new failure modes needing
-new scaffolding. The work is not finished; it relocates.
+pruned against exactly the failure modes above. Because they are plain files,
+the same artifacts can be symlinked into other harnesses such as
+[Pi](https://pi.dev/) rather than maintained twice - which is how I use them
+myself.
+Better models do not make harnesses obsolete; harnesses move. Old scaffolding
+falls away while harder tasks expose new failure modes.
 
 ### Two teams who ran it to the limit
 
