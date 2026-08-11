@@ -84,52 +84,25 @@ import './agentic-engineering.css';
     render inline in the reading essay; five of them also appear full-screen on
     their slides, while AgentAnatomy is reading-only (inline, no slide). */}
 
-The reflex, when a coding agent disappoints, is to wait for a better model. Which
-model you use still matters, but a huge share of the engineering
-leverage in a coding agent today sits outside the weights. It is in the context you feed it
-and the machinery you run it in - exactly the knobs you can dial yourself. Prompt engineering
-did not exactly die, but was rather absorbed by the disciplines of context and harness engineering.
-Call that agentic engineering.
+The first reaction when a coding agent disappoints is usually to wait for a better model. The model still matters, of course, but much of the leverage now sits outside its weights. It sits in the context you give it and the machinery wrapped around it. Those are the parts you can change yourself. Prompt engineering did not disappear so much as get folded into two broader disciplines: context engineering and harness engineering. Together, I think of them as agentic engineering.
 
 ## The workflow underneath
 
-Both pillars serve one way of working. The strongest practitioners do not just point
-an agent at a task and watch it type. Larger success stories tend to start with a good plan -
-often after a fair bit of back and forth with the model. Then break down work into
-small pieces and verify at every checkpoint.
+Both disciplines support the same way of working. Strong practitioners do not point an agent at a large task and watch it type. They spend time on the plan, usually through several rounds with the model, then divide the work into small pieces and verify each checkpoint.
 
 > Nearly everything that makes a software engineer better at the job makes an AI agent better too.
 
-This shape is vendor-neutral. GitHub's own recipe reads the same - prototype
-cheaply, plan methodically, let a loop drive to done, then review - and the
-discipline scales upstream as the effort grows. For work too big for a single
-session I chart it first with a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md)
-map: a shared board of decision tickets resolved one at a time, so the *what* and
-the *why* are settled before a line of code is written - the hierarchy of leverage
-applied as a way of working. For work items too big to hold in one board, tools such
-as [Fiberplane](https://fp.dev/) and [Backlog.md](https://github.com/MrLesk/Backlog.md)
-are starting to formalise the same idea - CLI-native trackers the agent itself
-creates, edits, and updates, so the board stays a live source of truth instead of a
-manually updated doc. When that backlog lives in the repository, the rationale and
-gotchas travel with the code: Git makes completed tasks durable and searchable,
-without a separate system quietly drifting away from the implementation.
+This is not tied to one vendor. GitHub recommends roughly the same sequence: prototype cheaply, plan carefully, let a loop run to completion, then review the result. The same discipline applies further upstream as the work gets larger.
 
-What lets that loop run on its own is grounding: giving the agent a way to check
-its work without a human standing over it. Tests, linters, and type-checkers, fed
-back as it goes, are what separate a plausible-looking change from a verified one.
-It is the highest-return thing you can hand it. A small habit sharpens it: hold one
-model and one reasoning level across a whole feature, so the session's prompt cache
-keeps paying off instead of resetting each turn. The two pillars exist to make that
-loop good: context engineering decides what the agent knows when it plans, and
-harness engineering builds the machinery that runs the loop and reins the agent in
-when it strays.
+For work that will outlive a single session, I start with a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md) map. It is a shared board of decision tickets, resolved one at a time, so the *what* and *why* are settled before implementation starts. For work too large for one board, tools such as [Fiberplane](https://fp.dev/) and [Backlog.md](https://github.com/MrLesk/Backlog.md) apply the same idea to CLI-native trackers. The agent can create and update its own backlog, which keeps the board alive instead of leaving behind a document nobody maintains. Put that backlog in the repository and the reasoning travels with the code. Git makes completed work searchable without introducing another system that can drift away from the implementation.
+
+The loop becomes useful when the agent can check its own work. Tests, linters, and type-checkers separate a plausible change from a verified one. This is probably the highest-return capability you can give an agent.
+
+One small habit helps too: keep the model and reasoning level fixed across a feature. That lets the prompt cache keep paying off instead of resetting with every turn. Context engineering decides what the agent knows while it plans and works. Harness engineering provides the loop, the checks, and the boundaries that pull it back when it goes astray.
 
 ## Context engineering
 
-If the model is a processor, context is its working set. Between turns the model
-remembers nothing; everything it knows about your task is whatever sits in the
-window right now. Context engineering is the discipline of deciding what enters
-that window, in what order, and when to throw it away.
+If the model is a processor, context is its working set. It remembers nothing between turns unless that information is placed in the current window. Context engineering is the work of deciding what enters that window, in which order, and when to discard it.
 
 <Slide title="The forgetful senior">
 
@@ -139,12 +112,7 @@ that window, in what order, and when to throw it away.
 
 </Slide>
 
-The organising idea is a hierarchy of leverage: an error's blast radius grows
-the further upstream it sits. A bad line of code costs a line. A bad line in the
-plan sends the whole task down a wrong solution. A mistake in the research means
-you are building on a misunderstood system, a mistake in the spec means you are
-solving the wrong problem, and a bad line in the context files that steer *every*
-session costs the most of all. Potentially across every engineer in your organisation.
+Errors get more expensive the further upstream they occur. A bad line of code may cost one line. A bad plan can send the whole task towards the wrong solution. Faulty research means the plan rests on a misunderstanding; a faulty specification means the team is solving the wrong problem. Worst of all is a bad instruction in a context file that steers every session, potentially for every engineer in the organisation.
 
 <Slide title="The hierarchy of leverage">
 
@@ -152,17 +120,9 @@ session costs the most of all. Potentially across every engineer in your organis
 
 </Slide>
 
-The mechanism underneath is a quality cascade: research quality caps plan
-quality, which caps code quality, and no amount of careful implementation
-recovers from the wrong problem. The highest-leverage human effort goes
-into the upstream artifacts - the research, the spec, and the context files
-themselves - not the code the agent is so eager to produce.
+The result is a quality ceiling: research limits the plan, and the plan limits the implementation. Careful coding cannot rescue a misunderstood problem. I would rather spend human attention on the research, specification, and shared context than on polishing code the agent was always happy to generate.
 
-That leverage lives in the agent's working memory. A stack of system instructions
-you do not control, the tool descriptions injected up front, the context files you
-author, the memory the agent keeps on its own, and the live work log that fills
-as the task runs. Only part of it is yours to shape, and the whole thing is a
-fixed budget - so the craft is spending that budget well.
+All of that material competes for space in working memory: system instructions you do not control, tool descriptions loaded at startup, context files you wrote, memories the agent saved, and the running transcript of the task. You can shape only part of it, but all of it consumes the same fixed budget. The job is to spend that budget deliberately.
 
 <Slide title="The context window">
 
@@ -170,14 +130,9 @@ fixed budget - so the craft is spending that budget well.
 
 </Slide>
 
-The enemy is context rot: a model's reliability degrades as its window fills,
-worst of all with its own earlier output. The tempting fix - a bigger window -
-does not solve it; a larger window just grows the haystack. What you need is not
-more tokens but better isolation.
+As the window fills, reliability tends to fall. The model's own earlier output is especially costly because errors and stale assumptions remain in view. A larger context window does not remove this problem; it gives you a larger haystack. Isolation matters more than raw capacity.
 
-The rhythm that falls out of this is *expand to plan, then reset to execute*:
-let the window grow while you gather everything a good plan or research needs,
-then start the implementation from a clean window carrying only the plan.
+A useful rhythm follows: *expand to plan, then reset to execute*. Let the context grow while gathering the material needed for research and planning. Once the plan is sound, begin implementation in a clean window with only that plan and the necessary project context.
 
 <Slide title="Expand to plan, then reset to execute">
 
@@ -185,71 +140,29 @@ then start the implementation from a clean window carrying only the plan.
 
 </Slide>
 
-The verification signal follows the same economy of attention.
+Verification should respect the same attention budget. A passing check can stay silent. A failing check should return the relevant error and wake the agent back up. Thousands of lines of successful test output only bury the task.
 
-A passing check should add nothing to the window; a failing one injects only the
-error and re-engages the agent. Flood the context with thousands of lines of
-green test output and the agent loses the thread of the task it was sent to do.
-
-The throughline to the second pillar is a warning: a poisoned `AGENTS.md` is
-simultaneously the highest-leverage context artifact *and* an attack surface.
-Leverage cuts both ways, which is exactly why the machinery around the model has
-to be engineered, not trusted.
+There is a security consequence here. A poisoned `AGENTS.md` is both a high-leverage context artifact and an attack surface. The same instruction can steer many sessions, so the machinery around the model has to constrain what those instructions are able to cause.
 
 ## Harness engineering
 
-Everything that is not the weights is the harness: the model is one fixed
-component, wrapped in a set of pieces around it.
+The harness is everything around the model. The weights are one fixed component inside a larger system.
 
 <AgentAnatomy />
 
-Not all of those pieces are yours in the same way, and how much of each you
-control is provider-dependent. Where a piece sits - fixed by whoever built your
-agent, exposed as a setting to toggle, or written by you from nothing - shifts
-from one tool to the next. Claude Code ships the system prompt, the core tool
-set, and the sub-agent machinery as givens you never see, and hands you the rest
-as configuration (permission rules, which MCP tools load, the sandbox) and as
-artifacts you author (`CLAUDE.md`, hooks, skills, the tests and linters that
-close the loop). A minimal harness like Pi inverts much of that: it omits MCP,
-sub-agents, and permission popups by design, so the system prompt, orchestration,
-and guardrails become yours to write, with fewer dials in between. So "engineer the harness" means something different depending on where
-you start - and the first, highest-leverage move is choosing the harness itself,
-because that fixes how much of the rest is even yours to touch.
+How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `CLAUDE.md`, hooks, skills, tests, and linters. Pi makes a different trade. It deliberately omits MCP, sub-agents, and permission prompts, which leaves more of the system prompt, orchestration, and guardrails for you to build.
 
-The claim is not rhetorical. Hold the weights fixed, change only the harness, and
-the results move materially: the same model can sit mid-pack in one harness and
-near the top of the leaderboard in another it was never trained for. A lot of
-agent failures are configuration problems, not model problems - so the honest
-response to a disappointing run is rarely to wait for the next release. It is to
-fix the harness.
+So "engineer the harness" does not mean the same thing in every tool. The first consequential choice is the harness itself because that choice determines which other parts you can touch.
 
-The same conclusion turns up outside the Claude and LangChain circle that supplies
-most of the argument here. GitHub calls Copilot "an agent harness" and titles its
-own account *the harness is all you need (mostly)* - the biggest gains come from
-learning the harness you already have, not chasing every new model. The
-parenthetical does real work, though: skills, MCP servers, and custom agents start
-to matter once workflows get complex, and much of the published harness advice is
-slop. Reinforcement, with a caveat, from a very different vantage point.
+This is not just a naming exercise. In one TerminalBench run, changing the harness moved a fixed model from roughly 33rd place into the top five. Many disappointing runs are configuration failures rather than model failures. Waiting for the next release is often less useful than fixing the system around the model you already have.
 
-Before the levers, the substrate. A harness is not an abstraction; it is a
-concrete set of pieces, and the cleanest way to see why each exists is to work
-backwards from something a raw model cannot do. A model is text in, text out, with
-nothing kept between turns - so give it a filesystem and Git and it gains a
-workspace, somewhere to offload context that will not fit the window, memory
-across sessions, and versioning for free. It can only emit text, never act - so
-give it tools, and above all bash and code execution, and it writes the tools it
-needs instead of waiting for you to build them. That suggests a useful boundary:
-when the work itself is deterministic, have the model write or invoke an inspectable,
-testable tool rather than ask a probabilistic model to produce the answer directly.
-Running arbitrary code is unsafe
-and does not scale - so put it in a sandbox that isolates it and ships the default
-tooling (test runners, a browser, logs, screenshots) it needs to observe its own
-work. Its knowledge is frozen at training time - so hand it memory files and
-search and it learns what it does not know without anyone touching the weights.
-It has a single, serial train of thought - so let it spawn sub-agents, each with
-a fresh window and its own Git worktree, and it can wall a messy exploration off
-behind a clean result and run independent work in parallel. Filesystem and Git is
-the foundational one; the rest lean on it.
+GitHub makes the same argument from outside the Claude and LangChain ecosystem. It calls Copilot "an agent harness" and titled its own account *the harness is all you need (mostly)*. The parenthesis is important. Learning the harness you already use will usually beat chasing each new model, but skills, MCP servers, and custom agents become useful as workflows grow. Plenty of published harness advice is still slop.
+
+A harness is concrete, not an abstract layer in a diagram. The reason for each component becomes clearer if you start with what a raw model cannot do.
+
+A model is text in, text out, with no persistent state. Give it a filesystem and Git and it gets a workspace, a place to offload context, memory across sessions, and version history. It can emit text but cannot act, so give it tools, especially bash and code execution. It can then write a small tool when needed instead of waiting for somebody else to provide one. This also suggests a boundary: when the work is deterministic, ask the model to write or invoke an inspectable, testable program rather than produce the answer probabilistically.
+
+Arbitrary code execution is unsafe on a bare machine. Put it in a sandbox stocked with the things it needs to observe its own work: test runners, a browser, logs, and screenshots. The model's training knowledge is frozen, so give it memory files and search. Its reasoning is serial and confined to one window, so let it delegate isolated investigations to sub-agents with fresh windows and separate Git worktrees. That keeps messy exploration out of the main context and allows independent work to run in parallel. The filesystem and Git come first; most of the other capabilities depend on them.
 
 <Slide title="Working backwards from what a model can't do">
 
@@ -257,17 +170,9 @@ the foundational one; the rest lean on it.
 
 </Slide>
 
-The test for whether a piece belongs is simple: if you cannot name the behaviour
-a component exists to deliver, it probably should not be there.
+A component should earn its place. If you cannot name the behaviour it exists to produce, leave it out.
 
-With that substrate in place, the question turns to how you steer what runs on it,
-and the vocabulary for that comes from control theory. The first cut is guides
-versus sensors: a guide steers the agent *before* it acts (feedforward), a
-sensor observes *after* it acts (feedback). A harness with only sensors fixes
-each mistake but lets the next session rediscover it; one with only guides
-encodes rules and never learns whether they held. You want to cover both. Read as
-a closed-loop controller around the model, a full harness has seven distinct
-control surfaces, each with a characteristic failure when it is missing.
+Once the substrate is in place, the remaining question is how to steer the work running on it. Control theory offers a useful vocabulary. Guides act before the agent does something; sensors observe after it acts. In control terms, those are feedforward and feedback. Sensors alone correct mistakes but force each new session to rediscover them. Guides alone encode rules without checking whether those rules worked. A complete loop needs both. Across that loop, I find seven useful control surfaces, each tied to a particular kind of failure.
 
 <Slide title="Harness seen as a control loop">
 
@@ -275,21 +180,9 @@ control surfaces, each with a characteristic failure when it is missing.
 
 </Slide>
 
-The seven sort into pairs by what they do. Guides and Exemplars steer, before the
-fact. Sensors and Mirrors observe - Mirrors catch confident wrongness *before* a
-tool call by forcing the agent to externalise state it cannot otherwise see;
-Sensors catch it *after*. Rails and Throttles bound the blast radius, and
-Scaffolds partition the problem so a long task never rots a single window.
+The seven controls fall into functional groups. Guides and Exemplars steer before action. Mirrors expose the agent's state before a tool call, while Sensors inspect the result afterwards. Rails and Throttles limit damage. Scaffolds divide work so a long task does not decay inside one overloaded window.
 
-A harness is grown, not designed up front. The rule every practitioner converges
-on: any time the agent makes a mistake, engineer it so it cannot make that
-mistake again. The subtlety is *which* mistake - the quiet failure it repeats,
-not the loud one-off. Add the minimal constraint that holds, working up only as
-far as you must: a `CLAUDE.md` line before a hook before a hard deny rule,
-because stronger constraints are harder to remove later. Every line of a good
-context file should trace to a specific thing that went wrong. Ratchet, do not
-brainstorm. Expressed as configuration, the constraint is usually smaller than
-the prose describing it:
+Do not try to design the whole harness up front. Grow it from observed failures. When the agent makes a repeatable mistake, add the smallest constraint that prevents it: a line in `CLAUDE.md` before a hook, and a hook before a hard deny rule. Stronger controls are harder to unwind. Each corrective rule should point back to something that actually went wrong. Ratchet from evidence instead of brainstorming imaginary failures. Configuration is often much shorter than the prose used to explain it:
 
 ```json
 {
@@ -302,51 +195,19 @@ the prose describing it:
 }
 ```
 
-Not every line is a fossilised failure, though. Some just encode how you like to
-work - how much the agent explains, how often it checks in, how much it may do
-before asking. That is not the agent being wrong; it is fitting the tool to you.
-The ratchet keeps it correct; this keeps it yours.
+Not every instruction comes from a failure. Some encode personal working preferences: how much explanation you want, when the agent should pause, or how much it may change before asking. The ratchet protects correctness. These preferences make the tool fit the person using it.
 
-One lever is worth unpacking, because it is where most of this gets systematised.
-Scaffolds, in practice, mostly means *skills* - and a skill is a folder, not a
-file: a short entry point sitting beside the scripts, reference docs, and
-templates the agent pulls in only when it needs them, triggered by a description
-rather than riding in every session's context. Two authoring habits carry the
-weight. Give the agent scripts to run rather than prose to follow, so it stops
-reconstructing the same boilerplate each turn and spends its intelligence on the
-decision. And keep a "gotchas" section that grows every time it gets something
-wrong - the ratchet again, only persisted into the scaffold itself instead of a
-context file.
+Scaffolds deserve a closer look because this is where teams tend to systematise their working methods. In practice, a scaffold is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
 
-The Rails lever is where the OS-level security model lives, and it is the same
-lever that answers the poisoned-`AGENTS.md` problem from pillar one. A coding
-agent runs with the same permissions as the person who started it - your cloud
-credentials, your SSH keys, your registry tokens are all one command away - and
-its primary threat is indirect prompt injection: hostile content reaching the
-window through a repository, a pull request, a dependency, or a context file.
-Application-level checks can inspect a tool call before it runs, but once control
-passes to a subprocess they go blind, and an attacker can reach a restricted
-capability through an approved one.
+Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Keep a gotchas section too, and add to it when a recurring mistake appears. It is the same ratchet, stored inside the scaffold.
 
-So rails belong *beneath* the application, and the piece that does that work is
-the sandbox. A sandbox is not a policy about commands; it is a boundary the
-process cannot argue with: writes confined to the working directory and a scratch
-directory, network deny-by-default with per-host approval, all of it enforced by
-the OS rather than by the agent. That boundary holds across subprocesses, which a
-string check on a command line structurally cannot. Which gives the two layers a
-clean division of labour. The sandbox bounds what the agent *can* do; the
-application-level rule judges what it *means* to do. Deny rules and pre-tool
-hooks are still worth having, but for the small set of actions that are
-destructive *inside* the boundary and legible only as intent - a force-push, a
-history rewrite, staging a secret into a commit. Everything else is the
-boundary's job.
+Rails contain the OS-level security model and answer the poisoned-`AGENTS.md` problem. A coding agent usually inherits the permissions of the person who launched it. Cloud credentials, SSH keys, and registry tokens may all be one command away. The main threat is indirect prompt injection: hostile instructions arriving through a repository, pull request, dependency, or context file. An application can inspect a tool call before execution, but it loses visibility once an approved subprocess starts. A restricted capability may still be reached through an apparently safe command.
 
-Reads are the gap in that default, and worth closing by hand.
-[Claude Code's sandbox](https://code.claude.com/docs/en/sandboxing#configure-sandboxing)
-confines writes and network out of the box, but a sandboxed command can still
-read most of the disk - `~/.aws` and `~/.ssh` included - and there is no built-in
-credential list. So the denies below are doing real work rather than restating a
-default:
+The hard boundary therefore belongs below the application. A sandbox is not advice about which commands to avoid. It is a limit the process cannot negotiate with: writes confined to the project and a scratch directory, network access denied by default, and individual hosts approved when needed. The operating system enforces those rules across subprocesses. Command-string matching cannot provide the same guarantee.
+
+I use the two layers for different jobs. The sandbox controls what the agent *can* do. Application rules judge what it *means* to do. Deny rules and pre-tool hooks remain useful for destructive actions inside the boundary whose intent is visible, such as force-pushing, rewriting history, or staging a secret.
+
+Read access remains an important gap. [Claude Code's sandbox](https://code.claude.com/docs/en/sandboxing#configure-sandboxing) confines writes and network access by default, but sandboxed commands can still read much of the disk, including `~/.aws` and `~/.ssh`. There is no built-in credential list, so explicit denies like these do real work:
 
 ```json
 {
@@ -365,69 +226,33 @@ default:
 }
 ```
 
-A rail nobody can escape gets switched off wholesale, so the escapes matter as
-much as the walls. Some tools genuinely break under confinement - Go-based CLIs
-fail TLS verification under macOS Seatbelt, which is what `excludedCommands`
-above is for - and the right response is a named exemption, not a disabled
-sandbox. When anything else fails *because* of the sandbox, the agent should be
-able to retry it as an explicit, prompted decision, so confinement is never a
-dead end. Worth stating the residual gap plainly to yourself, though: every
-escape hatch is a place the boundary is not holding, so approving one stays a
-real decision rather than a formality. The same boundary is what makes the fast
-path safe: run an agent in allow-all, approve-nothing mode *only* inside a
-sandbox, never against a bare machine.
+A boundary that blocks legitimate work will eventually be disabled, so escape hatches matter. Some tools really do fail under confinement. Go-based CLIs, for example, can fail TLS verification under macOS Seatbelt; that is what the named `excludedCommands` above are for. A specific exemption is better than switching off the sandbox. Other sandbox-related failures should be retried only after explicit approval. Each exception is still a hole in the boundary, not a box to click through without thinking.
+
+That same boundary enables the fast path. An agent can run in allow-all, approve-nothing mode inside a sandbox. It should never run that way on a bare machine.
 
 <Slide title="The discipline">
 
-> A line in the harness is a fossilised failure - but with a decay term. The
+> A line in the harness is a fossilised failure, but with a decay term. The
 > measure of the discipline is not how much scaffolding you have accumulated, but
 > how much of yesterday's you managed to delete today.
 
 </Slide>
 
-The last discipline is the one almost nobody practices: deletion. As models
-improve, yesterday's scaffolding turns into drag - the constraint that once saved
-you now holds a more capable model back. It helps to make the audit a habit
-rather than a mood: Claude Code's `/checkup` command sweeps a setup for exactly
-this rot - unused skills, slow hooks, a `CLAUDE.md` that has bloated past its
-usefulness - and nothing stops you writing your own skill to prune on your terms.
-My own [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is
-public if you want a worked example: context files, hooks, and skills grown and
-pruned against exactly the failure modes above. Because they are plain files,
-the same artifacts can be symlinked into other harnesses such as
-[Pi](https://pi.dev/) rather than maintained twice - which is how I use them
-myself.
-Better models do not make harnesses obsolete; harnesses move. Old scaffolding
-falls away while harder tasks expose new failure modes.
+Deletion is the neglected part of harness engineering. As models improve, old scaffolding becomes drag. A constraint that once prevented failure may later obstruct a more capable model. Make this a routine audit instead of waiting until the setup feels unbearable. Claude Code's `/checkup` command looks for this kind of rot: unused skills, slow hooks, and an overgrown `CLAUDE.md`. You can also write your own pruning skill.
+
+My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to the failure modes described here. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.
+
+Better models do not eliminate harnesses. They change them. Old constraints disappear, and harder tasks reveal new failures.
 
 ### Two teams who ran it to the limit
 
-Two production stories show the levers at full scale. At OpenAI, a team shipped an
-internal product of roughly a million lines with *no manually-written code* - some
-1,500 pull requests, humans steering and agents executing. The load-bearing
-decision was to treat repository knowledge as the system of record: one giant
-context file fails predictably, because when everything is important nothing is,
-so their `AGENTS.md` became a hundred-line table of contents pointing into a
-structured `docs/` directory. Architecture was held by invariants rather than
-implementations - custom linters whose error messages inject the fix, and
-background agents that scan, grade, and open refactor pull requests to pay down
-drift continuously. The Rails, Sensors, and Guides levers, taken to org scale.
+At OpenAI, a team shipped an internal product of roughly a million lines with *no manually-written code*. Around 1,500 pull requests went through a process in which humans steered and agents executed. Repository knowledge was the system of record. A single enormous context file had failed for the usual reason: when everything is important, nothing is. The team replaced it with a hundred-line `AGENTS.md` that acted as a table of contents for a structured `docs/` directory.
 
-Anthropic's long-running app builds show the other half, and name the strongest
-quality lever there is: separate the doer from the judge. Agents grade their own
-work generously - the most common autonomy failure is an agent re-reading its own
-code, declaring it fine, and stopping. So the harness splits into a planner, a
-generator, and a skeptical evaluator, because tuning a standalone critic is far
-more tractable than teaching a generator to distrust itself. It is the discard
-discipline in action too: the scaffolding that made this work on one model was
-taken out on the next, which had absorbed it.
+They enforced architecture through invariants rather than prescribed implementations. Custom linters returned errors that included the fix. Background agents scanned the repository, graded drift, and opened refactoring pull requests. This is what Rails, Sensors, and Guides look like at organisation scale.
 
-What reads as bespoke lab scaffolding is already becoming a default feature. Some
-harnesses, like GitHub Copilot, ship a "rubber duck" review that draws the evaluator
-from a *different* model family than the generator - one model's work checked by another,
-on the logic that different training data leaves different blind spots - and wraps it
-in a loop that runs until both sides agree only diminishing-returns nits remain.
-Separate the doer from the judge, productized, no custom harness required.
+Anthropic's long-running application experiments expose a different quality problem: agents are generous when grading their own work. A common failure is for an agent to reread its implementation, declare it good enough, and stop. Anthropic split the harness into a planner, generator, and skeptical evaluator. Tuning a standalone critic is easier than teaching the generator to distrust itself. The experiment also demonstrates why old scaffolding should be discarded. Controls needed for one model were removed when the next model no longer needed them.
+
+This pattern is already moving from lab setup to product feature. GitHub Copilot includes a "rubber duck" review in which a model from a different family checks the generator's work. Different training data may leave different blind spots. The loop continues until both models agree that only low-value nits remain. The doer and judge are separate, without requiring users to build a custom harness.
 
 <Slide title="Separate the doer from the judge">
 
@@ -439,57 +264,24 @@ Separate the doer from the judge, productized, no custom harness required.
 
 ## Scaling beyond one developer
 
-Everything so far is single-player: one engineer, one agent, one repository. At
-that scale the practices above mostly hold. The harder problem, the one the field
-has not solved, is multiplayer - a team of engineers each running several agents
-against a shared codebase.
+So far this is a single-player setup: one engineer, one agent, one repository. Most of these practices work well at that scale. The unsolved problem is multiplayer, where several engineers each run several agents against the same codebase.
 
-The first thing that breaks is the role. When an agent writes most of the code,
-the engineer stops typing and starts directing: reading more English than code,
-handing over a goal with its constraints and acceptance criteria, then judging
-what comes back. Deciding *what* to build, and whether what was built is right,
-becomes the scarce skill. The bottleneck shifts from writing to reviewing.
+The engineer's role changes first. When the agent writes most of the code, the human spends less time typing and more time directing. They state the goal, constraints, and acceptance criteria, then judge the result. Choosing what to build and deciding whether it is correct become the scarce skills. The bottleneck moves from writing to review.
 
-And review is where the strain shows. As of 2026, Anthropic reports that more
-than 80% of its merged code is Claude-authored and the typical engineer merges
-around eight times more code per day than two years ago, with the human directing
-and reviewing rather than writing. Throughput like that does not remove the
-bottleneck; by Amdahl's law it lands on the one step still done by hand: review.
-Anthropic's own answer is to automate even that - a Claude reviewer that runs
-before merge.
+That shift is already visible. In 2026, Anthropic reported that Claude authored more than 80% of its merged code and that the typical engineer merged about eight times as much code per day as two years earlier. Human engineers directed and reviewed rather than writing most of it. By Amdahl's law, that extra throughput lands on the remaining manual step. Anthropic's response was to automate part of review with a Claude reviewer that runs before merge.
 
 <Slide title="The bottleneck moves, it does not vanish">
 
-> Throughput up - but what survives? When agents write most of the code, human
+> Throughput is up, but what survives? When agents write most of the code, human
 > review stops being one step among many and becomes the rate-limiter for the
 > whole system.
 
 </Slide>
 
-Not everyone reports the gains landing cleanly. Faros AI's 2026 telemetry, across
-22,000 developers, agrees the throughput is real - and finds that bugs,
-incidents, and rework are rising faster: bugs per developer up by half,
-production incidents up several-fold, code churn up nearly tenfold, and about a
-third more pull requests merged with no review at all. They call it the
-*Acceleration Whiplash*: a system built for human-paced work, flooded with more
-output than it was designed to absorb.
+The gains do not land this cleanly everywhere. Faros AI's 2026 telemetry covers 22,000 developers. It found more throughput alongside faster growth in bugs, incidents, and rework: bugs per developer rose by half, production incidents increased several-fold, code churn grew nearly tenfold, and roughly a third more pull requests merged without any review. Faros calls this *Acceleration Whiplash*: systems built for human-paced work receiving more output than they can absorb.
 
-The two pictures are less contradictory than they look, and the gap between them
-is the whole argument of this essay. Anthropic measures output from a heavily
-scaffolded environment, automated reviewer included; Faros measures what lands in
-average codebases, where far more pull requests now skip review entirely. The
-gap is the harness. AI code is superficially convincing - idiomatic, well-named -
-while the logical flaw hides underneath, which is exactly why the sensors, the
-mirrors, and the human check are not optional overhead. They are what stands
-between throughput and a mess.
+These reports are not necessarily in conflict. Anthropic describes a heavily scaffolded environment with an automated reviewer. Faros measures average codebases, where many more pull requests now skip review. The harness explains much of the difference. AI-generated code often looks convincing. It is idiomatic and well named, while the logical flaw is easy to miss. Sensors, Mirrors, and human review are not ceremonial overhead. Without them, higher throughput can simply produce a larger mess.
 
-The human-side answer is to review at a higher altitude. When the machine writes
-plausible, well-formed code, staring at each line is low-value; the risk has
-moved to whether ten changes fit together, to the seams between them. So review
-shifts to the integration points, aided by two things the agent should hand up
-with its work: evidence of what it verified, and a picture of how the change
-fits. Review the seams, not the lines.
+Humans also need to review at a different altitude. Line-by-line inspection offers less value when the machine reliably produces tidy code. The larger risk is whether a collection of changes fits together, especially at integration points. The agent should submit two things with the code: evidence of what it verified and a clear account of how the change fits the existing system. Review the seams, not every line.
 
-Which returns to where the essay started. The model is the one part you do not
-control. Everything else - what it is allowed to see, what it is allowed to do,
-and how what it produces is checked - is engineering, and it is yours.
+This is why I am less interested in waiting for the next model than I used to be. I cannot change its weights. I can change what it sees, what it may do, and what evidence it must produce before I trust the result. That is the part worth engineering.
