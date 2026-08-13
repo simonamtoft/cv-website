@@ -68,6 +68,12 @@ sources:
   - title: "Pocock, M. - Wayfinder skill"
     url: "https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md"
     note: "plan-first discipline: chart a large multi-session effort as a map of decision tickets before any code is written"
+  - title: "Anthropic - Run parallel Claude Code sessions with Git worktrees"
+    url: "https://code.claude.com/docs/en/worktrees"
+    note: "built-in worktree isolation for parallel sessions and subagents"
+  - title: "Pedersen, S. A. - pi-worktree-agents"
+    url: "https://github.com/simonamtoft/pi-worktree-agents"
+    note: "interactive Pi worktree sessions with WezTerm tabs, splits, isolated ports, and guarded merge and cleanup commands"
 ---
 
 import LeveragePyramid from './LeveragePyramid';
@@ -97,6 +103,10 @@ This is not tied to one vendor. GitHub recommends roughly the same sequence: pro
 For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md) map: a shared board of decision tickets that settles the consequential *what* and *why* before implementation starts. I like the idea more than I like treating the full workflow as a default. Combined with `grill-me` or other planning skills, it can turn each answer into another branch of questions and make planning a rabbit hole. I now use it selectively, stop once the important decisions are clear, and prefer a short plan when that is enough.
 
 For larger multi-session efforts, I currently use [Backlog.md](https://github.com/MrLesk/Backlog.md), and it has substantially improved both the feel and the UX of working with agents. Instead of using plan mode to produce one monolithic implementation plan, I use it to design and refine the tickets. The agent can then work through those durable units one at a time, while decisions, progress, and dependencies remain visible across sessions. [Fiberplane](https://fp.dev/) explores a similar CLI-native model.
+
+Tickets also provide a clean boundary for parallel work. When two tickets are independent, I can give each one to an agent in its own Git worktree. The agents share the repository's history but get separate branches, indexes, and working files, so one does not change branches underneath the other or mix uncommitted changes into its work. One ticket runs in one worktree while another proceeds beside it; dependent tickets stay sequential.
+
+Claude Code has this pattern built in through its [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) to provide the same operating model in WezTerm tabs and splits, with a distinct port for each worktree and guarded commands for merging and cleanup. Backlog.md supplies the units of coordination; worktrees supply the isolated execution environments.
 
 The useful principle is not to maximise the number of tickets. It is to keep the backlog alive and the consequential reasoning close to the code, where Git makes completed work searchable without introducing another system that can drift away from the implementation.
 
