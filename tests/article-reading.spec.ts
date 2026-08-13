@@ -35,13 +35,14 @@ test.describe('Self-hosted article reading view', () => {
     await expect(controller.locator('.harness-lever-detail h4')).toBeVisible();
   });
 
-  test('All four interactive visuals render inline', async ({ page }) => {
+  test('Article visuals render inline', async ({ page }) => {
     await page.goto('/writing/agentic-engineering');
 
     await expect(page.locator('.leverage-pyramid')).toBeVisible();
     await expect(page.locator('.context-window')).toBeVisible();
     await expect(page.locator('.context-flow')).toBeVisible();
     await expect(page.locator('.harness-controller')).toBeVisible();
+    await expect(page.locator('.verification-ladder')).toBeVisible();
   });
 
   test('The leverage pyramid responds to interaction', async ({ page }) => {

@@ -71,7 +71,7 @@ test.describe('Article presentation / slide mode', () => {
     await expect(page.locator('.deck-counter')).toHaveText(counter!);
   });
 
-  test('each of the four visuals is featured on a slide', async ({ page }) => {
+  test('each featured visual has its own slide', async ({ page }) => {
     await page.goto('/writing/agentic-engineering/present');
 
     for (const visual of [
@@ -79,6 +79,7 @@ test.describe('Article presentation / slide mode', () => {
       '.context-window',
       '.context-flow',
       '.harness-controller',
+      '.verification-ladder',
     ]) {
       const slide = page.locator('.deck-slide', { has: page.locator(visual) });
       await expect(slide).toHaveCount(1);
