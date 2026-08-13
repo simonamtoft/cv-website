@@ -82,6 +82,7 @@ import ContextFlow from './ContextFlow';
 import Primitives from './Primitives';
 import AgentAnatomy from './AgentAnatomy';
 import HarnessController from './HarnessController';
+import WorktreeMap from './WorktreeMap';
 import './agentic-engineering.css';
 
 {/* Present mode is a curated deck: only the bits wrapped in <Slide> below become
@@ -106,7 +107,9 @@ For larger multi-session efforts, I currently use [Backlog.md](https://github.co
 
 Tickets also provide a clean boundary for parallel work. When two tickets are independent, I can give each one to an agent in its own Git worktree. The agents share the repository's history but get separate branches, indexes, and working files, so one does not change branches underneath the other or mix uncommitted changes into its work. One ticket runs in one worktree while another proceeds beside it; dependent tickets stay sequential.
 
-Claude Code has this pattern built in through its [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) to provide the same operating model in WezTerm tabs and splits, with a distinct port for each worktree and guarded commands for merging and cleanup. Backlog.md supplies the units of coordination; worktrees supply the isolated execution environments.
+Claude Code has this pattern built in through its [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) to provide the same operating model in WezTerm tabs and splits, with a distinct port for each worktree and guarded commands for merging and cleanup.
+
+<WorktreeMap />
 
 The useful principle is not to maximise the number of tickets. It is to keep the backlog alive and the consequential reasoning close to the code, where Git makes completed work searchable without introducing another system that can drift away from the implementation.
 
@@ -176,7 +179,7 @@ A harness is concrete, not an abstract layer in a diagram. The reason for each c
 
 A model is text in, text out, with no persistent state. Give it a filesystem and Git and it gets a workspace, a place to offload context, memory across sessions, and version history. It can emit text but cannot act, so give it tools, especially bash and code execution. It can then write a small tool when needed instead of waiting for somebody else to provide one. This also suggests a boundary: when the work is deterministic, ask the model to write or invoke an inspectable, testable program rather than produce the answer probabilistically.
 
-Arbitrary code execution is unsafe on a bare machine. Put it in a sandbox stocked with the things it needs to observe its own work: test runners, a browser, logs, and screenshots. The model's training knowledge is frozen, so give it memory files and search. Its reasoning is serial and confined to one window, so let it delegate isolated investigations to sub-agents with fresh windows and separate Git worktrees. That keeps messy exploration out of the main context and allows independent work to run in parallel. The filesystem and Git come first; most of the other capabilities depend on them.
+Arbitrary code execution is unsafe on a bare machine. Put it in a sandbox stocked with the things it needs to observe its own work: test runners, a browser, logs, and screenshots. The model's training knowledge is frozen, so give it memory files and search. Its reasoning is serial and confined to one window, so let it delegate isolated investigations to sub-agents with fresh windows. That keeps messy exploration out of the main context. The filesystem and Git come first; most of the other capabilities depend on them.
 
 <Slide title="Working backwards from what a model can't do">
 
