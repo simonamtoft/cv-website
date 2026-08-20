@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 13:07"
+lastUpdated: "2026-08-20 13:11"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -256,7 +256,7 @@ Verification is therefore part of the organisational harness, not just a reposit
 
 ### Verification has levels
 
-Verification should escalate with the scope of the risk.
+The broader the possible failure, the wider the check needs to be.
 
 <Slide title="Verification broadens with the risk">
 
@@ -264,13 +264,9 @@ Verification should escalate with the scope of the risk.
 
 </Slide>
 
-Local checks catch concrete failures near the change. Harness feedback goes wider: hooks run the right checks after an edit, while browsers, logs, and screenshots let the agent observe the system in context. A passing check can stay silent; a failure should return the relevant evidence.
+Start close to the change. Tests, linters, and type-checkers catch mechanical errors. Hooks, browsers, logs, and screenshots check how the change behaves in context. Passing checks can stay quiet; failures should return only the evidence needed to act.
 
-Independent evaluation challenges the solution itself. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator. GitHub Copilot's "rubber duck" review similarly lets a model from a different family check the generator's work.
-
-Review automation should be proportional to risk. Zalando uses stack-specific incident rules to auto-approve low-risk pull requests while routing compatibility and configuration hazards to people. The fast path shortens lead time and encourages smaller, independently shippable changes.
-
-Human review takes the widest view. Tidy, plausible code can still fail where changes meet the existing system. The agent should submit evidence of what it verified and a clear account of how the change fits.
+Broader questions need an independent evaluator. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator. GitHub Copilot's "rubber duck" review similarly uses a model from a different family to check the generator's work.
 
 <Slide title="Separate the doer from the judge">
 
@@ -280,8 +276,10 @@ Human review takes the widest view. Tidy, plausible code can still fail where ch
 
 </Slide>
 
-OpenAI reports a million-line internal product built through roughly 1,500 agent-executed pull requests. Its useful lesson here is about context, not code volume: a short `AGENTS.md` indexes structured repository documentation, while linters and background agents enforce invariants and detect drift.
+Human attention can then follow the risk. Zalando uses stack-specific incident rules to auto-approve low-risk pull requests while sending compatibility and configuration hazards to people. The fast path shortens lead time and encourages smaller, independently shippable changes.
 
-Review the seams, not just the lines.
+OpenAI applied these layers to a million-line internal product built through roughly 1,500 agent-executed pull requests. A short `AGENTS.md` points to structured repository documentation, linters enforce invariants, and background agents detect drift.
+
+People still take the widest view. Code can pass every local check and fail where it meets the rest of the system. The agent should show what it verified and how the change fits, so reviewers can focus on the seams rather than rereading every line.
 
 This is why I am less interested in waiting for the next model than I used to be. I cannot change its weights. I can change what it sees, what it may do, and what evidence it must produce before I trust the result. That is the part worth engineering.
