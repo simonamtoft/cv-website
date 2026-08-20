@@ -9,7 +9,7 @@ const workExperience = [
     start: "2026 Mar",
     end: "Now",
     text: <>
-    At <a href="https://www.thetechcollective.dk/" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group's Digital Transformation practice - I combine hands-on engineering with AI advisory.
+    At <a href="https://www.thetechcollective.eu/" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group's Digital Transformation practice - I combine hands-on engineering with AI advisory.
     I build end-to-end AI solutions across the full stack, from data pipelines and model training to application layers, while advising clients on AI strategy: where it fits, what to prioritise, and how to move from idea to production.
     </>,
     icon: TTC_logo
