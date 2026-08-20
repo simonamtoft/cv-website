@@ -24,13 +24,13 @@ export default defineConfig({
     reactRouter(),
   ],
   server: {
-    // Keep the legacy CRA dev port so Playwright (baseURL :3000) and docs stay valid.
-    port: 3000,
+    // Keep local dev, preview, and Playwright on the same uncommon fixed port.
+    port: 4317,
     strictPort: true,
     open: false,
   },
   preview: {
-    port: 3000,
+    port: 4317,
     strictPort: true,
   },
 });

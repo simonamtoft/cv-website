@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
-const port = process.env.PLAYWRIGHT_PORT ?? '3000';
+const port = process.env.PLAYWRIGHT_PORT ?? '4317';
 const baseURL = `http://localhost:${port}`;
 
 /**

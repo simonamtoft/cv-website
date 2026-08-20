@@ -87,7 +87,7 @@ For article changes:
 
 1. Run `npm run build` to verify MDX compilation and prerendering.
 2. Run `npm run test:isolated` so Playwright owns its server rather than reusing
-   another application on port 3000.
+   another application on port 4317.
 3. For visual changes, inspect reading and presentation modes at desktop and
    mobile widths. Wait for `.article-dek.is-revealed` before capturing the
    reading view, scroll the target figure into view, and wait for it to receive

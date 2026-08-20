@@ -49,19 +49,19 @@ The site is built with [Vite](https://vitejs.dev/) (migrated from Create React
 App).
 
 ```bash
-# Start the Vite dev server (runs on localhost:3000)
+# Start the Vite dev server (runs on localhost:4317)
 npm start          # alias: npm run dev
 
 # Build production bundle (output goes to build/)
 npm run build
 
-# Preview the production build locally (localhost:3000)
+# Preview the production build locally (localhost:4317)
 npm run preview
 
 # Run the Playwright end-to-end tests on the default port
 npm test
 
-# Run tests on an isolated port when port 3000 may be occupied
+# Run the Playwright suite on the configured localhost:4317 port
 npm run test:isolated
 
 # Check source URLs declared in article frontmatter
@@ -89,7 +89,7 @@ publishes it to GitHub Pages.
   `vite.config.js` uses the `reactRouter()` plugin (not `@vitejs/plugin-react`);
   `react-router.config.js` sets `ssr: false`, `appDirectory: "src"`,
   `buildDirectory: "build"`, and the `prerender` route list.
-- `vite.config.js` pins the dev/preview port to `3000`. The build emits the
+- `vite.config.js` pins the dev/preview port to `4317`. The build emits the
   deployable SPA to `build/client` (each prerendered route as static HTML), which
   the GitHub Pages workflow uploads.
 - There is no root `index.html` entry: the document shell lives in `src/root.jsx`
@@ -99,11 +99,10 @@ publishes it to GitHub Pages.
 ## Visual Verification with Playwright
 
 After making visual changes (colors, layout, components), take screenshots to
-verify correctness. The dev server must be running on localhost:3000 first.
+verify correctness. The dev server must be running on localhost:4317 first.
 Playwright never reuses an existing server, so a process already using the
 configured port causes a clear startup failure rather than tests running against
-the wrong application. Set `PLAYWRIGHT_PORT` or use `npm run test:isolated` when
-port 3000 is occupied.
+the wrong application. Set `PLAYWRIGHT_PORT` to override the configured port.
 
 Use system Chrome (Playwright browsers may not be installed):
 
@@ -117,12 +116,12 @@ const { chromium } = require('playwright');
   const page = await browser.newPage();
   await page.setViewportSize({ width: 1280, height: 900 });
   for (const [route, name] of [['/', 'home'], ['/about', 'about'], ['/background', 'bg'], ['/writing', 'writing'], ['/contact', 'contact']]) {
-    await page.goto('http://localhost:3000' + route);
+    await page.goto('http://localhost:4317' + route);
     await page.waitForTimeout(1500);
     await page.screenshot({ path: '/tmp/cv-' + name + '.png' });
   }
   // Modal check
-  await page.goto('http://localhost:3000/background');
+  await page.goto('http://localhost:4317/background');
   await page.waitForTimeout(1500);
   await page.click('.timeline-item.has-details');
   await page.waitForTimeout(600);
