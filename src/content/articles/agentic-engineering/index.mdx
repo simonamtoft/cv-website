@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 13:36"
+lastUpdated: "2026-08-20 15:24"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -208,7 +208,7 @@ Read access remains a gap. [Claude Code's sandbox](https://code.claude.com/docs/
 
 Deletion is the neglected part of harness engineering. As models improve, old scaffolding becomes drag. A constraint that once prevented failure may later obstruct a more capable model. Make this a routine audit instead of waiting until the setup feels unbearable. Claude Code's `/checkup` command looks for this kind of rot: unused skills, slow hooks, and an overgrown `AGENTS.md`. You can also write your own pruning skill.
 
-These principles shape my own setup: durable planning artifacts, isolated worktrees, and shared skills across harnesses. I document the concrete workflow separately in [My Agentic Engineering Setup](/writing/my-agentic-engineering-setup).
+These principles shape my own setup: durable planning artifacts, isolated worktrees, and a shared layer of instructions, skills, agents, and prompts that is independent of any one harness. I document the concrete workflow and its [public cross-harness repository](https://github.com/simonamtoft/coding-harness) separately in [My Agentic Engineering Setup](/writing/my-agentic-engineering-setup).
 
 ## Scaling beyond one developer
 

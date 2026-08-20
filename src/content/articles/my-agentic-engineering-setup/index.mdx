@@ -1,9 +1,9 @@
 ---
 title: "My Agentic Engineering Setup"
-dek: "The planning artifacts, worktrees, and shared skills I use to keep coding-agent work effective across sessions."
+dek: "The planning artifacts, worktrees, and cross-harness resources I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 13:36"
+lastUpdated: "2026-08-20 15:24"
 sources:
   - title: "Pocock, M. - Wayfinder skill"
     url: "https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md"
@@ -17,9 +17,9 @@ sources:
   - title: "Pedersen, S. A. - pi-worktree-agents"
     url: "https://github.com/simonamtoft/pi-worktree-agents"
     note: "interactive Pi worktree sessions with isolated ports and guarded merge and cleanup commands"
-  - title: "Pedersen, S. A. - Claude Code setup"
-    url: "https://github.com/simonamtoft/claude-code-setup"
-    note: "the context files, hooks, and skills described in this article"
+  - title: "Pedersen, S. A. - coding-harness"
+    url: "https://github.com/simonamtoft/coding-harness"
+    note: "the canonical cross-harness repository for the shared resources and harness-specific configuration described in this article"
 ---
 
 import WorktreeMap from './WorktreeMap';
@@ -29,7 +29,7 @@ This is the concrete counterpart to [Agentic Engineering](/writing/agentic-engin
 
 ## Planning work across sessions
 
-For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md) map to settle the consequential *what* and *why* before implementation starts. I use it selectively. Combined with `grill-me` or other planning skills, each answer can produce another branch of questions. Once the important decisions are clear, a short plan is enough.
+For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map to settle the consequential *what* and *why* before implementation starts. I use it selectively. Combined with `grill-me` or other planning skills, each answer can produce another branch of questions. Once the important decisions are clear, a short plan is enough.
 
 For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to refine durable tickets whose decisions, progress, and dependencies remain visible across sessions.
 
@@ -47,4 +47,6 @@ The point is not to maximise the number of tickets. It is to keep the backlog al
 
 ## One setup across harnesses
 
-My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to observed failure modes. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.
+My [coding harness](https://github.com/simonamtoft/coding-harness) is public as a worked example. It separates shared, user-authored resources from each harness's native configuration: `AGENTS.md`, skills, agents, and prompts have one canonical home; Pi extensions and Claude hooks, settings, themes, and statusline remain harness-specific. Credentials, sessions, caches, installed packages, and model/provider configuration stay local.
+
+A link script installs the shared resources into both [Pi](https://pi.dev/) and Claude Code without maintaining copies. The artifacts were added and removed in response to observed failure modes; keeping the common layer separate means another harness can join later without moving its source of truth.
