@@ -22,7 +22,9 @@
     "dev": "react-router dev",
     "build": "react-router build",
     "preview": "vite preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:isolated": "PLAYWRIGHT_PORT=3100 playwright test",
+    "check:article-sources": "node scripts/check-article-sources.mjs"
   },
   "browserslist": {
     "production": [

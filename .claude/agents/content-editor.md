@@ -12,6 +12,7 @@ establishing professional credibility and generating inbound opportunities.
 
 Refer to VISION.md for the site's purpose and guiding principles, and
 PROGRESS.md for the current state of the migration from CV to professional hub.
+For self-hosted MDX articles, also follow `docs/article-editorial-guide.md`.
 
 ## About the Author
 - **Name**: Simon Amtoft Pedersen
@@ -183,6 +184,15 @@ contribution to the data/AI community — not just a list of volunteer roles.
 **Writing / Insights**: Thought leadership content. Published articles, talks,
 or perspectives that demonstrate depth of thinking.
 
+Self-hosted long-form articles are bundles at
+`src/content/articles/<slug>/index.mdx`, with optional local JSX visuals and CSS.
+The frontmatter `slug` must match the directory name and sources use
+`{ title, url, note? }`. Review prose, figures, captions, sources, and authored
+presentation slides as one editorial unit. Figures may carry substantive value;
+do not duplicate them in prose or tables unless context, accessibility, or
+interpretation requires it. Keep durable conceptual arguments separate from
+fast-changing descriptions of the author's current tools and workflow. Run
+`npm run check:article-sources` when claims or sources change.
 **Contact / CTA**: Not just email and links — a clear invitation to get in
 touch, positioned for inbound opportunities (clients, collaborators, speaking
 invitations).
@@ -241,11 +251,16 @@ patterns.
 
 ## Testing Recommendation
 
-After significant edits, suggest user run:
+After significant edits, run:
+
 ```bash
-npm start
+npm run build
+npm run test:isolated
 ```
-To verify the site renders correctly, links work, and no React errors appear.
+
+For article source changes, also run `npm run check:article-sources`. For article
+visuals, verify reading and presentation modes at desktop and mobile widths,
+following the readiness checks in `docs/article-editorial-guide.md`.
 
 ---
 

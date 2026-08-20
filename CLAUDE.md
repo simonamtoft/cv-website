@@ -58,8 +58,14 @@ npm run build
 # Preview the production build locally (localhost:3000)
 npm run preview
 
-# Run the Playwright end-to-end tests
+# Run the Playwright end-to-end tests on the default port
 npm test
+
+# Run tests on an isolated port when port 3000 may be occupied
+npm run test:isolated
+
+# Check source URLs declared in article frontmatter
+npm run check:article-sources
 ```
 
 Deployment is automatic: pushing to `main` triggers the GitHub Actions
@@ -94,6 +100,10 @@ publishes it to GitHub Pages.
 
 After making visual changes (colors, layout, components), take screenshots to
 verify correctness. The dev server must be running on localhost:3000 first.
+Playwright never reuses an existing server, so a process already using the
+configured port causes a clear startup failure rather than tests running against
+the wrong application. Set `PLAYWRIGHT_PORT` or use `npm run test:isolated` when
+port 3000 is occupied.
 
 Use system Chrome (Playwright browsers may not be installed):
 
@@ -122,6 +132,13 @@ const { chromium } = require('playwright');
 ```
 
 Then read each `/tmp/cv-*.png` with the Read tool to visually inspect.
+
+For article captures, wait for `.article-dek.is-revealed`, scroll the target
+figure into view, and wait for its `.is-visible` class before taking a reading
+view screenshot. For `/writing/:slug/present`, wait for `.deck[data-ready]`
+before sending keyboard input or capturing. Check both modes at desktop and
+mobile widths. Prefer Playwright's managed `webServer` for automated checks;
+background shell servers can leave child processes running.
 
 **What to check after style changes:**
 - Correct background, text, and accent colors on all pages
@@ -174,6 +191,11 @@ per-route (and per-article) tags are authoritative and not duplicated.
 
 ### Article system (self-hosted essays)
 
+Article authoring and review follow `docs/article-editorial-guide.md`. In
+particular, figures are first-class content rather than material that must be
+duplicated in prose, and fast-changing personal workflows should be split from
+durable conceptual articles.
+
 Long-form essays are self-hosted MDX. The pipeline (see `vite.config.js`):
 `@mdx-js/rollup` compiles `.mdx` at build; `remark-frontmatter` +
 `remark-mdx-frontmatter` parse YAML frontmatter into a `frontmatter` export;
@@ -181,9 +203,12 @@ Long-form essays are self-hosted MDX. The pipeline (see `vite.config.js`):
 `react-markdown` is deliberately not used because it cannot host inline
 interactive React components).
 
-- Content lives in `src/content/articles/*.mdx`. Frontmatter schema: `title`,
-  `dek`, `slug`, `series`, `lastUpdated`, `sources: [{ title, url, note? }]`.
-  An MDX file may `import` and embed interactive React visuals inline.
+- Content lives in self-contained bundles at
+  `src/content/articles/<slug>/index.mdx`. Frontmatter schema: `title`, `dek`,
+  `slug`, `series`, `lastUpdated`, `sources: [{ title, url, note? }]`. The slug
+  must match the bundle directory. An MDX file may import and embed interactive
+  React visuals inline. Validate source URLs with
+  `npm run check:article-sources`.
 - `src/data/articles.js` auto-discovers articles via `import.meta.glob` (eager),
   sorts newest-first by `lastUpdated`, and exposes `getArticleBySlug`.
 - `routes/article.jsx` renders `<ArticleReadingView>` for `/writing/:slug` and

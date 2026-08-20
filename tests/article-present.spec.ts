@@ -1,14 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+
+async function openDeck(page: Page) {
+  await page.goto('/writing/agentic-engineering/present');
+  const deck = page.locator('.deck');
+  await expect(deck).toHaveAttribute('data-ready', '');
+  await expect(deck).toBeFocused();
+  await expect(page.locator('.deck-slide.is-current')).toBeVisible();
+}
 
 // Seam 1 (e2e): the presentation deck at /writing/:slug/present - slide
 // navigation, Escape return, and an interactive visual that stays interactive
 // full-screen (its state survives navigation).
 test.describe('Article presentation / slide mode', () => {
   test('renders slide 1 and a counter over the authored slides', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering/present');
-
-    const current = page.locator('.deck-slide.is-current');
-    await expect(current).toBeVisible();
+    await openDeck(page);
 
     const total = await page.locator('.deck-slide').count();
     expect(total).toBeGreaterThan(1);
@@ -16,7 +21,7 @@ test.describe('Article presentation / slide mode', () => {
   });
 
   test('arrow keys navigate the deck without leaving the present route', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering/present');
+    await openDeck(page);
     const total = await page.locator('.deck-slide').count();
 
     await page.keyboard.press('ArrowRight');
@@ -30,7 +35,7 @@ test.describe('Article presentation / slide mode', () => {
   });
 
   test('Escape returns to the reading view', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering/present');
+    await openDeck(page);
 
     await page.keyboard.press('Escape');
     await expect(page).toHaveURL(/\/writing\/agentic-engineering$/);
@@ -38,7 +43,7 @@ test.describe('Article presentation / slide mode', () => {
   });
 
   test('a visual builds up on key press and hides the reading-only info panel', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering/present');
+    await openDeck(page);
 
     // Advance to the slide that hosts the harness controller (a press consumes a
     // build step before moving on, so keep pressing until it is current).
@@ -72,7 +77,7 @@ test.describe('Article presentation / slide mode', () => {
   });
 
   test('each featured visual has its own slide', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering/present');
+    await openDeck(page);
 
     for (const visual of [
       '.leverage-pyramid',
@@ -91,6 +96,7 @@ test.describe('Article presentation / slide mode', () => {
 
     await page.locator('.article-present-link').click();
     await expect(page).toHaveURL(/\/writing\/agentic-engineering\/present$/);
+    await expect(page.locator('.deck')).toHaveAttribute('data-ready', '');
     await expect(page.locator('.deck-slide.is-current')).toBeVisible();
   });
 });
