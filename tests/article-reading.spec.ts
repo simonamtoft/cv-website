@@ -56,6 +56,16 @@ test.describe('Self-hosted article reading view', () => {
     await expect(blast).not.toHaveText(before!);
   });
 
+  test('The skill explorer switches between file examples', async ({ page }) => {
+    await page.goto('/writing/agentic-engineering');
+
+    const explorer = page.locator('.skill-explorer');
+    await explorer.getByRole('button', { name: 'gotchas.md' }).click();
+
+    await expect(explorer.locator('.skill-breadcrumb')).toContainText('references / gotchas.md');
+    await expect(explorer.locator('pre')).toContainText('Check the release artifact');
+  });
+
   test('The reading view has a back link that returns to the list', async ({ page }) => {
     await page.goto('/writing/agentic-engineering');
 

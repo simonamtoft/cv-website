@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-07-31 16:09"
+lastUpdated: "2026-08-20 12:43"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -47,6 +47,9 @@ sources:
   - title: "Faros AI - The Acceleration Whiplash (AI Engineering Report 2026)"
     url: "https://www.faros.ai/research/ai-acceleration-whiplash"
     note: "cross-industry telemetry: throughput up, but bugs, incidents, churn and review time rising faster"
+  - title: "Ocytko, B. (Zalando) - Agentic Engineering at Zalando: A Snapshot"
+    url: "https://engineering.zalando.com/posts/2026/08/agentic-engineering-at-zalando-a-snapshot.html"
+    note: "the organizational harness: shared infrastructure, plural tools, observable usage, and risk-sensitive review"
   - title: "Irvine, C. - Code reviews are work items now"
     url: "https://caseyirvine.dev/articles/code-reviews-are-work-items-now/"
     note: "review at a higher altitude - the seams, not the lines; validation evidence as a PR artifact"
@@ -84,6 +87,7 @@ import AgentAnatomy from './AgentAnatomy';
 import HarnessController from './HarnessController';
 import WorktreeMap from './WorktreeMap';
 import VerificationLadder from './VerificationLadder';
+import SkillExplorer from './SkillExplorer';
 import './agentic-engineering.css';
 
 {/* Present mode is a curated deck: only the bits wrapped in <Slide> below become
@@ -169,7 +173,7 @@ The harness is everything around the model. The weights are one fixed component 
 
 <AgentAnatomy />
 
-How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `CLAUDE.md`, hooks, skills, tests, and linters. Pi makes a different trade. It deliberately omits MCP, sub-agents, and permission prompts, which leaves more of the system prompt, orchestration, and guardrails for you to build.
+How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `AGENTS.md`, hooks, skills, tests, and linters. Pi makes a different trade. It deliberately omits MCP, sub-agents, and permission prompts, which leaves more of the system prompt, orchestration, and guardrails for you to build.
 
 So "engineer the harness" does not mean the same thing in every tool. The first consequential choice is the harness itself because that choice determines which other parts you can touch.
 
@@ -201,7 +205,7 @@ Once the substrate is in place, the remaining question is how to steer the work 
 
 The seven controls fall into functional groups. Guides and Exemplars steer before action. Mirrors expose the agent's state before a tool call, while Sensors inspect the result afterwards. Rails and Throttles limit damage. Scaffolds divide work so a long task does not decay inside one overloaded window.
 
-Do not try to design the whole harness up front. Grow it from observed failures. When the agent makes a repeatable mistake, add the smallest constraint that prevents it: a line in `CLAUDE.md` before a hook, and a hook before a hard deny rule. Stronger controls are harder to unwind. Each corrective rule should point back to something that actually went wrong. Ratchet from evidence instead of brainstorming imaginary failures. Configuration is often much shorter than the prose used to explain it:
+Do not try to design the whole harness up front. Grow it from observed failures. When the agent makes a repeatable mistake, add the smallest constraint that prevents it: a line in `AGENTS.md` before a hook, and a hook before a hard deny rule. Stronger controls are harder to unwind. Each corrective rule should point back to something that actually went wrong. Ratchet from evidence instead of brainstorming imaginary failures. Configuration is often much shorter than the prose used to explain it:
 
 ```json
 {
@@ -214,11 +218,13 @@ Do not try to design the whole harness up front. Grow it from observed failures.
 }
 ```
 
-Not every instruction comes from a failure. Some encode personal working preferences: how much explanation you want, when the agent should pause, or how much it may change before asking. The ratchet protects correctness. These preferences make the tool fit the person using it.
+Not every instruction comes from a failure. Some encode personal working preferences: how much explanation you want, when the agent should pause, or how much it may change before asking. These preferences make the tool fit the person using it.
 
 Scaffolds deserve a closer look because this is where teams tend to systematise their working methods. In practice, a scaffold is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
 
 Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Keep a gotchas section too, and add to it when a recurring mistake appears. It is the same ratchet, stored inside the scaffold.
+
+<SkillExplorer />
 
 Rails contain the OS-level security model and answer the poisoned-`AGENTS.md` problem. A coding agent usually inherits the permissions of the person who launched it. Cloud credentials, SSH keys, and registry tokens may all be one command away. Hostile instructions can arrive through a repository, pull request, dependency, or context file, and an apparently safe command can start a subprocess the application no longer sees.
 
@@ -228,15 +234,7 @@ The two layers do different jobs. The sandbox controls what the agent *can* do. 
 
 Read access remains a gap. [Claude Code's sandbox](https://code.claude.com/docs/en/sandboxing#configure-sandboxing) confines writes and network access by default, but sandboxed commands can still read much of the disk unless sensitive paths are denied explicitly. Exceptions are sometimes necessary, but each one is a hole in the boundary. The payoff is a safer fast path: an agent can run with fewer approval interruptions inside a sandbox, but should not run that way on a bare machine.
 
-<Slide title="The discipline">
-
-> A line in the harness is a fossilised failure, but with a decay term. The
-> measure of the discipline is not how much scaffolding you have accumulated, but
-> how much of yesterday's scaffolding you managed to delete today.
-
-</Slide>
-
-Deletion is the neglected part of harness engineering. As models improve, old scaffolding becomes drag. A constraint that once prevented failure may later obstruct a more capable model. Make this a routine audit instead of waiting until the setup feels unbearable. Claude Code's `/checkup` command looks for this kind of rot: unused skills, slow hooks, and an overgrown `CLAUDE.md`. You can also write your own pruning skill.
+Deletion is the neglected part of harness engineering. As models improve, old scaffolding becomes drag. A constraint that once prevented failure may later obstruct a more capable model. Make this a routine audit instead of waiting until the setup feels unbearable. Claude Code's `/checkup` command looks for this kind of rot: unused skills, slow hooks, and an overgrown `AGENTS.md`. You can also write your own pruning skill.
 
 My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to the failure modes described here. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.
 
@@ -244,7 +242,15 @@ Better models do not eliminate harnesses. They change them. Old constraints disa
 
 ## Scaling beyond one developer
 
-So far this is a single-player setup: one engineer, one agent, one repository. Most of these practices work well at that scale. The unsolved problem is multiplayer, where several engineers each run several agents against the same codebase.
+So far this is a single-player setup: one engineer, one agent, one repository. Most of these practices work well at that scale. Multiplayer is less settled: organisations have to support many engineers, agents, and repositories without prematurely forcing everyone onto one tool. Coordinating concurrent changes to the same codebase remains harder still.
+
+### The organizational harness
+
+Zalando's experience across more than 250 engineering teams suggests a useful division of responsibility: standardise the substrate, not necessarily the tool. A central platform provides access to models from several providers, handles authentication and protected MCP ingress, distributes reference configurations, and observes cost and cache behaviour. Teams remain free to choose their agent and model. The shared layer supplies the rails and sensors that are expensive or risky for every team to rebuild, while preserving room for local experimentation.
+
+A central skill collection turns those experiments into a bottom-up standardisation channel. Teams contribute migration and discipline-specific skills; shared distribution and CI make successful practices reusable. Deterministic operations such as generating authentication tokens stay in scripts rather than being recast as probabilistic instructions. Knowledge follows a similar path: fast-moving ideas begin in guilds and constrained experiments, then graduate into repeatable training once they stabilise.
+
+At this scale, the agent session itself becomes observable. Tool identity, cost, cache behaviour, and traces can reveal waste or local configuration failures that code-level checks cannot see. This is the organizational form of the same feedback loop used inside one repository: shared rails, observable experiments, and gradual convergence where the evidence supports it.
 
 The engineer's role changes first. When the agent writes most of the code, the human spends less time typing and more time directing. They state the goal, constraints, and acceptance criteria, then judge the result. Choosing what to build and deciding whether it is correct become the scarce skills. The bottleneck moves from writing to review.
 
@@ -275,6 +281,8 @@ Verification should escalate with the scope of the risk.
 Local checks catch concrete failures near the change. Harness feedback goes wider: hooks run the right checks after an edit, while browsers, logs, and screenshots let the agent observe the system in context. A passing check can stay silent; a failure should return the relevant evidence.
 
 Independent evaluation challenges the solution itself. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator because agents are generous when grading their own work. GitHub Copilot's "rubber duck" review similarly lets a model from a different family check the generator's work. The doer and the judge are separate.
+
+Review automation should also be proportional to risk. Zalando uses an approval bot whose rules come from incident drivers and knowledge of its own stack rather than a generic model verdict. It auto-approves the 33% of pull requests classified as low risk; their lead time is 20–40% shorter than the overall set. Backwards-incompatible changes and configuration hazards still require judgment. The fast path also shapes behaviour: engineers make changes independently shippable and backwards-compatible so they qualify for it.
 
 Human review takes the widest view. Tidy, plausible code can still fail where changes meet the existing system. The agent should submit evidence of what it verified and a clear account of how the change fits.
 
