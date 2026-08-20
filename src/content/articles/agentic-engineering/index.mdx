@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 12:43"
+lastUpdated: "2026-08-20 13:07"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -16,7 +16,7 @@ sources:
     note: "'Agent = Model + Harness'; deriving the primitives from what a raw model cannot do"
   - title: "LangChain - Improving Deep Agents with harness engineering"
     url: "https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering"
-    note: "the TerminalBench climb - a fixed model from rank ~33 to top-5 by changing only the harness"
+    note: "the Terminal Bench 2.0 climb - a fixed model from 52.8 to 66.5 by changing only the harness"
   - title: "HumanLayer - Skill Issue: Harness Engineering for Coding Agents"
     url: "https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents"
     note: "the 'skill issue' reframe; the sub-agent as context firewall; success is silent, failure is verbose"
@@ -55,7 +55,7 @@ sources:
     note: "review at a higher altitude - the seams, not the lines; validation evidence as a PR artifact"
   - title: "Pi - a minimal agent harness"
     url: "https://pi.dev/"
-    note: "the build-it-yourself contrast: omits MCP, sub-agents, permission popups by design; extensions and SYSTEM.md as the control surfaces"
+    note: "the build-it-yourself contrast: its core omits MCP, sub-agents, and permission popups; extensions and SYSTEM.md are the control surfaces"
   - title: "OpenAI - Codex CLI configuration"
     url: "https://developers.openai.com/codex"
     note: "the batteries-included comparison point: config.toml sandbox/approval profiles, MCP, hooks, subagents, AGENTS.md"
@@ -101,7 +101,7 @@ The first reaction when a coding agent disappoints is usually to wait for a bett
 
 Both disciplines support the same way of working. Strong practitioners do not point an agent at a large task and watch it type. They spend time on the plan, usually through several rounds with the model, then divide the work into small pieces and verify each checkpoint.
 
-> Nearly everything that makes a software engineer better at the job makes an AI agent better too.
+> Many practices that make software engineers effective also help coding agents.
 
 This is not tied to one vendor. GitHub recommends roughly the same sequence: prototype cheaply, plan carefully, let a loop run to completion, then review the result. The same discipline applies further upstream as the work gets larger.
 
@@ -109,11 +109,9 @@ For work that will outlive a single session, I sometimes use a [wayfinder](https
 
 ### Durable work and parallel execution
 
-For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to design and refine tickets. The agent works through those durable units one at a time, while decisions, progress, and dependencies remain visible across sessions. [Fiberplane](https://fp.dev/) explores a similar CLI-native model.
+For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to refine durable tickets whose decisions, progress, and dependencies remain visible across sessions.
 
-Tickets also provide a clean boundary for parallel work. Independent tickets can run in separate Git worktrees, each with its own branch, index, and working files. One agent cannot change branches underneath another or mix uncommitted changes into its work; dependent tickets remain sequential.
-
-Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) around the same model, with WezTerm tabs and splits, isolated ports, and guarded merge and cleanup commands.
+Independent tickets can run in separate Git worktrees; dependent tickets remain sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) around the same model.
 
 <WorktreeMap />
 
@@ -163,8 +161,6 @@ A useful rhythm follows: *expand to plan, then reset to execute*. Let the contex
 
 </Slide>
 
-Verification should respect the same attention budget. A passing check can stay silent. A failing check should return the relevant error and wake the agent back up. Thousands of lines of successful test output only bury the task.
-
 There is a security consequence here. A poisoned `AGENTS.md` is both a high-leverage context artifact and an attack surface. The same instruction can steer many sessions, so the machinery around the model has to constrain what those instructions are able to cause.
 
 ## Harness engineering
@@ -173,19 +169,17 @@ The harness is everything around the model. The weights are one fixed component 
 
 <AgentAnatomy />
 
-How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `AGENTS.md`, hooks, skills, tests, and linters. Pi makes a different trade. It deliberately omits MCP, sub-agents, and permission prompts, which leaves more of the system prompt, orchestration, and guardrails for you to build.
+How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `AGENTS.md`, hooks, skills, tests, and linters. Pi makes a different trade. Its core omits MCP, sub-agents, and permission prompts, leaving those capabilities to extensions or user-built orchestration.
 
 So "engineer the harness" does not mean the same thing in every tool. The first consequential choice is the harness itself because that choice determines which other parts you can touch.
 
-This is not just a naming exercise. In one TerminalBench run, changing the harness moved a fixed model from roughly 33rd place into the top five. Many disappointing runs are configuration failures rather than model failures. Waiting for the next release is often less useful than fixing the system around the model you already have.
-
-GitHub makes the same argument from outside the Claude and LangChain ecosystem. It calls Copilot "an agent harness" and titled its own account *the harness is all you need (mostly)*. The parenthesis is important: the model still matters, but it operates as one component in a system you can shape.
+This is not just a naming exercise. LangChain raised a fixed model's Terminal Bench 2.0 score from 52.8 to 66.5 by changing only the harness. That does not make the model irrelevant; it shows that some apparent model failures are system failures.
 
 A harness is concrete, not an abstract layer in a diagram. The reason for each component becomes clearer if you start with what a raw model cannot do.
 
-A model is text in, text out, with no persistent state. Give it a filesystem and Git and it gets a workspace, a place to offload context, memory across sessions, and version history. It can emit text but cannot act, so give it tools, especially bash and code execution. It can then write a small tool when needed instead of waiting for somebody else to provide one. This also suggests a boundary: when the work is deterministic, ask the model to write or invoke an inspectable, testable program rather than produce the answer probabilistically.
+A raw model invocation is text in, text out, with no persistent state. A filesystem and Git provide a workspace, memory, and history; tools let it act. When the work is deterministic, have it invoke an inspectable, testable program rather than produce the answer probabilistically.
 
-Arbitrary code execution is unsafe on a bare machine. Put it in a sandbox stocked with the things it needs to observe its own work: test runners, a browser, logs, and screenshots. The model's training knowledge is frozen, so give it memory files and search. Its reasoning is serial and confined to one window, so let it delegate isolated investigations to sub-agents with fresh windows. That keeps messy exploration out of the main context. The filesystem and Git come first; most of the other capabilities depend on them.
+Code execution needs containment and feedback. Put it in a sandbox with test runners, a browser, logs, and screenshots. Add memory and search for knowledge outside its training, and isolated sub-agents for investigations that would otherwise clutter the main context. The filesystem and Git come first; most of the other capabilities depend on them.
 
 <Slide title="Working backwards from what a model can't do">
 
@@ -222,7 +216,7 @@ Not every instruction comes from a failure. Some encode personal working prefere
 
 Scaffolds deserve a closer look because this is where teams tend to systematise their working methods. In practice, a scaffold is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
 
-Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Keep a gotchas section too, and add to it when a recurring mistake appears. It is the same ratchet, stored inside the scaffold.
+Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Store recurring gotchas in the skill too.
 
 <SkillExplorer />
 
@@ -238,23 +232,17 @@ Deletion is the neglected part of harness engineering. As models improve, old sc
 
 My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to the failure modes described here. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.
 
-Better models do not eliminate harnesses. They change them. Old constraints disappear, and harder tasks reveal new failures.
-
 ## Scaling beyond one developer
 
 So far this is a single-player setup: one engineer, one agent, one repository. Most of these practices work well at that scale. Multiplayer is less settled: organisations have to support many engineers, agents, and repositories without prematurely forcing everyone onto one tool. Coordinating concurrent changes to the same codebase remains harder still.
 
 ### The organizational harness
 
-Zalando's experience across more than 250 engineering teams suggests a useful division of responsibility: standardise the substrate, not necessarily the tool. A central platform provides access to models from several providers, handles authentication and protected MCP ingress, distributes reference configurations, and observes cost and cache behaviour. Teams remain free to choose their agent and model. The shared layer supplies the rails and sensors that are expensive or risky for every team to rebuild, while preserving room for local experimentation.
+An organisation does not need every team to use the same agent. Zalando's experience across more than 250 teams points to a narrower standard: centralise model access, authentication, protected MCP ingress, reference configurations, and observability. Let teams choose their own tools, and share the skills that prove useful.
 
-A central skill collection turns those experiments into a bottom-up standardisation channel. Teams contribute migration and discipline-specific skills; shared distribution and CI make successful practices reusable. Deterministic operations such as generating authentication tokens stay in scripts rather than being recast as probabilistic instructions. Knowledge follows a similar path: fast-moving ideas begin in guilds and constrained experiments, then graduate into repeatable training once they stabilise.
+Anthropic is already seeing why the shared layer matters. Claude authored more than 80% of its merged code in May 2026, while merged code volume per engineer reached eight times its 2024 level. Anthropic cautions that lines of code overstate productivity, but human review still became a bottleneck. It now runs an automated Claude reviewer before merge.
 
-At this scale, the agent session itself becomes observable. Tool identity, cost, cache behaviour, and traces can reveal waste or local configuration failures that code-level checks cannot see. This is the organizational form of the same feedback loop used inside one repository: shared rails, observable experiments, and gradual convergence where the evidence supports it.
-
-The engineer's role changes first. When the agent writes most of the code, the human spends less time typing and more time directing. They state the goal, constraints, and acceptance criteria, then judge the result. Choosing what to build and deciding whether it is correct become the scarce skills. The bottleneck moves from writing to review.
-
-That shift is already visible. In 2026, Anthropic reported that Claude authored more than 80% of its merged code and that the typical engineer merged about eight times as much code per day as two years earlier. Human engineers directed and reviewed rather than writing most of it. By Amdahl's law, that extra throughput lands on the remaining manual step. Anthropic's response was to automate part of review with a Claude reviewer that runs before merge.
+Faros found higher throughput alongside more bugs, incidents, churn, and review delay across 22,000 developers. Its data is not directly comparable with Anthropic's. The narrower point is that code volume says little about whether an organisation can review and absorb the work.
 
 <Slide title="The bottleneck moves, it does not vanish">
 
@@ -264,9 +252,7 @@ That shift is already visible. In 2026, Anthropic reported that Claude authored 
 
 </Slide>
 
-The gains do not land this cleanly everywhere. Faros AI's 2026 telemetry covers 22,000 developers. It found more throughput alongside faster growth in bugs, incidents, and rework: bugs per developer rose by half, production incidents increased several-fold, code churn grew nearly tenfold, and roughly a third more pull requests merged without any review. Faros calls this *Acceleration Whiplash*: systems built for human-paced work receiving more output than they can absorb.
-
-These reports are not necessarily in conflict. Anthropic describes a heavily scaffolded environment with an automated reviewer. Faros measures average codebases, where many more pull requests now skip review. The harness explains much of the difference. AI-generated code often looks convincing. It is idiomatic and well named, while the logical flaw is easy to miss. Without effective checks, higher throughput can simply produce a larger mess.
+Verification is therefore part of the organisational harness, not just a repository-level check.
 
 ### Verification has levels
 
@@ -280,9 +266,9 @@ Verification should escalate with the scope of the risk.
 
 Local checks catch concrete failures near the change. Harness feedback goes wider: hooks run the right checks after an edit, while browsers, logs, and screenshots let the agent observe the system in context. A passing check can stay silent; a failure should return the relevant evidence.
 
-Independent evaluation challenges the solution itself. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator because agents are generous when grading their own work. GitHub Copilot's "rubber duck" review similarly lets a model from a different family check the generator's work. The doer and the judge are separate.
+Independent evaluation challenges the solution itself. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator. GitHub Copilot's "rubber duck" review similarly lets a model from a different family check the generator's work.
 
-Review automation should also be proportional to risk. Zalando uses an approval bot whose rules come from incident drivers and knowledge of its own stack rather than a generic model verdict. It auto-approves the 33% of pull requests classified as low risk; their lead time is 20–40% shorter than the overall set. Backwards-incompatible changes and configuration hazards still require judgment. The fast path also shapes behaviour: engineers make changes independently shippable and backwards-compatible so they qualify for it.
+Review automation should be proportional to risk. Zalando uses stack-specific incident rules to auto-approve low-risk pull requests while routing compatibility and configuration hazards to people. The fast path shortens lead time and encourages smaller, independently shippable changes.
 
 Human review takes the widest view. Tidy, plausible code can still fail where changes meet the existing system. The agent should submit evidence of what it verified and a clear account of how the change fits.
 
@@ -294,9 +280,7 @@ Human review takes the widest view. Tidy, plausible code can still fail where ch
 
 </Slide>
 
-At OpenAI, one team ran this discipline at organisation scale. It shipped an internal product of roughly a million lines with *no manually written code*. Around 1,500 pull requests went through a process in which humans steered and agents executed. Repository knowledge was the system of record. A single enormous context file had failed for the usual reason: when everything is important, nothing is. The team replaced it with a hundred-line `AGENTS.md` that acted as a table of contents for a structured `docs/` directory.
-
-They enforced architecture through invariants rather than prescribed implementations. Custom linters returned errors that included the fix. Background agents scanned the repository, graded drift, and opened refactoring pull requests. This is what Guides, Sensors, and Rails look like when the work extends beyond one developer.
+OpenAI reports a million-line internal product built through roughly 1,500 agent-executed pull requests. Its useful lesson here is about context, not code volume: a short `AGENTS.md` indexes structured repository documentation, while linters and background agents enforce invariants and detect drift.
 
 Review the seams, not just the lines.
 
