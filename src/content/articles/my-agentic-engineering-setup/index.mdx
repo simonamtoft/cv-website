@@ -1,0 +1,50 @@
+---
+title: "My Agentic Engineering Setup"
+dek: "The planning artifacts, worktrees, and shared skills I use to keep coding-agent work effective across sessions."
+slug: "my-agentic-engineering-setup"
+series: "Agentic Engineering"
+lastUpdated: "2026-08-20 13:36"
+sources:
+  - title: "Pocock, M. - Wayfinder skill"
+    url: "https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md"
+    note: "plan-first discipline for mapping consequential decisions before implementation"
+  - title: "Backlog.md"
+    url: "https://github.com/MrLesk/Backlog.md"
+    note: "Git-native task management for durable tickets and dependencies"
+  - title: "Anthropic - Run parallel Claude Code sessions with Git worktrees"
+    url: "https://code.claude.com/docs/en/worktrees"
+    note: "built-in worktree isolation for parallel sessions and subagents"
+  - title: "Pedersen, S. A. - pi-worktree-agents"
+    url: "https://github.com/simonamtoft/pi-worktree-agents"
+    note: "interactive Pi worktree sessions with isolated ports and guarded merge and cleanup commands"
+  - title: "Pedersen, S. A. - Claude Code setup"
+    url: "https://github.com/simonamtoft/claude-code-setup"
+    note: "the context files, hooks, and skills described in this article"
+---
+
+import WorktreeMap from './WorktreeMap';
+import './my-agentic-engineering-setup.css';
+
+This is the concrete counterpart to [Agentic Engineering](/writing/agentic-engineering). That article describes the principles; this one records the tools and working habits I currently use to apply them. The setup will change as the harnesses and models improve.
+
+## Planning work across sessions
+
+For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md) map to settle the consequential *what* and *why* before implementation starts. I use it selectively. Combined with `grill-me` or other planning skills, each answer can produce another branch of questions. Once the important decisions are clear, a short plan is enough.
+
+For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to refine durable tickets whose decisions, progress, and dependencies remain visible across sessions.
+
+## Isolated execution with worktrees
+
+Independent tickets can run in separate Git worktrees; dependent tickets remain sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) around the same model.
+
+<Slide title="Tickets coordinate; worktrees isolate">
+
+<WorktreeMap />
+
+</Slide>
+
+The point is not to maximise the number of tickets. It is to keep the backlog alive and consequential reasoning close to the code, where Git makes completed work searchable without introducing another system that can drift from the implementation.
+
+## One setup across harnesses
+
+My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to observed failure modes. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.

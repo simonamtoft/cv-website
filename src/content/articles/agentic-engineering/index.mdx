@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 13:11"
+lastUpdated: "2026-08-20 13:36"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -68,15 +68,6 @@ sources:
   - title: "GitHub - The harness is all you need (mostly)"
     url: "https://github.blog/ai-and-ml/github-copilot/the-harness-is-all-you-need-mostly/"
     note: "cross-vendor confirmation - 'Copilot is an agent harness'; the rubber-duck cross-family review; run YOLO only in a sandbox"
-  - title: "Pocock, M. - Wayfinder skill"
-    url: "https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md"
-    note: "plan-first discipline: chart a large multi-session effort as a map of decision tickets before any code is written"
-  - title: "Anthropic - Run parallel Claude Code sessions with Git worktrees"
-    url: "https://code.claude.com/docs/en/worktrees"
-    note: "built-in worktree isolation for parallel sessions and subagents"
-  - title: "Pedersen, S. A. - pi-worktree-agents"
-    url: "https://github.com/simonamtoft/pi-worktree-agents"
-    note: "interactive Pi worktree sessions with WezTerm tabs, splits, isolated ports, and guarded merge and cleanup commands"
 ---
 
 import LeveragePyramid from './LeveragePyramid';
@@ -85,7 +76,6 @@ import ContextFlow from './ContextFlow';
 import Primitives from './Primitives';
 import AgentAnatomy from './AgentAnatomy';
 import HarnessController from './HarnessController';
-import WorktreeMap from './WorktreeMap';
 import VerificationLadder from './VerificationLadder';
 import SkillExplorer from './SkillExplorer';
 import './agentic-engineering.css';
@@ -105,21 +95,9 @@ Both disciplines support the same way of working. Strong practitioners do not po
 
 This is not tied to one vendor. GitHub recommends roughly the same sequence: prototype cheaply, plan carefully, let a loop run to completion, then review the result. The same discipline applies further upstream as the work gets larger.
 
-For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/claude-code-setup/blob/main/skills/wayfinder/SKILL.md) map to settle the consequential *what* and *why* before implementation starts. I use it selectively. Combined with `grill-me` or other planning skills, each answer can produce another branch of questions. Once the important decisions are clear, a short plan is enough.
+The loop becomes useful when the agent can check its own work. Tests, linters, and type-checkers turn a plausible change into an evidence-backed one. This is one of the highest-return capabilities you can give an agent.
 
-### Durable work and parallel execution
-
-For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to refine durable tickets whose decisions, progress, and dependencies remain visible across sessions.
-
-Independent tickets can run in separate Git worktrees; dependent tickets remain sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) around the same model.
-
-<WorktreeMap />
-
-The point is not to maximise the number of tickets. It is to keep the backlog alive and consequential reasoning close to the code, where Git makes completed work searchable without introducing another system that can drift from the implementation.
-
-The loop becomes useful when the agent can check its own work. Tests, linters, and type-checkers separate a plausible change from a verified one. This is one of the highest-return capabilities you can give an agent.
-
-Context engineering decides what the agent knows while it plans and works. Harness engineering provides the loop, checks, and boundaries that pull it back when it goes astray.
+Context engineering decides what task-specific information the agent can use while it plans and works. Harness engineering provides the loop, checks, and boundaries that pull it back when it goes astray.
 
 ## Context engineering
 
@@ -151,7 +129,7 @@ All of that material competes for space in working memory: system instructions y
 
 </Slide>
 
-As the window fills, reliability tends to fall. The model's own earlier output is especially costly because errors and stale assumptions remain in view. A larger context window does not remove this problem; it can also give you a larger haystack. Isolation often matters more than raw capacity.
+In long coding sessions, I find reliability tends to fall as the window fills. The model's own earlier output can be especially costly because errors and stale assumptions remain in view. A larger context window does not remove this problem; it can also give you a larger haystack. Isolation often matters more than raw capacity.
 
 A useful rhythm follows: *expand to plan, then reset to execute*. Let the context grow while gathering the material needed for research and planning. Once the plan is sound, begin implementation in a clean window with only that plan and the necessary project context.
 
@@ -224,13 +202,13 @@ Rails contain the OS-level security model and answer the poisoned-`AGENTS.md` pr
 
 The hard boundary therefore belongs below the application. A sandbox is not advice about which commands to avoid. It is a limit the process cannot negotiate with: writes confined to the project and a scratch directory, network access denied by default, and individual hosts approved when needed. The operating system enforces those rules across subprocesses in a way command-string matching cannot.
 
-The two layers do different jobs. The sandbox controls what the agent *can* do. Application rules judge what it *means* to do. Deny rules and pre-tool hooks remain useful for destructive actions whose intent is visible, such as force-pushing or rewriting history.
+The two layers do different jobs. The sandbox controls what the agent *can* do. Application rules flag or constrain intent visible at the tool boundary. Deny rules and pre-tool hooks remain useful for destructive actions whose intent is visible, such as force-pushing or rewriting history.
 
 Read access remains a gap. [Claude Code's sandbox](https://code.claude.com/docs/en/sandboxing#configure-sandboxing) confines writes and network access by default, but sandboxed commands can still read much of the disk unless sensitive paths are denied explicitly. Exceptions are sometimes necessary, but each one is a hole in the boundary. The payoff is a safer fast path: an agent can run with fewer approval interruptions inside a sandbox, but should not run that way on a bare machine.
 
 Deletion is the neglected part of harness engineering. As models improve, old scaffolding becomes drag. A constraint that once prevented failure may later obstruct a more capable model. Make this a routine audit instead of waiting until the setup feels unbearable. Claude Code's `/checkup` command looks for this kind of rot: unused skills, slow hooks, and an overgrown `AGENTS.md`. You can also write your own pruning skill.
 
-My [Claude Code setup](https://github.com/simonamtoft/claude-code-setup) is public as a worked example. Its context files, hooks, and skills were added and removed in response to the failure modes described here. Because they are plain files, I symlink the same artifacts into other harnesses such as [Pi](https://pi.dev/) instead of maintaining two copies.
+These principles shape my own setup: durable planning artifacts, isolated worktrees, and shared skills across harnesses. I document the concrete workflow separately in [My Agentic Engineering Setup](/writing/my-agentic-engineering-setup).
 
 ## Scaling beyond one developer
 
@@ -266,13 +244,13 @@ The broader the possible failure, the wider the check needs to be.
 
 Start close to the change. Tests, linters, and type-checkers catch mechanical errors. Hooks, browsers, logs, and screenshots check how the change behaves in context. Passing checks can stay quiet; failures should return only the evidence needed to act.
 
-Broader questions need an independent evaluator. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator. GitHub Copilot's "rubber duck" review similarly uses a model from a different family to check the generator's work.
+Broader questions benefit from a separate evaluator. Anthropic's long-running application experiments split the harness into a planner, generator, and skeptical evaluator. GitHub Copilot's "rubber duck" review similarly uses a model from a different family to diversify the blind spots brought to the review.
 
 <Slide title="Separate the doer from the judge">
 
-> Agents grade their own work generously. The most common autonomy failure is an
-> agent re-reading its own code, calling it fine, and stopping. Tuning a skeptical
-> evaluator is more tractable than teaching a generator to distrust itself.
+> A generator reviewing its own work in the same context can repeat its original
+> blind spots and stop too early. In practice, I find tuning a skeptical evaluator
+> more tractable than teaching a generator to distrust itself.
 
 </Slide>
 

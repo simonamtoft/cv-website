@@ -16,7 +16,7 @@ const LEVELS = [
   },
   {
     key: 'independent',
-    title: 'Independent evaluation',
+    title: 'Separate evaluation',
     question: 'Does another agent challenge it?',
     signals: ['Critic', 'Cross-model review'],
   },
