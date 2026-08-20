@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { formatDisplayDate } from '../../utils/dateFormatter';
 import useTypewriter from '../../utils/useTypewriter';
+import ChapterMinimap from './ChapterMinimap';
 import Sources from './Sources';
 import { READING_COMPONENTS, ViewModeProvider } from './Slide';
 import '../../styles/Article.css';
@@ -76,6 +77,7 @@ const ArticleReadingView = ({ article }) => {
         </ViewModeProvider>
       </div>
 
+      <ChapterMinimap bodyRef={bodyRef} />
       <Sources sources={sources} />
     </article>
   );

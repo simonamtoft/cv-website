@@ -180,6 +180,7 @@
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-2xl);
   margin: 2.75rem 0 0.75rem;
+  scroll-margin-top: 6rem;
 }
 
 .article-body p {
@@ -239,6 +240,147 @@
 /* NOTE: styling for an article's bespoke interactive visuals lives with that
    article, not here (see src/content/articles/<slug>/<slug>.css). This file
    holds only the generic essay list, reading view, and sources chrome. */
+
+/* ---------- chapter minimap ---------- */
+.chapter-minimap {
+  display: none;
+}
+
+@media (min-width: 1180px) {
+  .chapter-minimap {
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    right: 1.5rem;
+    display: block;
+    width: 13rem;
+    height: min(72vh, 42rem);
+    transform: translateY(-50%);
+  }
+
+  .chapter-minimap-track {
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .chapter-minimap-track::after {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0.25rem;
+    bottom: 0;
+    width: 1px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-border) 72%, transparent);
+    content: '';
+  }
+
+  .chapter-minimap-segment {
+    position: relative;
+    display: block;
+    min-height: 1.25rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .chapter-minimap-segment::after {
+    position: absolute;
+    top: -0.5px;
+    right: 0.25rem;
+    bottom: -0.5px;
+    width: 1px;
+    border-radius: 999px;
+    background: transparent;
+    content: '';
+    transition: background-color var(--transition-fast);
+  }
+
+  .chapter-minimap-segment::before {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 0.55rem;
+    height: 1px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-border) 88%, transparent);
+    content: '';
+    transition: background-color var(--transition-fast), width var(--transition-fast);
+  }
+
+  .chapter-minimap-segment.is-complete::after,
+  .chapter-minimap-segment.is-previous::after {
+    background: var(--color-text-muted);
+  }
+
+  .chapter-minimap-segment.is-active::after,
+  .chapter-minimap-segment.is-active::before {
+    background: var(--accent-amber);
+  }
+
+  .chapter-minimap-segment:hover::before,
+  .chapter-minimap-segment:focus-visible::before {
+    width: 0.9rem;
+    background: var(--accent-amber);
+  }
+
+  .chapter-minimap-title {
+    position: absolute;
+    top: 0;
+    right: 1.15rem;
+    width: 11rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(-50%) translateX(0.35rem);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    pointer-events: none;
+  }
+
+  .chapter-minimap-segment.is-active .chapter-minimap-title {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .chapter-minimap-segment.is-previous .chapter-minimap-title,
+  .chapter-minimap-segment.is-next .chapter-minimap-title {
+    opacity: 0.48;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .chapter-minimap-segment:hover .chapter-minimap-title,
+  .chapter-minimap-segment:focus-visible .chapter-minimap-title {
+    color: var(--color-text);
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .chapter-minimap-marker {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid var(--color-bg);
+    border-radius: 50%;
+    background: var(--accent-amber);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-amber) 35%, transparent),
+      0 2px 8px color-mix(in srgb, var(--accent-amber) 28%, transparent);
+    transform: translateY(-50%);
+    transition: top 140ms ease-out;
+    pointer-events: none;
+  }
+}
 
 /* ---------- sources ---------- */
 .article-sources {

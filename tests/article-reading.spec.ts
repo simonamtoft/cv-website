@@ -66,6 +66,26 @@ test.describe('Self-hosted article reading view', () => {
     await expect(explorer.locator('pre')).toContainText('Check the release artifact');
   });
 
+  test('The chapter minimap tracks and navigates the article headings', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/writing/agentic-engineering');
+
+    const headings = page.locator('.article-body h2');
+    const segments = page.locator('.chapter-minimap-segment');
+    const minimap = page.locator('.chapter-minimap');
+    await expect(minimap).toBeVisible();
+    const minimapBox = await minimap.boundingBox();
+    expect(minimapBox?.y).toBeGreaterThanOrEqual(0);
+    expect((minimapBox?.y ?? 900) + (minimapBox?.height ?? 0)).toBeLessThanOrEqual(900);
+    await expect(segments).toHaveCount(await headings.count());
+    await expect(segments.first()).toContainText(await headings.first().innerText());
+
+    await segments.nth(1).click();
+    await expect(segments.nth(1)).toHaveAttribute('aria-current', 'location');
+    await expect(segments.first()).toHaveClass(/is-previous/);
+    await expect(segments.nth(2)).toHaveClass(/is-next/);
+  });
+
   test('The reading view has a back link that returns to the list', async ({ page }) => {
     await page.goto('/writing/agentic-engineering');
 
@@ -90,5 +110,6 @@ test.describe('Self-hosted article reading view', () => {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.locator('.harness-controller')).toBeVisible();
+    await expect(page.locator('.chapter-minimap')).toBeHidden();
   });
 });
