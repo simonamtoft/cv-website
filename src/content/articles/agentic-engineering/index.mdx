@@ -85,7 +85,9 @@ import './agentic-engineering.css';
     prose stays outside <Slide> - reading-only. Visuals render inline in the
     reading essay; selected ones also appear full-screen on their slides. */}
 
-The first reaction when a coding agent disappoints is usually to wait for a better model. The model still matters, of course, but much of the leverage now sits outside its weights. It sits in the context you give it and the machinery wrapped around it. Those are the parts you can change yourself. Prompt engineering did not disappear so much as get folded into two broader disciplines: context engineering and harness engineering. Together, I think of them as agentic engineering.
+When a coding agent disappoints is usually to wait for a better model. But the model is only one part of the system. LangChain raised a fixed model's Terminal Bench 2.0 score from 52.8 to 66.5 by changing only the harness around it. The weights stayed the same; the environment, tools, and feedback loop changed.
+
+That matters because agentic code quality cannot be prompted into existence. It has to be engineered through the context the model receives and the machinery that plans, constrains, and verifies its work. Together, I think of those disciplines as agentic engineering.
 
 ## The workflow underneath
 
@@ -143,15 +145,23 @@ There is a security consequence here. A poisoned `AGENTS.md` is both a high-leve
 
 ## Harness engineering
 
-The harness is everything around the model. The weights are one fixed component inside a larger system.
+[Vivek Trivedy at LangChain](https://www.langchain.com/blog/the-anatomy-of-an-agent-harness) expresses the basic anatomy neatly. The model is one fixed component; the harness is everything around it.
 
-<AgentAnatomy />
+<p className="aa-equation" aria-label="Agent equals Model plus Harness">
+  <span className="aa-term aa-term-agent">Agent</span>
+  <span className="aa-op">=</span>
+  <span className="aa-term aa-term-model">Model</span>
+  <span className="aa-op">+</span>
+  <span className="aa-term aa-term-harness">Harness</span>
+</p>
 
 How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `AGENTS.md`, hooks, skills, tests, and linters. Pi makes a different trade. Its core omits MCP, sub-agents, and permission prompts, leaving those capabilities to extensions or user-built orchestration.
 
+<AgentAnatomy />
+
 So "engineer the harness" does not mean the same thing in every tool. The first consequential choice is the harness itself because that choice determines which other parts you can touch.
 
-This is not just a naming exercise. LangChain raised a fixed model's Terminal Bench 2.0 score from 52.8 to 66.5 by changing only the harness. That does not make the model irrelevant; it shows that some apparent model failures are system failures.
+This is not just a naming exercise. Some apparent model failures are failures of the system around it.
 
 A harness is concrete, not an abstract layer in a diagram. The reason for each component becomes clearer if you start with what a raw model cannot do.
 
