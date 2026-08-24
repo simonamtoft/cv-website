@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 15:24"
+lastUpdated: "2026-08-24"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -14,6 +14,9 @@ sources:
   - title: "Trivedy, V. (LangChain) - The Anatomy of an Agent Harness"
     url: "https://www.langchain.com/blog/the-anatomy-of-an-agent-harness"
     note: "'Agent = Model + Harness'; deriving the primitives from what a raw model cannot do"
+  - title: "Earendil - What is a Harness?"
+    url: "https://earendil.com/posts/what-is-a-harness/"
+    note: "the four-part baseline - system prompt, tools, agentic loop, and translation layer - and harness ownership as human agency"
   - title: "LangChain - Improving Deep Agents with harness engineering"
     url: "https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering"
     note: "the Terminal Bench 2.0 climb - a fixed model from 52.8 to 66.5 by changing only the harness"
@@ -155,11 +158,15 @@ There is a security consequence here. A poisoned `AGENTS.md` is both a high-leve
   <span className="aa-term aa-term-harness">Harness</span>
 </p>
 
+At minimum, that runtime needs a system prompt, tools, an agentic loop, and a translation layer between the loop and model providers. A coding harness extends well beyond that core: it also supplies the context, persistence, containment, and feedback that make the loop useful and governable.
+
 How much of that system you control depends on the provider. Claude Code keeps its system prompt, core tools, and sub-agent implementation out of reach. It exposes configuration such as permissions, MCP tools, and sandbox settings, while leaving you to author `AGENTS.md`, hooks, skills, tests, and linters. Pi makes a different trade. Its core omits MCP, sub-agents, and permission prompts, leaving those capabilities to extensions or user-built orchestration.
 
 <AgentAnatomy />
 
 So "engineer the harness" does not mean the same thing in every tool. The first consequential choice is the harness itself because that choice determines which other parts you can touch.
+
+That choice is also an agency decision. A neutral, locally owned harness can keep sessions, instructions, tools, and workflows under the user's control while allowing proprietary and open-weight models to be compared or replaced. You may not own the weights, but you can own the interaction layer instead of rebuilding your working method inside each provider's application.
 
 This is not just a naming exercise. Some apparent model failures are failures of the system around it.
 

@@ -433,7 +433,7 @@
   margin: 1.75rem 0;
 }
 
-/* ---------- agent anatomy (Agent = Model + Harness) ---------- */
+/* ---------- agent anatomy (Agent = Model + Harness, then control ownership) ---------- */
 /* The umbrella: an Agent frame containing the amber Model box and the Harness
    group of engineerable boxes. */
 .aa-frame {

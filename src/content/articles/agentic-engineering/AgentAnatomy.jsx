@@ -197,7 +197,7 @@ const AgentAnatomy = () => {
       </div>
 
       <p className="aa-caption">
-        Switch harness to see the same pieces land in different tiers - which
+        Switch harness to see selected pieces land in different tiers - which
         tier a piece falls in is provider-dependent. Pi, a minimal harness, omits
         MCP, sub-agents, and permission popups by design, so most pieces are yours
         to author.
