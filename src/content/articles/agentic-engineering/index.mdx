@@ -184,7 +184,7 @@ Code execution needs containment and feedback. Put it in a sandbox with test run
 
 A component should earn its place. If you cannot name the behaviour it exists to produce, leave it out.
 
-Once the substrate is in place, the remaining question is how to steer the work running on it. Control theory offers a useful vocabulary. Guides act before the agent does something; sensors observe after it acts. In control terms, those are feedforward and feedback. Sensors alone correct mistakes but force each new session to rediscover them. Guides alone encode rules without checking whether those rules worked. A complete loop needs both. Across that loop, I find seven useful control surfaces, each tied to a particular kind of failure.
+Once the substrate is in place, the remaining question is how to steer the work running on it. Control theory offers a useful vocabulary. Guides add knowledge before the agent acts; Sensors measure what happened afterwards. In control terms, those are feedforward and feedback. Sensors alone catch mistakes but force each new session to rediscover them. Guides alone encode rules without showing whether those rules worked. A complete loop needs both. Across that loop, I find seven useful control surfaces, each tied to a particular kind of failure.
 
 <Slide title="Harness seen as a control loop">
 
@@ -192,7 +192,7 @@ Once the substrate is in place, the remaining question is how to steer the work 
 
 </Slide>
 
-The seven controls fall into functional groups. Guides and Exemplars steer before action. Mirrors expose the agent's state before a tool call, while Sensors inspect the result afterwards. Rails and Throttles limit damage. Scaffolds divide work so a long task does not decay inside one overloaded window.
+The seven controls play distinct roles. Templates define the reference: the shape of a plan, file, or report that good output should approach. Guides supply standing knowledge before action, while Controllers turn recurring work into procedures using skills, prompts, and subagents. Rails constrain what the agent can do; Throttles cap how far a run may escalate. Sensors return deterministic evidence from tests and other checks. Observers estimate the less visible state of the work by inspecting assumptions, plans, and diffs from a fresh context.
 
 Do not try to design the whole harness up front. Grow it from observed failures. When the agent makes a repeatable mistake, add the smallest constraint that prevents it: a line in `AGENTS.md` before a hook, and a hook before a hard deny rule. Stronger controls are harder to unwind. Each corrective rule should point back to something that actually went wrong. Ratchet from evidence instead of brainstorming imaginary failures. Configuration is often much shorter than the prose used to explain it:
 
@@ -209,7 +209,7 @@ Do not try to design the whole harness up front. Grow it from observed failures.
 
 Not every instruction comes from a failure. Some encode personal working preferences: how much explanation you want, when the agent should pause, or how much it may change before asking. These preferences make the tool fit the person using it.
 
-Scaffolds deserve a closer look because this is where teams tend to systematise their working methods. In practice, a scaffold is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
+Controllers deserve a closer look because this is where teams tend to systematise their working methods. In practice, a controller is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
 
 Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Store recurring gotchas in the skill too.
 

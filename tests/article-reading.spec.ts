@@ -29,7 +29,7 @@ test.describe('Self-hosted article reading view', () => {
     const controller = page.locator('.harness-controller');
     await expect(controller).toBeVisible();
 
-    // The loop assembles from the setpoint on scroll; its detail panel always
+    // The loop assembles from the reference on scroll; its detail panel always
     // names a control surface. (Click-through is covered by the present deck
     // test, where the loop starts fully assembled.)
     await expect(controller.locator('.harness-lever-detail h4')).toBeVisible();

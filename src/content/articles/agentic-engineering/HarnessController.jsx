@@ -3,54 +3,66 @@ import { useViewMode, useSlideSteps } from '../../../components/articles/Slide';
 import useAutoSequence from '../../../utils/useAutoSequence';
 import useRevealProgress from '../../../utils/useRevealProgress';
 
-// The seven-lever harness, drawn as a control-theory closed loop: a reference
-// (Exemplars/setpoint) enters a summing junction, the controller (Scaffolds) and
-// actuator limits (Rails/Throttles) drive the plant (the Model), and the output
-// is fed back through a sensor (Sensors) and state observer (Mirrors) to the
-// junction's negative input, with feedforward (Guides) added into the forward
-// path. Each block is a control surface; click one to read its failure mode.
+// The seven control surfaces form a closed loop: Templates define the reference;
+// Controllers act on the error; Rails and Throttles constrain the action; the
+// Model produces output; and Sensors and Observers feed evidence back. Guides
+// add feedforward knowledge before the controller acts.
 const LEVERS = [
   {
     name: 'Guides',
     role: 'feedforward',
-    fail: 'rediscovers conventions every session',
-    cc: 'CLAUDE.md + system prompt: short, specific, falsifiable, advisory only',
+    loop: 'Feedforward enters before any result is available, biasing the controller toward known-good actions.',
+    does: 'Supplies durable rules before the controller chooses an action.',
+    fail: 'conventions have to be rediscovered in every session',
+    example: 'an AGENTS.md that requires repository inspection and task-scoped changes',
   },
   {
     name: 'Sensors',
     role: 'feedback',
-    fail: 'repeats one lint error across 20 files',
-    cc: 'PostToolUse hooks scoped to blast radius; a reviewer subagent on the diff',
+    loop: 'Feedback measures the model’s output and sends an observable signal back around the loop.',
+    does: 'Turns the result of an action into evidence the controller can use.',
+    fail: 'the agent cannot tell whether a plausible change actually works',
+    example: 'a verifier that runs type-checking, linting, and tests, then returns the first failure',
   },
   {
     name: 'Rails',
-    role: 'hard "cannot"',
-    fail: 'rm -rf / DROP TABLE one turn from firing',
-    cc: 'the sandbox is the boundary; permissions.deny and hooks judge intent inside it',
+    role: 'constraints',
+    loop: 'Constraints remove prohibited commands from the controller’s available output before they reach the model.',
+    does: 'Makes unsafe actions impossible regardless of what the model requests.',
+    fail: 'a mistaken or hostile instruction can reach the host unchecked',
+    example: 'a sandbox that confines writes and denies access to credential paths',
   },
   {
-    name: 'Scaffolds',
-    role: 'controller',
-    fail: 'long sessions drift as context rots',
-    cc: 'subagents / slash commands / skills - a subagent is a context firewall first',
+    name: 'Controllers',
+    role: 'control logic',
+    loop: 'Control logic combines the reference, guidance, and estimated state to decide the model’s next action.',
+    does: 'Turns the task and current state into an ordered sequence of actions.',
+    fail: 'complex work becomes one improvised, context-heavy conversation',
+    example: 'a skill that gathers context, runs scripts, delegates review, and reports verification',
   },
   {
-    name: 'Exemplars',
-    role: 'setpoint',
-    fail: 'invents a new file layout every time',
-    cc: 'pointer files to the canonical thing to copy, not prose - kept fresh',
+    name: 'Templates',
+    role: 'reference',
+    loop: 'The reference defines the desired output; feedback reveals the error between that target and the result.',
+    does: 'Defines the concrete shape that the produced artifact should approach.',
+    fail: 'the agent invents a new shape for the same artifact each time',
+    example: 'a report template with required sections, file naming, and a validation command',
   },
   {
-    name: 'Mirrors',
-    role: 'state observer',
-    fail: 'confident wrongness goes unchallenged',
-    cc: 'plan mode + extended thinking + writer/reviewer split',
+    name: 'Observers',
+    role: 'state estimation',
+    loop: 'State estimation combines output and sensor evidence to infer conditions the loop cannot measure directly.',
+    does: 'Infers quality and risk that deterministic checks cannot measure directly.',
+    fail: 'the generator’s assumptions and blind spots go unchallenged',
+    example: 'an isolated reviewer that inspects the diff after automated checks pass',
   },
   {
     name: 'Throttles',
-    role: 'saturation cap',
-    fail: 'a diverging run burns the budget overnight ($400 by morning)',
-    cc: '--max-turns, --max-budget-usd, --permission-mode escalated over a run',
+    role: 'saturation limits',
+    loop: 'Saturation limits cap the size or duration of a command even when the controller asks for more.',
+    does: 'Caps scope, resources, or autonomy and forces a pause at the limit.',
+    fail: 'scope or autonomy expands silently during a diverging run',
+    example: 'a clarification gate before widening scope, plus turn and budget caps on delegated runs',
   },
 ];
 
@@ -58,28 +70,28 @@ const LEVERS = [
 // canvas. Boxes are kept compact so the connecting wires read as real signal
 // paths: forward path along y=81, feedback along y=191.
 const BLOCKS = {
-  4: { x: 6, y: 66, w: 50, h: 30 }, // Exemplars - setpoint (reference in)
-  3: { x: 128, y: 66, w: 52, h: 30 }, // Scaffolds - controller
-  2: { x: 212, y: 66, w: 46, h: 30 }, // Rails - limit
-  6: { x: 286, y: 66, w: 54, h: 30 }, // Throttles - saturation
+  4: { x: 4, y: 66, w: 56, h: 30 }, // Templates - reference input
+  3: { x: 124, y: 66, w: 60, h: 30 }, // Controllers - control logic
+  2: { x: 212, y: 66, w: 46, h: 30 }, // Rails - constraints
+  6: { x: 286, y: 66, w: 54, h: 30 }, // Throttles - saturation limits
   0: { x: 128, y: 14, w: 52, h: 28 }, // Guides - feedforward (above path)
-  1: { x: 336, y: 176, w: 54, h: 30 }, // Sensors - feedback sensor
-  5: { x: 150, y: 176, w: 54, h: 30 }, // Mirrors - state observer
+  1: { x: 336, y: 176, w: 54, h: 30 }, // Sensors - feedback
+  5: { x: 146, y: 176, w: 58, h: 30 }, // Observers - state estimation
 };
 
 // Directed wires (SVG path d) tracing the loop, each ending in an arrowhead.
 // `owner` is the block whose reveal brings the wire in, so the loop assembles
 // along the signal path.
 const WIRES = [
-  { d: 'M56,81 L87,81', owner: 4 }, // Exemplars -> summing junction
-  { d: 'M105,81 L128,81', owner: 3 }, // junction -> Scaffolds (controller)
-  { d: 'M180,81 L212,81', owner: 2 }, // Scaffolds -> Rails
+  { d: 'M60,81 L87,81', owner: 4 }, // Templates -> summing junction
+  { d: 'M105,81 L124,81', owner: 3 }, // junction -> Controllers
+  { d: 'M184,81 L212,81', owner: 2 }, // Controllers -> Rails
   { d: 'M258,81 L286,81', owner: 6 }, // Rails -> Throttles
   { d: 'M340,81 L374,81', owner: 6 }, // Throttles -> Model (plant)
-  { d: 'M154,42 L154,66', owner: 0 }, // Guides -> Scaffolds (feedforward in)
+  { d: 'M154,42 L154,66', owner: 0 }, // Guides -> Controllers (feedforward in)
   { d: 'M436,81 L440,81 L440,191 L390,191', owner: 1 }, // Model output -> feedback tap
-  { d: 'M336,191 L204,191', owner: 5 }, // Sensors -> Mirrors
-  { d: 'M150,191 L96,191 L96,90', owner: 5 }, // Mirrors -> summing junction (-)
+  { d: 'M336,191 L204,191', owner: 5 }, // Sensors -> Observers
+  { d: 'M146,191 L96,191 L96,90', owner: 5 }, // Observers -> summing junction (-)
 ];
 
 const Block = ({ i, active, shown, onSelect, interactive }) => {
@@ -119,7 +131,7 @@ const Block = ({ i, active, shown, onSelect, interactive }) => {
   );
 };
 
-// Autoplay traces the loop: setpoint -> controller -> limits -> feedback ->
+// Autoplay traces the loop: reference -> controller -> limits -> feedback ->
 // observer -> feedforward, ending back on Guides (the default).
 const SEQUENCE = [4, 3, 2, 6, 1, 5, 0];
 
@@ -129,7 +141,7 @@ const HarnessController = () => {
   // autoplays on scroll and responds to clicks (steps == null).
   const steps = useSlideSteps();
   const present = steps != null;
-  // Reading assembles the loop from the setpoint.
+  // Reading assembles the loop from the reference.
   const [active, setActive] = useState(SEQUENCE[0]);
   const { ref, cancel } = useAutoSequence({
     order: SEQUENCE,
@@ -217,32 +229,38 @@ const HarnessController = () => {
           <span className="harness-core-label">Model</span>
           <span className="harness-core-sub">the plant, closed-loop</span>
         </div>
-        {LEVERS.map((lv, i) => (
-          <button
-            type="button"
-            key={lv.name}
-            className={`harness-lever${i === displayActive ? ' active' : ''}`}
-            style={{ opacity: shown(i) ? 1 : 0 }}
-            aria-pressed={i === displayActive}
-            onClick={present ? undefined : () => select(i)}
-          >
-            <span className="harness-lever-name">{lv.name}</span>
-            <span className="harness-lever-role">{lv.role}</span>
-          </button>
-        ))}
+        {SEQUENCE.map((i) => {
+          const lv = LEVERS[i];
+          return (
+            <button
+              type="button"
+              key={lv.name}
+              className={`harness-lever${i === displayActive ? ' active' : ''}`}
+              style={{ opacity: shown(i) ? 1 : 0 }}
+              aria-pressed={i === displayActive}
+              onClick={present ? undefined : () => select(i)}
+            >
+              <span className="harness-lever-name">{lv.name}</span>
+              <span className="harness-lever-role">{lv.role}</span>
+            </button>
+          );
+        })}
       </div>
 
       {!present && (
         <div className="harness-lever-detail" aria-live="polite">
           <h4>{lever.name}</h4>
           <p className="harness-detail-row">
-            <strong>Role:</strong> {lever.role}
-          </p>
-          <p className="harness-detail-row harness-detail-fail">
-            <strong>Missing -&gt;</strong> {lever.fail}
+            <strong>In the loop:</strong> {lever.loop}
           </p>
           <p className="harness-detail-row">
-            <strong>On Claude Code:</strong> {lever.cc}
+            <strong>Purpose:</strong> {lever.does}
+          </p>
+          <p className="harness-detail-row harness-detail-fail">
+            <strong>Without it:</strong> {lever.fail}
+          </p>
+          <p className="harness-detail-row">
+            <strong>Example:</strong> {lever.example}
           </p>
         </div>
       )}
