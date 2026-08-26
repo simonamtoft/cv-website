@@ -1,0 +1,257 @@
+---
+title: "A Beginner's Guide to AI Assistants"
+dek: "A practical way to use Claude, ChatGPT, Gemini, and similar assistants: frame the work, provide the right context, iterate, and verify before you rely on the result."
+slug: "beginners-guide-ai-assistants"
+series: "Practical AI"
+lastUpdated: "2026-08-26"
+sources:
+  - title: "Anthropic - Prompt engineering overview"
+    url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+    note: "define success criteria and test before trying to improve a prompt"
+  - title: "OpenAI - Prompt engineering"
+    url: "https://developers.openai.com/api/docs/guides/prompt-engineering"
+    note: "general prompting practices, including clear instructions, relevant context, and examples"
+  - title: "Google - Prompt design strategies"
+    url: "https://ai.google.dev/gemini-api/docs/prompting-strategies"
+    note: "vendor-independent prompt design patterns reflected across Gemini guidance"
+  - title: "Anthropic - Reduce hallucinations"
+    url: "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    note: "allowing uncertainty, requiring evidence, and verifying claims against sources"
+  - title: "Anthropic Support - Understanding Claude's personalization features"
+    url: "https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features"
+    note: "how account-wide instructions differ from project-specific instructions and other personalization features"
+  - title: "Anthropic Support - What are Projects?"
+    url: "https://support.anthropic.com/en/articles/9517075-what-are-projects"
+    note: "how Claude Projects keep project-specific instructions and knowledge available across separate chats"
+  - title: "NIST - AI Risk Management Framework"
+    url: "https://www.nist.gov/itl/ai-risk-management-framework"
+    note: "risk-aware use and evaluation of AI systems"
+  - title: "Anthropic Privacy Center - Is my data used for model training?"
+    url: "https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training"
+    note: "an example of why users must check the current terms and settings for their specific product and account"
+  - title: "OWASP - LLM01: Prompt Injection"
+    url: "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    note: "the risk introduced when models process untrusted instructions or can use connected tools"
+---
+
+import AssistantRoles from './AssistantRoles';
+import BriefBuilder from './BriefBuilder';
+import ContextSelection from './ContextSelection';
+import './beginners-guide-ai-assistants.css';
+
+AI assistants are easy to start using. Open Claude, ChatGPT, Gemini, or a similar tool, type a question, and an answer appears. The harder part is knowing when that answer is useful, what to give the assistant, and what to check before you act on it.
+
+This guide shows how to explain a real task, work through it with an assistant, and decide when the result is trustworthy enough to use.
+
+## Start with the right mental model
+
+An AI assistant produces a response from the instructions and information available in its current context. It can explain, transform, compare, draft, and work through material quickly. It can also produce a confident answer that is incomplete, unsupported, or simply wrong.
+
+Treat it less like a search engine or an oracle and more like a fast collaborator who has broad general knowledge but no automatic understanding of your situation. It does not know what matters in your organisation, what happened in a meeting, or which definition your team uses unless that information is available in the conversation.
+
+<Slide title="A useful division of work">
+
+<AssistantRoles />
+
+</Slide>
+
+Start with tasks where a mistake is easy to notice and cheap to correct. Drafting an agenda, restructuring notes, comparing two documents, or generating questions for an interview are better first exercises than making a legal judgement, approving a financial figure, or sending an unreviewed message to a client.
+
+## Use a simple working loop
+
+Good prompting mostly comes down to explaining the job clearly. Before opening the chat, identify the goal, audience, source material, constraints, and desired output.
+
+<Slide title="Build a clear task brief">
+
+<BriefBuilder />
+
+</Slide>
+
+A simple task deserves a simple prompt. Use this structure when the result is generic or several requirements matter at once.
+
+### A worked example: turn notes into a decision brief
+
+Imagine you have these rough notes from a project meeting:
+
+```text
+Pilot launch: agreed to start with the support team on 21 October.
+Ravi suggested releasing to all customers on 14 October. No decision recorded.
+Priya said legal review must happen before any customer data is uploaded.
+The CSV export still drops some accented characters. Could delay the pilot.
+Mia will update the training guide by Friday.
+Need someone to confirm the support rota before launch.
+```
+
+A weak request would be:
+
+```text
+Summarise these notes.
+```
+
+That may produce readable prose, but the assistant has to guess what the summary is for. A stronger request defines the job:
+
+```text
+Turn the meeting notes below into a decision brief for the project team.
+
+Include:
+- decisions that were made;
+- open questions;
+- action items in a table with owner and due date;
+- risks that were explicitly raised.
+
+Use only the notes. Do not infer an owner or deadline. Mark missing details as
+"not specified". Keep the brief under 500 words and use plain language.
+
+Before drafting, tell me if the notes contain conflicting decisions.
+
+[Paste notes here]
+```
+
+This works better not because it sounds more technical, but because it explains what a useful answer contains. It also separates evidence from guesswork and makes missing information visible. A useful response could now look like this:
+
+```text
+CONFLICT CHECK
+- No conflicting decisions are recorded. Ravi proposed an all-customer release
+  on 14 October, but no decision was recorded and that date precedes the agreed
+  pilot on 21 October. The sequence needs clarification.
+
+DECISIONS
+- Run the pilot with the support team on 21 October.
+
+OPEN QUESTIONS
+- Who will confirm the support rota?
+- Has the required legal review been scheduled?
+- Should a wider customer release follow the pilot?
+
+ACTIONS
+| Action                    | Owner | Due date     |
+|---------------------------|-------|--------------|
+| Update the training guide | Mia   | Friday       |
+| Confirm the support rota  | Not specified | Not specified |
+
+CONSTRAINTS
+- Customer data must not be uploaded before legal review.
+
+RISKS
+- The CSV export drops some accented characters and could delay the pilot.
+```
+
+The structure makes the questionable date, missing ownership, constraint, and explicit risk easy to check against the original notes.
+
+Treat the first response as a draft. Read it and continue the conversation:
+
+```text
+The categories are useful, but I need a faster audit trail. Quote the sentence
+that supports each agreed decision, constraint, and risk. Keep follow-up
+questions inferred from missing information separate from questions explicitly
+recorded in the notes.
+```
+
+Give the assistant the smallest useful set of material. Label authoritative sources, distinguish facts from tentative ideas, and say what to do when evidence is missing. A folder of loosely related documents can hide the important source, introduce contradictions, and expose information the task never needed.
+
+<Slide title="Choose the smallest useful context">
+
+<ContextSelection />
+
+</Slide>
+
+Examples help when format or tone is hard to describe. One good example can show the difference between three bullets and a one-page executive brief.
+
+### Set account-wide communication preferences
+
+If you use Claude regularly, add a short set of account-wide instructions under **Settings → Instructions for Claude**. Other assistants offer similar settings under names such as custom instructions. Use them for preferences that should apply in almost every conversation, not for the details of one task or project.
+
+A useful starting point might be:
+
+```text
+Treat these as defaults unless I ask for something different in the current chat.
+
+- Be direct and concise. Lead with the answer or recommendation.
+- Use plain language and explain specialist terms when they are necessary.
+- Ask a clarifying question when ambiguity would materially change the answer.
+- Distinguish facts from assumptions or suggestions.
+- Point out weak assumptions, important trade-offs, and reasons to disagree with me.
+- Use bullets or tables only when they make the answer easier to scan.
+```
+
+Make this yours. If you prefer a warmer tone, more detail, fewer headings, or examples before explanations, say so. Start with a handful of instructions, notice where they improve or distort ordinary conversations, and revise them. A long list of rigid or contradictory rules makes every task harder.
+
+Do not put confidential information, temporary task requirements, or project-specific terminology in account-wide instructions. Those details belong in the relevant conversation or project.
+
+### Save stable context for recurring work
+
+For work with the same audience, terminology, source documents, and constraints, use your assistant's project or workspace feature. Store only background that applies across tasks: approved reference material, a glossary, and short, stable instructions.
+
+Keep individual chats focused on one piece of work. Start a new chat when the task changes or the conversation has become long or confused. Shared context should make work easier, not carry old assumptions into a new task.
+
+## Ask for evidence and verify by risk
+
+AI assistants often fill gaps in an attempt to be helpful. That is useful in brainstorming and dangerous in factual work. Ask the assistant to separate what is supported by supplied material from its suggestions, cite the source passage for factual claims, and say what is missing when the material cannot support a conclusion.
+
+You can also ask for alternatives and counterarguments:
+
+```text
+Give me three viable approaches. For each, state the main trade-off and the
+assumption that would make it the wrong choice.
+```
+
+Asking for a source is not the same as checking it. Assistants can misquote a document, misunderstand a passage, or cite a source that does not support the claim. Open important sources yourself.
+
+The amount of checking should depend on the cost of being wrong. Do not spend half an hour auditing a private brainstorming list. Do not rely on a polished answer just because it took half an hour to produce. The greater the consequence of an error, the more independent the verification should be.
+
+Match the check to what the assistant produced:
+
+- **Summary of supplied material:** Compare its claims and quotations with the original.
+- **External factual claims:** Open the cited sources and confirm that they support the claims.
+- **Calculations or data analysis:** Recalculate samples, rows, and totals.
+- **Recommendations:** Test the assumptions and seek counterarguments.
+- **Consequential advice:** Use qualified human review and follow the required process.
+
+Define checks before asking for the answer where possible. Provide a total that a numerical result must match, a policy a recommendation must follow, or an approved example when tone matters. For higher-risk work, a fresh conversation can critique the draft against explicit criteria, but it does not replace your review or an independent expert.
+
+## Use assistants safely
+
+### Share only what is appropriate
+
+When you paste or upload information, the service processes it under the product's current terms. Data handling differs between consumer, team, enterprise, and API products, and policies change over time. Check the terms for the product and account you are actually using.
+
+Before sharing material, ask:
+
+- Am I allowed to use AI for this work?
+- Does it contain personal, confidential, client, or regulated information?
+- Can I remove names, identifiers, secrets, or irrelevant sections?
+- Is there an approved organisational account or tool I should use?
+- Would a smaller excerpt be enough?
+
+Never paste passwords, API keys, access tokens, or other credentials into a conversation. If policy or contractual terms are unclear, stop and ask the appropriate owner. Redacting after submission does not undo the original disclosure.
+
+### Control connected tools
+
+Depending on the product and configuration, an assistant may browse the web, read cloud storage, use email or calendar connectors, run code, or take actions in another system. A text response waits for you to use it; a connected assistant may reach information you did not paste or act on your behalf.
+
+External webpages and documents may contain hostile instructions. Telling the model to ignore them is not a reliable security boundary. Restrict what connected tools can do, treat external content as untrusted, and keep consequential actions behind human approval.
+
+## When the result is poor
+
+Diagnose the problem before rewriting everything.
+
+- **Too generic:** Add the audience, purpose, relevant material, or an example.
+- **In the wrong format:** Show the required structure or specify headings, fields, and length.
+- **Unsupported:** Restrict it to supplied sources and require evidence for each claim.
+- **Missing a constraint:** Put the constraint near the task, ask it to restate it, and check it explicitly.
+- **Repeating the same mistake:** Start a fresh conversation with a corrected brief and only the material still needed.
+- **Hard to judge:** Narrow the task, request an explanation, or involve someone who can evaluate it.
+
+If you cannot describe what a good result would contain, use the assistant first to clarify the problem: ask what decisions need to be made, what information is missing, and what a sensible evaluation would look like.
+
+## A 30-minute first exercise
+
+Choose a real but low-risk task, such as restructuring your own notes, drafting an agenda, or comparing two public documents.
+
+1. Write the goal, audience, material, constraints, and output in five short lines.
+2. Ask the assistant to identify missing information, then request a first draft.
+3. Find one unsupported assumption and one part that could be more useful.
+4. Give concrete feedback and request a revision.
+5. Verify two details against the original material.
+
+The point is not to hand over the task or supervise every word. Spend your effort on defining the work, supplying the right evidence, noticing uncertainty, and deciding what is trustworthy enough to use.
