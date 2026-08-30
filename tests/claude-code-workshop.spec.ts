@@ -73,6 +73,67 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.annotated-prompt')).toHaveCount(1);
   });
 
+  test('renders slide 5 as one shared task carried through two interfaces in every presentation mode', async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto(`${route}?slide=5`);
+
+    const demo = page.locator('.chat-vs-code');
+    const chat = demo.locator('[data-outcome="chat"]');
+    const code = demo.locator('[data-outcome="code"]');
+    await expect(demo).toBeVisible();
+    await expect(demo).toContainText('Samme opgave');
+    await expect(chat).toContainText('Saml tallene fra de tre regneark til én kvartalsoversigt');
+    await expect(code).toContainText('Saml tallene fra de tre regneark til én kvartalsoversigt');
+
+    await expect(chat).toContainText('Kopiér');
+    await expect(chat).toContainText('Svaret bliver i vinduet. I overfører det selv til regnearket.');
+    await expect(code).toContainText('Skriver saml-kvartal.py');
+    await expect(code).toContainText('kvartal-oversigt.xlsx');
+    await expect(code).toContainText('Filerne ligger i mappen og kan åbnes, læses og køres igen.');
+    await expect(demo).toContainText('samme resultat kræver stadig de samme filer');
+
+    // The interfaces are recreated in markup, so no screenshot can leak data.
+    await expect(demo.locator('img')).toHaveCount(0);
+
+    await page.waitForTimeout(1200);
+    const layout = await demo.evaluate((element) => {
+      const slide = element.closest('.slide-content');
+      const slideBox = slide?.getBoundingClientRect();
+      const footer = slide?.querySelector('footer')?.getBoundingClientRect();
+      const panels = [...element.querySelectorAll('[data-outcome]')].map((panel) => {
+        const box = panel.getBoundingClientRect();
+        const caption = panel.querySelector('p:last-child')?.getBoundingClientRect();
+        return {
+          contained: Boolean(slideBox && footer && box.left >= slideBox.left
+            && box.right <= slideBox.right && box.bottom <= footer.top),
+          captionInside: Boolean(caption && caption.bottom <= box.bottom + 1),
+        };
+      });
+      return panels;
+    });
+    expect(layout).toHaveLength(2);
+    expect(layout.every(({ contained, captionInside }) => contained && captionInside)).toBe(true);
+
+    await page.keyboard.press('g');
+    await expect(page.locator('.chat-vs-code')).toHaveCount(2);
+    await page.keyboard.press('Escape');
+
+    await page.goto(`${route}?print`);
+    await expect(page.locator('.chat-vs-code')).toHaveCount(1);
+    await expect(page.locator('.chat-vs-code [data-outcome]')).toHaveCount(2);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`${route}?slide=5`);
+    const isContainedOnMobile = await demo.evaluate((element) => {
+      const slide = element.closest('.slide-content')?.getBoundingClientRect();
+      const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
+      const box = element.getBoundingClientRect();
+      return Boolean(slide && footer && box.left >= slide.left && box.right <= slide.right
+        && box.bottom <= footer.top);
+    });
+    expect(isContainedOnMobile).toBe(true);
+  });
+
   test('renders slide 10 as a complete leverage hierarchy in every presentation mode', async ({ page }) => {
     await page.goto(`${route}?slide=10`);
 

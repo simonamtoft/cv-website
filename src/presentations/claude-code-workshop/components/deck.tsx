@@ -3,11 +3,9 @@ import { motion } from "motion/react";
 import { SlideFrame, SlideLayout, useSlideMotion } from "./SlideLayout";
 import {
   AnnotatedPrompt,
-  AskAgainLoop,
+  ChatVersusCode,
   ContextFunnel,
   CountUp,
-  ReRunLoop,
-
   FolderScopeVisual,
   GrowBar,
   Iceberg,
@@ -424,50 +422,10 @@ function TwoOutcomesSlide() {
           Chat svarer. Claude Code <span className="slide-mark">udfører</span>.
         </>
       }
-      lead="Forskellen er ikke modellen. Det er de værktøjer, den får adgang til."
+      lead="Forskellen er ikke modellen, men værktøjerne."
       page={5}
     >
-      <div className="flex h-full flex-col gap-[30px]">
-        <div className="grid flex-1 grid-cols-2 gap-[34px]">
-          <Reveal delay={0.1} className="flex">
-            <div className="flex w-full flex-col border border-slide-rule bg-slide-surface p-[30px]">
-              <span className="slide-kicker font-mono text-slide-accent">01</span>
-              <h3 className="slide-subtitle mt-[14px] font-display font-bold uppercase leading-tight">
-                Chat
-              </h3>
-              <p className="slide-body-lg mt-[10px] text-slide-ink-soft">
-                Et forslag, I selv overfører
-              </p>
-              <p className="slide-body mt-[18px] text-slide-ink-soft">
-                Chatten kan forklare og skrive et udkast. I kopierer selv
-                resultatet over i jeres filer og værktøjer.
-              </p>
-              <div className="mt-[20px] flex flex-1 flex-col">
-                <AskAgainLoop />
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.28} className="flex">
-            <div className="flex w-full flex-col border border-slide-pink bg-slide-pink p-[30px]">
-              <span className="slide-kicker font-mono text-slide-accent">02</span>
-              <h3 className="slide-subtitle mt-[14px] font-display font-bold uppercase leading-tight">
-                Claude Code
-              </h3>
-              <p className="slide-body-lg mt-[10px] text-slide-ink">
-                Arbejdet sker i jeres mappe
-              </p>
-              <p className="slide-body mt-[18px] text-slide-ink">
-                Den kan læse, oprette og ændre filer samt køre værktøjer, når I
-                giver tilladelse. Resultatet kan bagefter inspiceres og køres igen.
-              </p>
-              <div className="mt-[20px] flex flex-1 flex-col">
-                <ReRunLoop />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-
+      <ChatVersusCode />
     </SlideFrame>
   );
 }
