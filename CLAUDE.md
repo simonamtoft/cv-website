@@ -1,47 +1,8 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with
-code in this repository. Refer to VISION.md for the site's purpose and direction.
+Guidance for Claude Code (claude.ai/code) in this repository. The site is Simon Amtoft Pedersen's React professional hub, deployed to GitHub Pages at https://amtoft.dev. It evolved from a digital CV to establish Simon as a trusted data science and AI expert and generate inbound opportunities.
 
-## Project Overview
-
-This is Simon Amtoft Pedersen's personal professional hub, built with React and
-deployed to GitHub Pages at https://amtoft.dev. The site's purpose is to
-establish a strong, coherent professional presence that positions Simon as a
-trusted expert in data science and AI — generating inbound opportunities from
-clients, collaborators, and the broader professional community.
-
-The site originated as a digital CV and has been migrated to a professional hub
-as defined in VISION.md.
-
-## Vision Alignment
-
-All development decisions should be guided by these principles from VISION.md:
-
-1. **Substance over style.** Every section should communicate real competence.
-   Avoid generic filler and buzzwords.
-2. **Show, don't just list.** Demonstrate expertise through context —
-   publications, talks, community roles — rather than listing skills and job
-   titles.
-3. **Professional but approachable.** Confident and direct tone, without being
-   stiff or self-promotional.
-4. **Confidentiality-aware.** Convey depth of experience without exposing
-   client-specific details.
-5. **Evolve incrementally.** New content types may be added as they become
-   relevant. The architecture should support this without requiring rewrites.
-
-## Audience
-
-The site serves these groups, in priority order:
-
-1. **Potential clients and decision-makers** — evaluating whether to engage Simon
-   for data and AI work.
-2. **Industry peers and collaborators** — fellow practitioners who may want to
-   collaborate, exchange ideas, or invite Simon to speak or contribute.
-3. **The broader professional community** — conference attendees, readers of
-   published articles, and others exploring the data and AI space.
-4. **Recruiters and employers** — people assessing Simon's background and fit for
-   opportunities.
+Read [VISION.md](VISION.md) for the site's purpose, direction, audience, and guiding principles. Those principles govern all development decisions.
 
 ## Development Commands
 
@@ -148,14 +109,9 @@ background shell servers can leave child processes running.
 
 ## Architecture
 
-### Architecture Notes
+### Architecture notes
 
-Potential future additions:
-- Community section (if volunteering/IDA role grows significantly)
-- Case studies or project spotlights (if client confidentiality allows)
-- Note: Services section was built and removed — About carries positioning weight
-
-The architecture documentation below reflects the current codebase. Update it as code changes.
+Potential future additions are a community section if the volunteering/IDA role grows and confidentiality-safe case studies or project spotlights. Services was intentionally removed; About carries the positioning. Update this documentation when the architecture changes.
 
 ### Routing
 
@@ -282,36 +238,11 @@ The app uses a multi-page routing architecture:
 Sub-pages are wrapped in `<main className="main-content page-content">` which
 applies `padding-top: 80px` (defined in `App.css`) to clear the fixed nav.
 
-### Timeline System
+### Timeline system
 
-The Timeline component is the most complex part of the codebase. Key features:
+`Timeline.jsx` merges `workExperience.jsx`, `education.jsx`, and `volunteering.jsx`, sorts by `getComparableTime()`, alternates items left and right, and uses Intersection Observer to add `is-visible`. Items with `projects` or `courses` show the "Click to view details" hint and open the detail modal.
 
-1. **Data Consolidation**: Merges arrays from `workExperience.jsx`,
-   `education.jsx`, and `volunteering.jsx`
-2. **Flexible Date Parsing**: Date utilities are centralized in
-   `utils/dateFormatter.js` and support multiple date formats:
-   - ISO format: `YYYY-MM` or `YYYY-MM-DD`
-   - Named months: `MMM YYYY` (e.g., "Jan 2025")
-   - Year only: `YYYY`
-   - Semester notation: `YYYY spring` or `YYYY fall`
-   - Current time: `"now"` (case-insensitive)
-3. **Date Utilities** (`utils/dateFormatter.js`):
-   - `parseFlexibleDate(value)`: Parses flexible date formats into Date objects
-   - `formatDisplayDate(value)`: Formats dates for display (e.g., "Jan 2025" or
-     "Now")
-   - `formatDisplayRange(start, end)`: Formats date ranges (e.g., "Jan 2023 -
-     Dec 2025")
-   - `getComparableTime(value)`: Converts dates to timestamps for sorting
-   - `getNumericalYear(yearString)`: Handles semester notation in year values
-4. **Chronological Sorting**: Items are sorted by start date using
-   `getComparableTime()` function from dateFormatter utilities
-5. **Intersection Observer**: Implements scroll-based animations that add
-   `is-visible` class when items enter viewport
-6. **Alternating Layout**: Items alternate between left/right positioning based
-   on index
-7. **Interactive Details**: Timeline items with `projects` or `courses` data are
-   clickable and display a visual hint ("Click to view details"). Clicking opens
-   a modal with detailed information.
+`utils/dateFormatter.js` handles ISO (`YYYY-MM`, `YYYY-MM-DD`), named-month (`MMM YYYY`), year-only, semester (`YYYY spring` / `YYYY fall`), and case-insensitive `"now"` dates. It exports `parseFlexibleDate`, `formatDisplayDate`, `formatDisplayRange`, `getComparableTime`, and `getNumericalYear`.
 
 ### Data File Schema
 
@@ -341,32 +272,9 @@ Each item in the data files should have:
 **Note**: Timeline items with `projects` or `courses` arrays will automatically
 become clickable and open a modal displaying the detailed information.
 
-### Modal System
+### Modal system
 
-The `TimelineDetailModal` component provides an interactive detail view for
-timeline items:
-
-**Features:**
-- Displays job title/degree, company/institution, and date range in the header
-- Renders the item's description text in the modal body
-- Shows key projects for work experience items:
-  - Each project displays name, timeline, description, and technology tags
-  - Projects are rendered as cards with visual hierarchy
-- Shows coursework for education items:
-  - Courses are displayed in a structured table format
-  - Columns: Course Number, Course Name, Description
-  - Responsive table design
-- Keyboard accessibility: Press Escape to close
-- Click backdrop to close
-- Prevents body scroll when open
-- Smooth transitions and animations
-
-**Implementation Notes:**
-- Modal is conditionally rendered based on the presence of `projects` or
-  `courses` data
-- Uses React hooks (useState, useEffect) for state management and event handling
-- Modal content is styled in `TimelineDetailModal.css`
-- Items with details show a "Click to view details" hint on hover
+`TimelineDetailModal` is conditionally rendered for items with `projects` or `courses`. It uses React hooks, displays the item header and description, project cards or a responsive coursework table (number, name, description), closes on Escape or backdrop click, prevents body scroll, and is styled in `TimelineDetailModal.css` with transitions.
 
 ### Styling
 
@@ -414,18 +322,26 @@ To update site content:
   `src/components/`, styles in `src/styles/`
 - Update this file when new content types are introduced
 
-## Important Notes
+<!-- BACKLOG.MD GUIDELINES START -->
+<!-- backlog.md-instructions-version: 1.50.1 -->
+<CRITICAL_INSTRUCTION>
 
-- The site has no backend - all content is static React components
-- Images and assets are stored in `src/assets/`
-- The site is built and bundled with Vite (`vite.config.js`)
-- Utility functions are organized in `src/utils/` (currently contains
-  `dateFormatter.js`)
-- Modal system uses keyboard navigation (Escape key) and click-outside-to-close
-  pattern
-- Timeline items with detailed information (`projects` or `courses` arrays) are
-  automatically made clickable
-- Custom domain configured via CNAME file: amtoft.dev
-- Playwright test suite exists in `tests/` and targets the multi-page routing
-  structure; `playwright.config.js` is configured to use system Chrome
-  (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`)
+## Backlog.md Workflow
+
+This project uses Backlog.md for task and project management.
+
+**For every user request in this project, run `backlog instructions overview` before answering or taking action.**
+
+Use the overview to decide whether to search, read, create, or update Backlog tasks.
+
+Before task lifecycle actions, read the matching detailed guide:
+- `backlog instructions task-creation` before creating or splitting tasks
+- `backlog instructions task-execution` before planning, changing status or assignee, adding a plan or implementation notes, or implementing task work
+- `backlog instructions task-finalization` before checking acceptance criteria, writing final summaries, or moving tasks to terminal statuses
+
+Use `backlog <command> --help` before running unfamiliar commands. Help shows options, fields, and examples.
+
+Do not edit Backlog task, draft, document, decision, or milestone markdown files directly. Use the `backlog` CLI so metadata, relationships, and history stay consistent.
+
+</CRITICAL_INSTRUCTION>
+<!-- BACKLOG.MD GUIDELINES END -->
