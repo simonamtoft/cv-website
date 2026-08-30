@@ -65,42 +65,6 @@ Playwright never reuses an existing server, so a process already using the
 configured port causes a clear startup failure rather than tests running against
 the wrong application. Set `PLAYWRIGHT_PORT` to override the configured port.
 
-In Pi, use Playwright's managed Chromium and write captures to the session temporary workspace. System Chrome and `/tmp` may be outside the sandbox boundary.
-
-```js
-// Run with: node -e "<contents>"
-const { chromium } = require('playwright');
-const outputDir = process.env.PI_SESSION_TMPDIR;
-if (!outputDir) throw new Error('PI_SESSION_TMPDIR is required for screenshot output');
-
-(async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await page.setViewportSize({ width: 1280, height: 900 });
-  for (const [route, name] of [['/', 'home'], ['/about', 'about'], ['/background', 'bg'], ['/writing', 'writing'], ['/contact', 'contact']]) {
-    await page.goto('http://localhost:4317' + route);
-    await page.waitForTimeout(1500);
-    await page.screenshot({ path: outputDir + '/cv-' + name + '.png' });
-  }
-  // Modal check
-  await page.goto('http://localhost:4317/background');
-  await page.waitForTimeout(1500);
-  await page.click('.timeline-item.has-details');
-  await page.waitForTimeout(600);
-  await page.screenshot({ path: outputDir + '/cv-modal.png' });
-  await browser.close();
-})();
-```
-
-Then read each `$PI_SESSION_TMPDIR/cv-*.png` with the Read tool to visually inspect. For local execution outside Pi, use any installed Chrome executable and a local output directory instead.
-
-For article captures, wait for `.article-dek.is-revealed`, scroll the target
-figure into view, and wait for its `.is-visible` class before taking a reading
-view screenshot. For `/writing/:slug/present`, wait for `.deck[data-ready]`
-before sending keyboard input or capturing. Check both modes at desktop and
-mobile widths. Prefer Playwright's managed `webServer` for automated checks;
-background shell servers can leave child processes running.
-
 **What to check after style changes:**
 - Correct background, text, and accent colors on all pages
 - Nav pill renders with correct glassmorphism and active link color
