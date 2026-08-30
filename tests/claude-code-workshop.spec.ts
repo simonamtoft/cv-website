@@ -20,11 +20,11 @@ test.describe('Claude Code workshop presentation', () => {
 
   test('supports keyboard navigation and overview', async ({ page }) => {
     await openDeck(page);
-    await expect(page.getByText('01 / 15')).toBeVisible();
+    await expect(page.getByText('01 / 14')).toBeVisible();
 
     await page.keyboard.press('ArrowRight');
     await expect(page).toHaveURL(`${route}?slide=2`);
-    await expect(page.getByText('02 / 15')).toBeVisible();
+    await expect(page.getByText('02 / 14')).toBeVisible();
 
     await page.keyboard.press('g');
     await expect(page.getByText('All slides')).toBeVisible();
@@ -36,32 +36,32 @@ test.describe('Claude Code workshop presentation', () => {
     await openDeck(page);
     await expect(page.getByRole('link', { name: 'Print / PDF' })).toHaveAttribute('href', '?print');
 
-    await expect(page.getByText('01 / 15')).toBeVisible();
+    await expect(page.getByText('01 / 14')).toBeVisible();
     await page.getByRole('button', { name: 'Present (F)' }).click();
     await expect.poll(() => page.evaluate(() => Boolean(document.fullscreenElement))).toBe(true);
-    await expect(page.getByText('01 / 15')).toHaveCount(0);
+    await expect(page.getByText('01 / 14')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Present (F)' })).toHaveCount(0);
     await page.evaluate(() => document.exitFullscreen());
     await expect.poll(() => page.evaluate(() => Boolean(document.fullscreenElement))).toBe(false);
-    await expect(page.getByText('01 / 15')).toBeVisible();
+    await expect(page.getByText('01 / 14')).toBeVisible();
 
     await page.goto(`${route}?print`);
     await expect(page.getByText('Print edition · Claude Code workshop')).toBeVisible();
-    await expect(page.locator('.print-slide')).toHaveCount(15);
+    await expect(page.locator('.print-slide')).toHaveCount(14);
     await page.emulateMedia({ media: 'print' });
     await expect(page.getByText('Print edition · Claude Code workshop')).toBeHidden();
     await expect(page.locator('.print-slide').first()).toHaveCSS('zoom', '1');
   });
 
   test('renders the first prompt as one annotated composition in live, overview, and print modes', async ({ page }) => {
-    await page.goto(`${route}?slide=11`);
+    await page.goto(`${route}?slide=10`);
 
     const prompt = page.locator('.annotated-prompt');
     await expect(prompt).toBeVisible();
-    await expect(prompt.getByText('mappen kvartalsrapporter')).toBeVisible();
+    await expect(prompt.getByText('mappen kvartal-q3')).toBeVisible();
     await expect(prompt.getByText('én samlet oversigt over nøgletallene for hvert selskab')).toBeVisible();
     await expect(prompt.getByText('en kollega')).toBeVisible();
-    await expect(prompt.getByText('Skriv et script, der bygger oversigten, og gem resultatet som kvartalsoversigt.xlsx')).toBeVisible();
+    await expect(prompt.getByText('Skriv et script, der bygger oversigten, og gem resultatet som kvartal-oversigt.xlsx')).toBeVisible();
     await expect(prompt.locator('svg')).toHaveCount(0);
 
     await page.keyboard.press('g');
@@ -73,9 +73,9 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.annotated-prompt')).toHaveCount(1);
   });
 
-  test('renders slide 5 as one shared task carried through two interfaces in every presentation mode', async ({ page }) => {
+  test('renders slide 4 as one shared task carried through two interfaces in every presentation mode', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto(`${route}?slide=5`);
+    await page.goto(`${route}?slide=4`);
 
     const demo = page.locator('.chat-vs-code');
     const chat = demo.locator('[data-outcome="chat"]');
@@ -123,7 +123,7 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.chat-vs-code [data-outcome]')).toHaveCount(2);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(`${route}?slide=5`);
+    await page.goto(`${route}?slide=4`);
     const isContainedOnMobile = await demo.evaluate((element) => {
       const slide = element.closest('.slide-content')?.getBoundingClientRect();
       const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
@@ -134,18 +134,18 @@ test.describe('Claude Code workshop presentation', () => {
     expect(isContainedOnMobile).toBe(true);
   });
 
-  test('renders slide 10 as a complete leverage hierarchy in every presentation mode', async ({ page }) => {
-    await page.goto(`${route}?slide=10`);
+  test('renders slide 9 as a complete leverage hierarchy in every presentation mode', async ({ page }) => {
+    await page.goto(`${route}?slide=9`);
 
     const hierarchy = page.locator('.leverage-hierarchy');
-    const levels = hierarchy.locator('[aria-label="Leverage hierarchy from code to operating frame"] > div > div');
+    const levels = hierarchy.locator('[aria-label="Leverage hierarchy from the code up to the standing instructions"] > div > div');
     await expect(hierarchy).toBeVisible();
     await expect(levels).toHaveCount(5);
-    await expect(hierarchy).toContainText('Kode');
-    await expect(hierarchy).toContainText('Løsning og plan');
-    await expect(hierarchy).toContainText('Kildemateriale');
-    await expect(hierarchy).toContainText('Opgaven');
-    await expect(hierarchy).toContainText('Arbejdsrammen');
+    await expect(hierarchy).toContainText('Koden');
+    await expect(hierarchy).toContainText('Planen');
+    await expect(hierarchy).toContainText('Research og kontekst');
+    await expect(hierarchy).toContainText('Opgavevalget');
+    await expect(hierarchy).toContainText('De faste instruktioner (CLAUDE.md)');
     await expect(hierarchy).toContainText('Minutter');
     await expect(hierarchy).toContainText(/Hele\s*eftermiddagen/);
 
@@ -170,7 +170,7 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.leverage-hierarchy')).toHaveCount(1);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(`${route}?slide=10`);
+    await page.goto(`${route}?slide=9`);
     const isContained = await hierarchy.evaluate((element) => {
       const slide = element.closest('.slide-content')?.getBoundingClientRect();
       const box = element.getBoundingClientRect();
@@ -180,9 +180,9 @@ test.describe('Claude Code workshop presentation', () => {
     expect(isContained).toBe(true);
   });
 
-  test('renders slide 9 as an expanding planning flow in every presentation mode', async ({ page }) => {
+  test('renders slide 8 as an expanding planning flow in every presentation mode', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto(`${route}?slide=9`);
+    await page.goto(`${route}?slide=8`);
 
     const journey = page.locator('.plan-mode-journey');
     const gate = journey.locator('.plan-approval-gate');
@@ -192,7 +192,7 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(journey).toContainText('Iterér planen, til den passer');
     await expect(journey).toContainText('Mere kontekst');
     await expect(journey).toContainText('plan.md');
-    await expect(journey).toContainText('Plan: kvartalsoversigt');
+    await expect(journey).toContainText('Plan: kvartal-oversigt');
     await expect(journey).toContainText('Stemmer totalen med rapporten?');
     await expect(gate).toContainText('Godkend planen, før den rører noget.');
     await expect(journey.locator('.context-funnel')).toBeVisible();
@@ -214,24 +214,24 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.plan-approval-gate')).toHaveCount(1);
   });
 
-  test('renders slide 12 as three task families in every presentation mode', async ({ page }) => {
+  test('renders slide 11 as generic first-task ideas in every presentation mode', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto(`${route}?slide=12`);
+    await page.goto(`${route}?slide=11`);
 
     const families = page.locator('.task-families [data-task-family]');
     await expect(families).toHaveCount(3);
-    await expect(families.nth(0)).toContainText('Saml og skriv');
-    await expect(families.nth(1)).toContainText('Beregn og modellér');
-    await expect(families.nth(2)).toContainText('Følg og kontrollér');
-    await expect(page.getByText('Vælg én familie og ét eksempel, du selv har liggende.')).toBeVisible();
+    await expect(families.nth(0)).toContainText('Saml og omdan filer');
+    await expect(families.nth(1)).toContainText('Automatisér en beregning');
+    await expect(families.nth(2)).toContainText('Kontrollér en leverance');
+    await expect(page.getByText('Vælg en mappe med kendte filer, og få Claude til at gemme et resultat, I kan tjekke.')).toBeVisible();
 
     for (const example of [
-      'Fra mødenoter til beslutningsoplæg',
-      'Saml en tilbagevendende rapport',
-      'Byg et beregningsværktøj',
-      'Gør en model gentagelig',
-      'Lav et performanceoverblik',
-      'Automatiser en screening',
+      'Lav én oversigt fra mange filer',
+      'Udtræk felter fra dokumenter',
+      'Genskab en månedlig rapport',
+      'Kør en model på nye data',
+      'Find afvigelser mellem filer',
+      'Tjek om en mappe er klar',
     ]) {
       await expect(page.locator('.task-families').getByText(example)).toBeVisible();
     }
@@ -258,7 +258,7 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.task-families [data-task-family]')).toHaveCount(3);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(`${route}?slide=12`);
+    await page.goto(`${route}?slide=11`);
     const isContainedOnMobile = await page.locator('.task-families').evaluate((element) => {
       const slide = element.closest('.slide-content')?.getBoundingClientRect();
       const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
@@ -268,58 +268,67 @@ test.describe('Claude Code workshop presentation', () => {
     expect(isContainedOnMobile).toBe(true);
   });
 
-  test('carries the prepared folder visual from scope setup into the scope comparison', async ({ page }) => {
+  test('states the folder scope and its trade-off on one slide in every presentation mode', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto(`${route}?slide=6`);
+    await page.goto(`${route}?slide=5`);
 
-    const prepared = page.locator('[data-folder-scope="prepared"]');
-    await expect(prepared).toBeVisible();
-    await expect(prepared).toContainText('kvartal-q3/');
-    await expect(prepared).toContainText('Claude Code');
-    await expect(prepared).toContainText('I godkender handlinger og ekstra adgang undervejs.');
-    await expect(prepared).toContainText('ikke kun dem, den ændrer.');
-    await expect(prepared).toContainText('Data behandles efter jeres aftale og opsætning.');
-    await expect(prepared).toContainText('ikke en garanti for teknisk afgrænsning');
+    const scope = page.locator('.folder-scope-visual');
+    await expect(scope).toBeVisible();
+    await expect(scope).toContainText('kvartal-q3/');
+    await expect(scope).toContainText('Claude Code');
+    await expect(scope).toContainText('I godkender handlinger og ekstra adgang undervejs.');
+    await expect(scope).toContainText('ikke kun dem, den ændrer.');
+    await expect(scope).toContainText('Data behandles efter jeres aftale og opsætning.');
+    await expect(scope).toContainText('er løn, kontrakter og kundedata også i spil');
+    await expect(scope).toContainText('ikke en garanti for teknisk afgrænsning');
 
-    const preparedAboveFooter = await prepared.evaluate((element) => {
+    const aboveFooter = await scope.evaluate((element) => {
       const footer = element.closest('.slide-content')?.querySelector('footer');
       return Boolean(footer && element.getBoundingClientRect().bottom <= footer.getBoundingClientRect().top);
     });
-    expect(preparedAboveFooter).toBe(true);
+    expect(aboveFooter).toBe(true);
 
     await page.keyboard.press('g');
-    await expect(page.locator('[data-folder-scope="prepared"]')).toHaveCount(2);
-    await expect(page.locator('[data-folder-scope="comparison"]')).toHaveCount(2);
+    await expect(page.locator('.folder-scope-visual')).toHaveCount(2);
     await page.keyboard.press('Escape');
 
     await page.goto(`${route}?print`);
-    await expect(page.locator('[data-folder-scope="prepared"]')).toHaveCount(1);
-    await expect(page.locator('[data-folder-scope="comparison"]')).toHaveCount(1);
-
-    await page.goto(`${route}?slide=7`);
-    const comparison = page.locator('[data-folder-scope="comparison"]');
-    await expect(comparison).toBeVisible();
-    await expect(comparison).toContainText('En mappe til én opgave');
-    await expect(comparison).toContainText('Hele computeren eller et delt drev');
-    await expect(comparison).toContainText('S:/fælles-drev/');
-    await expect(comparison).not.toContainText('Jura og compliance');
+    await expect(page.locator('.folder-scope-visual')).toHaveCount(1);
 
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`${route}?slide=5`);
+    const isContainedOnMobile = await scope.evaluate((element) => {
+      const slide = element.closest('.slide-content')?.getBoundingClientRect();
+      const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
+      const box = element.getBoundingClientRect();
+      return Boolean(slide && footer && box.left >= slide.left && box.right <= slide.right && box.bottom <= footer.top);
+    });
+    expect(isContainedOnMobile).toBe(true);
+  });
+
+  test('explains all five permission modes in live, overview, and print modes', async ({ page }) => {
     await page.goto(`${route}?slide=6`);
-    for (const scope of [page.locator('[data-folder-scope="prepared"]'), page.locator('[data-folder-scope="comparison"]')]) {
-      const isContained = await scope.evaluate((element) => {
-        const slide = element.closest('.slide-content')?.getBoundingClientRect();
-        const box = element.getBoundingClientRect();
-        const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
-        return Boolean(slide && footer && box.left >= slide.left && box.right <= slide.right && box.bottom <= footer.top);
-      });
-      expect(isContained).toBe(true);
-      await page.keyboard.press('ArrowRight');
-    }
+
+    const modes = page.locator('.permission-modes [data-permission-mode]');
+    await expect(modes).toHaveCount(5);
+    await expect(modes.nth(0)).toContainText('Manual');
+    await expect(modes.nth(1)).toContainText('Accept Edits');
+    await expect(modes.nth(2)).toContainText('Plan');
+    await expect(modes.nth(3)).toContainText('Auto');
+    await expect(modes.nth(4)).toContainText('Bypass permissions');
+    await expect(page.getByText('Vælg den mindst selvkørende indstilling, der stadig passer til opgaven.')).toBeVisible();
+    await expect(modes.nth(4)).toContainText('Kun i en isoleret, disponibel mappe.');
+
+    await page.keyboard.press('g');
+    await expect(page.locator('.permission-modes')).toHaveCount(2);
+    await page.keyboard.press('Escape');
+
+    await page.goto(`${route}?print`);
+    await expect(page.locator('.permission-modes')).toHaveCount(1);
   });
 
   test('contains the highlighted Claude Code column within the comparison table', async ({ page }) => {
-    await page.goto(`${route}?slide=8`);
+    await page.goto(`${route}?slide=7`);
 
     const table = page.locator('.tool-choice-table');
     await expect(table).toBeVisible();

@@ -1,10 +1,9 @@
-import { motion, useInView } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion } from "motion/react";
+import { type ReactNode } from "react";
 import { cn } from "../utils";
 import { useSlideMotion } from "./SlideLayout";
 
 /** Entrance animations fire when the element scrolls into view. */
-export const inView = { once: false, amount: 0.35 } as const;
 export const inViewSoft = { once: false, amount: 0.15 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -65,74 +64,14 @@ export function GrowBar({
 }
 
 /* ------------------------------------------------------------------ */
-/* Count-up number                                                     */
-/* ------------------------------------------------------------------ */
-
-export function CountUp({
-  to,
-  suffix = "",
-  duration = 1.2,
-  className,
-}: {
-  to: number;
-  suffix?: string;
-  duration?: number;
-  className?: string;
-}) {
-  const animate = useSlideMotion();
-  const ref = useRef<HTMLSpanElement>(null);
-  const visible = useInView(ref, inViewSoft);
-  const [value, setValue] = useState(animate ? 0 : to);
-
-  useEffect(() => {
-    if (!animate) return;
-    if (!visible) {
-      setValue(0);
-      return;
-    }
-    let frame = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / (duration * 1000), 1);
-      setValue(Math.round(to * (1 - Math.pow(1 - t, 3))));
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [animate, visible, to, duration]);
-
-  return (
-    <span ref={ref} className={className}>
-      {value}
-      {suffix}
-    </span>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* Folder scope: the same prepared folder, then the scope contrast    */
 /* ------------------------------------------------------------------ */
 
-const taskFiles = ["q3.xlsx", "noter.md", "skabelon.xlsx"];
-const driveFiles = ["løn.xlsx", "kontrakter/", "bestyrelse/", "kundedata/", "arkiv-2019/"];
+const taskFiles = ["q3-nord.xlsx", "q3-syd.xlsx", "q3-vest.xlsx"];
 
-function FileChip({
-  name,
-  muted = false,
-  surface = "cream",
-}: {
-  name: string;
-  muted?: boolean;
-  surface?: "white" | "cream";
-}) {
+function FileChip({ name }: { name: string }) {
   return (
-    <span
-      className={cn(
-        "slide-caption rounded-[12px] border px-[22px] py-[11px] font-mono",
-        surface === "white" ? "bg-slide-surface" : "bg-slide-bg",
-        muted ? "border-slide-ink/10 text-slide-ink-soft/55" : "border-slide-rule text-slide-ink",
-      )}
-    >
+    <span className="slide-caption rounded-[12px] border border-slide-rule bg-slide-bg px-[22px] py-[11px] font-mono text-slide-ink">
       {name}
     </span>
   );
@@ -141,34 +80,14 @@ function FileChip({
 const pillOnEdge = { translate: "0 -50%" };
 
 /** Folder panel with the pill tab straddling its top edge, as in the source deck. */
-function FolderPanel({
-  label,
-  children,
-  surface = "white",
-  compact = false,
-}: {
-  label: string;
-  children: ReactNode;
-  /** The panel needs to contrast with whatever it sits on. */
-  surface?: "white" | "cream";
-  compact?: boolean;
-}) {
+function FolderPanel({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div
-      className={cn(
-        "relative rounded-[20px]",
-        surface === "white" ? "bg-slide-surface" : "bg-slide-bg",
-        compact ? "px-[26px] pt-[48px] pb-[30px]" : "px-[40px] pt-[54px] pb-[40px]",
-      )}
-    >
+    <div className="relative rounded-[20px] bg-slide-surface px-[40px] pt-[54px] pb-[40px]">
       <span
         // Tailwind's translate utilities rely on @property-registered custom
         // properties, which browsers ignore inside this deck's shadow root.
         style={pillOnEdge}
-        className={cn(
-          "slide-caption absolute top-0 left-[36px] rounded-full bg-slide-ink font-mono font-medium text-slide-bg",
-          compact ? "px-[26px] py-[12px]" : "px-[34px] py-[14px]",
-        )}
+        className="slide-caption absolute top-0 left-[36px] rounded-full bg-slide-ink px-[34px] py-[14px] font-mono font-medium text-slide-bg"
       >
         {label}
       </span>
@@ -224,113 +143,35 @@ function SentOutArrow() {
   );
 }
 
-function ScopeMark({ kind }: { kind: "check" | "cross" }) {
-  const color = kind === "check" ? "var(--slide-good)" : "var(--slide-warn)";
+function PreparedFolder() {
   return (
-    <svg viewBox="0 0 48 48" className="h-[62px] w-[62px] shrink-0" aria-hidden>
-      <path
-        d={kind === "check" ? "M6 24 L19 38 L42 8" : "M9 9 L39 39 M39 9 L9 39"}
-        fill="none"
-        stroke={color}
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function PreparedFolder({
-  compact = false,
-  surface = "white",
-}: {
-  compact?: boolean;
-  surface?: "white" | "cream";
-}) {
-  return (
-    <FolderPanel label="kvartal-q3/" compact={compact} surface={surface}>
-      <div className={cn("flex gap-[12px]", compact ? "flex-col items-start" : "flex-wrap gap-[16px]")}>
+    <FolderPanel label="kvartal-q3/">
+      <div className="flex flex-wrap gap-[16px]">
         {taskFiles.map((file) => (
-          <FileChip key={file} name={file} surface={surface === "white" ? "cream" : "white"} />
+          <FileChip key={file} name={file} />
         ))}
       </div>
-      {!compact && (
-        <div className="mt-[28px] flex flex-col gap-[16px]">
-          <CapabilityRow
-            tone="edit"
-            label="Ændringer"
-            lead="Claude Code arbejder i mappen."
-            rest="I godkender handlinger og ekstra adgang undervejs."
-          />
-          <CapabilityRow
-            tone="read"
-            label="Læsning"
-            lead="Den kan læse alle filer i mappen,"
-            rest="ikke kun dem, den ændrer."
-          />
-        </div>
-      )}
+      <div className="mt-[28px] flex flex-col gap-[16px]">
+        <CapabilityRow
+          tone="edit"
+          label="Ændringer"
+          lead="Claude Code arbejder i mappen."
+          rest="I godkender handlinger og ekstra adgang undervejs."
+        />
+        <CapabilityRow
+          tone="read"
+          label="Læsning"
+          lead="Den kan læse alle filer i mappen,"
+          rest="ikke kun dem, den ændrer."
+        />
+      </div>
     </FolderPanel>
   );
 }
 
-export function FolderScopeVisual({ stage }: { stage: "prepared" | "comparison" }) {
-  if (stage === "comparison") {
-    return (
-      <div className="folder-scope-visual flex h-full min-h-0 flex-col justify-center" data-folder-scope="comparison">
-        <div className="grid min-h-0 grid-cols-2 items-stretch gap-[36px]">
-          <Reveal delay={0.1} className="flex">
-            <section className="flex w-full flex-col rounded-[20px] bg-slide-surface px-[40px] pt-[44px] pb-[46px]">
-              <div className="mb-[80px] flex min-h-[158px] items-start gap-[26px]">
-                <ScopeMark kind="check" />
-                <div>
-                  <h3 className="slide-subtitle">En mappe til én opgave</h3>
-                  <p className="slide-body mt-[14px] text-slide-ink-soft">
-                    Læg kun det materiale ind, opgaven kræver. Så ved I selv, hvad der er i spil.
-                  </p>
-                </div>
-              </div>
-              <PreparedFolder compact surface="cream" />
-              <p className="slide-caption mt-[24px] text-slide-good">Kun det, opgaven har brug for</p>
-            </section>
-          </Reveal>
-
-          <Reveal delay={0.35} className="flex">
-            <section className="flex w-full flex-col rounded-[20px] bg-slide-surface px-[40px] pt-[44px] pb-[46px]">
-              <div className="mb-[80px] flex min-h-[158px] items-start gap-[26px]">
-                <ScopeMark kind="cross" />
-                <div>
-                  <h3 className="slide-subtitle">Hele computeren eller et delt drev</h3>
-                  <p className="slide-body mt-[14px] text-slide-ink-soft">
-                    Det gør langt mere materiale tilgængeligt, end opgaven behøver.
-                  </p>
-                </div>
-              </div>
-              <div className="relative rounded-[20px] border-2 border-dashed border-slide-warn/50 bg-slide-bg/50 px-[26px] pt-[48px] pb-[30px]">
-                <span
-                  style={pillOnEdge}
-                  className="slide-caption absolute top-0 left-[36px] rounded-full bg-slide-warn px-[26px] py-[12px] font-mono text-slide-bg"
-                >
-                  S:/fælles-drev/
-                </span>
-                <div className="flex flex-wrap gap-[12px]">
-                  {taskFiles.map((file) => (
-                    <FileChip key={file} name={file} surface="white" />
-                  ))}
-                  {driveFiles.map((file) => (
-                    <FileChip key={file} name={file} surface="white" muted />
-                  ))}
-                </div>
-              </div>
-              <p className="slide-caption mt-[24px] text-slide-warn">… og meget mere, I ikke har brug for</p>
-            </section>
-          </Reveal>
-        </div>
-      </div>
-    );
-  }
-
+export function FolderScopeVisual() {
   return (
-    <div className="folder-scope-visual flex h-full min-h-0 flex-col justify-center" data-folder-scope="prepared">
+    <div className="folder-scope-visual flex h-full min-h-0 flex-col justify-center">
       <div className="grid grid-cols-[1fr_190px_470px] items-center gap-[36px]">
         <Reveal delay={0.05}>
           <PreparedFolder />
@@ -348,9 +189,15 @@ export function FolderScopeVisual({ stage }: { stage: "prepared" | "comparison" 
           </div>
         </Reveal>
       </div>
-      <p className="slide-body mt-[52px] border-l-[7px] border-slide-good pl-[22px] text-slide-ink-soft">
-        Startmappen er et bevidst udgangspunkt — ikke en garanti for teknisk afgrænsning i alle opsætninger.
-      </p>
+      <div className="mt-[40px] flex flex-col gap-[16px]">
+        <p className="slide-body border-l-[7px] border-solid border-slide-warn pl-[22px] text-slide-ink-soft">
+          Peger I den mod et fælles drev, er løn, kontrakter og kundedata også i spil.
+        </p>
+        <p className="slide-body border-l-[7px] border-solid border-slide-good pl-[22px] text-slide-ink-soft">
+          Startmappen er et bevidst udgangspunkt — ikke en garanti for teknisk afgrænsning i alle
+          opsætninger.
+        </p>
+      </div>
     </div>
   );
 }
@@ -387,7 +234,7 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            Kig i <span className={phraseClass}>mappen kvartalsrapporter <sup className="text-slide-accent">01</sup></span>.
+            Kig i <span className={phraseClass}>mappen kvartal-q3 <sup className="text-slide-accent">01</sup></span>.
           </motion.p>
           <motion.p
             className="slide-body mt-[13px] font-mono leading-[1.4] text-slide-ink"
@@ -414,7 +261,7 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, delay: 0.75, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            <span className={phraseClass}>Skriv et script, der bygger oversigten, og gem resultatet som kvartalsoversigt.xlsx <sup className="text-slide-accent">04</sup></span>.
+            <span className={phraseClass}>Skriv et script, der bygger oversigten, og gem resultatet som kvartal-oversigt.xlsx <sup className="text-slide-accent">04</sup></span>.
           </motion.p>
         </div>
 
@@ -441,64 +288,6 @@ export function AnnotatedPrompt() {
         </div>
       </div>
 
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Terminal: typed prompt                                             */
-/* ------------------------------------------------------------------ */
-
-export function TypedTerminal({
-  lines,
-  className,
-}: {
-  lines: string[];
-  className?: string;
-}) {
-  const animate = useSlideMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const visible = useInView(ref, inViewSoft);
-  const full = lines.join("\n");
-  const [count, setCount] = useState(animate ? 0 : full.length);
-
-  useEffect(() => {
-    if (!animate) return;
-    if (!visible) {
-      setCount(0);
-      return;
-    }
-    let frame = 0;
-    const start = performance.now();
-    const total = 2600;
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / total, 1);
-      setCount(Math.round(full.length * t));
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [animate, visible, full.length]);
-
-  return (
-    <div ref={ref} className={cn("flex h-full flex-col bg-slide-navy p-[46px]", className)}>
-      <div className="flex items-center gap-[14px]">
-        <span className="size-[14px] bg-slide-accent" />
-        <span className="size-[14px] bg-slide-yellow" />
-        <span className="size-[14px] bg-slide-sage" />
-        <p className="slide-chrome ml-[14px] font-mono text-slide-bg/60">
-          claude · plan mode
-        </p>
-      </div>
-      <p className="slide-body mt-[30px] font-mono whitespace-pre-wrap text-slide-bg">
-        <span className="text-slide-accent-soft">&gt; </span>
-        {full.slice(0, count)}
-        <motion.span
-          className="ml-[2px] inline-block h-[1em] w-[0.5em] translate-y-[0.12em] bg-slide-yellow"
-          animate={animate ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        />
-      </p>
     </div>
   );
 }
@@ -725,7 +514,7 @@ export function Iceberg({ below }: { below: Array<[string, string]> }) {
             transition={{ duration: 0.6, delay: 0.6, ease }}
           >
             <text x="30" y="120" fill="var(--slide-accent)" fontSize="62" fontFamily="var(--font-display)">
-              10%
+              20%
             </text>
             <text x="30" y="148" fill="var(--slide-ink-soft)" fontSize="16" letterSpacing="3" fontFamily="var(--font-mono)">
               PROTOTYPEN
@@ -739,7 +528,7 @@ export function Iceberg({ below }: { below: Array<[string, string]> }) {
             transition={{ duration: 0.6, delay: 0.85, ease }}
           >
             <text x="30" y="352" fill="var(--slide-ink)" fontSize="62" fontFamily="var(--font-display)">
-              90%
+              80%
             </text>
             <text x="30" y="380" fill="var(--slide-ink-soft)" fontSize="16" letterSpacing="3" fontFamily="var(--font-mono)">
               RESTEN AF
@@ -777,238 +566,6 @@ export function Iceberg({ below }: { below: Array<[string, string]> }) {
   );
 }
 
-
-/* ------------------------------------------------------------------ */
-/* AmbientField: levende baggrund til de mørke statement-slides       */
-/* ------------------------------------------------------------------ */
-
-export function AmbientField({
-  tone = "accent",
-}: {
-  tone?: "accent" | "pink" | "green";
-}) {
-  const animate = useSlideMotion();
-  const stroke =
-    tone === "pink"
-      ? "var(--slide-pink)"
-      : tone === "green"
-        ? "var(--slide-green)"
-        : "var(--slide-accent-soft)";
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* fint gitter */}
-      <svg className="absolute inset-0 h-full w-full opacity-[0.16]" aria-hidden>
-        <defs>
-          <pattern id={`grid-${tone}`} width="80" height="80" patternUnits="userSpaceOnUse">
-            <path d="M80 0H0V80" fill="none" stroke={stroke} strokeWidth="1" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#grid-${tone})`} />
-      </svg>
-
-      {/* langsomt vandrende lysfelt */}
-      <motion.div
-        className="absolute -inset-y-1/2 w-[46%] blur-[90px]"
-        style={{
-          background: `radial-gradient(closest-side, ${stroke}, transparent)`,
-          opacity: 0.22,
-        }}
-        initial={animate ? { x: "-20%" } : false}
-        animate={animate ? { x: ["-20%", "130%"] } : {}}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-      />
-
-      {/* løbende scan-linje */}
-      <motion.div
-        className="absolute inset-x-0 h-px"
-        style={{ background: stroke, opacity: 0.35 }}
-        initial={animate ? { top: "8%" } : false}
-        animate={animate ? { top: ["8%", "92%", "8%"] } : {}}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* HandToBuilt: fra manuelt arbejde til noget, der kan vises           */
-/* ------------------------------------------------------------------ */
-
-export function HandToBuilt() {
-  const animate = useSlideMotion();
-  const rows = [0, 1, 2, 3, 4, 5];
-  return (
-    <div className="flex items-start gap-[46px]">
-      {/* manuelt: løse ark */}
-      <div className="flex flex-col">
-      <div className="relative h-[220px] w-[260px]">
-        {[0, 1, 2].map((i) => (
-
-          <motion.div
-            key={i}
-            className="absolute h-[190px] w-[150px] border border-slide-bg/25 bg-slide-bg/[0.06]"
-            style={{ left: i * 34, top: i * 12 }}
-            initial={animate ? { opacity: 0, rotate: 0 } : false}
-            whileInView={{ opacity: 1, rotate: -8 + i * 7 }}
-            viewport={inViewSoft}
-            transition={{ delay: 0.2 + i * 0.12, duration: 0.6 }}
-          >
-            <div className="flex h-full flex-col justify-center gap-[9px] px-[16px]">
-              {rows.map((r) => (
-                <div
-                  key={r}
-                  className="h-px bg-slide-bg/30"
-                  style={{ width: `${60 + ((r * 37) % 40)}%` }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-        <p className="slide-caption mt-[18px] font-mono whitespace-nowrap text-slide-bg/60">
-          i hånden, hver gang
-        </p>
-      </div>
-
-      {/* pil */}
-      <div className="relative mt-[110px] w-[130px]">
-
-        <motion.div
-          className="h-[2px] origin-left bg-slide-accent-soft"
-          initial={animate ? { scaleX: 0 } : false}
-          whileInView={{ scaleX: 1 }}
-          viewport={inViewSoft}
-          transition={{ delay: 0.7, duration: 0.5 }}
-        />
-        <motion.div
-          className="absolute -top-[5px] right-0 h-[12px] w-[12px] rotate-45 border-t-2 border-r-2 border-slide-accent-soft"
-          initial={animate ? { opacity: 0 } : false}
-          whileInView={{ opacity: 1 }}
-          viewport={inViewSoft}
-          transition={{ delay: 1.05, duration: 0.3 }}
-        />
-      </div>
-
-      {/* bygget: lille værktøj */}
-      <div className="flex flex-col">
-      <motion.div
-        className="w-[330px] border border-slide-pink/70 bg-slide-bg/[0.07]"
-        initial={animate ? { opacity: 0, y: 30 } : false}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={inViewSoft}
-        transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="flex items-center gap-[8px] border-b border-slide-bg/20 px-[18px] py-[12px]">
-          {["var(--slide-pink)", "var(--slide-yellow)", "var(--slide-green)"].map((c) => (
-            <span key={c} className="h-[9px] w-[9px] rounded-full" style={{ background: c }} />
-          ))}
-        </div>
-        <div className="flex flex-col gap-[14px] p-[24px]">
-          {[0.9, 0.62, 0.38].map((f, i) => (
-            <div key={f} className="flex items-center gap-[14px]">
-              <span className="slide-caption w-[54px] font-mono text-slide-bg/55">
-                0{i + 1}
-              </span>
-              <div className="h-[12px] flex-1 bg-slide-bg/12">
-                <motion.div
-                  className="h-full"
-                  style={{ background: i === 0 ? "var(--slide-green)" : "var(--slide-pink)" }}
-                  initial={animate ? { width: 0 } : false}
-                  whileInView={{ width: `${f * 100}%` }}
-                  viewport={inViewSoft}
-                  transition={{ delay: 1.35 + i * 0.14, duration: 0.8 }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-        <p className="slide-caption mt-[18px] font-mono whitespace-nowrap text-slide-bg/60">
-          bygget i dag, brugbart på mandag
-        </p>
-      </div>
-    </div>
-
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* TimerRing: nedtælling til demoen                                    */
-/* ------------------------------------------------------------------ */
-
-export function TimerRing({ minutes = 75 }: { minutes?: number }) {
-  const animate = useSlideMotion();
-  const r = 150;
-  const c = 2 * Math.PI * r;
-  return (
-    <div className="relative h-[360px] w-[360px]">
-      <svg viewBox="0 0 360 360" className="h-full w-full -rotate-90">
-        <circle cx="180" cy="180" r={r} fill="none" stroke="currentColor" strokeWidth="10" className="text-slide-bg/15" />
-        <motion.circle
-          cx="180"
-          cy="180"
-          r={r}
-          fill="none"
-          stroke="var(--slide-pink)"
-          strokeWidth="10"
-          strokeDasharray={c}
-          initial={animate ? { strokeDashoffset: c } : false}
-          whileInView={{ strokeDashoffset: c * 0.12 }}
-          viewport={inViewSoft}
-          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="slide-title-lg font-display leading-none text-slide-bg">
-          <CountUp to={minutes} duration={1.6} />
-        </span>
-        <span className="slide-caption mt-[12px] font-mono uppercase tracking-[0.2em] text-slide-bg/65">
-          minutter
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* WeekStrip: én ting i næste uge                                      */
-/* ------------------------------------------------------------------ */
-
-export function WeekStrip() {
-  const animate = useSlideMotion();
-  const days = ["man", "tir", "ons", "tor", "fre"];
-  return (
-    <div className="flex items-end gap-[18px]">
-      {days.map((d, i) => (
-        <motion.div
-          key={d}
-          className={cn(
-            "flex h-[130px] w-[130px] flex-col justify-between p-[18px]",
-            i === 0 ? "bg-slide-pink" : "border border-slide-bg/25",
-          )}
-          initial={animate ? { opacity: 0, y: 24 } : false}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={inViewSoft}
-          transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-        >
-          <span
-            className={cn(
-              "slide-caption font-mono uppercase tracking-[0.2em]",
-              i === 0 ? "text-slide-ink" : "text-slide-bg/55",
-            )}
-          >
-            {d}
-          </span>
-          {i === 0 && (
-            <span className="slide-body font-display font-bold uppercase leading-tight text-slide-ink">
-              én ting
-            </span>
-          )}
-        </motion.div>
-      ))}
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* ChatVersusCode: samme opgave i to grænseflader                     */
@@ -1077,7 +634,7 @@ export function ChatVersusCode() {
             data-outcome="chat"
             className="flex min-h-0 w-full flex-col overflow-hidden rounded-[20px] bg-slide-surface"
           >
-            <WindowChrome label="Chat i browseren" tone="light" />
+            <WindowChrome label="Claude Chat" tone="light" />
             <div className="flex min-h-0 flex-1 flex-col gap-[16px] px-[28px] py-[22px]">
               <div className="self-end rounded-[14px] bg-slide-bg px-[22px] py-[12px]">
                 <p className="slide-caption text-slide-ink-soft">{sharedTask}</p>

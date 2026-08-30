@@ -134,7 +134,7 @@ function Deck() {
             ref={(element) => { sectionsRef.current[index] = element; }}
             className="relative h-screen w-full snap-start"
           >
-            {entered.includes(index) ? <ScaledSlide>{slide.render()}</ScaledSlide> : <div className="h-full w-full" />}
+            {entered.includes(index) ? <ScaledSlide>{slide.render(index + 1)}</ScaledSlide> : <div className="h-full w-full" />}
           </section>
         ))}
       </div>
@@ -183,7 +183,7 @@ function Deck() {
               {slides.map((slide, index) => (
                 <button key={slide.id} onClick={() => { setOverview(false); requestAnimationFrame(() => goTo(index)); }} className="group text-left">
                   <div className={`aspect-video overflow-hidden border transition-colors ${index === active ? "border-accent" : "border-border group-hover:border-accent/60"}`}>
-                    <StillSlides><ScaledSlide still>{slide.render()}</ScaledSlide></StillSlides>
+                    <StillSlides><ScaledSlide still>{slide.render(index + 1)}</ScaledSlide></StillSlides>
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")} · {slide.title}</p>
                 </button>
@@ -209,7 +209,7 @@ function PrintView() {
         <p className="mt-2 text-sm text-muted-foreground">Press Cmd/Ctrl + P and choose “Save as PDF”. Each slide prints on its own landscape page.</p>
       </div>
       <div className="flex flex-col items-center gap-6 pb-10">
-        {slides.map((slide) => <div key={slide.id} className="print-slide origin-top-left" style={{ width: 1920, height: 1080, zoom: 0.5 }}><StillSlides>{slide.render()}</StillSlides></div>)}
+        {slides.map((slide, index) => <div key={slide.id} className="print-slide origin-top-left" style={{ width: 1920, height: 1080, zoom: 0.5 }}><StillSlides>{slide.render(index + 1)}</StillSlides></div>)}
       </div>
     </main>
   );

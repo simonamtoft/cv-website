@@ -192,6 +192,11 @@
   font-size: var(--slide-body);
   line-height: 1.32;
 }
+
+.tool-choice-table .slide-body {
+  font-size: 28px;
+  line-height: 1.24;
+}
 .slide-caption {
   font-size: var(--slide-caption);
   line-height: 1.3;

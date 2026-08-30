@@ -5,7 +5,6 @@ import {
   AnnotatedPrompt,
   ChatVersusCode,
   ContextFunnel,
-  CountUp,
   FolderScopeVisual,
   GrowBar,
   Iceberg,
@@ -22,7 +21,8 @@ import implementLogoNegative from "../assets/Implement_plain_negativ.svg";
 export type Slide = {
   id: string;
   title: string;
-  render: () => ReactNode;
+  /** The deck owns slide order, so each slide is told its own page number. */
+  render: (page: number) => ReactNode;
 };
 
 /* ------------------------------------------------------------------ */
@@ -98,7 +98,7 @@ const program: Array<[string, string, string]> = [
   ["14.45 – 15.00", "Fælles opsamling", "Vil nogen vise noget, er der tid."],
 ];
 
-function ProgramSlide() {
+function ProgramSlide({ page }: { page: number }) {
   const total = 120;
   const spans = [20, 75, 15];
   return (
@@ -106,9 +106,9 @@ function ProgramSlide() {
       kicker="Program"
       title="Sådan ser de to timer ud"
       lead="Det meste af tiden har I hænderne i tastaturet. Vi holder oplægget kort."
-      page={3}
+      page={page}
     >
-      <div className="flex h-full min-h-0 flex-col justify-between gap-[18px]">
+      <div className="flex h-full min-h-0 flex-col justify-center">
         <div className="border border-slide-rule bg-slide-surface">
           {program.map(([time, heading, note], i) => (
             <div key={time}>
@@ -154,16 +154,6 @@ function ProgramSlide() {
             </div>
           ))}
         </div>
-        <Reveal delay={0.55}>
-          <div className="flex items-baseline gap-[18px] border-t border-slide-rule pt-[14px]">
-            <span className="slide-body-lg font-display font-bold text-slide-accent">
-              <CountUp to={75} suffix=" min" />
-            </span>
-            <span className="slide-body text-slide-ink-soft">
-              med hænderne i tastaturet. Det er hele pointen.
-            </span>
-          </div>
-        </Reveal>
       </div>
     </SlideFrame>
   );
@@ -266,14 +256,10 @@ function HostsSlide() {
             </motion.h2>
           </div>
           <div className="pb-[10px] text-right">
-            <p className="slide-body max-w-[620px] text-slide-ink-soft">
-              Vi er her hele eftermiddagen. Ræk hånden op, så snart I sidder
-              fast.
-            </p>
             <img
               src={implementLogo}
               alt=""
-              className="mt-[14px] ml-auto h-[48px] w-auto"
+              className="ml-auto h-[48px] w-auto"
             />
           </div>
         </div>
@@ -313,107 +299,30 @@ function HostsSlide() {
 
 
 /* ------------------------------------------------------------------ */
-/* 04: Målet                                                          */
-/* ------------------------------------------------------------------ */
-
-function GoalSlide() {
-  return (
-    <SlideLayout variant="navy">
-
-      <div className="absolute top-0 left-0 h-[16px] w-[420px] bg-slide-pink" />
-      <img
-        src={imLogoNegative}
-        alt=""
-        className="absolute top-[78px] right-[130px] h-[48px] w-auto"
-      />
-      <div className="relative flex h-full flex-col justify-center px-[140px]">
-        <Reveal delay={0.05}>
-          <p className="slide-kicker text-slide-accent-soft">Målet i dag</p>
-        </Reveal>
-        <Reveal delay={0.18} y={40}>
-          <h2 className="slide-title-lg mt-[30px] max-w-[1250px]">
-            Byg noget, I selv kan bruge igen
-            <BlinkUnderscore />
-          </h2>
-        </Reveal>
-        <Reveal delay={0.45}>
-          <p className="slide-subtitle mt-[36px] max-w-[1050px] text-slide-bg/80">
-            Tyve minutter fra os. Resten af eftermiddagen er jeres.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.6}>
-          <div className="mt-[80px] grid max-w-[1250px] grid-cols-[1fr_auto_1fr] items-center gap-[50px] border-t border-slide-bg/20 pt-[46px]">
-            <div>
-              <p className="slide-kicker text-slide-bg/50">Før workshoppen</p>
-              <p className="slide-body-lg mt-[14px] text-slide-bg/70">
-                I samler opgaven manuelt hver gang
-              </p>
-            </div>
-            <span className="slide-body-lg font-mono text-slide-pink">→</span>
-            <div>
-              <p className="slide-kicker text-slide-pink">Efter workshoppen</p>
-              <p className="slide-body-lg mt-[14px]">
-                I har en arbejdsgang, I kan prøve igen
-              </p>
-            </div>
-
-          </div>
-        </Reveal>
-      </div>
-      <span className="slide-page absolute right-[130px] bottom-[70px] font-mono text-slide-bg/60">
-        04
-      </span>
-
-    </SlideLayout>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* 05: Mappen                                                         */
 /* ------------------------------------------------------------------ */
 
-function FolderSlide() {
+function FolderSlide({ page }: { page: number }) {
   return (
     <SlideFrame
       kicker="Rammen"
       title={
         <>
-          Startmappen sætter <span className="slide-mark">rammen</span>
+          Mappen er Claudes <span className="slide-mark">verden</span>
         </>
       }
-      page={6}
+      page={page}
     >
-      <FolderScopeVisual stage="prepared" />
+      <FolderScopeVisual />
     </SlideFrame>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* 06: Hvad lægger du i mappen                                        */
+/* 04: Samme opgave, to udfald                                        */
 /* ------------------------------------------------------------------ */
 
-function DataChoiceSlide() {
-  return (
-    <SlideFrame
-      kicker="Jeres beslutning"
-      title={
-        <>
-          Hvad lægger I i <span className="slide-mark">mappen</span>?
-        </>
-      }
-      page={7}
-    >
-      <FolderScopeVisual stage="comparison" />
-    </SlideFrame>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* 07: Samme opgave, to udfald                                        */
-/* ------------------------------------------------------------------ */
-
-function TwoOutcomesSlide() {
+function TwoOutcomesSlide({ page }: { page: number }) {
   return (
     <SlideFrame
       kicker="Fra svar til handling"
@@ -423,7 +332,7 @@ function TwoOutcomesSlide() {
         </>
       }
       lead="Forskellen er ikke modellen, men værktøjerne."
-      page={5}
+      page={page}
     >
       <ChatVersusCode />
     </SlideFrame>
@@ -431,38 +340,118 @@ function TwoOutcomesSlide() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 08: Hvornår bruger du hvad                                         */
+/* 06: Så meget må Claude gøre                                       */
 /* ------------------------------------------------------------------ */
 
-function ToolChoiceSlide() {
+type PermissionMode = {
+  name: string;
+  summary: string;
+  use: string;
+  tone: string;
+  textTone: string;
+};
+
+function PermissionModesSlide({ page }: { page: number }) {
+  const modes: PermissionMode[] = [
+    {
+      name: "Manual",
+      summary: "Spørger før hver handling.",
+      use: "Når du vil følge med trin for trin.",
+      tone: "bg-slide-surface border-slide-rule",
+      textTone: "text-slide-ink",
+    },
+    {
+      name: "Accept Edits",
+      summary: "Retter filer uden stop.",
+      use: "Terminal og ekstra adgang spørger stadig.",
+      tone: "bg-slide-sage border-slide-sage",
+      textTone: "text-slide-ink",
+    },
+    {
+      name: "Plan",
+      summary: "Læser, undersøger og foreslår.",
+      use: "Ingen ændringer, før planen er godkendt.",
+      tone: "bg-slide-pink border-slide-pink",
+      textTone: "text-slide-ink",
+    },
+    {
+      name: "Auto",
+      summary: "Udfører inden for den valgte ramme.",
+      use: "Tjek outputtet og resultatet undervejs.",
+      tone: "bg-slide-green border-slide-green",
+      textTone: "text-slide-bg",
+    },
+    {
+      name: "Bypass permissions",
+      summary: "Ingen godkendelser.",
+      use: "Kun i en isoleret, disponibel mappe.",
+      tone: "bg-slide-navy border-slide-navy",
+      textTone: "text-slide-bg",
+    },
+  ];
+
+  return (
+    <SlideFrame
+      kicker="Tilladelser"
+      title="Hvor meget må Claude gøre selv?"
+      lead="Vælg den mindst selvkørende indstilling, der stadig passer til opgaven."
+      page={page}
+    >
+      <div className="permission-modes flex h-full min-h-0 flex-col justify-center overflow-hidden">
+        <div className="grid grid-cols-5 gap-[18px]">
+          {modes.map((mode, index) => (
+            <Reveal key={mode.name} delay={0.08 + index * 0.11} className="min-h-0">
+              <article className={cn("flex h-[410px] flex-col border p-[26px]", mode.tone, mode.textTone)} data-permission-mode={mode.name}>
+                <span className="slide-caption font-mono text-current/55">0{index + 1}</span>
+                <h3 className="slide-body-lg mt-[26px] font-display font-bold uppercase leading-[0.95]">
+                  {mode.name}
+                </h3>
+                <p className="slide-body mt-[22px] font-semibold leading-tight">
+                  {mode.summary}
+                </p>
+                <p className="slide-caption mt-auto leading-snug text-current/70">{mode.use}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </SlideFrame>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 07: Hvornår bruger du hvad                                         */
+/* ------------------------------------------------------------------ */
+
+function ToolChoiceSlide({ page }: { page: number }) {
   const rows: Array<[string, string, string, string]> = [
     [
-      "Arbejder med",
-      "Det, I skriver eller uploader",
-      "Det, I skriver eller uploader",
-      "Filer og værktøjer i en arbejdsmappe",
+      "Hvad det er",
+      "Jeres egen chat, driftet af jeres IT",
+      "Anthropics chat i browser og app",
+      "En agent i en mappe på jeres maskine",
     ],
     [
-      "Kan gøre",
-      "Svare og lave udkast",
-      "Svare og lave udkast",
-      "Læse, ændre og køre med tilladelse",
+      "Data",
+      "Bliver i det godkendte miljø",
+      "Det, I indsætter, forlader huset",
+      "Den vælger selv, hvad den læser og sender med",
     ],
     [
-      "I får med hjem",
-      "Et svar i vinduet",
-      "Et svar i vinduet",
-      "Filer og en synlig arbejdsgang",
+      "Brug til",
+      "Materiale, der ikke må sendes ud",
+      "Sparring og hurtige udkast",
+      "Arbejde på tværs af filer: præsentationer, analyser, demoer",
     ],
     [
-      "God til",
-      "Spørgsmål i det godkendte miljø",
-      "Sparring og enkeltstående udkast",
-      "Opgaver på tværs af flere filer",
+      "Brug ikke til",
+      "Det, jeres IT ikke har rullet ud endnu",
+      "Materiale, der ikke må ud, og arbejde, der skal ende i filer",
+      "Hurtige spørgsmål, og mapper med materiale, der ikke må ud",
     ],
   ];
   return (
-    <SlideFrame kicker="Værktøjskassen" title="Hvornår bruger du hvad?" page={8}>
+    <SlideFrame kicker="Værktøjskassen" title="Hvornår bruger du hvad?" page={page}>
       <div className="flex h-full min-h-0 flex-col gap-[22px] overflow-hidden">
         <div className="tool-choice-table min-h-0 flex-1 overflow-hidden bg-slide-bg p-[2px]">
           <table className="h-full w-full table-fixed border-separate border-spacing-[2px] text-left">
@@ -475,7 +464,7 @@ function ToolChoiceSlide() {
             <thead>
               <tr>
                 <th scope="col" className="bg-slide-surface px-[28px] py-[14px]" />
-                {["Intern GPT", "Claude i browseren", "Claude Code"].map((title, index) => (
+                {["Intern GPT", "Claude Chat", "Claude Code"].map((title, index) => (
                   <th
                     key={title}
                     scope="col"
@@ -530,11 +519,11 @@ function ToolChoiceSlide() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 09: Plan mode                                                      */
+/* 08: Plan mode                                                      */
 /* ------------------------------------------------------------------ */
 
 
-function PlanSlide() {
+function PlanSlide({ page }: { page: number }) {
   const steps: Array<[string, string]> = [
     ["01", "Åbn projektmappen"],
     ["02", "Skift til Plan mode"],
@@ -543,11 +532,11 @@ function PlanSlide() {
 
   // rå markdown-linjer: [markør, tekst]
   const plan: Array<[string, string]> = [
-    ["#", "Plan: kvartalsoversigt"],
+    ["#", "Plan: kvartal-oversigt"],
     ["", ""],
     ["##", "Opgave"],
-    ["-", "Saml tallene fra de tre filer"],
-    ["-", "Én tabel pr. portefølje"],
+    ["-", "Saml tallene fra de tre q3-filer"],
+    ["-", "Én række pr. selskab"],
     ["", ""],
     ["##", "Fremgangsmåde"],
     ["1.", "Læs filerne, tjek kolonnenavne"],
@@ -562,7 +551,7 @@ function PlanSlide() {
     <SlideFrame
       kicker="Jeres første tur"
       title="Plan først. Godkend bagefter."
-      page={9}
+      page={page}
     >
       <div className="plan-mode-journey flex h-full min-h-0 flex-col gap-[24px] overflow-hidden">
         <div className="grid min-h-0 flex-1 grid-cols-[0.85fr_0.9fr_1.25fr] gap-[44px]">
@@ -660,48 +649,47 @@ function PlanSlide() {
 
 
 /* ------------------------------------------------------------------ */
-/* 10: Ikke alle valg vejer lige meget                                */
+/* 09: Ikke alle valg vejer lige meget                                */
 /* ------------------------------------------------------------------ */
 
-function LeverageSlide() {
+function LeverageSlide({ page }: { page: number }) {
   const levels: Array<[string, string, string, string]> = [
     [
       "01",
-      "Kode",
+      "Koden",
       "Lokal fejl. Rettes på minutter.",
       "52%",
     ],
     [
       "02",
-      "Løsning og plan",
+      "Planen",
       "Skæv plan opdages, når noget er bygget.",
       "64%",
     ],
     [
       "03",
-      "Kildemateriale",
-      "Forkerte filer gør resten forkert.",
+      "Research og kontekst",
+      "Forkert materiale gør resten forkert.",
       "76%",
     ],
     [
       "04",
-      "Opgaven",
+      "Opgavevalget",
       "Forkert opgave, løst upåklageligt.",
       "88%",
     ],
     [
       "05",
-      "Arbejdsrammen",
-      "Skæve rammer gentager fejlen.",
+      "De faste instruktioner (CLAUDE.md)",
+      "Skæve rammer gentager fejlen i hver opgave.",
       "100%",
     ],
   ];
   return (
     <SlideFrame
-      kicker="Hvor ligger vægten"
       title="Ikke alle valg vejer lige meget"
-      lead="Brug tiden dér, hvor den flytter mest: øverst i hierarkiet."
-      page={10}
+      lead="Fem minutter mere på instruktionerne og planen sparer en time i koden."
+      page={page}
     >
       <div className="leverage-hierarchy flex h-full min-h-0 items-center justify-center overflow-hidden">
         <div className="relative h-[520px] w-[1400px] max-w-full">
@@ -724,7 +712,7 @@ function LeverageSlide() {
 
           <div
             className="absolute top-0 right-0 flex w-[1100px] flex-col-reverse gap-[14px]"
-            aria-label="Leverage hierarchy from code to operating frame"
+            aria-label="Leverage hierarchy from the code up to the standing instructions"
           >
             {levels.map(([number, title, note, width], index) => (
               <Reveal
@@ -765,16 +753,15 @@ function LeverageSlide() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 11: Din første prompt                                              */
+/* 10: Din første prompt                                              */
 /* ------------------------------------------------------------------ */
 
-function PromptSlide() {
+function PromptSlide({ page }: { page: number }) {
   return (
     <SlideFrame
-      kicker="Kom i gang"
+      kicker="Kom godt i gang"
       title="Din første prompt"
-      lead="En god start: fortæl, hvad opgaven tager udgangspunkt i, hvad den skal lave, hvem det er til, og hvad der skal gemmes."
-      page={11}
+      page={page}
     >
       <AnnotatedPrompt />
     </SlideFrame>
@@ -782,7 +769,7 @@ function PromptSlide() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 12: Jeres opgaver i dag                                            */
+/* 11: Jeres opgaver i dag                                            */
 /* ------------------------------------------------------------------ */
 
 type TaskFamily = {
@@ -796,20 +783,20 @@ type TaskFamily = {
   bodyTone: string;
 };
 
-function TasksSlide() {
+function TasksSlide({ page }: { page: number }) {
   const families: TaskFamily[] = [
     {
       number: "01",
-      name: "Saml og skriv",
-      what: "Du har materialet. Der skal komme tekst ud af det.",
+      name: "Saml og omdan filer",
+      what: "Mange filer i en mappe skal blive til én leverance, der kan bruges videre.",
       examples: [
         [
-          "Fra mødenoter til beslutningsoplæg",
-          "Noter, baggrundsmateriale og et tidligere oplæg, der viser formatet.",
+          "Lav én oversigt fra mange filer",
+          "Læs de faste regneark eller CSV-filer, og gem en samlet, kontrollerbar rapport.",
         ],
         [
-          "Saml en tilbagevendende rapport",
-          "Flere kilder samlet ét sted, tjekket og kommenteret.",
+          "Udtræk felter fra dokumenter",
+          "Find de samme oplysninger i mange dokumenter, og læg dem i et regneark.",
         ],
       ],
       tone: "bg-slide-surface border-slide-rule",
@@ -819,16 +806,16 @@ function TasksSlide() {
     },
     {
       number: "02",
-      name: "Beregn og modellér",
-      what: "Der er tal, og de skal regnes igennem på samme måde hver gang.",
+      name: "Automatisér en beregning",
+      what: "De samme trin og kontroller skal køres igen, når næste datasæt lander.",
       examples: [
         [
-          "Byg et beregningsværktøj",
-          "Fra rå data til beregning til et overblik, I kan sende videre.",
+          "Genskab en månedlig rapport",
+          "Byg en arbejdsgang, der læser de nye filer og skriver næste måneds resultat.",
         ],
         [
-          "Gør en model gentagelig",
-          "Beregningen samlet ét sted, så den kan køres igen uden at bygges op forfra.",
+          "Kør en model på nye data",
+          "Pak beregningen i et script, så den kan køres igen uden at starte forfra.",
         ],
       ],
       tone: "bg-slide-pink border-slide-pink",
@@ -838,16 +825,16 @@ function TasksSlide() {
     },
     {
       number: "03",
-      name: "Følg og kontrollér",
-      what: "Det samme tjek skal laves hver gang.",
+      name: "Kontrollér en leverance",
+      what: "Filerne skal tjekkes mod faste regler, før de sendes videre.",
       examples: [
         [
-          "Lav et performanceoverblik",
-          "Ét sted at se tallene, i stedet for at samle dem forfra hver gang.",
+          "Find afvigelser mellem filer",
+          "Sammenlign nøgletal eller lister på tværs, og skriv kun det, der ikke stemmer.",
         ],
         [
-          "Saml en screening ét sted",
-          "Den faste kontrol hentet fra flere kilder ned i én liste.",
+          "Tjek om en mappe er klar",
+          "Kontrollér filnavne, manglende bilag og format — og gem en tjekliste.",
         ],
       ],
       tone: "bg-slide-navy text-slide-bg border-slide-navy",
@@ -858,10 +845,9 @@ function TasksSlide() {
   ];
   return (
     <SlideFrame
-      kicker="OPGAVEEKSEMPLER"
-      title="Jeres opgaver i dag"
-      lead="Vælg én slags og ét eksempel, I selv har liggende."
-      page={12}
+      title="Gode første idéer"
+      lead="Vælg en mappe med kendte filer, og få Claude til at gemme et resultat, I kan tjekke."
+      page={page}
     >
       <div className="task-families grid h-full min-h-0 grid-cols-3 gap-[26px] overflow-hidden">
         {families.map((family, index) => (
@@ -915,11 +901,11 @@ function TasksSlide() {
 
 
 /* ------------------------------------------------------------------ */
-/* 13: Workshop start                                                 */
+/* 12: Workshop start                                                 */
 /* ------------------------------------------------------------------ */
 
 
-function WorkshopSlide() {
+function WorkshopSlide({ page }: { page: number }) {
   return (
     <SlideLayout variant="navy">
       <div className="absolute top-0 left-0 h-[16px] w-[420px] bg-slide-pink" />
@@ -935,7 +921,7 @@ function WorkshopSlide() {
           </Reveal>
           <Reveal delay={0.18} y={40}>
             <h2 className="slide-title-lg mt-[30px]">
-              Nu er det jer
+              Prøv jeres idéer af
               <BlinkUnderscore />
             </h2>
           </Reveal>
@@ -955,38 +941,34 @@ function WorkshopSlide() {
             <p className="slide-body-lg font-display uppercase tracking-[0.06em]">
               minutter
             </p>
-            <p className="slide-body mt-[22px] font-mono text-slide-bg/60">
-              demo kl. 14.45
-            </p>
           </div>
         </Reveal>
       </div>
 
       <span className="slide-page absolute right-[130px] bottom-[70px] font-mono text-slide-bg/60">
-        13
+        {String(page).padStart(2, "0")}
       </span>
     </SlideLayout>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* 14: Isbjerget                                                      */
+/* 13: Isbjerget                                                      */
 /* ------------------------------------------------------------------ */
 
-function IcebergSlide() {
+function IcebergSlide({ page }: { page: number }) {
   const hidden: Array<[string, string]> = [
-    ["Adgang", "Hvem kan køre den ud over dig?"],
+    ["Adgang", "Ser de, der bruger den, tal de ikke må se?"],
     ["Forkert input", "Fejler den stille, eller siger den fra?"],
     ["Afprøvning", "Den har kun set de tal, I selv gav den."],
-    ["Ejerskab", "Hvem samler den op, når den brækker?"],
+    ["Ejerskab", "Hvem opdaterer den, og hvem hjælper, når den fejler?"],
     ["Data", "Hvor ender de henne?"],
   ];
   return (
     <SlideFrame
       kicker="Fra prototype til drift"
-      lead="Prototypen virker. Spørgsmålet er, hvad der ligger under vandlinjen."
       title="Ville du sætte dit navn på det?"
-      page={14}
+      page={page}
     >
       <Iceberg below={hidden} />
     </SlideFrame>
@@ -994,10 +976,10 @@ function IcebergSlide() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 15: Afslutning                                                     */
+/* 14: Afslutning                                                     */
 /* ------------------------------------------------------------------ */
 
-function ClosingSlide() {
+function ClosingSlide({ page }: { page: number }) {
   return (
     <SlideLayout variant="navy">
       <div className="absolute top-0 left-0 h-[16px] w-[420px] bg-slide-pink" />
@@ -1044,7 +1026,7 @@ function ClosingSlide() {
         </p>
       </div>
       <span className="slide-page absolute right-[130px] bottom-[70px] font-mono text-slide-bg/60">
-        15
+        {String(page).padStart(2, "0")}
       </span>
     </SlideLayout>
   );
@@ -1067,69 +1049,63 @@ export const slides: Slide[] = [
   {
     id: "program",
     title: "Program",
-    render: () => <ProgramSlide />,
-  },
-
-  {
-    id: "maalet",
-    title: "Målet i dag",
-    render: () => <GoalSlide />,
+    render: (page) => <ProgramSlide page={page} />,
   },
   {
     id: "to-udfald",
-    title: "Fra svar til handling",
-    render: () => <TwoOutcomesSlide />,
+    title: "Chat svarer. Claude Code udfører",
+    render: (page) => <TwoOutcomesSlide page={page} />,
   },
   {
     id: "mappen",
     title: "Mappen er Claudes verden",
-    render: () => <FolderSlide />,
+    render: (page) => <FolderSlide page={page} />,
   },
   {
-    id: "data",
-    title: "Hvad lægger I i mappen",
-    render: () => <DataChoiceSlide />,
+    id: "tilladelser",
+    title: "Hvor meget må Claude gøre selv",
+    render: (page) => <PermissionModesSlide page={page} />,
   },
   {
     id: "vaerktoej",
     title: "Hvornår bruger du hvad",
-    render: () => <ToolChoiceSlide />,
+    render: (page) => <ToolChoiceSlide page={page} />,
   },
   {
     id: "plan-mode",
-    title: "Plan først. Tjek bagefter",
-    render: () => <PlanSlide />,
+    title: "Plan først. Godkend bagefter",
+    render: (page) => <PlanSlide page={page} />,
   },
   {
     id: "vaegt",
     title: "Ikke alle valg vejer lige meget",
-    render: () => <LeverageSlide />,
+    render: (page) => <LeverageSlide page={page} />,
   },
   {
     id: "foerste-prompt",
     title: "Din første prompt",
-    render: () => <PromptSlide />,
+    render: (page) => <PromptSlide page={page} />,
   },
   {
     id: "opgaver",
     title: "Jeres opgaver i dag",
-    render: () => <TasksSlide />,
+    render: (page) => <TasksSlide page={page} />,
   },
   {
     id: "workshop",
-    title: "Nu er det jer",
-    render: () => <WorkshopSlide />,
+    title: "Prøv jeres idéer af",
+    render: (page) => <WorkshopSlide page={page} />,
   },
 
   {
     id: "isbjerg",
     title: "Prototype vs. drift",
-    render: () => <IcebergSlide />,
+    render: (page) => <IcebergSlide page={page} />,
   },
   {
     id: "afslutning",
     title: "Prøv det igen inden fredag",
-    render: () => <ClosingSlide />,
+    render: (page) => <ClosingSlide page={page} />,
   },
 ];
 
