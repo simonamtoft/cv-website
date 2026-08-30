@@ -61,8 +61,8 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(prompt.getByText('mappen kvartalsrapporter')).toBeVisible();
     await expect(prompt.getByText('én samlet oversigt over nøgletallene for hvert selskab')).toBeVisible();
     await expect(prompt.getByText('en kollega')).toBeVisible();
-    await expect(prompt.getByText('Brug kun filerne i mappen, og skriv til sidst, hvad du er i tvivl om')).toBeVisible();
-    await expect(prompt.locator('svg path')).toHaveCount(4);
+    await expect(prompt.getByText('Skriv et script, der bygger oversigten, og gem resultatet som kvartalsoversigt.xlsx')).toBeVisible();
+    await expect(prompt.locator('svg')).toHaveCount(0);
 
     await page.keyboard.press('g');
     await expect(page.getByText('All slides')).toBeVisible();

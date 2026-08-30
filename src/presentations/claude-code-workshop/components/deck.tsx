@@ -773,7 +773,7 @@ function PromptSlide() {
     <SlideFrame
       kicker="Kom i gang"
       title="Din første prompt"
-      lead="En god start: fortæl både, hvad den må læse, hvad den skal lave, hvem det er til, og hvad den skal tjekke."
+      lead="En god start: fortæl, hvad opgaven tager udgangspunkt i, hvad den skal lave, hvem det er til, og hvad der skal gemmes."
       page={11}
     >
       <AnnotatedPrompt />

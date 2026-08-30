@@ -360,61 +360,25 @@ export function FolderScopeVisual({ stage }: { stage: "prepared" | "comparison" 
 /* ------------------------------------------------------------------ */
 
 const promptAnnotations = [
-  { id: "01", label: "Kilde", note: "Hvilke filer må den bruge?", delay: 0.3 },
+  { id: "01", label: "Kilde", note: "Hvad tager opgaven udgangspunkt i?", delay: 0.3 },
   { id: "02", label: "Resultat", note: "Hvad skal den lave?", delay: 0.55 },
   { id: "03", label: "Modtager", note: "Hvem skal kunne bruge det?", delay: 0.8 },
-  { id: "04", label: "Kontrol", note: "Hvad skal den holde sig til?", delay: 1.05 },
+  { id: "04", label: "Levering", note: "Hvad skal den gemme, og hvor?", delay: 1.05 },
 ] as const;
 
 export function AnnotatedPrompt() {
   const animate = useSlideMotion();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const phraseRefs = useRef<Array<HTMLSpanElement | null>>([]);
-  const annotationRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [connectors, setConnectors] = useState<Array<{ startX: number; startY: number; endX: number; endY: number }>>([]);
   const phraseClass = "border-b-[5px] border-slide-yellow bg-slide-yellow/35 px-[5px] text-slide-ink";
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return undefined;
-
-    const updateConnectors = () => {
-      const bounds = container.getBoundingClientRect();
-      const next = phraseRefs.current.map((phrase, index) => {
-        const annotation = annotationRefs.current[index];
-        if (!phrase || !annotation) return null;
-        const phraseLines = phrase.getClientRects();
-        const phraseBounds = phraseLines[phraseLines.length - 1];
-        const annotationBounds = annotation.getBoundingClientRect();
-        if (!phraseBounds) return null;
-        const scaleX = container.clientWidth / bounds.width;
-        const scaleY = container.clientHeight / bounds.height;
-        return {
-          startX: (phraseBounds.right - bounds.left + 10) * scaleX,
-          startY: (phraseBounds.top - bounds.top + phraseBounds.height / 2) * scaleY,
-          endX: (annotationBounds.left - bounds.left + 54) * scaleX,
-          endY: (annotationBounds.top - bounds.top + annotationBounds.height / 2) * scaleY,
-        };
-      }).filter((connector): connector is { startX: number; startY: number; endX: number; endY: number } => connector !== null);
-      setConnectors(next);
-    };
-
-    updateConnectors();
-    const observer = new ResizeObserver(updateConnectors);
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div ref={containerRef} className="annotated-prompt relative h-full overflow-hidden border border-slide-ink bg-slide-surface px-[64px] py-[30px]">
-      <div className="flex items-center justify-between border-b border-slide-rule pb-[16px]">
+    <div className="annotated-prompt relative flex h-full flex-col overflow-hidden border border-slide-ink bg-slide-surface px-[64px] py-[30px]">
+      <div className="border-b border-slide-rule pb-[16px]">
         <p className="slide-caption font-mono uppercase tracking-[0.16em] text-slide-ink-soft">
           Prompt til Claude Code
         </p>
-        <p className="slide-caption font-mono text-slide-accent">01 · skriv opgaven tydeligt</p>
       </div>
 
-      <div className="grid grid-cols-[1fr_430px] gap-[66px] pt-[26px]">
+      <div className="grid min-h-0 flex-1 grid-cols-[1fr_430px] gap-[66px] pt-[26px]">
         <div className="relative z-10 pt-[8px]">
           <motion.p
             className="slide-body font-mono leading-[1.4] text-slide-ink"
@@ -423,7 +387,7 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            Kig i <span ref={(element) => { phraseRefs.current[0] = element; }} className={phraseClass}>mappen kvartalsrapporter <sup className="text-slide-accent">01</sup></span>.
+            Kig i <span className={phraseClass}>mappen kvartalsrapporter <sup className="text-slide-accent">01</sup></span>.
           </motion.p>
           <motion.p
             className="slide-body mt-[13px] font-mono leading-[1.4] text-slide-ink"
@@ -432,7 +396,7 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            Lav <span ref={(element) => { phraseRefs.current[1] = element; }} className={phraseClass}>én samlet oversigt over nøgletallene for hvert selskab <sup className="text-slide-accent">02</sup></span>.
+            Lav <span className={phraseClass}>én samlet oversigt over nøgletallene for hvert selskab <sup className="text-slide-accent">02</sup></span>.
           </motion.p>
           <motion.p
             className="slide-body mt-[13px] font-mono leading-[1.4] text-slide-ink"
@@ -441,7 +405,7 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            Den skal kunne sendes videre til <span ref={(element) => { phraseRefs.current[2] = element; }} className={phraseClass}>en kollega <sup className="text-slide-accent">03</sup></span>, så hold den på én side.
+            Den skal kunne sendes videre til <span className={phraseClass}>en kollega <sup className="text-slide-accent">03</sup></span>, så hold den på én side.
           </motion.p>
           <motion.p
             className="slide-body mt-[13px] font-mono leading-[1.4] text-slide-ink"
@@ -450,15 +414,17 @@ export function AnnotatedPrompt() {
             viewport={inViewSoft}
             transition={{ duration: 0.5, delay: 0.75, ease: [0.22, 0.9, 0.24, 1] }}
           >
-            <span ref={(element) => { phraseRefs.current[3] = element; }} className={phraseClass}>Brug kun filerne i mappen, og skriv til sidst, hvad du er i tvivl om <sup className="text-slide-accent">04</sup></span>.
+            <span className={phraseClass}>Skriv et script, der bygger oversigten, og gem resultatet som kvartalsoversigt.xlsx <sup className="text-slide-accent">04</sup></span>.
           </motion.p>
         </div>
 
-        <div className="relative z-10 flex flex-col gap-[16px]">
+        <div
+          className="relative z-10 flex flex-col justify-center gap-[16px]"
+          style={{ transform: "translateY(-38px)" }}
+        >
           {promptAnnotations.map(({ id, label, note, delay }, index) => (
             <motion.div
               key={id}
-              ref={(element) => { annotationRefs.current[index] = element; }}
               initial={animate ? { opacity: 0, y: 12 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay, ease: [0.22, 0.9, 0.24, 1] }}
@@ -475,21 +441,6 @@ export function AnnotatedPrompt() {
         </div>
       </div>
 
-      <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-        {connectors.map(({ startX, startY, endX, endY }, index) => (
-          <motion.path
-            key={index}
-            d={`M ${startX} ${startY} C ${startX + 70} ${startY}, ${endX - 70} ${endY}, ${endX} ${endY}`}
-            fill="none"
-            stroke="var(--slide-accent)"
-            strokeWidth="2"
-            strokeDasharray="7 8"
-            initial={animate ? { pathLength: 0, opacity: 0 } : false}
-            animate={{ pathLength: 1, opacity: 0.75 }}
-            transition={{ duration: 0.45, delay: 0.35 + index * 0.25 }}
-          />
-        ))}
-      </svg>
     </div>
   );
 }
