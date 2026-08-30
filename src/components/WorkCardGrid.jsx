@@ -41,27 +41,36 @@ const parseDate = (dateStr) => {
   return new Date(year, month - 1);
 };
 
+const workTypeDetails = {
+  article: { icon: 'fa-file-alt', label: 'Article' },
+  webinar: { icon: 'fa-video', label: 'Webinar' },
+  conference: { icon: 'fa-chalkboard-teacher', label: 'Conference' },
+  presentation: { icon: 'fa-display', label: 'Presentation' },
+};
+
 const WorkCard = ({ item }) => {
   const showRecordingLink = !!item.recording;
+  const typeDetails = workTypeDetails[item.type];
+  const isExternal = item.link?.startsWith('http');
   return (
     <div className={`work-card work-card-${item.type}`}>
       {item.link && (
         <a
           href={item.link}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
           className="work-card-link"
           aria-label={item.title}
         ></a>
       )}
       <div className="work-card-header">
         <div className={`work-type-badge work-type-${item.type}`}>
-          <i className={`fas ${item.type === 'article' ? 'fa-file-alt' : item.type === 'webinar' ? 'fa-video' : 'fa-chalkboard-teacher'}`}></i>
-          <span>{item.type === 'article' ? 'Article' : item.type === 'webinar' ? 'Webinar' : 'Conference'}</span>
+          <i className={`fas ${typeDetails.icon}`}></i>
+          <span>{typeDetails.label}</span>
         </div>
         {item.link && (
           <div className="work-link-indicator">
-            <i className="fas fa-external-link-alt"></i>
+            <i className={`fas ${isExternal ? 'fa-external-link-alt' : 'fa-arrow-right'}`}></i>
           </div>
         )}
       </div>

@@ -13,6 +13,29 @@ const publicationsEvents = [
   //   authors: ["First Author", "Second Author"], // Optional - array of author names
   // }
   {
+    type: "presentation",
+    title: "Claude Code Workshop",
+    originalTitle: "Byg noget i dag, som du kan bruge på mandag",
+    date: "2026 Aug",
+    link: "/talks/claude-code-workshop",
+    venue: "Practical workshop",
+    description: "A hands-on Danish-language workshop deck about choosing a useful task, working safely with files, using Plan mode, and understanding what it takes to move from prototype to production.",
+  },
+  {
+    type: "webinar",
+    title: "Agentic Coding (4): Harness Engineering",
+    originalTitle: "Kod med AI (4): Harness Engineering",
+    date: "2026 Aug",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-4-harness-engineering-367935",
+    venue: "IDA AI",
+    description: "Fourth session in the Agentic Coding series. Explored harness engineering: designing the prompts, tools, sandbox, permissions, and feedback loops around an AI model as one control system for building in a real codebase.",
+    metrics: [
+      { icon: "fa-star", value: "9.0/10" },
+      { icon: "fa-users", value: "58 participants" },
+    ],
+    recording: "https://videos.ida.dk/media/Webinar%3A+Kod+med+AI+%284%29%3A+Harness+Engineering/1_3th7c91p",
+  },
+  {
     type: "webinar",
     title: "Agentic Coding (3): Autonomous Coding Agents",
     originalTitle: "Kod med AI (3): Autonomous coding agents",

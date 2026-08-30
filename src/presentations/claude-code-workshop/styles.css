@@ -1,0 +1,251 @@
+@import "tailwindcss" source(none);
+@source "./";
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system: Implement Consulting Group brand.
+ * Cream/light-grey foundation, black text, colour blocks (maroon, pink,
+ * dark green, sage, brown), yellow highlighter. Condensed caps display
+ * type (Grotzec substitute) + Swiss grotesque body (Akkurat substitute).
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-slide-bg: var(--slide-bg);
+  --color-slide-ink: var(--slide-ink);
+  --color-slide-ink-soft: var(--slide-ink-soft);
+  --color-slide-rule: var(--slide-rule);
+  --color-slide-surface: var(--slide-surface);
+  --color-slide-navy: var(--slide-navy);
+  --color-slide-navy-soft: var(--slide-navy-soft);
+  --color-slide-accent: var(--slide-accent);
+  --color-slide-accent-soft: var(--slide-accent-soft);
+  --color-slide-good: var(--slide-good);
+  --color-slide-warn: var(--slide-warn);
+
+  --color-slide-pink: var(--slide-pink);
+  --color-slide-green: var(--slide-green);
+  --color-slide-sage: var(--slide-sage);
+  --color-slide-brown: var(--slide-brown);
+  --color-slide-yellow: var(--slide-yellow);
+
+  --font-display: "Oswald", "Impact", "Arial Narrow", sans-serif;
+  --font-sans: "Inter", Arial, Helvetica, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.workshop-presentation {
+  --radius: 0rem;
+
+  --background: oklch(0.967 0.018 92.7);
+  --foreground: oklch(0.241 0.008 285.8);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.241 0.008 285.8);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.241 0.008 285.8);
+  --primary: oklch(0.241 0.008 285.8);
+  --primary-foreground: oklch(0.967 0.018 92.7);
+  --secondary: oklch(0.902 0.008 73.7);
+  --secondary-foreground: oklch(0.241 0.008 285.8);
+  --muted: oklch(0.902 0.008 73.7);
+  --muted-foreground: oklch(0.489 0.013 243.8);
+  --accent: oklch(0.464 0.103 16.2);
+  --accent-foreground: oklch(0.967 0.018 92.7);
+  --destructive: oklch(0.464 0.103 16.2);
+  --destructive-foreground: oklch(0.967 0.018 92.7);
+  --border: oklch(0.902 0.008 73.7);
+  --input: oklch(0.902 0.008 73.7);
+  --ring: oklch(0.332 0.012 232.8);
+
+  /* Slide palette: the deck's master */
+  --slide-bg: oklch(0.967 0.018 92.7); /* cream #F8F4E7 */
+  --slide-ink: oklch(0.241 0.008 285.8); /* black #1F1F23 */
+  --slide-ink-soft: oklch(0.332 0.012 232.8); /* dark grey #30373B */
+  --slide-rule: oklch(0.902 0.008 73.7); /* light grey #E2DED9 */
+  --slide-surface: oklch(1 0 0); /* white */
+  --slide-navy: oklch(0.332 0.012 232.8); /* dark neutral base */
+  --slide-navy-soft: oklch(0.902 0.008 73.7); /* light grey block */
+  --slide-accent: oklch(0.464 0.103 16.2); /* maroon #893E45 */
+  --slide-accent-soft: oklch(0.822 0.051 51.3); /* light pink #E1BCA7 */
+  --slide-good: oklch(0.467 0.037 191); /* dark green #41615F */
+  --slide-warn: oklch(0.464 0.103 16.2); /* maroon */
+  --slide-pink: oklch(0.822 0.051 51.3);
+  --slide-green: oklch(0.467 0.037 191);
+  --slide-sage: oklch(0.691 0.029 173.3);
+  --slide-brown: oklch(0.574 0.08 63.7);
+  --slide-yellow: oklch(0.799 0.144 87.9); /* highlighter #E4B73C */
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  .workshop-presentation {
+    min-height: 100%;
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  .workshop-presentation button,
+  .workshop-presentation a {
+    cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Slide surface: fixed 1920x1080, scaled to fit                       */
+/* ------------------------------------------------------------------ */
+
+.slide-wrapper {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  left: 50%;
+  top: 50%;
+  margin-left: -960px;
+  margin-top: -540px;
+  transform: scale(var(--scale, 1));
+  transform-origin: center center;
+}
+
+.slide-content {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  position: relative;
+
+  --slide-title-lg: 104px;
+  --slide-title: 84px;
+  --slide-subtitle: 50px;
+  --slide-body-lg: 40px;
+  --slide-body: 32px;
+  --slide-caption: 24px;
+  --slide-kicker: 22px;
+  --slide-chrome: 20px;
+}
+
+.slide-title-lg,
+.slide-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+.slide-title-lg {
+  font-size: var(--slide-title-lg);
+  line-height: 0.98;
+}
+.slide-title {
+  font-size: var(--slide-title);
+  line-height: 1.0;
+}
+.slide-subtitle {
+  font-size: var(--slide-subtitle);
+  line-height: 1.14;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Yellow highlighter behind text on light-base designs only */
+.slide-mark {
+  background-image: linear-gradient(
+    var(--slide-yellow),
+    var(--slide-yellow)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 0.78em;
+  background-position: 0 0.18em;
+  padding: 0 0.06em;
+}
+.slide-body-lg {
+  font-size: var(--slide-body-lg);
+  line-height: 1.25;
+}
+.slide-body {
+  font-size: var(--slide-body);
+  line-height: 1.32;
+}
+.slide-caption {
+  font-size: var(--slide-caption);
+  line-height: 1.3;
+}
+.slide-kicker {
+  font-size: var(--slide-kicker);
+  line-height: 1.1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.slide-chrome,
+.slide-badge,
+.slide-footer,
+.slide-page {
+  font-size: var(--slide-chrome);
+  line-height: 1.15;
+}
+.slide-badge,
+.slide-page {
+  white-space: nowrap;
+}
+
+.portrait-text-scrim {
+  background: linear-gradient(
+    to top,
+    oklch(0.241 0.008 285.8 / 0.94),
+    oklch(0.241 0.008 285.8 / 0.76) 48%,
+    transparent
+  );
+}
+
+@media print {
+  @page {
+    size: 1920px 1080px landscape;
+    margin: 0;
+  }
+  .print-slide {
+    page-break-after: always;
+    break-after: page;
+  }
+  .print-hide {
+    display: none !important;
+  }
+
+  .print-slide {
+    zoom: 1 !important;
+  }
+}
+
+/* Hide scrollbars on the full-bleed deck scroller */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

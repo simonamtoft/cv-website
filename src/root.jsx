@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, Meta, Links, ScrollRestoration, Scripts } from 'react-router';
+import { Outlet, Meta, Links, ScrollRestoration, Scripts, useLocation } from 'react-router';
 import Nav from './components/Nav';
 import BackToTop from './components/BackToTop';
 import ReadingProgress from './components/ReadingProgress';
@@ -43,7 +43,7 @@ export function Layout({ children }) {
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -63,8 +63,20 @@ export function Layout({ children }) {
 
 // The persistent app shell around the routed page (was App.js / AppContent).
 export default function App() {
+  const { pathname } = useLocation();
+  const isPresentation = pathname === '/talks/claude-code-workshop';
+
   useKeyboardNav();
   useSwipeNav();
+
+  if (isPresentation) {
+    return (
+      <ErrorBoundaryClass>
+        <Outlet />
+      </ErrorBoundaryClass>
+    );
+  }
+
   return (
     <ErrorBoundaryClass>
       <ReadingProgress />

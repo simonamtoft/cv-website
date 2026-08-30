@@ -9,6 +9,7 @@ export default [
   route('writing/:slug', 'routes/article.jsx'),
   route('writing/:slug/present', 'routes/present.jsx'),
   route('talks', 'routes/talks.jsx'),
+  route('talks/claude-code-workshop', 'routes/claude-code-workshop.jsx'),
   route('contact', 'routes/contact.jsx'),
   // Unknown client-side paths redirect home (former <Navigate to="/" replace />).
   route('*', 'routes/catchall.jsx'),

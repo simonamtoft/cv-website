@@ -48,6 +48,10 @@
   background: var(--color-border);
 }
 
+.talks-divider {
+  margin-top: var(--space-2xl);
+}
+
 .publications-events-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -109,6 +113,10 @@
 
 .work-card-webinar {
   border-left-color: #2d7a8a;
+}
+
+.work-card-presentation {
+  border-left-color: #5d4b8a;
 }
 
 .work-card-conference:focus-visible {
@@ -232,6 +240,12 @@
   background: rgba(45, 122, 138, 0.15);
   color: #2d7a8a;
   border: 1px solid rgba(45, 122, 138, 0.3);
+}
+
+.work-type-presentation {
+  background: rgba(93, 75, 138, 0.15);
+  color: #5d4b8a;
+  border: 1px solid rgba(93, 75, 138, 0.3);
 }
 
 .work-link-indicator {

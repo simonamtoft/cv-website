@@ -26,6 +26,7 @@ export default {
     '/background',
     '/writing',
     '/talks',
+    '/talks/claude-code-workshop',
     '/contact',
     ...articleRoutes,
   ],

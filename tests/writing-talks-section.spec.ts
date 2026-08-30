@@ -24,9 +24,16 @@ test.describe('Writing / Talks split', () => {
     }
   });
 
-  test('Talks shows webinar and conference cards, but no articles', async ({ page }) => {
+  test('Talks shows presentations, webinars, and conferences, but no articles', async ({ page }) => {
     await page.goto('/talks');
 
+    const presentation = page.locator('.work-card-presentation');
+    await expect(presentation).toBeVisible();
+    await expect(presentation.locator('.work-card-link')).toHaveAttribute(
+      'href',
+      '/talks/claude-code-workshop'
+    );
+    await expect(presentation.locator('.work-card-link')).not.toHaveAttribute('target', '_blank');
     await expect(page.locator('.work-card-webinar').first()).toBeVisible();
     await expect(page.locator('.work-card-conference').first()).toBeVisible();
     await expect(page.locator('.work-card-article')).toHaveCount(0);

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { reactRouter } from '@react-router/dev/vite';
+import tailwindcss from '@tailwindcss/vite';
 import mdx from '@mdx-js/rollup';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
@@ -8,6 +9,7 @@ import rehypeShiki from '@shikijs/rehype';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     // MDX compiled at build time. Frontmatter (YAML) is parsed and re-exported
     // as a `frontmatter` named export (remark-mdx-frontmatter), the single
     // source of truth for list metadata and per-article meta/OG. Code blocks
