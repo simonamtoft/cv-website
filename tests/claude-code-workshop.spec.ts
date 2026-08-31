@@ -185,16 +185,20 @@ test.describe('Claude Code workshop presentation', () => {
     await page.goto(`${route}?slide=8`);
 
     const journey = page.locator('.plan-mode-journey');
-    const gate = journey.locator('.plan-approval-gate');
     await expect(journey).toBeVisible();
     await expect(journey).toContainText('Åbn projektmappen');
     await expect(journey).toContainText('Skift til Plan mode');
     await expect(journey).toContainText('Iterér planen, til den passer');
+    await expect(journey).toContainText('Løs én opgave ad gangen');
     await expect(journey).toContainText('Mere kontekst');
     await expect(journey).toContainText('plan.md');
     await expect(journey).toContainText('Plan: kvartal-oversigt');
     await expect(journey).toContainText('Stemmer totalen med rapporten?');
-    await expect(gate).toContainText('Godkend planen, før den rører noget.');
+    await expect(journey).toContainText('løst');
+    await expect(journey).toContainText('næste');
+    await expect(
+      page.locator('.slide-content').filter({ has: journey }),
+    ).toContainText('hold opgaven lille');
     await expect(journey.locator('.context-funnel')).toBeVisible();
 
     const isAboveFooter = await journey.evaluate((element) => {
@@ -206,60 +210,55 @@ test.describe('Claude Code workshop presentation', () => {
 
     await page.keyboard.press('g');
     await expect(page.locator('.plan-mode-journey')).toHaveCount(2);
-    await expect(page.locator('.plan-approval-gate')).toHaveCount(2);
     await page.keyboard.press('Escape');
 
     await page.goto(`${route}?print`);
     await expect(page.locator('.plan-mode-journey')).toHaveCount(1);
-    await expect(page.locator('.plan-approval-gate')).toHaveCount(1);
   });
 
-  test('renders slide 11 as generic first-task ideas in every presentation mode', async ({ page }) => {
+  test('renders slide 11 as a low-stakes Claude Code exploration in every presentation mode', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(`${route}?slide=11`);
 
-    const families = page.locator('.task-families [data-task-family]');
-    await expect(families).toHaveCount(3);
-    await expect(families.nth(0)).toContainText('Saml og omdan filer');
-    await expect(families.nth(1)).toContainText('Automatisér en beregning');
-    await expect(families.nth(2)).toContainText('Kontrollér en leverance');
-    await expect(page.getByText('Vælg en mappe med kendte filer, og få Claude til at gemme et resultat, I kan tjekke.')).toBeVisible();
+    const exercise = page.locator('.delivery-exercise');
+    const steps = exercise.locator('[data-delivery-step]');
+    await expect(exercise).toBeVisible();
+    await expect(steps).toHaveCount(5);
+    await expect(page.getByText('Få jord under neglene')).toBeVisible();
+    await expect(page.locator('.slide-content').filter({ has: exercise })).toContainText('I behøver ikke at blive færdige');
+    await expect(exercise).toContainText('input → handling → resultat');
 
-    for (const example of [
-      'Lav én oversigt fra mange filer',
-      'Udtræk felter fra dokumenter',
-      'Genskab en månedlig rapport',
-      'Kør en model på nye data',
-      'Find afvigelser mellem filer',
-      'Tjek om en mappe er klar',
-    ]) {
-      await expect(page.locator('.task-families').getByText(example)).toBeVisible();
+    for (const step of ['Vælg', 'Åbn mappen', 'Bed om en plan', 'Prøv og tjek', 'Del et fund']) {
+      await expect(exercise.getByText(step, { exact: true })).toBeVisible();
     }
+    await expect(steps.nth(2)).toContainText('Plan mode');
+    await expect(steps.nth(3)).toContainText('Kør en kontrol');
+    await expect(steps.nth(4)).toContainText('noget, der ikke virkede endnu');
 
     await page.waitForTimeout(900);
-    const contained = await page.locator('.task-families').evaluate((element) => {
+    const contained = await exercise.evaluate((element) => {
       const slide = element.closest('.slide-content');
       const footer = slide?.querySelector('footer')?.getBoundingClientRect();
       const slideBox = slide?.getBoundingClientRect();
       const box = element.getBoundingClientRect();
-      const lastExample = element.querySelector('[data-task-family]:last-child li:last-child')?.getBoundingClientRect();
-      return Boolean(slideBox && footer && lastExample
+      const lastStep = element.querySelector('[data-delivery-step]:last-child')?.getBoundingClientRect();
+      return Boolean(slideBox && footer && lastStep
         && box.left >= slideBox.left && box.right <= slideBox.right
-        && box.bottom <= footer.top && lastExample.bottom <= footer.top);
+        && box.bottom <= footer.top && lastStep.bottom <= footer.top);
     });
     expect(contained).toBe(true);
 
     await page.keyboard.press('g');
-    await expect(page.locator('.task-families')).toHaveCount(2);
+    await expect(page.locator('.delivery-exercise')).toHaveCount(2);
     await page.keyboard.press('Escape');
 
     await page.goto(`${route}?print`);
-    await expect(page.locator('.task-families')).toHaveCount(1);
-    await expect(page.locator('.task-families [data-task-family]')).toHaveCount(3);
+    await expect(page.locator('.delivery-exercise')).toHaveCount(1);
+    await expect(page.locator('.delivery-exercise [data-delivery-step]')).toHaveCount(5);
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${route}?slide=11`);
-    const isContainedOnMobile = await page.locator('.task-families').evaluate((element) => {
+    const isContainedOnMobile = await page.locator('.delivery-exercise').evaluate((element) => {
       const slide = element.closest('.slide-content')?.getBoundingClientRect();
       const footer = element.closest('.slide-content')?.querySelector('footer')?.getBoundingClientRect();
       const box = element.getBoundingClientRect();

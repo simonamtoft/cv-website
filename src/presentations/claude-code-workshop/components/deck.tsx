@@ -529,10 +529,11 @@ function PlanSlide({ page }: { page: number }) {
     ["01", "Åbn projektmappen"],
     ["02", "Skift til Plan mode"],
     ["03", "Iterér planen, til den passer"],
+    ["04", "Løs én opgave ad gangen"],
   ];
 
-  // rå markdown-linjer: [markør, tekst]
-  const plan: Array<[string, string]> = [
+  // rå markdown-linjer: [markør, tekst, status]
+  const plan: Array<[string, string, string?]> = [
     ["#", "Plan: kvartal-oversigt"],
     ["", ""],
     ["##", "Opgave"],
@@ -540,8 +541,8 @@ function PlanSlide({ page }: { page: number }) {
     ["-", "Én række pr. selskab"],
     ["", ""],
     ["##", "Fremgangsmåde"],
-    ["1.", "Læs filerne, tjek kolonnenavne"],
-    ["2.", "Byg tabellen"],
+    ["1.", "Læs filerne, tjek kolonnenavne", "løst"],
+    ["2.", "Byg tabellen", "næste"],
     ["", ""],
     ["##", "Kontrol"],
     ["- [ ]", "Stemmer totalen med rapporten?"],
@@ -552,6 +553,7 @@ function PlanSlide({ page }: { page: number }) {
     <SlideFrame
       kicker="Jeres første tur"
       title="Plan først. Godkend bagefter."
+      lead="Godkend planen, før den rører noget. Og hold opgaven lille: jo længere Claude arbejder i træk, jo dårligere bliver svarene — og jo dyrere bliver turen."
       page={page}
     >
       <div className="plan-mode-journey flex h-full min-h-0 flex-col gap-[24px] overflow-hidden">
@@ -596,7 +598,7 @@ function PlanSlide({ page }: { page: number }) {
                 </span>
               </div>
               <div className="flex min-h-0 flex-1 flex-col justify-center gap-[3px] px-[26px] py-[22px]">
-                {plan.map(([marker, text], i) => (
+                {plan.map(([marker, text, status], i) => (
                   <div
                     key={`${marker}-${text}-${i}`}
                     className="flex items-baseline gap-[10px] font-mono text-[19px] leading-[1.5]"
@@ -626,6 +628,11 @@ function PlanSlide({ page }: { page: number }) {
                         >
                           {text}
                         </span>
+                        {status && (
+                          <span className="ml-auto shrink-0 text-[14px] uppercase tracking-[0.1em] text-slide-accent">
+                            {status}
+                          </span>
+                        )}
                       </>
                     )}
                   </div>
@@ -634,15 +641,6 @@ function PlanSlide({ page }: { page: number }) {
             </div>
           </Reveal>
         </div>
-
-        <Reveal delay={0.8} className="shrink-0">
-          <div className="plan-approval-gate bg-slide-navy px-[40px] py-[22px]">
-            <p className="slide-body-lg text-slide-bg">
-              Godkend planen, før den rører noget. Tjek bagefter: et tal I
-              kender, en stikprøve, formen.
-            </p>
-          </div>
-        </Reveal>
       </div>
     </SlideFrame>
   );
@@ -773,131 +771,88 @@ function PromptSlide({ page }: { page: number }) {
 /* 11: Jeres opgaver i dag                                            */
 /* ------------------------------------------------------------------ */
 
-type TaskFamily = {
+type DeliveryStep = {
   number: string;
   name: string;
-  what: string;
-  examples: Array<[string, string]>;
+  instruction: string;
   tone: string;
-  numberTone: string;
-  ruleTone: string;
-  bodyTone: string;
 };
 
 function TasksSlide({ page }: { page: number }) {
-  const families: TaskFamily[] = [
+  const steps: DeliveryStep[] = [
     {
       number: "01",
-      name: "Saml og omdan filer",
-      what: "Mange filer i en mappe skal blive til én leverance, der kan bruges videre.",
-      examples: [
-        [
-          "Lav én oversigt fra mange filer",
-          "Læs de faste regneark eller CSV-filer, og gem en samlet, kontrollerbar rapport.",
-        ],
-        [
-          "Udtræk felter fra dokumenter",
-          "Find de samme oplysninger i mange dokumenter, og læg dem i et regneark.",
-        ],
-      ],
+      name: "Vælg",
+      instruction: "Et lille eksempel, I kender: et par ufølsomme filer eller en overskuelig opgave.",
       tone: "bg-slide-surface border-slide-rule",
-      numberTone: "text-slide-ink/25",
-      ruleTone: "bg-slide-rule",
-      bodyTone: "text-slide-ink-soft",
     },
     {
       number: "02",
-      name: "Automatisér en beregning",
-      what: "De samme trin og kontroller skal køres igen, når næste datasæt lander.",
-      examples: [
-        [
-          "Genskab en månedlig rapport",
-          "Byg en arbejdsgang, der læser de nye filer og skriver næste måneds resultat.",
-        ],
-        [
-          "Kør en model på nye data",
-          "Pak beregningen i et script, så den kan køres igen uden at starte forfra.",
-        ],
-      ],
+      name: "Åbn mappen",
+      instruction: "Lad Claude kigge rundt, og fortæl kort hvad I gerne vil prøve af.",
       tone: "bg-slide-pink border-slide-pink",
-      numberTone: "text-slide-ink/35",
-      ruleTone: "bg-slide-ink/25",
-      bodyTone: "text-slide-ink/75",
     },
     {
       number: "03",
-      name: "Kontrollér en leverance",
-      what: "Filerne skal tjekkes mod faste regler, før de sendes videre.",
-      examples: [
-        [
-          "Find afvigelser mellem filer",
-          "Sammenlign nøgletal eller lister på tværs, og skriv kun det, der ikke stemmer.",
-        ],
-        [
-          "Tjek om en mappe er klar",
-          "Kontrollér filnavne, manglende bilag og format — og gem en tjekliste.",
-        ],
-      ],
-      tone: "bg-slide-navy text-slide-bg border-slide-navy",
-      numberTone: "text-slide-bg/35",
-      ruleTone: "bg-slide-bg/25",
-      bodyTone: "text-slide-bg/70",
+      name: "Bed om en plan",
+      instruction: "Brug Plan mode til at undersøge opgaven og foreslå næste skridt.",
+      tone: "bg-slide-surface border-slide-rule",
+    },
+    {
+      number: "04",
+      name: "Prøv og tjek",
+      instruction: "Lad Claude lave en ændring. Kør en kontrol, og kig resultatet eller diffet igennem.",
+      tone: "bg-slide-surface border-slide-rule",
+    },
+    {
+      number: "05",
+      name: "Del et fund",
+      instruction: "Vis en god prompt, en overraskelse eller noget, der ikke virkede endnu.",
+      tone: "bg-slide-navy border-slide-navy text-slide-bg",
     },
   ];
   return (
     <SlideFrame
-      title="Gode første idéer"
-      lead="Vælg en mappe med kendte filer, og få Claude til at gemme et resultat, I kan tjekke."
+      kicker="Workshop-opgaven"
+      title="Få jord under neglene"
+      lead="Prøv Claude Code på noget, I genkender. I behøver ikke at blive færdige — bare kom i gang og se, hvad I lærer."
       page={page}
     >
-      <div className="task-families grid h-full min-h-0 grid-cols-3 gap-[26px] overflow-hidden">
-        {families.map((family, index) => (
-          <Reveal
-            key={family.name}
-            delay={0.08 + index * 0.16}
-            className="min-h-0"
-          >
-            <article
-              className={cn(
-                "flex h-full min-h-0 flex-col border p-[34px]",
-                family.tone,
-              )}
-              data-task-family={family.number}
-            >
-              <span
-                className={cn(
-                  "font-display text-[76px] leading-none font-bold",
-                  family.numberTone,
-                )}
-              >
-                {family.number}
-              </span>
-              <h3 className="slide-body-lg mt-[10px] font-display font-bold uppercase leading-none">
-                {family.name}
-              </h3>
-              <p className={cn("slide-caption mt-[14px]", family.bodyTone)}>
-                {family.what}
+      <div className="delivery-exercise flex h-full min-h-0 flex-col justify-center overflow-hidden">
+        <Reveal delay={0.06}>
+          <div className="flex items-center justify-between border border-slide-rule bg-slide-surface px-[34px] py-[20px]">
+            <div>
+              <p className="slide-kicker text-slide-accent">Et godt udgangspunkt</p>
+              <p className="slide-body-lg mt-[6px] font-semibold">
+                En lille, kendt opgave er rigeligt til at komme i gang.
               </p>
-              <div className={cn("mt-[26px] h-px w-full", family.ruleTone)} />
-              <ul className="mt-[26px] flex min-h-0 flex-col gap-[24px]">
-                {family.examples.map(([title, body]) => (
-                  <li key={title}>
-                    <p className="slide-caption font-semibold leading-tight">
-                      {title}
-                    </p>
-                    <p className={cn("slide-chrome mt-[8px] leading-snug", family.bodyTone)}>
-                      {body}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </Reveal>
-        ))}
+            </div>
+            <div className="border-l border-slide-rule pl-[30px] text-right">
+              <p className="slide-caption font-mono uppercase tracking-[0.12em] text-slide-ink-soft">Hvis I når det</p>
+              <p className="slide-body mt-[5px] font-semibold">input → handling → resultat</p>
+            </div>
+          </div>
+        </Reveal>
+        <div className="mt-[26px] grid min-h-0 flex-1 grid-cols-5 gap-[16px]">
+          {steps.map((step, index) => (
+            <Reveal key={step.number} delay={0.16 + index * 0.1} className="min-h-0">
+              <article
+                className={cn("flex h-full min-h-0 flex-col border p-[26px]", step.tone)}
+                data-delivery-step={step.number}
+              >
+                <span className="slide-caption font-mono opacity-55">{step.number}</span>
+                <h3 className="slide-body-lg mt-[22px] font-display font-bold uppercase leading-none">
+                  {step.name}
+                </h3>
+                <div className="mt-[22px] h-px w-full bg-current opacity-20" />
+                <p className="slide-caption mt-[22px] leading-snug opacity-75">{step.instruction}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </SlideFrame>
   );
-
 }
 
 
