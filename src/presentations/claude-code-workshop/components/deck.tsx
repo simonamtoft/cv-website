@@ -82,7 +82,6 @@ function TitleSlide() {
           <span className="slide-body text-slide-bg/75">
             31. august 2026 · kl. 13.00-15.00
           </span>
-          <span className="slide-body text-slide-bg/75">Simon &amp; Mathias</span>
         </div>
       </div>
     </SlideLayout>
@@ -1017,26 +1016,14 @@ function ClosingSlide({ page }: { page: number }) {
             Ikke et projekt. Bare én opgave, du plejer at lave i hånden.
           </p>
         </Reveal>
-        <Reveal delay={0.55}>
-          <div className="mt-[80px] grid max-w-[1250px] grid-cols-[1fr_auto_1fr] items-center gap-[50px] border-t border-slide-bg/20 pt-[46px]">
-            <div>
-              <p className="slide-kicker text-slide-bg/50">I dag</p>
-              <p className="slide-body-lg mt-[14px] text-slide-bg/70">
-                Vælg opgaven, før du går
-              </p>
-            </div>
-            <span className="slide-body-lg font-mono text-slide-pink">→</span>
-            <div>
-              <p className="slide-kicker text-slide-pink">En dag i denne uge</p>
-              <p className="slide-body-lg mt-[14px]">
-                Sæt 30 minutter i kalenderen
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
         <p className="slide-body mt-[56px] font-mono text-slide-bg/70">
-          Tak for i dag · amtoft.dev
+          Tak for i dag · amtoft.dev ·{" "}
+          <a
+            href="mailto:siap@thetechcollective"
+            className="transition-colors hover:text-slide-pink focus-visible:text-slide-pink focus-visible:outline-none"
+          >
+            siap@thetechcollective
+          </a>
         </p>
       </div>
       <span className="slide-page absolute right-[130px] bottom-[70px] font-mono text-slide-bg/60">
