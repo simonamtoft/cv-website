@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-24"
+lastUpdated: "2026-08-31"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -71,6 +71,9 @@ sources:
   - title: "GitHub - The harness is all you need (mostly)"
     url: "https://github.blog/ai-and-ml/github-copilot/the-harness-is-all-you-need-mostly/"
     note: "cross-vendor confirmation - 'Copilot is an agent harness'; the rubber-duck cross-family review; run YOLO only in a sandbox"
+  - title: "Tang, L. et al. - WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution"
+    url: "https://arxiv.org/pdf/2608.27454"
+    note: "separating active skills from traces and a persistent learning record; validation-gated skill evolution and its limits"
 ---
 
 import LeveragePyramid from './LeveragePyramid';
@@ -212,6 +215,10 @@ Not every instruction comes from a failure. Some encode personal working prefere
 Controllers deserve a closer look because this is where teams tend to systematise their working methods. In practice, a controller is often a *skill*. A skill is a folder rather than a single file: a short entry point beside scripts, references, and templates that load only when needed. The description triggers it, so the full material does not consume context in every session.
 
 Two authoring habits matter. Give the agent scripts to run instead of repeatedly describing mechanical steps in prose. That prevents it from rebuilding the same boilerplate and keeps its attention on the decision at hand. Store recurring gotchas in the skill too.
+
+As the harness accumulates corrections, a skill file can become a poor substitute for its own history. It tells the agent what to do, but not which failures justified each rule, which alternatives were tried, or whether they worked. Keep the active procedure separate from the evidence behind it: raw traces, recurring patterns, and a record of proposed changes and their outcomes. That keeps the skill short and usable while retaining rejected ideas for the next revision.
+
+This is an emerging pattern, not a finished recipe. WikiSkill used small validation splits; its strict immediate-improvement gate can discard useful stepping stones, and its knowledge base still needs a way to prune itself as it grows.
 
 <SkillExplorer />
 
