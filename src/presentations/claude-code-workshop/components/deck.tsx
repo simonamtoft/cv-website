@@ -9,6 +9,7 @@ import {
   GrowBar,
   Iceberg,
   Reveal,
+  SkillFolderVisual,
   inViewSoft,
 } from "./visuals";
 import { cn } from "../utils";
@@ -953,7 +954,62 @@ function WorkshopSlide({ page }: { page: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 13: Isbjerget                                                      */
+/* 13: Skills                                                         */
+/* ------------------------------------------------------------------ */
+
+function SkillSlide({ page }: { page: number }) {
+  const points: Array<[string, string, string]> = [
+    [
+      "01",
+      "Hvad en skill er",
+      "En mappe med din egen opskrift på en opgave, du laver igen og igen. Skrevet i almindeligt sprog, ikke i kode.",
+    ],
+    [
+      "02",
+      "Hvordan den bliver brugt",
+      "Claude kan selv se, at opgaven passer, og følger opskriften. Du kan også bede om den direkte.",
+    ],
+    [
+      "03",
+      "Hvornår det betaler sig",
+      "Når I mærker, at I forklarer det samme til Claude igen. Bed den om at lave et skill, mens eksemplet stadig ligger foran jer.",
+    ],
+  ];
+
+  return (
+    <SlideFrame
+      kicker="Skills"
+      title={
+        <>
+          Skriv opskriften <span className="slide-mark">én gang</span>
+        </>
+      }
+      page={page}
+    >
+      <div className="skill-slide grid h-full min-h-0 grid-cols-[0.82fr_1.18fr] gap-[56px] overflow-hidden">
+        <div className="flex min-h-0 flex-col justify-center gap-[42px]">
+          {points.map(([number, heading, body], index) => (
+            <Reveal key={number} delay={0.08 + index * 0.14}>
+              <div className="border-l-[6px] border-slide-accent pl-[26px]">
+                <div className="flex items-baseline gap-[16px]">
+                  <span className="slide-caption font-mono text-slide-accent">{number}</span>
+                  <h3 className="slide-body-lg font-display font-bold uppercase leading-none">
+                    {heading}
+                  </h3>
+                </div>
+                <p className="slide-body mt-[14px] text-slide-ink-soft">{body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <SkillFolderVisual />
+      </div>
+    </SlideFrame>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 14: Isbjerget                                                      */
 /* ------------------------------------------------------------------ */
 
 function IcebergSlide({ page }: { page: number }) {
@@ -976,7 +1032,7 @@ function IcebergSlide({ page }: { page: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 14: Afslutning                                                     */
+/* 15: Afslutning                                                     */
 /* ------------------------------------------------------------------ */
 
 function ClosingSlide({ page }: { page: number }) {
@@ -1097,6 +1153,11 @@ export const slides: Slide[] = [
     render: (page) => <WorkshopSlide page={page} />,
   },
 
+  {
+    id: "skills",
+    title: "Skriv opskriften én gang",
+    render: (page) => <SkillSlide page={page} />,
+  },
   {
     id: "isbjerg",
     title: "Prototype vs. drift",
