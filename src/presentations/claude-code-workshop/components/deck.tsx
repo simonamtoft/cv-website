@@ -1014,16 +1014,19 @@ function SkillSlide({ page }: { page: number }) {
 
 function IcebergSlide({ page }: { page: number }) {
   const hidden: Array<[string, string]> = [
-    ["Adgang", "Ser de, der bruger den, tal de ikke må se?"],
-    ["Forkert input", "Fejler den stille, eller siger den fra?"],
-    ["Afprøvning", "Den har kun set de tal, I selv gav den."],
-    ["Ejerskab", "Hvem opdaterer den, og hvem hjælper, når den fejler?"],
-    ["Data", "Hvor ender de henne?"],
+    ["Adgang", "Kan andre overhovedet starte den? Og ser de tal, de ikke må se?"],
+    [
+      "Forkert input",
+      "Nye tal, nyt format. Siger den fra, eller regner den videre på noget forkert?",
+    ],
+    ["Afprøvning", "Den har kun set de tal, du selv gav den."],
+    ["Ejerskab", "Hvem vedligeholder den, og hvem supporterer, når den fejler?"],
+    ["Data", "Kan du forklare bagefter, hvor tallene endte?"],
   ];
   return (
     <SlideFrame
       kicker="Fra prototype til drift"
-      title="Ville du sætte dit navn på det?"
+      title="Hvad sker der, når du er på ferie?"
       page={page}
     >
       <Iceberg below={hidden} />
