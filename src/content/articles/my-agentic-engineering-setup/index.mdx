@@ -3,11 +3,8 @@ title: "My Agentic Engineering Setup"
 dek: "The planning artifacts, worktrees, and cross-harness resources I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-20 15:24"
+lastUpdated: "2026-09-02"
 sources:
-  - title: "Pocock, M. - Wayfinder skill"
-    url: "https://github.com/mattpocock/skills/blob/main/skills/engineering/wayfinder/SKILL.md"
-    note: "plan-first discipline for mapping consequential decisions before implementation"
   - title: "Backlog.md"
     url: "https://github.com/MrLesk/Backlog.md"
     note: "Git-native task management for durable tickets and dependencies"
@@ -19,23 +16,29 @@ sources:
     note: "interactive Pi worktree sessions with isolated ports and guarded merge and cleanup commands"
   - title: "Pedersen, S. A. - coding-harness"
     url: "https://github.com/simonamtoft/coding-harness"
-    note: "the canonical cross-harness repository for the shared resources and harness-specific configuration described in this article"
+    note: "the canonical cross-harness repository for the configuration boundaries, Pi package manifest, and operating practices described in this article"
 ---
 
 import WorktreeMap from './WorktreeMap';
 import './my-agentic-engineering-setup.css';
 
-This is the concrete counterpart to [Agentic Engineering](/writing/agentic-engineering). That article describes the principles; this one records the tools and working habits I currently use to apply them. The setup will change as the harnesses and models improve.
+[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve.
 
 ## Planning work across sessions
 
-For work that will outlive a single session, I sometimes use a [wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map to settle the consequential *what* and *why* before implementation starts. I use it selectively. Combined with `grill-me` or other planning skills, each answer can produce another branch of questions. Once the important decisions are clear, a short plan is enough.
+When work is too uncertain for one session, I sometimes use a [Wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map. It is a parent [Backlog.md](https://github.com/MrLesk/Backlog.md) task with child investigations that resolve important decisions one at a time. I use it selectively. Once the route is clear, conventional implementation tickets are enough.
 
-For larger multi-session efforts, I use [Backlog.md](https://github.com/MrLesk/Backlog.md). Instead of asking plan mode for one monolithic implementation plan, I use it to refine durable tickets whose decisions, progress, and dependencies remain visible across sessions.
+For larger efforts, Backlog tasks keep the record of scope, dependencies, decisions, and progress across sessions. They replace a single monolithic plan. Tickets coordinate the work, and each ticket's plan should be no more detailed than the work requires.
+
+## Operational guardrails
+
+Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. The harness keeps filesystem work inside the project or a private session workspace, so a coding task does not casually become a home-directory task. That keeps assumptions visible and the agent's operating context narrow.
+
+I also prefer one focused task per session. When the context grows too large, Pi's `/ctx-monitor` shows what is consuming it and `/handoff` carries the decisions and state into a fresh session.
 
 ## Isolated execution with worktrees
 
-Independent tickets can run in separate Git worktrees; dependent tickets remain sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). For Pi, I built [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) around the same model.
+Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). In Pi, I use [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) for the same approach.
 
 <Slide title="Tickets coordinate; worktrees isolate">
 
@@ -43,10 +46,10 @@ Independent tickets can run in separate Git worktrees; dependent tickets remain 
 
 </Slide>
 
-The point is not to maximise the number of tickets. It is to keep the backlog alive and consequential reasoning close to the code, where Git makes completed work searchable without introducing another system that can drift from the implementation.
+The goal is not to maximise the number of tickets. It is to keep the backlog current and the important reasoning close to the code, where Git makes completed work searchable without creating another system that can drift from the implementation.
 
 ## One setup across harnesses
 
-My [coding harness](https://github.com/simonamtoft/coding-harness) is public as a worked example. It separates shared, user-authored resources from each harness's native configuration: `AGENTS.md`, skills, agents, and prompts have one canonical home; Pi extensions and Claude hooks, settings, themes, and statusline remain harness-specific. Credentials, sessions, caches, installed packages, and model/provider configuration stay local.
+My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains only user-authored resources both harnesses can use: `AGENTS.md` and skills. Pi keeps its own extensions, prompts, and agents. Claude Code keeps its own hooks, settings, themes, and agents. Credentials, sessions, caches, provider configuration, and generated state remain local.
 
-A link script installs the shared resources into both [Pi](https://pi.dev/) and Claude Code without maintaining copies. The artifacts were added and removed in response to observed failure modes; keeping the common layer separate means another harness can join later without moving its source of truth.
+A link script installs the shared resources into both [Pi](https://pi.dev/) and Claude Code without maintaining copies. Its optional package step installs the Pi packages listed in the version-controlled manifest. These are currently `pi-worktree-agents` and `pi-status-footer`. Local Pi settings record what is installed on a given machine. I added and removed the artifacts in response to observed failure modes. Keeping the shared layer small means another harness can join later without moving its source of truth.
