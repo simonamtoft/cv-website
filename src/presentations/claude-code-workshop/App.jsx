@@ -80,7 +80,7 @@ function Deck() {
     const url = new URL(window.location.href);
     url.search = active ? `?slide=${active + 1}` : "";
     window.history.replaceState({}, "", url);
-    document.title = `${active + 1}/${slides.length} · ${slides[active]?.title ?? "Claude Code workshop"}`;
+    document.title = `${active + 1}/${slides.length} · ${slides[active]?.title ?? "Claude i praksis"}`;
   }, [active]);
 
   useEffect(() => {
@@ -201,11 +201,11 @@ function Chip({ children, label, onClick }) {
 }
 
 function PrintView() {
-  useEffect(() => { document.title = "Print · Claude Code workshop"; }, []);
+  useEffect(() => { document.title = "Print · Claude i praksis"; }, []);
   return (
     <main className="bg-secondary">
       <div className="print-hide mx-auto max-w-[1100px] px-6 py-8">
-        <h1 className="font-display text-2xl tracking-tight">Print edition · Claude Code workshop</h1>
+        <h1 className="font-display text-2xl tracking-tight">Print edition · Claude i praksis</h1>
         <p className="mt-2 text-sm text-muted-foreground">Press Cmd/Ctrl + P and choose “Save as PDF”. Each slide prints on its own landscape page.</p>
       </div>
       <div className="flex flex-col items-center gap-6 pb-10">
