@@ -12,9 +12,11 @@ import {
   SkillFolderVisual,
   ToolLadder,
   Trifecta,
+  WorkshopCountdown,
   inViewSoft,
 } from "./visuals";
 import { cn } from "../utils";
+import { formatTime, scheduleById, scheduledItems } from "../schedule";
 import simonPhoto from "../assets/siap.jpg";
 import jeppePhoto from "../assets/jere.jpg";
 import imLogoNegative from "../assets/IM_-logo_negativ.svg";
@@ -101,58 +103,6 @@ function TitleSlide() {
 /* 02: Program                                                        */
 /* ------------------------------------------------------------------ */
 
-const WORKSHOP_START_MINUTES = 13 * 60;
-
-type ScheduleItem = {
-  id: "introduction" | "first-break" | "workshop" | "second-break" | "closing";
-  kind: "session" | "break";
-  duration: number;
-  heading: string;
-  note: string;
-};
-
-const workshopSchedule: ScheduleItem[] = [
-  {
-    id: "introduction",
-    kind: "session",
-    duration: 30,
-    heading: "Kort om at arbejde med Claude",
-    note: "Chat, Cowork og Code — og hvornår de passer.",
-  },
-  { id: "first-break", kind: "break", duration: 10, heading: "Pause", note: "" },
-  {
-    id: "workshop",
-    kind: "session",
-    duration: 90,
-    heading: "Workshop",
-    note: "I bygger. Vi går rundt og hjælper undervejs.",
-  },
-  { id: "second-break", kind: "break", duration: 10, heading: "Pause", note: "" },
-  {
-    id: "closing",
-    kind: "session",
-    duration: 40,
-    heading: "Refleksion, deling, skills og næste skridt",
-    note: "Tal sammen to og to — og lad et par grupper dele, hvad de byggede og lærte.",
-  },
-];
-
-const scheduledItems = workshopSchedule.reduce<Array<ScheduleItem & { start: number; end: number }>>(
-  (items, item) => {
-    const start = items.at(-1)?.end ?? WORKSHOP_START_MINUTES;
-    items.push({ ...item, start, end: start + item.duration });
-    return items;
-  },
-  [],
-);
-
-const scheduleById = Object.fromEntries(scheduledItems.map((item) => [item.id, item])) as Record<
-  ScheduleItem["id"],
-  (typeof scheduledItems)[number]
->;
-
-const formatTime = (minutes: number) => `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
-
 function ProgramSlide({ page }: { page: number }) {
   const total = scheduledItems.reduce((sum, item) => sum + item.duration, 0);
   return (
@@ -163,62 +113,39 @@ function ProgramSlide({ page }: { page: number }) {
     >
       <div className="flex h-full min-h-0 flex-col justify-center">
         <div className="program-schedule border border-slide-rule bg-slide-surface">
-          {scheduledItems.filter((item) => item.kind === "session").map((item, index) => {
-            const breakBefore = index > 0 ? scheduledItems[scheduledItems.indexOf(item) - 1] : undefined;
-            return (
-              <div key={item.id}>
-                {breakBefore && (
-                  <Reveal delay={0.1 + index * 0.12}>
-                    <div
-                      className="flex items-center gap-[24px] border-y border-slide-rule bg-slide-bg px-[36px] py-[6px]"
-                      data-schedule-item={breakBefore.id}
-                      data-start={formatTime(breakBefore.start)}
-                      data-end={formatTime(breakBefore.end)}
-                      data-duration-minutes={breakBefore.duration}
-                    >
-                      <span className="slide-caption w-[340px] shrink-0 font-mono text-slide-ink-soft">
-                        {formatTime(breakBefore.start)} – {formatTime(breakBefore.end)}
-                      </span>
-                      <span className="slide-caption uppercase tracking-[0.2em] text-slide-ink-soft">
-                        Pause · {breakBefore.duration} min · tilbage kl. {formatTime(breakBefore.end)}
-                      </span>
-                    </div>
-                  </Reveal>
-                )}
-                <Reveal delay={0.06 + index * 0.12}>
-                  <div
-                    className="flex items-center gap-[24px] px-[36px] py-[10px]"
-                    data-schedule-item={item.id}
-                    data-start={formatTime(item.start)}
-                    data-end={formatTime(item.end)}
-                    data-duration-minutes={item.duration}
-                  >
-                    <span className="slide-body-lg w-[340px] shrink-0 whitespace-nowrap font-mono text-slide-accent">
-                      {formatTime(item.start)} – {formatTime(item.end)}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="slide-subtitle font-display font-bold uppercase leading-none">
-                        {item.heading}
-                      </h3>
-                      <p className="slide-body mt-[4px] text-slide-ink-soft">{item.note}</p>
-                    </div>
-                    <div className="flex w-[300px] shrink-0 items-center gap-[16px]">
-                      <div className="flex-1">
-                        <GrowBar
-                          fraction={item.duration / total}
-                          delay={0.28 + index * 0.12}
-                          className={item.id === "workshop" ? "bg-slide-green" : "bg-slide-accent"}
-                        />
-                      </div>
-                      <span className="slide-caption w-[72px] shrink-0 whitespace-nowrap font-mono text-slide-ink-soft">
-                        {item.duration} min
-                      </span>
-                    </div>
+          {scheduledItems.map((item, index) => (
+            <Reveal key={item.id} delay={0.06 + index * 0.12}>
+              <div
+                className="flex items-center gap-[24px] px-[36px] py-[18px]"
+                data-schedule-item={item.id}
+                data-start={formatTime(item.start)}
+                data-end={formatTime(item.end)}
+                data-duration-minutes={item.duration}
+              >
+                <span className="slide-body-lg w-[340px] shrink-0 whitespace-nowrap font-mono text-slide-accent">
+                  {formatTime(item.start)} – {formatTime(item.end)}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="slide-subtitle font-display font-bold uppercase leading-none">
+                    {item.heading}
+                  </h3>
+                  <p className="slide-body mt-[4px] text-slide-ink-soft">{item.note}</p>
+                </div>
+                <div className="flex w-[300px] shrink-0 items-center gap-[16px]">
+                  <div className="flex-1">
+                    <GrowBar
+                      fraction={item.duration / total}
+                      delay={0.28 + index * 0.12}
+                      className={item.id === "workshop" ? "bg-slide-green" : "bg-slide-accent"}
+                    />
                   </div>
-                </Reveal>
+                  <span className="slide-caption w-[72px] shrink-0 whitespace-nowrap font-mono text-slide-ink-soft">
+                    {item.duration} min
+                  </span>
+                </div>
               </div>
-            );
-          })}
+            </Reveal>
+          ))}
         </div>
       </div>
     </SlideFrame>
@@ -517,7 +444,7 @@ function PermissionModesSlide({ page }: { page: number }) {
     {
       name: "Accept Edits",
       summary: "Retter filer uden stop.",
-      use: "Terminal og ekstra adgang spørger stadig.",
+      use: "Ekstra adgang spørger stadig.",
       tone: "bg-slide-sage border-slide-sage",
       textTone: "text-slide-ink",
     },
@@ -582,9 +509,9 @@ function ToolChoiceSlide({ page }: { page: number }) {
     [
       "Hvad det er",
       "Jeres egen chat, driftet af jeres IT",
-      "Anthropics chat i browser og app",
+      "Anthropics chat",
       "Claude i en mappe, med en opgave",
-      "En agent i en mappe, med terminal",
+      "En agent i en mappe",
     ],
     [
       "Data",
@@ -983,13 +910,7 @@ function TasksSlide({ page }: { page: number }) {
     {
       number: "04",
       name: "Prøv og tjek",
-      instruction: "Lad Claude lave en ændring. Kør en kontrol, og kig resultatet eller diffet igennem.",
-      tone: "bg-slide-surface border-slide-rule",
-    },
-    {
-      number: "05",
-      name: "Del et fund",
-      instruction: "Vis en god prompt, en overraskelse eller noget, der ikke virkede endnu.",
+      instruction: "Én ændring ad gangen. Kør en kontrol, og kig resultatet igennem.",
       tone: "bg-slide-navy border-slide-navy text-slide-bg",
     },
   ];
@@ -1006,17 +927,16 @@ function TasksSlide({ page }: { page: number }) {
             <div className="flex-1 px-[34px] py-[20px]">
               <p className="slide-kicker text-slide-accent">Vælg spor</p>
               <p className="slide-body-lg mt-[6px] font-semibold">
-                <span className="slide-mark">Cowork</span> i en mappe, uden terminal — eller{" "}
-                <span className="slide-mark">Code</span> i terminalen.
+                <span className="slide-mark">Cowork</span> eller <span className="slide-mark">Code</span>.
               </p>
             </div>
             <div className="border-l border-slide-rule px-[30px] py-[20px] text-right">
-              <p className="slide-caption font-mono uppercase tracking-[0.12em] text-slide-ink-soft">Samme fem trin</p>
+              <p className="slide-caption font-mono uppercase tracking-[0.12em] text-slide-ink-soft">Samme fire trin</p>
               <p className="slide-body mt-[5px] font-semibold">input → handling → resultat</p>
             </div>
           </div>
         </Reveal>
-        <div className="mt-[26px] grid min-h-0 flex-1 grid-cols-5 gap-[16px]">
+        <div className="mt-[26px] grid min-h-0 flex-1 grid-cols-4 gap-[20px]">
           {steps.map((step, index) => (
             <Reveal key={step.number} delay={0.16 + index * 0.1} className="min-h-0">
               <article
@@ -1024,11 +944,11 @@ function TasksSlide({ page }: { page: number }) {
                 data-delivery-step={step.number}
               >
                 <span className="slide-caption font-mono opacity-55">{step.number}</span>
-                <h3 className="slide-body-lg mt-[22px] font-display font-bold uppercase leading-none">
+                <h3 className="slide-subtitle mt-[24px] font-display font-bold uppercase leading-[0.95]">
                   {step.name}
                 </h3>
-                <div className="mt-[22px] h-px w-full bg-current opacity-20" />
-                <p className="slide-caption mt-[22px] leading-snug opacity-75">{step.instruction}</p>
+                <div className="mt-[24px] h-px w-full bg-current opacity-20" />
+                <p className="slide-caption mt-[24px] leading-snug opacity-75">{step.instruction}</p>
               </article>
             </Reveal>
           ))}
@@ -1043,22 +963,6 @@ function TasksSlide({ page }: { page: number }) {
 /* 12: Workshop start                                                 */
 /* ------------------------------------------------------------------ */
 
-
-function BreakSlide({ page, returnTime }: { page: number; returnTime: number }) {
-  return (
-    <SlideLayout variant="navy">
-      <div className="absolute top-0 left-0 h-[16px] w-[420px] bg-slide-pink" />
-      <img src={imLogoNegative} alt="" className="absolute top-[78px] right-[130px] h-[48px] w-auto" />
-      <div className="break-slide relative flex h-full flex-col justify-center px-[140px]" data-return-time={formatTime(returnTime)}>
-        <p className="slide-kicker text-slide-accent-soft">Pause</p>
-        <h2 className="slide-title-lg mt-[30px]">Vi er tilbage kl. {formatTime(returnTime)}</h2>
-      </div>
-      <span className="slide-page absolute right-[130px] bottom-[70px] font-mono text-slide-bg/60">
-        {String(page).padStart(2, "0")}
-      </span>
-    </SlideLayout>
-  );
-}
 
 function WorkshopSlide({ page }: { page: number }) {
   return (
@@ -1082,7 +986,7 @@ function WorkshopSlide({ page }: { page: number }) {
           </Reveal>
           <Reveal delay={0.45}>
             <p className="slide-subtitle mt-[40px] max-w-[1000px] text-slide-bg/80">
-              Har I noget at vise, er der tid til det.
+              Hold pause, når I har brug for det. Har I noget at vise, er der tid til det.
             </p>
           </Reveal>
 
@@ -1090,12 +994,7 @@ function WorkshopSlide({ page }: { page: number }) {
         <Reveal delay={0.6}>
           <div className="border-l border-slide-bg/20 pl-[46px]">
             <p className="slide-kicker text-slide-pink">Til rådighed</p>
-            <p className="font-display text-[190px] leading-[0.9] font-bold uppercase">
-              <span data-workshop-duration={scheduleById.workshop.duration}>{scheduleById.workshop.duration}</span>
-            </p>
-            <p className="slide-body-lg font-display uppercase tracking-[0.06em]">
-              minutter
-            </p>
+            <WorkshopCountdown minutes={scheduleById.workshop.duration} />
           </div>
         </Reveal>
       </div>
@@ -1202,50 +1101,86 @@ function DebriefSlide({ page }: { page: number }) {
 /* 15: Opskrift og kontrol                                            */
 /* ------------------------------------------------------------------ */
 
+type RepeatableColumn = {
+  number: string;
+  heading: string;
+  summary: string;
+  trigger: string;
+  file: string;
+  lines: string[];
+  tone: string;
+};
+
+const repeatableColumns: RepeatableColumn[] = [
+  {
+    number: "01",
+    heading: "Skill",
+    summary: "Opskriften på arbejdsgangen, skrevet én gang i almindeligt sprog.",
+    trigger: "Claude vælger den, når opgaven passer",
+    file: ".claude/skills/kvartal-tjek/SKILL.md",
+    lines: [
+      "1. Kør scripts/tjek-tal.sh",
+      "2. Undersøg hver afvigelse",
+      "3. Skriv, hvad du har tjekket",
+    ],
+    tone: "border-slide-rule bg-slide-surface",
+  },
+  {
+    number: "02",
+    heading: "Hook",
+    summary: "Kontrollen, I hægter på en hændelse, så den kører uanset hvad Claude finder på.",
+    trigger: "Kører hver gang hændelsen sker",
+    file: ".claude/settings.json",
+    lines: [
+      "når Claude har rettet en fil",
+      "→ kør scripts/tjek-tal.sh",
+      "fejl går retur til Claude",
+    ],
+    tone: "border-slide-green bg-slide-sage/40",
+  },
+];
+
 function RecipeCheckSlide({ page }: { page: number }) {
-  const columns: Array<[string, string, string, string[]]> = [
-    [
-      "01",
-      "Opskrift",
-      "En skill beskriver den arbejdsgang, I vil kunne bruge igen.",
-      ["Trin", "Format", "Faldgruber"],
-    ],
-    [
-      "02",
-      "Kontrol",
-      "Et tjek viser, om resultatet faktisk holder.",
-      ["Stemmer tallene?", "Kan filen åbnes?", "Er diffet rimeligt?"],
-    ],
-  ];
   return (
     <SlideFrame
       kicker="Gør det gentageligt"
-      title="Opskrift + kontrol"
-      lead="En skill forklarer vejen. En kontrol giver jer beviset."
+      title="Skill husker. Hook tjekker."
+      lead="En skill er opskriften, Claude kan vælge at følge. Et hook er kontrollen, der kører af sig selv — også når ingen husker den."
       page={page}
     >
-      <div className="flex h-full min-h-0 flex-col justify-center overflow-hidden">
-        <div className="grid grid-cols-2 gap-[26px]">
-          {columns.map(([number, heading, body, examples], index) => (
-            <Reveal key={number} delay={0.1 + index * 0.16}>
-              <article className={cn("flex h-[360px] flex-col border p-[34px]", index === 0 ? "border-slide-rule bg-slide-surface" : "border-slide-green bg-slide-sage/40")}>
-                <span className="slide-caption font-mono text-slide-accent">{number}</span>
-                <h3 className="slide-title mt-[20px] leading-none">{heading}</h3>
-                <p className="slide-body mt-[20px] max-w-[640px] text-slide-ink-soft">{body}</p>
-                <div className="mt-auto flex flex-wrap gap-[12px]">
-                  {examples.map((example) => (
-                    <span key={example} className="slide-caption border border-current/20 px-[16px] py-[9px] text-slide-ink-soft">
-                      {example}
-                    </span>
-                  ))}
+      <div className="repeatable-work flex h-full min-h-0 flex-col overflow-hidden">
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[26px]">
+          {repeatableColumns.map((column, index) => (
+            <Reveal key={column.number} delay={0.1 + index * 0.16} className="min-h-0">
+              <article
+                className={cn("flex h-full min-h-0 flex-col border p-[34px]", column.tone)}
+                data-repeatable={column.heading}
+              >
+                <div className="flex items-baseline gap-[20px]">
+                  <span className="slide-caption font-mono text-slide-accent">{column.number}</span>
+                  <h3 className="slide-title leading-none">{column.heading}</h3>
                 </div>
+                <p className="slide-body mt-[20px] text-slide-ink-soft">{column.summary}</p>
+                <div className="mt-[26px] bg-slide-navy px-[26px] py-[20px] text-slide-bg">
+                  <p className="slide-chrome font-mono text-slide-bg/60">{column.file}</p>
+                  <div className="mt-[12px] flex flex-col gap-[6px]">
+                    {column.lines.map((line) => (
+                      <p key={line} className="slide-caption font-mono text-slide-bg/85">
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+                <p className="slide-caption mt-auto border-t border-slide-ink/15 pt-[18px] font-semibold text-slide-ink">
+                  {column.trigger}
+                </p>
               </article>
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.48} className="mt-[28px]">
+        <Reveal delay={0.48} className="mt-[24px] shrink-0">
           <p className="slide-body border-l-[7px] border-slide-good pl-[24px] text-slide-ink-soft">
-            Start med dét, I ellers ville kontrollere hver gang. I behøver ikke automatisere alt.
+            Start med dét, I ellers ville kontrollere hver gang. Begge dele findes i Claude Code.
           </p>
         </Reveal>
       </div>
@@ -1284,18 +1219,16 @@ function IcebergSlide({ page }: { page: number }) {
 /* ------------------------------------------------------------------ */
 
 const nowTrack: string[] = [
-  "Udkast, noter og præsentationer uden fortrolige data",
+  "Udkast og noter uden fortrolige data",
   "Research: lovgivning, marked, leverandører",
-  "Oprydning og struktur i jeres egne filer",
-  "Prototyper på syntetiske eller ufølsomme data",
-  "Gennemgang og forklaring af eksisterende kode",
+  "Prototyper på ufølsomme data",
+  "Gennemgang af eksisterende kode",
 ];
 
 const nextTrack: string[] = [
-  "Cowork på mapper med fortroligt materiale",
-  "Connectors mod interne systemer",
-  "Læseadgang til produktionsdata",
-  "Arbejde med personhenførbare data",
+  "Mapper med fortroligt materiale",
+  "Connectors og læseadgang til interne systemer",
+  "Personhenførbare data",
 ];
 
 function NextStepsSlide({ page }: { page: number }) {
@@ -1309,8 +1242,8 @@ function NextStepsSlide({ page }: { page: number }) {
     ],
     [
       "02",
-      "Næste kvartal",
-      "Stor værdi — men tag en runde med jura, sikkerhed og data først.",
+      "Kræver en aftale først",
+      "Stor værdi — men jura, sikkerhed og data skal med, før I går i gang.",
       nextTrack,
       "border-slide-rule bg-slide-surface",
     ],
@@ -1322,19 +1255,19 @@ function NextStepsSlide({ page }: { page: number }) {
       lead="Ikke om I må endnu — men hvilke døre der står åbne."
       page={page}
     >
-      <div className="next-steps flex h-full min-h-0 flex-col justify-center overflow-hidden">
-        <div className="grid grid-cols-2 gap-[26px]">
+      <div className="next-steps flex h-full min-h-0 flex-col overflow-hidden">
+        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[26px]">
           {tracks.map(([number, heading, body, items, tone], index) => (
-            <Reveal key={number} delay={0.1 + index * 0.16}>
-              <article className={cn("flex h-[490px] flex-col border p-[34px]", tone)} data-track={heading}>
+            <Reveal key={number} delay={0.1 + index * 0.16} className="min-h-0">
+              <article className={cn("flex h-full min-h-0 flex-col border p-[34px]", tone)} data-track={heading}>
                 <span className="slide-caption font-mono text-slide-accent">{number}</span>
                 <h3 className="slide-body-lg mt-[18px] font-display font-bold uppercase leading-none">
                   {heading}
                 </h3>
                 <p className="slide-body mt-[16px] max-w-[640px] text-slide-ink-soft">{body}</p>
-                <ul className="mt-[24px] flex flex-col gap-[10px]">
+                <ul className="mt-[26px] flex flex-col gap-[16px]">
                   {items.map((item) => (
-                    <li key={item} className="slide-caption flex gap-[14px] text-slide-ink">
+                    <li key={item} className="slide-body flex gap-[14px] text-slide-ink">
                       <span className="shrink-0 font-mono text-slide-accent">—</span>
                       <span>{item}</span>
                     </li>
@@ -1344,7 +1277,7 @@ function NextStepsSlide({ page }: { page: number }) {
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.48} className="mt-[26px]">
+        <Reveal delay={0.48} className="mt-[24px] shrink-0">
           <p className="slide-body border-l-[7px] border-slide-accent bg-slide-pink/25 px-[28px] py-[18px] text-slide-ink-soft">
             <span className="font-semibold text-slide-ink">Start, hvor det er let.</span>{" "}
             Mål på, hvad der faktisk bliver brugt — ikke på, hvad der er givet lov til.
@@ -1467,19 +1400,9 @@ export const slides: Slide[] = [
     render: (page) => <TasksSlide page={page} />,
   },
   {
-    id: "foerste-pause",
-    title: "Pause · tilbage 13:40",
-    render: (page) => <BreakSlide page={page} returnTime={scheduleById.workshop.start} />,
-  },
-  {
     id: "workshop",
     title: "Prøv jeres idéer af",
     render: (page) => <WorkshopSlide page={page} />,
-  },
-  {
-    id: "anden-pause",
-    title: "Pause · tilbage 15:20",
-    render: (page) => <BreakSlide page={page} returnTime={scheduleById.closing.start} />,
   },
   {
     id: "opsamling",

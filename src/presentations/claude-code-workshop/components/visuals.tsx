@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "../utils";
 import { useSlideMotion } from "./SlideLayout";
 
@@ -198,6 +198,112 @@ export function FolderScopeVisual() {
           opsætninger.
         </p>
       </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Workshop countdown: clock face for the self-paced build block       */
+/* ------------------------------------------------------------------ */
+
+const DIAL_RADIUS = 168;
+const DIAL_CIRCUMFERENCE = 2 * Math.PI * DIAL_RADIUS;
+/** The slide counts as reached once most of it is on screen. */
+const REACHED_RATIO = 0.6;
+
+const formatClock = (seconds: number) =>
+  `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+
+/**
+ * Counts the workshop block down in real time. It starts the first time the
+ * slide is on screen and never restarts, so returning to the slide mid-workshop
+ * shows the true remaining time. Thumbnails and print render the full duration.
+ */
+export function WorkshopCountdown({ minutes }: { minutes: number }) {
+  const animate = useSlideMotion();
+  const totalMs = minutes * 60_000;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const startedAt = useRef<number | null>(null);
+  const [remainingMs, setRemainingMs] = useState(totalMs);
+
+  useEffect(() => {
+    if (!animate) return undefined;
+    const element = containerRef.current;
+    if (!element) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (startedAt.current === null && entries.some((entry) => entry.intersectionRatio >= REACHED_RATIO)) {
+          startedAt.current = Date.now();
+        }
+      },
+      { threshold: [0, REACHED_RATIO, 1] },
+    );
+    observer.observe(element);
+
+    const tick = window.setInterval(() => {
+      if (startedAt.current === null) return;
+      setRemainingMs(Math.max(0, totalMs - (Date.now() - startedAt.current)));
+    }, 250);
+
+    return () => {
+      observer.disconnect();
+      window.clearInterval(tick);
+    };
+  }, [animate, totalMs]);
+
+  const remainingSeconds = Math.ceil(remainingMs / 1000);
+  const fractionLeft = remainingMs / totalMs;
+  const isDone = remainingMs === 0;
+
+  return (
+    <div
+      ref={containerRef}
+      className="workshop-countdown flex flex-col items-center"
+      data-workshop-duration={minutes}
+      data-remaining-seconds={remainingSeconds}
+    >
+      <div className="relative">
+        <svg viewBox="0 0 400 400" className="h-[400px] w-[400px]" aria-hidden="true">
+          <circle cx="200" cy="200" r={DIAL_RADIUS} fill="none" stroke="var(--slide-bg)" strokeOpacity="0.18" strokeWidth="16" />
+          {Array.from({ length: 12 }, (_, index) => {
+            const angle = (index * Math.PI) / 6;
+            const inner = DIAL_RADIUS - 30;
+            return (
+              <line
+                key={index}
+                x1={200 + Math.sin(angle) * inner}
+                y1={200 - Math.cos(angle) * inner}
+                x2={200 + Math.sin(angle) * (inner - 14)}
+                y2={200 - Math.cos(angle) * (inner - 14)}
+                stroke="var(--slide-bg)"
+                strokeOpacity={index % 3 === 0 ? 0.55 : 0.22}
+                strokeWidth={index % 3 === 0 ? 3 : 2}
+              />
+            );
+          })}
+          <circle
+            cx="200"
+            cy="200"
+            r={DIAL_RADIUS}
+            fill="none"
+            stroke={isDone ? "var(--slide-accent)" : "var(--slide-pink)"}
+            strokeWidth="16"
+            strokeLinecap="butt"
+            strokeDasharray={DIAL_CIRCUMFERENCE}
+            strokeDashoffset={DIAL_CIRCUMFERENCE * (1 - fractionLeft)}
+            transform="rotate(-90 200 200)"
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <p className="font-display text-[66px] leading-[0.9] font-bold tabular-nums">
+            {isDone ? "Tid" : formatClock(remainingSeconds)}
+          </p>
+        </div>
+      </div>
+      <p className="slide-caption mt-[10px] font-mono uppercase tracking-[0.14em] text-slide-bg/65">
+        {isDone ? "vi samler op" : `tilbage af ${minutes} min`}
+      </p>
     </div>
   );
 }
@@ -777,19 +883,54 @@ export function ToolLadder() {
 /* Trifecta: de tre ting der ikke må mødes                            */
 /* ------------------------------------------------------------------ */
 
-const trifectaLegs: Array<[string, string, string]> = [
-  ["01", "Adgang til private data", "Mappen, I åbnede. Fælles drev, mails, databaser, .env-filer."],
-  [
-    "02",
-    "Indhold udefra",
-    "En fejllog, en README, en webside, en mail. Nogen kan have skrevet til Claude i den.",
-  ],
-  [
-    "03",
-    "Mulighed for at sende ud",
-    "Netværkskald, mail, formularer, git push. Vejen ud af huset.",
-  ],
+type TrifectaLeg = {
+  number: string;
+  heading: string;
+  example: string;
+  countermeasure: string;
+  /** Circle centre and label anchor in the diagram viewBox. */
+  cx: number;
+  cy: number;
+  labelX: number;
+  labelY: number;
+};
+
+const trifectaLegs: TrifectaLeg[] = [
+  {
+    number: "01",
+    heading: "Private data",
+    example: "Mappen, I åbnede. Fælles drev, mails, databaser, .env-filer.",
+    countermeasure: "Ingen hemmeligheder i mappen",
+    cx: 250,
+    cy: 245,
+    labelX: 150,
+    labelY: 34,
+  },
+  {
+    number: "02",
+    heading: "Indhold udefra",
+    example: "En fejllog, en README, en webside, en mail — skrevet af andre end jer.",
+    countermeasure: "Ét ærinde ad gangen",
+    cx: 410,
+    cy: 245,
+    labelX: 512,
+    labelY: 34,
+  },
+  {
+    number: "03",
+    heading: "Vejen ud",
+    example: "Netværkskald, mail, formularer, git push.",
+    countermeasure: "Godkend vejen ud",
+    cx: 330,
+    cy: 380,
+    labelX: 330,
+    labelY: 570,
+  },
 ];
+
+const TRIFECTA_CIRCLE_RADIUS = 145;
+/** Where all three circles overlap. */
+const TRIFECTA_CORE = { x: 330, y: 292 } as const;
 
 const buildLog: Array<[string, string]> = [
   ["dim", "$ npm run build"],
@@ -800,30 +941,88 @@ const buildLog: Array<[string, string]> = [
   ["dim", "  npm ERR! exited with code 1"],
 ];
 
-const brokenLegs: string[] = [
-  "Ingen hemmeligheder i mappen",
-  "Ét ærinde ad gangen",
-  "Godkend vejen ud",
-];
+function TrifectaDiagram() {
+  const animate = useSlideMotion();
+  return (
+    <svg viewBox="0 0 660 620" className="h-full w-full" role="img" aria-label="De tre ting overlapper i midten, hvor jeres data kan sendes ud">
+      {trifectaLegs.map(({ number, heading, cx, cy, labelX, labelY }, index) => (
+        <motion.g
+          key={number}
+          initial={animate ? { opacity: 0, scale: 0.9 } : false}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={inViewSoft}
+          transition={{ duration: 0.6, delay: 0.1 + index * 0.16, ease: [0.22, 0.9, 0.24, 1] }}
+          style={{ transformOrigin: `${cx}px ${cy}px` }}
+        >
+          <circle
+            cx={cx}
+            cy={cy}
+            r={TRIFECTA_CIRCLE_RADIUS}
+            fill="var(--slide-accent)"
+            fillOpacity="0.16"
+            stroke="var(--slide-accent)"
+            strokeWidth="2.5"
+          />
+          <text
+            x={labelX}
+            y={labelY}
+            textAnchor="middle"
+            fill="var(--slide-accent)"
+            fontSize="22"
+            fontFamily="var(--font-mono)"
+          >
+            {number}
+          </text>
+          <text
+            x={labelX}
+            y={labelY + 34}
+            textAnchor="middle"
+            fill="var(--slide-ink)"
+            fontSize="32"
+            fontFamily="var(--font-display)"
+            fontWeight="700"
+          >
+            {heading.toUpperCase()}
+          </text>
+        </motion.g>
+      ))}
+
+      <motion.g
+        initial={animate ? { opacity: 0 } : false}
+        whileInView={{ opacity: 1 }}
+        viewport={inViewSoft}
+        transition={{ duration: 0.6, delay: 0.72 }}
+      >
+        <circle cx={TRIFECTA_CORE.x} cy={TRIFECTA_CORE.y} r="58" fill="var(--slide-accent)" />
+        <text x={TRIFECTA_CORE.x} y={TRIFECTA_CORE.y - 4} textAnchor="middle" fill="var(--slide-bg)" fontSize="22" fontFamily="var(--font-mono)">
+          DATA
+        </text>
+        <text x={TRIFECTA_CORE.x} y={TRIFECTA_CORE.y + 24} textAnchor="middle" fill="var(--slide-bg)" fontSize="22" fontFamily="var(--font-mono)">
+          UD
+        </text>
+      </motion.g>
+    </svg>
+  );
+}
 
 export function Trifecta() {
   return (
-    <div className="trifecta-visual flex h-full min-h-0 flex-col gap-[24px]">
-      <div className="grid min-h-0 flex-1 grid-cols-[0.88fr_1.12fr] gap-[44px]">
-        <div className="flex min-h-0 flex-col justify-center gap-[20px]">
-          {trifectaLegs.map(([number, heading, body], index) => (
-            <Reveal key={number} delay={0.08 + index * 0.12}>
-              <div className="border-l-[6px] border-slide-accent pl-[26px]">
-                <div className="flex items-baseline gap-[16px]">
-                  <span className="slide-caption font-mono text-slide-accent">{number}</span>
-                  <h3 className="slide-body-lg font-display font-bold uppercase leading-none">
-                    {heading}
-                  </h3>
-                </div>
-                <p className="slide-body mt-[10px] text-slide-ink-soft">{body}</p>
-              </div>
-            </Reveal>
-          ))}
+    <div className="trifecta-visual flex h-full min-h-0 flex-col gap-[20px]">
+      <div className="grid min-h-0 flex-1 grid-cols-[0.95fr_1.05fr] gap-[44px]">
+        <div className="flex min-h-0 flex-col">
+          <div className="min-h-0 flex-1">
+            <TrifectaDiagram />
+          </div>
+          <div className="mt-[6px] flex flex-col gap-[6px]">
+            {trifectaLegs.map(({ number, example }, index) => (
+              <Reveal key={number} delay={0.4 + index * 0.1}>
+                <p className="slide-caption flex gap-[14px] text-slide-ink-soft">
+                  <span className="shrink-0 font-mono text-slide-accent">{number}</span>
+                  <span>{example}</span>
+                </p>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
         <Reveal delay={0.34} className="flex min-h-0">
@@ -858,13 +1057,15 @@ export function Trifecta() {
           <p className="slide-body-lg shrink-0 font-semibold">
             Fjern ét ben, og angrebet falder.
           </p>
-          <div className="flex flex-1 flex-wrap justify-end gap-[12px]">
-            {brokenLegs.map((leg) => (
+          <div className="flex flex-1 justify-end gap-[12px]">
+            {trifectaLegs.map(({ number, countermeasure }) => (
               <span
-                key={leg}
-                className="slide-caption border border-slide-ink/20 px-[18px] py-[10px] text-slide-ink-soft"
+                key={number}
+                className="slide-caption flex items-baseline gap-[12px] border border-slide-ink/20 px-[18px] py-[10px] text-slide-ink-soft"
+                data-countermeasure-for={number}
               >
-                {leg}
+                <span className="font-mono text-slide-accent">{number}</span>
+                {countermeasure}
               </span>
             ))}
           </div>
