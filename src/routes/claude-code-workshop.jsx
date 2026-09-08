@@ -1,6 +1,8 @@
 import ClaudeCodeWorkshopPresentation from '../components/ClaudeCodeWorkshopPresentation';
 import { buildMeta } from '../utils/meta';
 
+export const handle = { hideAppShell: true };
+
 export function meta() {
   return buildMeta({
     title: 'Claude Code workshop | Simon Amtoft Pedersen',

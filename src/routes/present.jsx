@@ -3,6 +3,10 @@ import ArticlePresentationView from '../components/articles/ArticlePresentationV
 import { getArticleBySlug } from '../data/articles';
 import { buildMeta } from '../utils/meta';
 
+export const handle = {
+  hideAppShell: (params) => Boolean(getArticleBySlug(params.slug)),
+};
+
 export function meta({ params }) {
   const article = getArticleBySlug(params.slug);
   if (!article) {

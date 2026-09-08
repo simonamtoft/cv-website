@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, Meta, Links, ScrollRestoration, Scripts, useLocation } from 'react-router';
+import { Outlet, Meta, Links, ScrollRestoration, Scripts, useLocation, useMatches } from 'react-router';
 import Nav from './components/Nav';
 import BackToTop from './components/BackToTop';
 import ReadingProgress from './components/ReadingProgress';
@@ -64,7 +64,13 @@ export function Layout({ children }) {
 // The persistent app shell around the routed page (was App.js / AppContent).
 export default function App() {
   const { pathname } = useLocation();
-  const isPresentation = pathname === '/talks/claude-code-workshop';
+  const matches = useMatches();
+  const normalizedPathname = pathname.replace(/\/+$/, '');
+  const isPresentation = normalizedPathname === '/talks/claude-code-workshop'
+    || matches.some(({ handle, params }) => {
+      const hideAppShell = handle?.hideAppShell;
+      return typeof hideAppShell === 'function' ? hideAppShell(params) : hideAppShell === true;
+    });
 
   useKeyboardNav();
   useSwipeNav();

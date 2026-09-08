@@ -18,6 +18,14 @@ test.describe('Article presentation / slide mode', () => {
     const total = await page.locator('.deck-slide').count();
     expect(total).toBeGreaterThan(1);
     await expect(page.locator('.deck-counter')).toHaveText(`1 / ${total}`);
+    await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(0);
+  });
+
+  test('keeps site navigation on an unknown presentation URL', async ({ page }) => {
+    await page.goto('/writing/not-an-article/present');
+
+    await expect(page.getByText('Article not found.')).toBeVisible();
+    await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(2);
   });
 
   test('arrow keys navigate the deck without leaving the present route', async ({ page }) => {

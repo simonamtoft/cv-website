@@ -18,6 +18,12 @@ test.describe('Claude Code workshop presentation', () => {
     await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(0);
   });
 
+  test('hides site navigation when opened with a trailing slash', async ({ page }) => {
+    await page.goto(`${route}/`);
+
+    await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(0);
+  });
+
   test('supports keyboard navigation and overview', async ({ page }) => {
     await openDeck(page);
     await expect(page.getByText('01 / 14')).toBeVisible();
