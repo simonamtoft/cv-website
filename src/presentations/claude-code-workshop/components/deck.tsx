@@ -14,7 +14,7 @@ import {
 } from "./visuals";
 import { cn } from "../utils";
 import simonPhoto from "../assets/siap.jpg";
-import mathiasPhoto from "../assets/mave.jpg";
+import jeppePhoto from "../assets/jere.jpg";
 import imLogoNegative from "../assets/IM_-logo_negativ.svg";
 import implementLogo from "../assets/Implement_plain.svg";
 import implementLogoNegative from "../assets/Implement_plain_negativ.svg";
@@ -77,11 +77,6 @@ function TitleSlide() {
               Byg noget i dag, som du kan bruge igen.
             </p>
           </Reveal>
-        </div>
-        <div className="flex items-end justify-between border-t border-slide-bg/25 pt-[28px]">
-          <span className="slide-body text-slide-bg/75">
-            31. august 2026 · kl. 13.00-15.00
-          </span>
         </div>
       </div>
     </SlideLayout>
@@ -161,7 +156,7 @@ function ProgramSlide({ page }: { page: number }) {
 
 
 /* ------------------------------------------------------------------ */
-/* 03: Os to                                                          */
+/* 02: Kontakt                                                        */
 /* ------------------------------------------------------------------ */
 
 function Host({
@@ -169,6 +164,7 @@ function Host({
   name,
   role,
   field,
+  contact,
   photo,
   tint,
   align = "left",
@@ -177,6 +173,7 @@ function Host({
   name: string;
   role: string;
   field: string;
+  contact: string;
   photo: string;
   tint: string;
   align?: "left" | "right";
@@ -204,7 +201,7 @@ function Host({
         viewport={inViewSoft}
         transition={{ delay: delay + 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       />
-      <div className="portrait-text-scrim absolute inset-x-0 bottom-0 h-[460px]" />
+      <div className="portrait-text-scrim absolute inset-x-0 bottom-0 h-[560px]" />
 
       <div
         className={`absolute inset-x-0 bottom-0 flex flex-col gap-[10px] p-[52px] ${
@@ -228,7 +225,13 @@ function Host({
           className={align === "right" ? "items-end" : "items-start"}
         >
           <p className="slide-body-lg text-slide-bg">{role}</p>
-          <p className="slide-body mt-[10px] max-w-[720px] text-slide-bg/70">
+          <a
+            href={`mailto:${contact}`}
+            className="slide-body mt-[6px] text-slide-bg/85 underline decoration-slide-pink underline-offset-[6px] transition-colors hover:text-slide-pink focus-visible:text-slide-pink focus-visible:outline-none"
+          >
+            {contact}
+          </a>
+          <p className="mt-[14px] max-w-[720px] text-[24px] leading-[1.32] text-slide-bg/75">
             {field}
           </p>
         </motion.div>
@@ -244,7 +247,7 @@ function HostsSlide() {
       <div className="flex h-full flex-col">
         <div className="flex items-end justify-between px-[80px] pt-[64px]">
           <div>
-            <p className="slide-kicker text-slide-accent">Hvem står her</p>
+            <p className="slide-kicker text-slide-accent">Claude Code</p>
             <motion.h2
               className="slide-title-lg mt-[16px] font-display uppercase leading-[0.88]"
               initial={animate ? { opacity: 0, y: 30 } : false}
@@ -252,7 +255,7 @@ function HostsSlide() {
               viewport={inViewSoft}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
-              Hej
+              Tag fat i os
             </motion.h2>
           </div>
           <div className="pb-[10px] text-right">
@@ -277,16 +280,18 @@ function HostsSlide() {
             index={0}
             name="Simon"
             role="Generative AI-konsulent, The Tech Collective"
-            field="Cand.polyt. i matematisk modellering og computing, DTU"
+            field="Hjælper virksomheder med at finde, hvor AI faktisk passer ind – og bygge det sammen med dem."
+            contact="siap@thetechcollective.eu"
             photo={simonPhoto}
             tint="var(--slide-ink)"
           />
           <Host
             index={1}
-            name="Mathias"
-            role="Kommerciel strategikonsulent, Implement Consulting Group"
-            field="Cand.merc. i Innovation Management & Business Development, Aarhus BSS"
-            photo={mathiasPhoto}
+            name="Jeppe Rasmussen"
+            role="AI Engineer, The Tech Collective"
+            field="Udvikler AI-agenter og RAG-applikationer."
+            contact="jere@thetechcollective.eu"
+            photo={jeppePhoto}
             tint="var(--slide-ink)"
             align="right"
           />
