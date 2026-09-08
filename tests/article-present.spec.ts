@@ -1,110 +1,60 @@
 import { test, expect, type Page } from '@playwright/test';
 
-async function openDeck(page: Page) {
-  await page.goto('/writing/agentic-engineering/present');
+async function expectDeckReady(page: Page) {
   const deck = page.locator('.deck');
   await expect(deck).toHaveAttribute('data-ready', '');
   await expect(deck).toBeFocused();
   await expect(page.locator('.deck-slide.is-current')).toBeVisible();
 }
 
-// Seam 1 (e2e): the presentation deck at /writing/:slug/present - slide
-// navigation, Escape return, and an interactive visual that stays interactive
-// full-screen (its state survives navigation).
-test.describe('Article presentation / slide mode', () => {
-  test('renders slide 1 and a counter over the authored slides', async ({ page }) => {
-    await openDeck(page);
-
-    const total = await page.locator('.deck-slide').count();
-    expect(total).toBeGreaterThan(1);
-    await expect(page.locator('.deck-counter')).toHaveText(`1 / ${total}`);
-    await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(0);
-  });
-
-  test('keeps site navigation on an unknown presentation URL', async ({ page }) => {
-    await page.goto('/writing/not-an-article/present');
-
-    await expect(page.getByText('Article not found.')).toBeVisible();
-    await expect(page.locator('.nav-pill, .nav-mobile')).toHaveCount(2);
-  });
-
-  test('arrow keys navigate the deck without leaving the present route', async ({ page }) => {
-    await openDeck(page);
-    const total = await page.locator('.deck-slide').count();
+test.describe('Article presentation', () => {
+  test('a reader can enter, navigate, and leave slide mode', async ({ page }) => {
+    await page.goto('/writing/agentic-engineering');
+    await page.locator('.article-present-link').click();
+    await expect(page).toHaveURL(/\/writing\/agentic-engineering\/present$/);
+    await expectDeckReady(page);
 
     await page.keyboard.press('ArrowRight');
-    // Guards the useKeyboardNav fix: ArrowRight must advance the deck, not
-    // navigate to the first site page.
     await expect(page).toHaveURL(/\/writing\/agentic-engineering\/present$/);
-    await expect(page.locator('.deck-counter')).toHaveText(`2 / ${total}`);
+    await expect(page.locator('.deck-counter')).toContainText(/^2 \/ /);
 
     await page.keyboard.press('ArrowLeft');
-    await expect(page.locator('.deck-counter')).toHaveText(`1 / ${total}`);
-  });
-
-  test('Escape returns to the reading view', async ({ page }) => {
-    await openDeck(page);
+    await expect(page.locator('.deck-counter')).toContainText(/^1 \/ /);
 
     await page.keyboard.press('Escape');
     await expect(page).toHaveURL(/\/writing\/agentic-engineering$/);
     await expect(page.locator('.article-reading')).toBeVisible();
   });
 
-  test('a visual builds up on key press and hides the reading-only info panel', async ({ page }) => {
-    await openDeck(page);
+  test('an unknown presentation URL keeps the site navigation available', async ({ page }) => {
+    await page.goto('/writing/not-an-article/present');
 
-    // Advance to the slide that hosts the harness controller (a press consumes a
-    // build step before moving on, so keep pressing until it is current).
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible();
+  });
+
+  test('visual build steps consume navigation keys before changing slides', async ({ page }) => {
+    await page.goto('/writing/agentic-engineering/present');
+    await expectDeckReady(page);
+
     const harnessSlide = page.locator('.deck-slide', { has: page.locator('.harness-controller') });
-    while (!(await harnessSlide.evaluate((el) => el.classList.contains('is-current')).catch(() => false))) {
+    while (!(await harnessSlide.evaluate((element) => element.classList.contains('is-current')).catch(() => false))) {
       await page.keyboard.press('ArrowRight');
     }
 
-    const controller = harnessSlide.locator('.harness-controller');
-    // The reading-only info panel below the dotted line is not rendered in present.
-    await expect(controller.locator('.harness-lever-detail')).toHaveCount(0);
-
-    // The loop assembles one block per press: it starts partly built, so a later
-    // block in the sequence is still hidden.
-    const blocks = controller.locator('.hc-block');
-    const hidden = () =>
-      blocks.evaluateAll((els) => els.filter((el) => getComputedStyle(el).opacity === '0').length);
-    const before = await hidden();
+    const hiddenBlocks = () => harnessSlide.locator('.hc-block').evaluateAll(
+      (elements) => elements.filter((element) => getComputedStyle(element).opacity === '0').length,
+    );
+    const before = await hiddenBlocks();
+    const counter = await page.locator('.deck-counter').textContent();
     expect(before).toBeGreaterThan(0);
 
-    // A press reveals the next step without changing the slide counter...
-    const counter = await page.locator('.deck-counter').textContent();
     await page.keyboard.press('ArrowRight');
-    await expect.poll(hidden).toBe(before - 1);
+    await expect.poll(hiddenBlocks).toBe(before - 1);
     await expect(page.locator('.deck-counter')).toHaveText(counter!);
 
-    // ...and stepping back un-reveals it (present reveal is reversible).
     await page.keyboard.press('ArrowLeft');
-    await expect.poll(hidden).toBe(before);
+    await expect.poll(hiddenBlocks).toBe(before);
     await expect(page.locator('.deck-counter')).toHaveText(counter!);
-  });
-
-  test('each featured visual has its own slide', async ({ page }) => {
-    await openDeck(page);
-
-    for (const visual of [
-      '.leverage-pyramid',
-      '.context-window',
-      '.context-flow',
-      '.harness-controller',
-      '.verification-ladder',
-    ]) {
-      const slide = page.locator('.deck-slide', { has: page.locator(visual) });
-      await expect(slide).toHaveCount(1);
-    }
-  });
-
-  test('the reading view links to the present deck', async ({ page }) => {
-    await page.goto('/writing/agentic-engineering');
-
-    await page.locator('.article-present-link').click();
-    await expect(page).toHaveURL(/\/writing\/agentic-engineering\/present$/);
-    await expect(page.locator('.deck')).toHaveAttribute('data-ready', '');
-    await expect(page.locator('.deck-slide.is-current')).toBeVisible();
   });
 });

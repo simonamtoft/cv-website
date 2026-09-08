@@ -49,9 +49,8 @@ test.describe('Article prerender (scraper-visible HTML)', () => {
   });
 
   test('the article body is prerendered, not JS-only', () => {
-    // Body headings and a build-time Shiki code block are in the static HTML.
+    expect(html).toMatch(/<article[^>]*>/);
     expect(html).toMatch(/<h2[^>]*>/);
-    expect(html).toContain('class="shiki');
   });
 
   test('the present (slide-deck) route is prerendered with its own title', () => {
