@@ -67,9 +67,10 @@ test.describe('Claude Code workshop presentation', () => {
   });
 
   test('the workshop countdown keeps running across slide navigation', async ({ page }) => {
-    await page.goto(`${route}?slide=15`);
+    await page.goto(`${route}?slide=19`);
 
-    const countdown = page.locator('.workshop-countdown');
+    // Two exercise countdowns exist; target the one this slide owns.
+    const countdown = page.locator('.workshop-countdown[data-workshop-duration="40"]');
     const clock = countdown.locator('p').first();
     await expect(clock).toHaveText(/^\d+:\d{2}$/);
     const initial = await clock.textContent();
@@ -82,6 +83,7 @@ test.describe('Claude Code workshop presentation', () => {
     await expect.poll(async () => clockSeconds(await clock.textContent())).toBeLessThan(beforeLeaving);
 
     await page.goto(`${route}?print`);
-    await expect(page.locator('.workshop-countdown').getByText('110:00')).toBeVisible();
+    await expect(page.locator('.workshop-countdown').getByText('25:00')).toBeVisible();
+    await expect(page.locator('.workshop-countdown').getByText('40:00')).toBeVisible();
   });
 });

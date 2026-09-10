@@ -108,7 +108,7 @@ function ProgramSlide({ page }: { page: number }) {
   return (
     <SlideFrame
       kicker="Program"
-      title="Sådan ser de tre timer ud"
+      title="Sådan ser eftermiddagen ud"
       page={page}
     >
       <div className="flex h-full min-h-0 flex-col justify-center">
@@ -116,7 +116,7 @@ function ProgramSlide({ page }: { page: number }) {
           {scheduledItems.map((item, index) => (
             <Reveal key={item.id} delay={0.06 + index * 0.12}>
               <div
-                className="flex items-center gap-[24px] px-[36px] py-[18px]"
+                className="flex items-center gap-[24px] px-[36px] py-[12px]"
                 data-schedule-item={item.id}
                 data-start={formatTime(item.start)}
                 data-end={formatTime(item.end)}
@@ -129,14 +129,14 @@ function ProgramSlide({ page }: { page: number }) {
                   <h3 className="slide-subtitle font-display font-bold uppercase leading-none">
                     {item.heading}
                   </h3>
-                  <p className="slide-body mt-[4px] text-slide-ink-soft">{item.note}</p>
+                  <p className="slide-body mt-[6px] text-slide-ink-soft">{item.note}</p>
                 </div>
                 <div className="flex w-[300px] shrink-0 items-center gap-[16px]">
                   <div className="flex-1">
                     <GrowBar
                       fraction={item.duration / total}
                       delay={0.28 + index * 0.12}
-                      className={item.id === "workshop" ? "bg-slide-green" : "bg-slide-accent"}
+                      className={item.kind === "exercise" ? "bg-slide-green" : "bg-slide-accent"}
                     />
                   </div>
                   <span className="slide-caption w-[72px] shrink-0 whitespace-nowrap font-mono text-slide-ink-soft">
@@ -180,7 +180,7 @@ function OutcomesSlide({ page }: { page: number }) {
     <SlideFrame
       kicker="I går herfra med"
       title="Noget, I kan bygge videre på"
-      lead="Ikke en færdig løsning — men en arbejdsform, I har prøvet på en rigtig opgave, i Cowork eller i Claude Code."
+      lead="Ikke en færdig løsning — men en arbejdsform, I har prøvet på en rigtig opgave: først i Claude Chat, bagefter i Claude Code."
       page={page}
     >
       <div className="flex h-full min-h-0 flex-col justify-center overflow-hidden">
@@ -633,6 +633,110 @@ function TrifectaSlide({ page }: { page: number }) {
 /* ------------------------------------------------------------------ */
 
 
+function ModelEffortSlide({ page }: { page: number }) {
+  const levels = ["Low", "Medium", "High", "Extra High", "Max"];
+  return (
+    <SlideFrame
+      kicker="Model og tænketid"
+      title="Vælg model og tænketid."
+      lead="Tommelfingerregel: De fleste opgaver kan løses med Medium."
+      page={page}
+      footer="Kilde: code.claude.com/docs/en/model-config · Niveauer afhænger af model og adgang"
+    >
+      <div className="flex h-full flex-col gap-[32px]">
+        <div className="grid grid-cols-[280px_1fr] gap-[40px]">
+          <div>
+            <h3 className="slide-body-lg">Vælg model</h3>
+            <p className="mt-[12px] text-[26px] text-slide-ink-soft">Hvor svær er opgaven?</p>
+          </div>
+          <div className="grid grid-cols-3 gap-[20px]">
+            {[
+              ["Lettere · fx Haiku", "Små, entydige rettelser med et klart tjek."],
+              ["Balanceret · fx Sonnet", "Dagligt arbejde og afgrænset implementering."],
+              ["Stærkere · fx Opus", "Svære planer, uklare krav og risikable valg."],
+            ].map(([title, text]) => (
+              <div key={title} className="border-t-[4px] border-slide-accent bg-slide-surface p-[24px]">
+                <h4 className="text-[30px] font-medium">{title}</h4>
+                <p className="mt-[12px] text-[28px] leading-[1.35] text-slide-ink-soft">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-[280px_1fr] gap-[40px] border-t border-slide-rule pt-[28px]">
+          <div>
+            <h3 className="slide-body-lg">Vælg effort</h3>
+            <p className="mt-[12px] text-[26px] text-slide-ink-soft">Hvor dybt skal den tænke?</p>
+          </div>
+          <div>
+            <div className="grid grid-cols-5 gap-[12px]">
+              {levels.map((level) => (
+                <div key={level} className={cn("border px-[12px] py-[18px] text-center text-[30px]", level === "Medium" ? "border-slide-accent bg-slide-accent text-white" : "border-slide-rule bg-slide-surface")}>
+                  {level}
+                  <p className="mt-[6px] text-[22px]">{level === "Medium" ? "Start her" : level === "Extra High" ? "xhigh" : "\u00a0"}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-[16px] flex items-center gap-[20px] text-[25px] text-slide-ink-soft">
+              <span>Hurtigere / færre tokens</span><span className="h-px flex-1 bg-slide-rule" /><span>Mere tænketid / flere tokens →</span>
+            </div>
+            <p className="mt-[20px] text-[27px] leading-[1.35]">Skru op ved svær fejlfinding eller dyre fejl — ikke bare fordi opgaven er lang.</p>
+          </div>
+        </div>
+        <p className="border-l-[4px] border-slide-accent pl-[24px] text-[27px] leading-[1.35] text-slide-ink-soft">
+          <strong className="font-medium text-slide-ink">Ultracode er noget andet:</strong> Extra High + koordinering af workflows. Ikke et trin over Max.
+        </p>
+      </div>
+    </SlideFrame>
+  );
+}
+
+function TokenEconomicsSlide({ page }: { page: number }) {
+  return (
+    <SlideFrame
+      kicker="Tokens og genbrug"
+      title="Små opgaver. Mindre spild."
+      lead="Tokens er tekstbidder: input, svar og reasoning bruger af budgettet. Omveje og gentaget arbejde tæller også."
+      page={page}
+      footer="Kilde: code.claude.com/docs/en/prompt-caching · Claude Code håndterer caching automatisk"
+    >
+      <div className="grid h-full grid-cols-[0.9fr_1.1fr] gap-[64px]">
+        <div>
+          <h3 className="slide-body-lg">Del planen i kontrollerbare bidder</h3>
+          <div className="mt-[28px] flex items-center gap-[12px]">
+            {["Én opgave", "Løs", "Tjek"].map((step, index) => (
+              <div key={step} className="flex flex-1 items-center gap-[12px]">
+                {index > 0 && <span className="text-[30px] text-slide-accent">→</span>}
+                <div className="flex-1 border border-slide-rule bg-slide-surface px-[12px] py-[28px] text-center text-[30px]">{step}</div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-[16px] text-right text-[25px] text-slide-accent">↳ Næste opgave, når tjekket holder</p>
+          <p className="mt-[32px] slide-body text-slide-ink-soft">Ét klart resultat og et konkret tjek. Så opdager du fejl, før de bliver bygget videre på.</p>
+          <p className="mt-[24px] text-[27px] leading-[1.4] text-slide-ink-soft">Bevar den relevante kontekst — små opgaver kræver ikke en ny chat hver gang.</p>
+        </div>
+        <div className="border-l border-slide-rule pl-[48px]">
+          <h3 className="slide-body-lg">Cache genbruger starten af inputtet</h3>
+          <div className="mt-[28px] space-y-[14px] text-[26px]">
+            <p className="text-[23px] text-slide-ink-soft">Samme model · identisk start · gyldig cache</p>
+            <div className="grid grid-cols-[100px_1fr_180px] items-stretch gap-[10px]">
+              <span className="self-center">Kald 1</span>
+              <span className="border border-slide-rule bg-slide-surface p-[20px]">Fælles kontekst</span>
+              <span className="border border-slide-rule p-[20px]">Opgave A</span>
+            </div>
+            <div className="grid grid-cols-[100px_1fr_180px] items-stretch gap-[10px]">
+              <span className="self-center">Kald 2</span>
+              <span className="border border-slide-accent bg-slide-accent/10 p-[20px]">Samme start → cache</span>
+              <span className="border border-slide-rule p-[20px]">Opgave B</span>
+            </div>
+          </div>
+          <p className="mt-[28px] slide-body text-slide-ink-soft">Den genbrugte del læses billigere og hurtigere. Svaret bliver lavet på ny.</p>
+          <p className="mt-[24px] text-[27px] leading-[1.4] text-slide-ink-soft">Cache er ikke gratis hukommelse. Modelskift bryder genbruget; vælg helst model og effort ved opgavens start.</p>
+        </div>
+      </div>
+    </SlideFrame>
+  );
+}
+
 function PlanSlide({ page }: { page: number }) {
   const steps: Array<[string, string]> = [
     ["01", "Åbn projektmappen"],
@@ -662,7 +766,7 @@ function PlanSlide({ page }: { page: number }) {
     <SlideFrame
       kicker="Jeres første tur"
       title="Plan først. Godkend bagefter."
-      lead="Godkend planen, før den rører noget. Og hold opgaven lille: jo længere Claude arbejder i træk, jo dårligere bliver svarene — og jo dyrere bliver turen."
+      lead="Godkend planen, før den rører noget. Hold opgaven lille: lange forløb kan samle irrelevant kontekst og gøre fejl dyrere at rette."
       page={page}
     >
       <div className="plan-mode-journey flex h-full min-h-0 flex-col gap-[24px] overflow-hidden">
@@ -877,7 +981,7 @@ function PromptSlide({ page }: { page: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 11: Jeres opgaver i dag                                            */
+/* 11 og 19: Briefen før hver øvelse                                  */
 /* ------------------------------------------------------------------ */
 
 type DeliveryStep = {
@@ -887,52 +991,113 @@ type DeliveryStep = {
   tone: string;
 };
 
-function TasksSlide({ page }: { page: number }) {
-  const steps: DeliveryStep[] = [
+/** The two exercises share a rhythm, so the brief is one slide with two scripts. */
+type ExerciseBrief = {
+  kicker: string;
+  title: string;
+  lead: string;
+  track: ReactNode;
+  rhythm: string;
+  steps: DeliveryStep[];
+};
+
+const stepTones = [
+  "bg-slide-surface border-slide-rule",
+  "bg-slide-pink border-slide-pink",
+  "bg-slide-surface border-slide-rule",
+  "bg-slide-navy border-slide-navy text-slide-bg",
+];
+
+const chatBrief: ExerciseBrief = {
+  kicker: "Øvelse 1 · Chat og Projects",
+  title: "Få jord under neglene",
+  lead: "I behøver ikke at blive færdige — bare kom i gang og se, hvad I lærer.",
+  track: (
+    <>
+      <span className="slide-mark">Chat</span> og <span className="slide-mark">Projects</span>.
+    </>
+  ),
+  rhythm: "materiale → udkast → tjek",
+  steps: [
     {
       number: "01",
-      name: "Vælg",
-      instruction: "Et lille eksempel, I kender: et par ufølsomme filer eller en overskuelig opgave.",
-      tone: "bg-slide-surface border-slide-rule",
+      name: "Vælg opgaven",
+      instruction: "Jeres egen eller en, vi foreslår — med materiale, der godt må forlade huset.",
+      tone: stepTones[0],
     },
     {
       number: "02",
-      name: "Åbn mappen",
-      instruction: "Lad Claude kigge rundt, og fortæl kort hvad I gerne vil prøve af.",
-      tone: "bg-slide-pink border-slide-pink",
+      name: "Opret et projekt",
+      instruction: "Læg materialet ind som projektviden, så I ikke skal indsætte det forfra hver gang.",
+      tone: stepTones[1],
     },
     {
       number: "03",
-      name: "Bed om en plan",
-      instruction: "Få forslaget til næste skridt, før noget bliver ændret. I Code: Plan mode.",
-      tone: "bg-slide-surface border-slide-rule",
+      name: "Bed om et udkast",
+      instruction: "Sig hvad kilden er, hvad resultatet skal bruges til, og hvem der skal læse det.",
+      tone: stepTones[2],
     },
     {
       number: "04",
-      name: "Prøv og tjek",
-      instruction: "Én ændring ad gangen. Kør en kontrol, og kig resultatet igennem.",
-      tone: "bg-slide-navy border-slide-navy text-slide-bg",
+      name: "Tjek og skærp",
+      instruction: "Læs efter. Ret præmissen frem for svaret, og prøv igen.",
+      tone: stepTones[3],
     },
-  ];
+  ],
+};
+
+const codeBrief: ExerciseBrief = {
+  kicker: "Øvelse 2 · Claude Code",
+  title: "Byg noget, I kan gentage",
+  lead: "Samme opgave eller en ny — nu i en mappe. Det færdige resultat er ikke målet; arbejdsformen er.",
+  track: (
+    <>
+      <span className="slide-mark">Code</span> i en mappe, I selv vælger.
+    </>
+  ),
+  rhythm: "mappe → plan → resultat",
+  steps: [
+    {
+      number: "01",
+      name: "Åbn mappen",
+      instruction: "Start Claude Code i en mappe med ufølsomme filer, og lad den kigge rundt.",
+      tone: stepTones[0],
+    },
+    {
+      number: "02",
+      name: "Bed om en plan",
+      instruction: "Plan mode. Iterér planen, til den passer — før noget bliver ændret.",
+      tone: stepTones[1],
+    },
+    {
+      number: "03",
+      name: "Kør én opgave",
+      instruction: "Godkend et trin ad gangen, og hold opgaven lille nok til at kunne tjekkes.",
+      tone: stepTones[2],
+    },
+    {
+      number: "04",
+      name: "Tjek resultatet",
+      instruction: "Kør kontrollen, og læs ændringen igennem, før I går videre.",
+      tone: stepTones[3],
+    },
+  ],
+};
+
+function ExerciseBriefSlide({ page, brief }: { page: number; brief: ExerciseBrief }) {
+  const { kicker, title, lead, track, rhythm, steps } = brief;
   return (
-    <SlideFrame
-      kicker="Workshop-opgaven"
-      title="Få jord under neglene"
-      lead="Prøv det på noget, I genkender. I behøver ikke at blive færdige — bare kom i gang og se, hvad I lærer."
-      page={page}
-    >
+    <SlideFrame kicker={kicker} title={title} lead={lead} page={page}>
       <div className="delivery-exercise flex h-full min-h-0 flex-col justify-center overflow-hidden">
         <Reveal delay={0.06}>
           <div className="flex items-stretch justify-between border border-slide-rule bg-slide-surface">
             <div className="flex-1 px-[34px] py-[20px]">
-              <p className="slide-kicker text-slide-accent">Vælg spor</p>
-              <p className="slide-body-lg mt-[6px] font-semibold">
-                <span className="slide-mark">Cowork</span> eller <span className="slide-mark">Code</span>.
-              </p>
+              <p className="slide-kicker text-slide-accent">Vi arbejder i</p>
+              <p className="slide-body-lg mt-[6px] font-semibold">{track}</p>
             </div>
             <div className="border-l border-slide-rule px-[30px] py-[20px] text-right">
-              <p className="slide-caption font-mono uppercase tracking-[0.12em] text-slide-ink-soft">Samme fire trin</p>
-              <p className="slide-body mt-[5px] font-semibold">input → handling → resultat</p>
+              <p className="slide-caption font-mono uppercase tracking-[0.12em] text-slide-ink-soft">Fire trin</p>
+              <p className="slide-body mt-[5px] font-semibold">{rhythm}</p>
             </div>
           </div>
         </Reveal>
@@ -960,11 +1125,22 @@ function TasksSlide({ page }: { page: number }) {
 
 
 /* ------------------------------------------------------------------ */
-/* 12: Workshop start                                                 */
+/* 12 og 20: Øvelserne                                                */
 /* ------------------------------------------------------------------ */
 
-
-function WorkshopSlide({ page }: { page: number }) {
+function ExerciseSlide({
+  page,
+  kicker,
+  title,
+  lead,
+  minutes,
+}: {
+  page: number;
+  kicker: string;
+  title: string;
+  lead: string;
+  minutes: number;
+}) {
   return (
     <SlideLayout variant="navy">
       <div className="absolute top-0 left-0 h-[16px] w-[420px] bg-slide-pink" />
@@ -976,25 +1152,23 @@ function WorkshopSlide({ page }: { page: number }) {
       <div className="relative grid h-full grid-cols-[1.4fr_0.6fr] items-center gap-[80px] px-[140px]">
         <div>
           <Reveal delay={0.05}>
-            <p className="slide-kicker text-slide-accent-soft">Workshop</p>
+            <p className="slide-kicker text-slide-accent-soft">{kicker}</p>
           </Reveal>
           <Reveal delay={0.18} y={40}>
             <h2 className="slide-title-lg mt-[30px]">
-              Prøv jeres idéer af
+              {title}
               <BlinkUnderscore />
             </h2>
           </Reveal>
           <Reveal delay={0.45}>
-            <p className="slide-subtitle mt-[40px] max-w-[1000px] text-slide-bg/80">
-              Hold pause, når I har brug for det. Har I noget at vise, er der tid til det.
-            </p>
+            <p className="slide-subtitle mt-[40px] max-w-[1000px] text-slide-bg/80">{lead}</p>
           </Reveal>
 
         </div>
         <Reveal delay={0.6}>
           <div className="border-l border-slide-bg/20 pl-[46px]">
             <p className="slide-kicker text-slide-pink">Til rådighed</p>
-            <WorkshopCountdown minutes={scheduleById.workshop.duration} />
+            <WorkshopCountdown minutes={minutes} />
           </div>
         </Reveal>
       </div>
@@ -1077,7 +1251,7 @@ function DebriefSlide({ page }: { page: number }) {
     <SlideFrame
       kicker="Fælles opsamling"
       title="Hvad fandt I?"
-      lead="Tal kort sammen to og to. Bagefter viser et par grupper, hvad de byggede, og hvad de lærte."
+      lead="Et par grupper viser, hvad de byggede, og hvad de lærte."
       page={page}
     >
       <div className="debrief-reflection grid h-full min-h-0 grid-cols-2 grid-rows-2 gap-[18px] overflow-hidden">
@@ -1098,89 +1272,59 @@ function DebriefSlide({ page }: { page: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 15: Opskrift og kontrol                                            */
+/* 15: Hooks                                                         */
 /* ------------------------------------------------------------------ */
-
-type RepeatableColumn = {
-  number: string;
-  heading: string;
-  summary: string;
-  trigger: string;
-  file: string;
-  lines: string[];
-  tone: string;
-};
-
-const repeatableColumns: RepeatableColumn[] = [
-  {
-    number: "01",
-    heading: "Skill",
-    summary: "Opskriften på arbejdsgangen, skrevet én gang i almindeligt sprog.",
-    trigger: "Claude vælger den, når opgaven passer",
-    file: ".claude/skills/kvartal-tjek/SKILL.md",
-    lines: [
-      "1. Kør scripts/tjek-tal.sh",
-      "2. Undersøg hver afvigelse",
-      "3. Skriv, hvad du har tjekket",
-    ],
-    tone: "border-slide-rule bg-slide-surface",
-  },
-  {
-    number: "02",
-    heading: "Hook",
-    summary: "Kontrollen, I hægter på en hændelse, så den kører uanset hvad Claude finder på.",
-    trigger: "Kører hver gang hændelsen sker",
-    file: ".claude/settings.json",
-    lines: [
-      "når Claude har rettet en fil",
-      "→ kør scripts/tjek-tal.sh",
-      "fejl går retur til Claude",
-    ],
-    tone: "border-slide-green bg-slide-sage/40",
-  },
-];
 
 function RecipeCheckSlide({ page }: { page: number }) {
   return (
     <SlideFrame
       kicker="Gør det gentageligt"
-      title="Skill husker. Hook tjekker."
-      lead="En skill er opskriften, Claude kan vælge at følge. Et hook er kontrollen, der kører af sig selv — også når ingen husker den."
+      title="Hooks tjekker. Hver gang."
+      lead="Et hook kører automatisk, når en bestemt hændelse sker — uanset hvad Claude vælger at gøre."
       page={page}
     >
       <div className="repeatable-work flex h-full min-h-0 flex-col overflow-hidden">
-        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[26px]">
-          {repeatableColumns.map((column, index) => (
-            <Reveal key={column.number} delay={0.1 + index * 0.16} className="min-h-0">
-              <article
-                className={cn("flex h-full min-h-0 flex-col border p-[34px]", column.tone)}
-                data-repeatable={column.heading}
-              >
-                <div className="flex items-baseline gap-[20px]">
-                  <span className="slide-caption font-mono text-slide-accent">{column.number}</span>
-                  <h3 className="slide-title leading-none">{column.heading}</h3>
+        <Reveal delay={0.1} className="min-h-0 flex-1">
+          <div className="grid h-full min-h-0 grid-rows-[1fr_1.25fr_1fr] gap-[18px]">
+            <article className="grid grid-cols-[360px_1fr] items-center gap-[32px] border border-slide-rule bg-slide-surface px-[34px] py-[22px]">
+              <div>
+                <p className="slide-chrome font-mono text-slide-accent">PreToolUse</p>
+                <h3 className="slide-body mt-[10px]">Før værktøjet kører</h3>
+              </div>
+              <p className="slide-body text-slide-ink-soft">
+                Tjek kommandoen — og blokér den, hvis den bryder jeres regler.
+              </p>
+            </article>
+            <article className="grid grid-cols-[360px_1fr] items-center gap-[32px] border border-slide-green bg-slide-sage/40 px-[34px] py-[22px]">
+              <div>
+                <p className="slide-chrome font-mono text-slide-green">PostToolUse · Edit / Write</p>
+                <h3 className="slide-body mt-[10px]">Efter en filændring</h3>
+              </div>
+              <div>
+                <div className="flex items-center gap-[18px]">
+                  <p className="slide-caption">Claude retter en fil</p>
+                  <span aria-hidden="true" className="slide-body-lg text-slide-green">→</span>
+                  <p className="slide-caption bg-slide-navy px-[20px] py-[14px] font-mono text-slide-bg">scripts/tjek-tal.sh</p>
+                  <span aria-hidden="true" className="slide-body-lg text-slide-green">→</span>
+                  <p className="slide-caption">Fejl retur til Claude</p>
                 </div>
-                <p className="slide-body mt-[20px] text-slide-ink-soft">{column.summary}</p>
-                <div className="mt-[26px] bg-slide-navy px-[26px] py-[20px] text-slide-bg">
-                  <p className="slide-chrome font-mono text-slide-bg/60">{column.file}</p>
-                  <div className="mt-[12px] flex flex-col gap-[6px]">
-                    {column.lines.map((line) => (
-                      <p key={line} className="slide-caption font-mono text-slide-bg/85">
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-                <p className="slide-caption mt-auto border-t border-slide-ink/15 pt-[18px] font-semibold text-slide-ink">
-                  {column.trigger}
-                </p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+                <p className="slide-caption mt-[16px] text-slide-ink-soft">Tjekket giver feedback; ændringen er allerede sket.</p>
+              </div>
+            </article>
+            <article className="grid grid-cols-[360px_1fr] items-center gap-[32px] border border-slide-rule bg-slide-surface px-[34px] py-[22px]">
+              <div>
+                <p className="slide-chrome font-mono text-slide-accent">Stop</p>
+                <h3 className="slide-body mt-[10px]">Når Claude vil slutte</h3>
+              </div>
+              <p className="slide-body text-slide-ink-soft">
+                Kør et afsluttende tjek — og få Claude til at fortsætte, hvis noget mangler.
+              </p>
+            </article>
+          </div>
+        </Reveal>
         <Reveal delay={0.48} className="mt-[24px] shrink-0">
           <p className="slide-body border-l-[7px] border-slide-good pl-[24px] text-slide-ink-soft">
-            Start med dét, I ellers ville kontrollere hver gang. Begge dele findes i Claude Code.
+            Skills guider Claude; hooks håndhæver kontrollen.
           </p>
         </Reveal>
       </div>
@@ -1365,11 +1509,6 @@ export const slides: Slide[] = [
     render: (page) => <FolderSlide page={page} />,
   },
   {
-    id: "tilladelser",
-    title: "Hvor meget må Claude gøre selv",
-    render: (page) => <PermissionModesSlide page={page} />,
-  },
-  {
     id: "vaerktoej",
     title: "Hvornår bruger du hvad",
     render: (page) => <ToolChoiceSlide page={page} />,
@@ -1380,9 +1519,42 @@ export const slides: Slide[] = [
     render: (page) => <TrifectaSlide page={page} />,
   },
   {
+    id: "opgave-chat",
+    title: "Øvelse 1 · Få jord under neglene",
+    render: (page) => <ExerciseBriefSlide page={page} brief={chatBrief} />,
+  },
+  {
+    id: "oevelse-chat",
+    title: "Øvelse 1 · Chat og Projects",
+    render: (page) => (
+      <ExerciseSlide
+        page={page}
+        kicker="Øvelse 1 · Chat og Projects"
+        title="Prøv det i Chat"
+        lead="Vi går rundt. Sig til, når noget ikke opfører sig, som I forventede."
+        minutes={scheduleById["exercise-chat"].duration}
+      />
+    ),
+  },
+  {
+    id: "tilladelser",
+    title: "Hvor meget må Claude gøre selv",
+    render: (page) => <PermissionModesSlide page={page} />,
+  },
+  {
     id: "plan-mode",
     title: "Plan først. Godkend bagefter",
     render: (page) => <PlanSlide page={page} />,
+  },
+  {
+    id: "model-effort",
+    title: "Vælg model og tænketid",
+    render: (page) => <ModelEffortSlide page={page} />,
+  },
+  {
+    id: "token-economics",
+    title: "Små opgaver. Mindre spild",
+    render: (page) => <TokenEconomicsSlide page={page} />,
   },
   {
     id: "vaegt",
@@ -1395,14 +1567,22 @@ export const slides: Slide[] = [
     render: (page) => <PromptSlide page={page} />,
   },
   {
-    id: "opgaver",
-    title: "Jeres opgaver i dag",
-    render: (page) => <TasksSlide page={page} />,
+    id: "opgave-code",
+    title: "Øvelse 2 · Byg noget, I kan gentage",
+    render: (page) => <ExerciseBriefSlide page={page} brief={codeBrief} />,
   },
   {
-    id: "workshop",
-    title: "Prøv jeres idéer af",
-    render: (page) => <WorkshopSlide page={page} />,
+    id: "oevelse-code",
+    title: "Øvelse 2 · Claude Code",
+    render: (page) => (
+      <ExerciseSlide
+        page={page}
+        kicker="Øvelse 2 · Claude Code"
+        title="Byg det i Code"
+        lead="Hold pause, når I har brug for det. Har I noget at vise, er der tid til det."
+        minutes={scheduleById["exercise-code"].duration}
+      />
+    ),
   },
   {
     id: "opsamling",
@@ -1416,7 +1596,7 @@ export const slides: Slide[] = [
   },
   {
     id: "opskrift-og-kontrol",
-    title: "Opskrift + kontrol",
+    title: "Hooks tjekker. Hver gang.",
     render: (page) => <RecipeCheckSlide page={page} />,
   },
   {
