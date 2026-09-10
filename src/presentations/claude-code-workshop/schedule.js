@@ -26,7 +26,7 @@ export const workshopSchedule = [
     duration: 40,
     heading: "Øvelse: Claude Code",
     note: "I bygger videre - nu med code.",
-  }
+  },
 //   {
 //     id: "closing",
 //     duration: 60,
