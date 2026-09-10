@@ -638,8 +638,8 @@ function ModelEffortSlide({ page }: { page: number }) {
   return (
     <SlideFrame
       kicker="Model og tænketid"
-      title="Vælg model og tænketid."
-      lead="Tommelfingerregel: De fleste opgaver kan løses med Medium."
+      title="To valg: model og tænketid"
+      lead="Mod højre: mere kapacitet eller tænketid — højere omkostning."
       page={page}
       footer="Kilde: code.claude.com/docs/en/model-config · Niveauer afhænger af model og adgang"
     >
@@ -649,17 +649,25 @@ function ModelEffortSlide({ page }: { page: number }) {
             <h3 className="slide-body-lg">Vælg model</h3>
             <p className="mt-[12px] text-[26px] text-slide-ink-soft">Hvor svær er opgaven?</p>
           </div>
-          <div className="grid grid-cols-3 gap-[20px]">
-            {[
-              ["Lettere · fx Haiku", "Små, entydige rettelser med et klart tjek."],
-              ["Balanceret · fx Sonnet", "Dagligt arbejde og afgrænset implementering."],
-              ["Stærkere · fx Opus", "Svære planer, uklare krav og risikable valg."],
-            ].map(([title, text]) => (
-              <div key={title} className="border-t-[4px] border-slide-accent bg-slide-surface p-[24px]">
-                <h4 className="text-[30px] font-medium">{title}</h4>
-                <p className="mt-[12px] text-[28px] leading-[1.35] text-slide-ink-soft">{text}</p>
-              </div>
-            ))}
+          <div>
+            <div className="grid grid-cols-3 gap-[20px]">
+              {[
+                ["Haiku", "Kræver tæt guidning", "Små, tydelige opgaver. Giv konkrete trin og tjek resultatet.", "bg-slide-accent/5"],
+                ["Sonnet", "God til implementering", "Afgrænsede opgaver og dagligt kodearbejde.", "bg-slide-accent/10"],
+                ["Opus", "Stærkest til planlægning", "Komplekse planer, uklare krav og svære afvejninger.", "bg-slide-accent/20"],
+              ].map(([title, role, text, tint]) => (
+                <div key={title} className={cn("border-t-[4px] border-slide-accent p-[24px]", tint)}>
+                  <h4 className="text-[36px] font-medium">{title}</h4>
+                  <p className="mt-[12px] text-[27px] font-medium">{role}</p>
+                  <p className="mt-[10px] text-[26px] leading-[1.35] text-slide-ink-soft">{text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-[18px] flex items-center gap-[20px] text-[26px] font-medium text-slide-accent">
+              <span>Enkle opgaver</span>
+              <span aria-hidden="true" className="h-[3px] min-w-[40px] flex-1 bg-slide-accent" />
+              <span>Mere kapacitet · højere tokenomkostning →</span>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-[280px_1fr] gap-[40px] border-t border-slide-rule pt-[28px]">
@@ -676,14 +684,15 @@ function ModelEffortSlide({ page }: { page: number }) {
                 </div>
               ))}
             </div>
-            <div className="mt-[16px] flex items-center gap-[20px] text-[25px] text-slide-ink-soft">
-              <span>Hurtigere / færre tokens</span><span className="h-px flex-1 bg-slide-rule" /><span>Mere tænketid / flere tokens →</span>
+            <div className="mt-[18px] flex items-center gap-[20px] text-[26px] font-medium text-slide-accent">
+              <span>Lavere forbrug</span>
+              <span aria-hidden="true" className="h-[3px] min-w-[40px] flex-1 bg-slide-accent" />
+              <span>Mere tænketid · flere tokens · højere forbrug →</span>
             </div>
-            <p className="mt-[20px] text-[27px] leading-[1.35]">Skru op ved svær fejlfinding eller dyre fejl — ikke bare fordi opgaven er lang.</p>
           </div>
         </div>
         <p className="border-l-[4px] border-slide-accent pl-[24px] text-[27px] leading-[1.35] text-slide-ink-soft">
-          <strong className="font-medium text-slide-ink">Ultracode er noget andet:</strong> Extra High + koordinering af workflows. Ikke et trin over Max.
+          <strong className="font-medium text-slide-ink">Vælg model efter opgaven. Start med Medium.</strong> Skru op ved svær fejlfinding eller dyre fejl.
         </p>
       </div>
     </SlideFrame>
