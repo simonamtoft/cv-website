@@ -120,9 +120,13 @@ test.describe('Claude Code workshop presentation', () => {
   });
 
   test('the workshop countdown keeps running across slide navigation', async ({ page }) => {
-    await page.goto(`${route}?slide=19`);
-    await expect(page.getByRole('heading', { name: 'Choose slides' })).toBeVisible();
-    await page.getByRole('button', { name: /^Present \d+ slides$/ }).click();
+    await openDeck(page);
+    await openOverview(page);
+    await page
+      .locator('article')
+      .filter({ hasText: 'Byg det i Code' })
+      .getByRole('button')
+      .click();
 
     const countdown = page.locator('.workshop-countdown[data-workshop-duration="40"]');
     const clock = countdown.locator('p').first();

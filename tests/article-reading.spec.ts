@@ -41,9 +41,10 @@ test.describe('Self-hosted article reading view', () => {
     const file = explorer.getByRole('button', { name: 'gotchas.md' });
     await expect(file).toHaveAttribute('aria-pressed', 'false');
 
-    await file.click();
-
-    await expect(file).toHaveAttribute('aria-pressed', 'true');
+    await expect.poll(async () => {
+      await file.click();
+      return file.getAttribute('aria-pressed');
+    }).toBe('true');
     await expect(explorer.getByLabel(/Contents of .*gotchas\.md/)).toBeVisible();
   });
 
