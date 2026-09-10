@@ -58,7 +58,9 @@ export function ToolChoiceSlide({ page }: { page: number }) {
                         ? "bg-slide-pink"
                         : index === 2
                           ? "bg-slide-sage/45"
-                          : "bg-slide-surface",
+                          : index === 1
+                            ? "bg-slide-blue"
+                            : "bg-slide-surface",
                     )}
                   >
                     <h3 className="slide-body-lg font-display font-bold uppercase leading-tight">
@@ -79,7 +81,7 @@ export function ToolChoiceSlide({ page }: { page: number }) {
                   <td className="bg-slide-surface px-[22px] py-[6px] align-top">
                     <p className="slide-body text-slide-ink-soft">{a}</p>
                   </td>
-                  <td className="bg-slide-surface px-[22px] py-[6px] align-top">
+                  <td className="bg-slide-blue/30 px-[22px] py-[6px] align-top">
                     <p className="slide-body text-slide-ink-soft">{b}</p>
                   </td>
                   <td className="bg-slide-sage/20 px-[22px] py-[6px] align-top">

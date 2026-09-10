@@ -5,7 +5,7 @@
 /*
  * Design system: Implement Consulting Group brand.
  * Cream/light-grey foundation, black text, colour blocks (maroon, pink,
- * dark green, sage, brown), yellow highlighter. Condensed caps display
+ * dark green, sage, brown, blue), yellow highlighter. Condensed caps display
  * type (Grotzec substitute) + Swiss grotesque body (Akkurat substitute).
  */
 
@@ -51,6 +51,7 @@
   --color-slide-green: var(--slide-green);
   --color-slide-sage: var(--slide-sage);
   --color-slide-brown: var(--slide-brown);
+  --color-slide-blue: var(--slide-blue);
   --color-slide-yellow: var(--slide-yellow);
 
   --font-display: "Oswald", "Impact", "Arial Narrow", sans-serif;
@@ -97,6 +98,7 @@
   --slide-green: oklch(0.467 0.037 191);
   --slide-sage: oklch(0.691 0.029 173.3);
   --slide-brown: oklch(0.574 0.08 63.7);
+  --slide-blue: oklch(0.83 0.065 245);
   --slide-yellow: oklch(0.799 0.144 87.9); /* highlighter #E4B73C */
 }
 
