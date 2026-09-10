@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { scheduleById } from "../schedule";
 import { ChatVersusCodeSlide } from "./slides/ChatVersusCodeSlide";
+import { ContextWindowSlide } from "./slides/ContextWindowSlide";
 import { ClosingSlide } from "./slides/ClosingSlide";
 import { DebriefSlide } from "./slides/DebriefSlide";
 import {
@@ -68,6 +69,11 @@ export const slides: Slide[] = [
     id: "mappen",
     title: "Mappen er Claudes verden",
     render: (page) => <FolderScopeSlide page={page} />,
+  },
+  {
+    id: "context-window",
+    title: "Hver besked og læst fil fylder",
+    render: (page) => <ContextWindowSlide page={page} />,
   },
   {
     id: "vaerktoej",

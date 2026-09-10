@@ -240,8 +240,8 @@ function Deck({ slides: selectedSlides, allSlides, excludedIds, onToggleSlide })
     const isIncluded = selectedIndex !== -1;
     if (isIncluded && selectedSlides.length === 1) return;
 
-    if (selectedIndex === active) {
-      const nextIndex = active < selectedSlides.length - 1 ? active : active - 1;
+    if (slide.id === activeSlideId.current) {
+      const nextIndex = selectedIndex < selectedSlides.length - 1 ? selectedIndex : selectedIndex - 1;
       activeSlideId.current = selectedSlides[nextIndex].id;
     }
 
