@@ -1359,80 +1359,6 @@ function IcebergSlide({ page }: { page: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 20: Hvor langt går vi nu                                           */
-/* ------------------------------------------------------------------ */
-
-const nowTrack: string[] = [
-  "Udkast og noter uden fortrolige data",
-  "Research: lovgivning, marked, leverandører",
-  "Prototyper på ufølsomme data",
-  "Gennemgang af eksisterende kode",
-];
-
-const nextTrack: string[] = [
-  "Mapper med fortroligt materiale",
-  "Connectors og læseadgang til interne systemer",
-  "Personhenførbare data",
-];
-
-function NextStepsSlide({ page }: { page: number }) {
-  const tracks: Array<[string, string, string, string[], string]> = [
-    [
-      "01",
-      "Nu",
-      "Inden for det, I allerede må. Ingen nye aftaler, ingen nye adgange.",
-      nowTrack,
-      "border-slide-green bg-slide-sage/40",
-    ],
-    [
-      "02",
-      "Kræver en aftale først",
-      "Stor værdi — men jura, sikkerhed og data skal med, før I går i gang.",
-      nextTrack,
-      "border-slide-rule bg-slide-surface",
-    ],
-  ];
-  return (
-    <SlideFrame
-      kicker="Herfra"
-      title="Hvor langt går vi nu?"
-      lead="Ikke om I må endnu — men hvilke døre der står åbne."
-      page={page}
-    >
-      <div className="next-steps flex h-full min-h-0 flex-col overflow-hidden">
-        <div className="grid min-h-0 flex-1 grid-cols-2 gap-[26px]">
-          {tracks.map(([number, heading, body, items, tone], index) => (
-            <Reveal key={number} delay={0.1 + index * 0.16} className="min-h-0">
-              <article className={cn("flex h-full min-h-0 flex-col border p-[34px]", tone)} data-track={heading}>
-                <span className="slide-caption font-mono text-slide-accent">{number}</span>
-                <h3 className="slide-body-lg mt-[18px] font-display font-bold uppercase leading-none">
-                  {heading}
-                </h3>
-                <p className="slide-body mt-[16px] max-w-[640px] text-slide-ink-soft">{body}</p>
-                <ul className="mt-[26px] flex flex-col gap-[16px]">
-                  {items.map((item) => (
-                    <li key={item} className="slide-body flex gap-[14px] text-slide-ink">
-                      <span className="shrink-0 font-mono text-slide-accent">—</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal delay={0.48} className="mt-[24px] shrink-0">
-          <p className="slide-body border-l-[7px] border-slide-accent bg-slide-pink/25 px-[28px] py-[18px] text-slide-ink-soft">
-            <span className="font-semibold text-slide-ink">Start, hvor det er let.</span>{" "}
-            Mål på, hvad der faktisk bliver brugt — ikke på, hvad der er givet lov til.
-          </p>
-        </Reveal>
-      </div>
-    </SlideFrame>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* 15: Afslutning                                                     */
 /* ------------------------------------------------------------------ */
 
@@ -1603,11 +1529,6 @@ export const slides: Slide[] = [
     id: "isbjerg",
     title: "Prototype vs. drift",
     render: (page) => <IcebergSlide page={page} />,
-  },
-  {
-    id: "hvor-langt",
-    title: "Hvor langt går vi nu",
-    render: (page) => <NextStepsSlide page={page} />,
   },
   {
     id: "afslutning",
