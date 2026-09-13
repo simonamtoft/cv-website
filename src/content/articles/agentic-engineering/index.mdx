@@ -74,11 +74,15 @@ sources:
   - title: "Tang, L. et al. - WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution"
     url: "https://arxiv.org/pdf/2608.27454"
     note: "separating active skills from traces and a persistent learning record; validation-gated skill evolution and its limits"
+  - title: "Mazmanov, D. (Spotify) - Portal by Spotify Cut My Claude Code Token Usage by 90%"
+    url: "https://engineering.atspotify.com/2026/09/portal-by-spotify-cut-my-claude-code-token-usage-by-90/"
+    note: "a first-person case study of hook-enforced delegation of broad reads to a cheaper worker, including its latency and reasoning limits"
 ---
 
 import LeveragePyramid from './LeveragePyramid';
 import ContextWindow from './ContextWindow';
 import ContextFlow from './ContextFlow';
+import ReadRouting from './ReadRouting';
 import Primitives from './Primitives';
 import AgentAnatomy from './AgentAnatomy';
 import HarnessController from './HarnessController';
@@ -138,6 +142,14 @@ All of that material competes for space in working memory: system instructions y
 </Slide>
 
 In long coding sessions, I find reliability tends to fall as the window fills. The model's own earlier output can be especially costly because errors and stale assumptions remain in view. A larger context window does not remove this problem; it can also give you a larger haystack. Isolation often matters more than raw capacity.
+
+The same distinction has an economic consequence. Broad reference reads are often extraction work, not reasoning work. Spotify's Shunt hooks redirect those reads to a cheaper worker and return only a concise summary; its author reports roughly 90% mean token savings in a Java monorepo. That is a product case study, not a general benchmark, and it trades 10–30 seconds of latency for the saving. More importantly, the summary is a map, not a substitute for direct inspection when you need to edit, debug, or make a consequential decision.
+
+<Slide title="Hand off extraction, keep the decision">
+
+<ReadRouting />
+
+</Slide>
 
 A useful rhythm follows: *expand to plan, then reset to execute*. Let the context grow while gathering the material needed for research and planning. Once the plan is sound, begin implementation in a clean window with only that plan and the necessary project context.
 
