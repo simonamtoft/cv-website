@@ -3,7 +3,7 @@ title: "My Agentic Engineering Setup"
 dek: "The planning artifacts, worktrees, and cross-harness resources I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-09-02"
+lastUpdated: "2026-09-12"
 sources:
   - title: "Backlog.md"
     url: "https://github.com/MrLesk/Backlog.md"
@@ -17,6 +17,9 @@ sources:
   - title: "Pedersen, S. A. - coding-harness"
     url: "https://github.com/simonamtoft/coding-harness"
     note: "the canonical cross-harness repository for the configuration boundaries, Pi package manifest, and operating practices described in this article"
+  - title: "Mazmanov, D. (Spotify) - Portal by Spotify Cut My Claude Code Token Usage by 90%"
+    url: "https://engineering.atspotify.com/2026/09/portal-by-spotify-cut-my-claude-code-token-usage-by-90/"
+    note: "the hook-to-skill-to-cheaper-worker pattern that informed the bulk-read route; its reported savings are not treated as a result for this setup"
 ---
 
 import WorktreeMap from './WorktreeMap';
@@ -35,6 +38,12 @@ For larger efforts, Backlog tasks keep the record of scope, dependencies, decisi
 Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. The harness keeps filesystem work inside the project or a private session workspace, so a coding task does not casually become a home-directory task. That keeps assumptions visible and the agent's operating context narrow.
 
 I also prefer one focused task per session. When the context grows too large, Pi's `/ctx-monitor` shows what is consuming it and `/handoff` carries the decisions and state into a fresh session.
+
+## Routing bulk reads
+
+I now keep large reference reads out of the parent context when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, currently pinned to a cheaper model, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
+
+This is a redirect, not an automatic hand-off. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code. In a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9% and combined parent-and-worker cost by 80–84%. That is not a general benchmark: I measure parent-context reduction, combined cost, latency, and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern, not a result I claim for this setup.
 
 ## Isolated execution with worktrees
 
