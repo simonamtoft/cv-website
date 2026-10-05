@@ -13,13 +13,13 @@ const publicationsEvents = [
   //   authors: ["First Author", "Second Author"], // Optional - array of author names
   // }
   {
-    type: "presentation",
-    title: "Claude Code Workshop",
-    originalTitle: "Byg noget i dag, som du kan bruge på mandag",
-    date: "2026 Aug",
-    link: "/talks/claude-code-workshop",
-    venue: "Practical workshop",
-    description: "A hands-on Danish-language workshop deck about choosing a useful task, working safely with files, using Plan mode, and understanding what it takes to move from prototype to production.",
+    type: "webinar",
+    title: "Agentic Coding (5): A Secure Sandbox for Your Coding Agent",
+    originalTitle: "Kod med AI (5): Sikker sandkasse til din kodeagent",
+    date: "2026 Nov",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-5-sikker-sandkasse-til-din-kodeagent-368803",
+    venue: "IDA AI",
+    description: "Fifth session in the Agentic Coding series. Covers allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
   },
   {
     type: "webinar",

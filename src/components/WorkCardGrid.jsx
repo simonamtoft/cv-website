@@ -45,7 +45,6 @@ const workTypeDetails = {
   article: { icon: 'fa-file-alt', label: 'Article' },
   webinar: { icon: 'fa-video', label: 'Webinar' },
   conference: { icon: 'fa-chalkboard-teacher', label: 'Conference' },
-  presentation: { icon: 'fa-display', label: 'Presentation' },
 };
 
 const WorkCard = ({ item }) => {
