@@ -3,7 +3,7 @@ title: "My Agentic Engineering Setup"
 dek: "The planning artifacts, worktrees, and cross-harness resources I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-09-12"
+lastUpdated: "2026-10-06"
 sources:
   - title: "Backlog.md"
     url: "https://github.com/MrLesk/Backlog.md"
@@ -35,7 +35,7 @@ For larger efforts, Backlog tasks keep the record of scope, dependencies, decisi
 
 ## Operational guardrails
 
-Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. The harness keeps filesystem work inside the project or a private session workspace, so a coding task does not casually become a home-directory task. That keeps assumptions visible and the agent's operating context narrow.
+Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. Pi's sandbox generally confines writes to the current project or a private session workspace, with limited exceptions for my plugin checkouts. Reads outside that scope may require approval; its Bash protections are lexical, not an OS-enforced sandbox. That keeps assumptions visible and the agent's operating context narrow.
 
 I also prefer one focused task per session. When the context grows too large, Pi's `/ctx-monitor` shows what is consuming it and `/handoff` carries the decisions and state into a fresh session.
 
@@ -43,7 +43,7 @@ I also prefer one focused task per session. When the context grows too large, Pi
 
 I now keep large reference reads out of the parent context when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, currently pinned to a cheaper model, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
 
-This is a redirect, not an automatic hand-off. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code. In a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9% and combined parent-and-worker cost by 80–84%. That is not a general benchmark: I measure parent-context reduction, combined cost, latency, and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern, not a result I claim for this setup.
+This is a redirect, not an automatic hand-off. In a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of 200 sessions started September 13–24, 2026, the hook redirected 102 of 3,664 parent `read` calls (2.8%). That counts attempted broad reads blocked by the hook, not worker dispatches or all opportunities for useful extraction. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents; search output is outside the gate too. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code. In a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9%. Applying parent-model prices to those measured tokens and the worker's reported cost yielded an estimated 80–84% saving in combined parent-and-worker cost, not an observed production saving. That is not a general benchmark: I measure parent-context reduction, combined cost, latency, and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern, not a result I claim for this setup.
 
 ## Isolated execution with worktrees
 
@@ -59,6 +59,6 @@ The goal is not to maximise the number of tickets. It is to keep the backlog cur
 
 ## One setup across harnesses
 
-My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains only user-authored resources both harnesses can use: `AGENTS.md` and skills. Pi keeps its own extensions, prompts, and agents. Claude Code keeps its own hooks, settings, themes, and agents. Credentials, sessions, caches, provider configuration, and generated state remain local.
+My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains user-authored resources both harnesses can use: `AGENTS.md`, skills, and command-safety and read-routing regression contracts. Pi keeps its own extensions, prompts, and agents. Claude Code keeps its own hooks, settings, themes, and agents. Credentials, sessions, caches, provider configuration, and generated state remain local.
 
 A link script installs the shared resources into both [Pi](https://pi.dev/) and Claude Code without maintaining copies. Its optional package step installs the Pi packages listed in the version-controlled manifest. These are currently `pi-worktree-agents` and `pi-status-footer`. Local Pi settings record what is installed on a given machine. I added and removed the artifacts in response to observed failure modes. Keeping the shared layer small means another harness can join later without moving its source of truth.
