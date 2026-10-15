@@ -33,7 +33,7 @@ const publicationsEvents = [
       { icon: "fa-star", value: "9.0/10" },
       { icon: "fa-users", value: "58 participants" },
     ],
-    recording: "https://videos.ida.dk/media/Webinar%3A+Kod+med+AI+%284%29%3A+Harness+Engineering/1_3th7c91p",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_3th7c91p",
   },
   {
     type: "webinar",
@@ -47,7 +47,7 @@ const publicationsEvents = [
       { icon: "fa-star", value: "8.4/10" },
       { icon: "fa-users", value: "440 participants" },
     ],
-    recording: "https://videos.ida.dk/media/Kod%20med%20AI%20(3)%3A%20Lad%20agenten%20k%C3%B8re/1_dapgezhw",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_dapgezhw",
   },
   {
     type: "webinar",
@@ -61,7 +61,7 @@ const publicationsEvents = [
       { icon: "fa-star", value: "7.6/10" },
       { icon: "fa-users", value: "250 participants" },
     ],
-    recording: "https://videos.ida.dk/media/Kod%20med%20AI%20(2)%3A%20Fra%20id%C3%A9%20til%20prototype/1_vnb7u59n",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_vnb7u59n",
   },
   {
     type: "webinar",
@@ -75,7 +75,7 @@ const publicationsEvents = [
       { icon: "fa-star", value: "8.7/10" },
       { icon: "fa-users", value: "340 participants" },
     ],
-    recording: "https://videos.ida.dk/media/Kod+med+AI+%281%29%3A+Workflows+That+Actually+Work/1_e43bk1om",
+    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_e43bk1om",
   },
   {
     type: "article",
