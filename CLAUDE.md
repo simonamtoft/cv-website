@@ -29,6 +29,11 @@ npm run test:isolated
 npm run check:article-sources
 ```
 
+`Taskfile.yml` wraps these scripts for [Task](https://taskfile.dev): run
+`task` to list tasks. `task verify` mirrors `.agent/verify.sh` (build, article
+sources, Playwright on a free port, `npm audit`). Tasks depend on `install`,
+which reruns `npm ci` only when `package.json` or `package-lock.json` changes.
+
 Deployment is automatic: pushing to `main` triggers the GitHub Actions
 workflow in `.github/workflows/static.yml`, which builds the site and
 publishes it to GitHub Pages.

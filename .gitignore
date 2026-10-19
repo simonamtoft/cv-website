@@ -40,3 +40,5 @@ node_modules/
 .fp/
 
 PKA - Claude Code Workshop (1)/
+# Taskfile checksum cache
+.task/

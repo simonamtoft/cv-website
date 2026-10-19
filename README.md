@@ -2,8 +2,12 @@
 
 Run locally
 ```
-npm start
+npm start   # or: task dev
 ```
+
+Run `task` to list the [Taskfile](https://taskfile.dev) tasks (`dev`, `build`,
+`preview`, `test`, `check:sources`, `audit`, `verify`). They wrap the npm
+scripts in `package.json`.
 
 ## Deployment
 
