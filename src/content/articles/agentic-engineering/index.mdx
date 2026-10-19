@@ -3,7 +3,7 @@ title: "Agentic Engineering"
 dek: "When you can't control the model, you can control everything around it - the context you feed it and the harness you run it in. That is agentic engineering."
 slug: "agentic-engineering"
 series: "Agentic Engineering"
-lastUpdated: "2026-08-31"
+lastUpdated: "2026-10-19"
 sources:
   - title: "Böckeler, B. - Harness engineering for coding agent users"
     url: "https://martinfowler.com/articles/harness-engineering.html"
@@ -50,6 +50,12 @@ sources:
   - title: "Faros AI - The Acceleration Whiplash (AI Engineering Report 2026)"
     url: "https://www.faros.ai/research/ai-acceleration-whiplash"
     note: "cross-industry telemetry: throughput up, but bugs, incidents, churn and review time rising faster"
+  - title: "Demirer, M., Musolff, L. & Yang, L. - Writing Code vs. Shipping Code: Productivity Effects Across Generations of AI Coding Tools (NBER WP 35275)"
+    url: "https://doi.org/10.3386/w35275"
+    note: "500k+ GitHub developers: commits multiply with each tool generation, but the gain shrinks at each step towards releases"
+  - title: "Chen, F. & Stratton, J. - Artificial Intelligence in the Firm: Bottlenecks in Software Production"
+    url: "https://fion.ac/jellyfish.pdf"
+    note: "Jellyfish data from 718 firms: AI agents raise lines of code about 30%, but resolved issues and epics show no significant gain while review time rises 49%"
   - title: "Ocytko, B. (Zalando) - Agentic Engineering at Zalando: A Snapshot"
     url: "https://engineering.zalando.com/posts/2026/08/agentic-engineering-at-zalando-a-snapshot.html"
     note: "the organizational harness: shared infrastructure, plural tools, observable usage, and risk-sensitive review"
@@ -88,6 +94,7 @@ import AgentAnatomy from './AgentAnatomy';
 import HarnessController from './HarnessController';
 import VerificationLadder from './VerificationLadder';
 import SkillExplorer from './SkillExplorer';
+import ShippingFunnel from './ShippingFunnel';
 import './agentic-engineering.css';
 
 {/* Present mode is a curated deck: only the bits wrapped in <Slide> below become
@@ -257,6 +264,18 @@ An organisation does not need every team to use the same agent. Zalando's experi
 Anthropic is already seeing why the shared layer matters. Claude authored more than 80% of its merged code in May 2026, while merged code volume per engineer reached eight times its 2024 level. Anthropic cautions that lines of code overstate productivity, but human review still became a bottleneck. It now runs an automated Claude reviewer before merge.
 
 Faros found higher throughput alongside more bugs, incidents, churn, and review delay across 22,000 developers. Its data is not directly comparable with Anthropic's. The narrower point is that code volume says little about whether an organisation can review and absorb the work.
+
+A larger study traces where the extra code goes. Across more than 500,000 GitHub developers, [Demirer, Musolff, and Yang](https://doi.org/10.3386/w35275) find weekly commits up 30% with autocomplete, 180% once synchronous agents such as Claude Code are added, and 240% with asynchronous agents. The gain shrinks at each step towards shipped software: across all three generations, 240% more commits become roughly 30% more releases.
+
+<Slide title="The gain shrinks on the way to shipping">
+
+<ShippingFunnel />
+
+</Slide>
+
+Larger releases explain only a small part of the gap. Most of it is experimentation that does not get past the stages where humans are the bottleneck: deletions grow faster than additions, branches multiply, and more repositories are abandoned. AI and human effort behave as strong complements, and new apps in four software marketplaces roughly doubled from early 2025 without any rise in total usage.
+
+That data is open-source only and runs to mid-2026; the authors expect bottlenecks inside firms to bind tighter. Enterprise data points the same way. [Chen and Stratton](https://fion.ac/jellyfish.pdf) use Jellyfish data from more than 700 firms. Adopting AI agents brings about 30% more lines of code per engineer, but no significant increase in resolved issues or completed features and no measurable change in employment. Pull requests take 49% longer to review, which points to code review as the bottleneck. The two 30% figures measure different things, and neither study finds a ceiling: the open-source gains grew with each tool generation. What they show is that only a fraction of the extra code reaches shipped and used software.
 
 <Slide title="The bottleneck moves, it does not vanish">
 

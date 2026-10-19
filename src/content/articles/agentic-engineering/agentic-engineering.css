@@ -13,6 +13,7 @@
 .article-body > .agent-anatomy,
 .article-body > .harness-controller,
 .article-body > .verification-ladder,
+.article-body > .shipping-funnel,
 .article-body > .skill-explorer {
   grid-column: 1 / -1;
   justify-self: center;
@@ -430,7 +431,8 @@
 .context-flow,
 .primitives,
 .agent-anatomy,
-.verification-ladder {
+.verification-ladder,
+.shipping-funnel {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 16px;
@@ -1421,6 +1423,152 @@
   }
 }
 
+/* ---------- shipping funnel (NBER sync-agent gains, Sankey drop-off) ---------- */
+/* Two canvases are rendered; CSS shows the horizontal one on wide screens and
+   the vertical one on narrow screens. Overlay text is positioned in percent of
+   the canvas so it tracks the scaled SVG. */
+.sf-step {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.sf-step.is-shown {
+  opacity: 1;
+}
+
+.sf-canvas {
+  position: relative;
+  width: 100%;
+}
+
+.sf-canvas > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sf-vertical {
+  display: none;
+}
+
+.sf-head {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  white-space: nowrap;
+}
+
+.sf-horizontal .sf-head {
+  transform: translateY(-100%);
+}
+
+.sf-horizontal .sf-head.is-last {
+  align-items: flex-end;
+  transform: translate(-100%, -100%);
+}
+
+.sf-vertical .sf-head {
+  transform: translateY(-50%);
+  white-space: normal;
+}
+
+.sf-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.15rem, 3.2vw, 2.4rem);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.sf-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.sf-sink {
+  position: absolute;
+  transform: translate(-50%, -140%);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: color-mix(in srgb, #c85a1a 75%, var(--color-text));
+}
+
+.sf-vertical .sf-sink {
+  transform: translate(-105%, -50%);
+}
+
+.sf-filtered {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.sf-filtered-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+}
+
+.sf-filtered ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sf-filtered li {
+  border: 1px solid color-mix(in srgb, #c85a1a 40%, var(--color-border));
+  border-radius: var(--radius-full);
+  background: var(--color-bg);
+  padding: 0.2rem 0.65rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+}
+
+.shipping-funnel figcaption {
+  margin-top: 1rem;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 0.75rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 720px) {
+  .sf-horizontal {
+    display: none;
+  }
+
+  .sf-vertical {
+    display: block;
+    max-width: 22rem;
+    margin: 0 auto;
+  }
+
+  .sf-vertical .sf-value {
+    font-size: 1.35rem;
+  }
+
+  .sf-label {
+    font-size: var(--font-size-xs);
+    line-height: 1.3;
+  }
+}
+
 /* ---------- presentation deck: compact the visuals for the slide band ----------
    Reused on a slide: full width, no outer margin, and scaled so they read from
    the back of a room, then compacted to fit between the pinned title and the
@@ -1431,7 +1579,8 @@
 .deck-slide-body .context-window,
 .deck-slide-body .context-flow,
 .deck-slide-body .primitives,
-.deck-slide-body .verification-ladder {
+.deck-slide-body .verification-ladder,
+.deck-slide-body .shipping-funnel {
   width: 100%;
   margin: 0;
   padding: clamp(1.4rem, 2.5vw, 2.4rem);
