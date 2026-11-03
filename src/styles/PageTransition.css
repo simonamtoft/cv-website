@@ -9,11 +9,15 @@
   transition: opacity 250ms ease-out, transform 250ms ease-out;
 }
 
+/* Cross-fade only. The global reduced-motion reset forces 0.01ms durations,
+   so this needs !important to keep a perceptible fade. */
 @media (prefers-reduced-motion: reduce) {
   .page-enter,
   .page-enter-active {
-    opacity: 1;
     transform: none;
-    transition: none;
+  }
+
+  .page-enter-active {
+    transition: opacity 150ms ease-out !important;
   }
 }

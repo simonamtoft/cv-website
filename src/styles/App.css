@@ -26,7 +26,15 @@
   --color-hover: #a84815;
   --color-active: #8a3a10;
   --color-focus: #c85a1a;
-  --color-disabled: #b8a090;
+
+  /* Stacking scale */
+  --z-back-to-top: 100;
+  --z-nav: 1000;
+  --z-modal: 1100;
+  --z-presentation: 2000;
+  --z-presentation-chrome: 2002;
+  --z-progress: 9999;
+  --z-skip-link: 10000;
 
   /* Spacing scale (8px base) */
   --space-xs: 0.5rem;    /* 8px */
@@ -100,6 +108,14 @@ body {
   color: var(--color-text);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li, blockquote {
+  text-wrap: pretty;
+}
+
 #root {
   display: flex;
   flex-direction: column;
@@ -154,7 +170,7 @@ a:focus-visible, button:focus-visible {
   color: var(--color-bg);
   padding: var(--space-xs) var(--space-md);
   text-decoration: none;
-  z-index: 9999;
+  z-index: var(--z-skip-link);
 }
 
 .skip-link:focus {
@@ -170,5 +186,15 @@ a:focus-visible, button:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Reveal-on-scroll targets start hidden; show them without a scroll trigger. */
+  .about,
+  .contact,
+  .timeline,
+  .timeline-item,
+  .publications-events {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

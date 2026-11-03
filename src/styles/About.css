@@ -25,13 +25,14 @@
 
 .about-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .about-image {
   flex: 0 0 auto;
-  margin-right: var(--space-3xl);
+  margin-right: var(--space-2xl);
   padding-left: 5%;
+  padding-top: var(--space-xs);
 }
 
 .profile-picture {

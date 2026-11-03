@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
   padding: 20px;
   animation: fadeIn 0.2s ease-out;
 }
@@ -63,7 +63,7 @@
   right: 16px;
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: var(--font-size-3xl);
   line-height: 1;
   cursor: pointer;
   color: var(--color-text-muted);
@@ -95,21 +95,21 @@
 
 .modal-header h2 {
   margin: 0 0 8px 0;
-  font-size: 28px;
+  font-size: var(--font-size-3xl);
   color: var(--color-text);
   font-family: 'Poppins', sans-serif;
 }
 
 .modal-header h3 {
   margin: 0 0 8px 0;
-  font-size: 20px;
+  font-size: var(--font-size-xl);
   color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .modal-dates {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   font-style: italic;
 }
@@ -131,7 +131,7 @@
 }
 
 .modal-projects h3 {
-  font-size: 20px;
+  font-size: var(--font-size-xl);
   margin: 0 0 16px 0;
   color: var(--color-text);
   border-bottom: 2px solid var(--accent-amber);
@@ -164,13 +164,13 @@
 
 .project-card h4 {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--font-size-lg);
   color: var(--color-text);
   font-family: 'Poppins', sans-serif;
 }
 
 .project-years {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -193,7 +193,7 @@
   color: var(--accent-text);
   padding: 4px 12px;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
 }
 
@@ -203,7 +203,7 @@
 }
 
 .modal-courses h3 {
-  font-size: 20px;
+  font-size: var(--font-size-xl);
   margin: 0 0 16px 0;
   color: var(--color-text);
   border-bottom: 2px solid var(--accent-amber);
@@ -254,7 +254,7 @@
 .courses-table td.course-number {
   font-family: 'Courier New', monospace;
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
 }
 
 .courses-table td:nth-child(2) {
@@ -291,12 +291,12 @@
   }
 
   .modal-header h2 {
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
     padding-right: 40px;
   }
 
   .modal-header h3 {
-    font-size: 18px;
+    font-size: var(--font-size-lg);
   }
 
   .modal-body {
@@ -313,7 +313,7 @@
   }
 
   .project-card h4 {
-    font-size: 16px;
+    font-size: var(--font-size-base);
   }
 
   @media (max-width: 600px) {
@@ -332,7 +332,7 @@
 
   @media (max-width: 480px) {
     .courses-table {
-      font-size: 13px;
+      font-size: var(--font-size-sm);
     }
 
     .courses-table th,
@@ -341,7 +341,7 @@
     }
 
     .courses-table td.course-number {
-      font-size: 12px;
+      font-size: var(--font-size-xs);
     }
   }
 }

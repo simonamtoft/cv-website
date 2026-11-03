@@ -2,7 +2,7 @@
   position: fixed;
   bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   right: calc(2rem + env(safe-area-inset-right, 0px));
-  z-index: 100;
+  z-index: var(--z-back-to-top);
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
