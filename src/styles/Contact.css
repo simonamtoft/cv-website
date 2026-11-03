@@ -1,14 +1,14 @@
 .contact {
   padding-top: var(--space-xl);
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
   padding-bottom: var(--space-xl);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  background: var(--color-surface);
-  text-align: center;
+  align-items: flex-start;
+  max-width: 640px;
+  margin: 0 auto;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity var(--transition-slow), transform var(--transition-slow);
@@ -35,25 +35,32 @@
 
 .contact-lead {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text);
-  max-width: 640px;
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--space-sm);
 }
 
 .contact-info {
   margin: var(--space-lg) 0;
+  width: 100%;
 }
 
 .contact-info p {
   font-size: var(--font-size-lg);
   margin: var(--space-xs) 0;
   color: var(--medium-grey);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
   align-items: center;
-  justify-content: center;
   gap: var(--space-xs);
+}
+
+.contact-info a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  overflow-wrap: anywhere;
 }
 
 .copy-btn {
@@ -65,7 +72,10 @@
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
-  padding: 2px 8px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  padding: 2px 12px;
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
   font-family: inherit;
@@ -88,8 +98,8 @@
 }
 
 .contact-info i {
-  margin-right: var(--space-xs);
   color: var(--accent-text);
+  text-align: center;
 }
 
 .contact a {
@@ -114,6 +124,10 @@
 }
 
 @media (max-width: 480px) {
+  .contact-info p {
+    font-size: var(--font-size-sm);
+  }
+
   .contact h2 {
     font-size: var(--font-size-2xl);
   }
