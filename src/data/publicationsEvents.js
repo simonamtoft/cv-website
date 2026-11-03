@@ -97,6 +97,26 @@ const publicationsEvents = [
   },
   {
     type: "conference",
+    title: "IDA Youth Summit",
+    date: "2026 Oct",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/ida-youth-summit-2026-367866",
+    venue: "IDA",
+    description: "Hosted the evening programme of IDA's summit for young volunteers together with Klara Nybo Fischer-Nielsen.",
+    metrics: [
+      { icon: "fa-star", value: "9.0/10" },
+      { icon: "fa-users", value: "68 participants" },
+    ],
+  },
+  {
+    type: "conference",
+    title: "Driving IT",
+    date: "2026 Nov",
+    link: "https://umbraco-api.ida.dk/media/jvpjol0e/driving-it-2026-program.pdf",
+    venue: "IDA",
+    description: "Denmark's main IT conference. Hosted the main stage (Kongressalen), including the AI track.",
+  },
+  {
+    type: "conference",
     title: "Driving AI",
     date: "2026 May",
     link: "https://ida.dk/driving-ai",
