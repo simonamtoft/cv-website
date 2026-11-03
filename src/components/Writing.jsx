@@ -21,6 +21,10 @@ const Writing = () => {
         <div className="essays-list">
           {essays.map((essay) => (
             <Link key={essay.slug} to={`/writing/${essay.slug}`} className="essay-item">
+              <div className="work-type-badge work-type-article">
+                <i className="fas fa-pen-nib"></i>
+                <span>Essay</span>
+              </div>
               <h3 className="essay-title">{essay.frontmatter.title}</h3>
               <p className="essay-dek">{essay.frontmatter.dek}</p>
               <p className="essay-meta">
