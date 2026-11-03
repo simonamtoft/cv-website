@@ -37,19 +37,19 @@
 
 .timeline-filter-btn.filter-work.active {
   background: rgba(200, 90, 26, 0.15);
-  color: #c85a1a;
+  color: var(--accent-text);
   border-color: rgba(200, 90, 26, 0.5);
 }
 
 .timeline-filter-btn.filter-education.active {
   background: rgba(212, 168, 67, 0.15);
-  color: #9a7020;
+  color: #7a5a14;
   border-color: rgba(212, 168, 67, 0.5);
 }
 
 .timeline-filter-btn.filter-community.active {
   background: rgba(100, 120, 80, 0.12);
-  color: #5a6e40;
+  color: #4a5c33;
   border-color: rgba(100, 120, 80, 0.5);
 }
 
@@ -138,19 +138,19 @@
 
 .category-work {
   background: rgba(200, 90, 26, 0.15);
-  color: #c85a1a;
+  color: var(--accent-text);
   border: 1px solid rgba(200, 90, 26, 0.3);
 }
 
 .category-education {
   background: rgba(212, 168, 67, 0.15);
-  color: #9a7020;
+  color: #7a5a14;
   border: 1px solid rgba(212, 168, 67, 0.3);
 }
 
 .category-community {
   background: rgba(100, 120, 80, 0.12);
-  color: #5a6e40;
+  color: #4a5c33;
   border: 1px solid rgba(100, 120, 80, 0.25);
 }
 
@@ -221,11 +221,12 @@
 }
 
 .timeline-content {
-  text-align: justify;
+  text-align: left;
+  text-wrap: pretty;
 }
 
 .timeline-item.right .timeline-content {
-  text-align: justify;
+  text-align: left;
 }
 
 /* Clickable timeline items */
@@ -239,16 +240,24 @@
 
 .view-details-hint {
   display: block;
+  width: fit-content;
   font-size: var(--font-size-sm);
-  color: var(--accent-orange);
-  font-style: italic;
+  font-weight: var(--font-weight-semibold);
+  color: var(--accent-text);
+  border: 1px solid var(--accent-text);
+  border-radius: var(--radius-full);
+  padding: 2px 12px;
   margin-top: var(--space-xs);
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.view-details-hint::after {
+  content: ' \203A';
 }
 
 .timeline-item.has-details:hover .view-details-hint {
-  opacity: 1;
+  background: var(--accent-text);
+  color: #fff;
 }
 
 .timeline-text p {
@@ -377,7 +386,7 @@
     grid-column: 1;
     padding: 0;
     width: 100%;
-    text-align: right; /* Ensure text within content is right-aligned */
+    text-align: left;
   }
 
   .timeline-icon-container {
@@ -395,7 +404,7 @@
   }
 
   .timeline-category-badge {
-    font-size: 10px;
+    font-size: var(--font-size-xs);
     padding: 1px 6px;
   }
 

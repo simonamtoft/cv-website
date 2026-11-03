@@ -31,7 +31,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .wt-heading {
@@ -78,7 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-amber);
+  color: var(--accent-text);
   font-weight: var(--font-weight-bold);
 }
 

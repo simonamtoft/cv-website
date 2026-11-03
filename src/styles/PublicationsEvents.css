@@ -162,7 +162,7 @@
   margin-bottom: var(--space-sm);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  color: var(--accent-orange);
+  color: var(--accent-text);
   text-decoration: none;
 }
 
@@ -192,12 +192,12 @@
 
 .filter-btn:hover {
   border-color: var(--accent-orange);
-  color: var(--accent-orange);
+  color: var(--accent-text);
 }
 
 .filter-btn.active {
-  background: var(--accent-orange);
-  border-color: var(--accent-orange);
+  background: var(--accent-text);
+  border-color: var(--accent-text);
   color: var(--white);
 }
 
@@ -222,7 +222,7 @@
 
 .work-type-article {
   background: rgba(200, 90, 26, 0.15);
-  color: #c85a1a;
+  color: var(--accent-text);
   border: 1px solid rgba(200, 90, 26, 0.3);
 }
 

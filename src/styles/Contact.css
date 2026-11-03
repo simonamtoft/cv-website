@@ -73,7 +73,7 @@
 }
 
 .copy-btn:hover {
-  color: var(--accent-amber);
+  color: var(--accent-text);
   border-color: var(--accent-amber);
 }
 
@@ -89,11 +89,11 @@
 
 .contact-info i {
   margin-right: var(--space-xs);
-  color: var(--accent-orange);
+  color: var(--accent-text);
 }
 
 .contact a {
-  color: var(--accent-orange);
+  color: var(--accent-text);
   text-decoration: none;
 }
 

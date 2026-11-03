@@ -31,11 +31,11 @@
 }
 
 .nav-link:hover {
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .nav-link--active {
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .nav-pill--fixed {
@@ -172,7 +172,7 @@
   }
 
   .nav-mobile-link--active {
-    color: var(--accent-amber);
+    color: var(--accent-text);
   }
 
   .nav-mobile-link--active i {

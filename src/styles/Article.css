@@ -46,7 +46,7 @@
   font-size: var(--font-size-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-amber);
+  color: var(--accent-text);
   font-weight: var(--font-weight-semibold);
   margin: 0;
 }
@@ -115,14 +115,14 @@
 
 .article-back:hover,
 .article-present-link:hover {
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .article-present-link {
   padding: 0.4rem 0.9rem;
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .article-present-link:hover {
@@ -138,7 +138,7 @@
   font-size: var(--font-size-xs);
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--accent-amber);
+  color: var(--accent-text);
   font-weight: var(--font-weight-semibold);
   margin: 0 0 0.6rem;
 }

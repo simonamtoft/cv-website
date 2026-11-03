@@ -11,6 +11,7 @@
 
   /* Terracotta / burnt sienna accent */
   --accent-amber: #c85a1a;
+  --accent-text: #a84815; /* accent-coloured text; --accent-amber stays for fills, dots, borders */
   --accent-amber-hover: #a84815;
   --accent-amber-active: #8a3a10;
 
@@ -131,7 +132,7 @@ body {
 }
 
 a {
-  color: var(--accent-amber);
+  color: var(--accent-text);
   text-decoration: none;
 }
 
@@ -149,7 +150,7 @@ a:focus-visible, button:focus-visible {
   position: absolute;
   top: -40px;
   left: 0;
-  background: var(--accent-amber);
+  background: var(--accent-text);
   color: var(--color-bg);
   padding: var(--space-xs) var(--space-md);
   text-decoration: none;

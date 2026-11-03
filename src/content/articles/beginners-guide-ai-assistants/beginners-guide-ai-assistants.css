@@ -149,7 +149,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--accent-amber);
+  color: var(--accent-text);
 }
 
 .bb-result h4 {

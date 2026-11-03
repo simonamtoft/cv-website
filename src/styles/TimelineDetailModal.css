@@ -190,7 +190,7 @@
 .tech-tag {
   display: inline-block;
   background: rgba(200, 90, 26, 0.10);
-  color: var(--accent-amber);
+  color: var(--accent-text);
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 13px;

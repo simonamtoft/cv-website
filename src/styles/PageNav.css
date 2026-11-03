@@ -21,7 +21,7 @@
 }
 
 .page-nav-link:hover {
-  color: var(--accent-amber);
+  color: var(--accent-text);
   background-color: var(--color-surface);
 }
 
