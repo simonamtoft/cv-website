@@ -36,16 +36,10 @@
 }
 
 .profile-picture {
-  width: 200px;
-  height: 200px;
-  border-radius: var(--radius-full);
-  object-fit: cover;
-  border: 2px solid var(--accent-orange);
-  transition: transform var(--transition-slow);
-}
-
-.profile-picture:hover {
-  transform: scale(1.05);
+  display: block;
+  width: clamp(280px, 30vw, 440px);
+  height: auto;
+  border-radius: var(--radius-xl);
 }
 
 .about-text {
@@ -75,5 +69,9 @@
     margin-bottom: var(--space-lg);
     padding-left: 0;
     margin-right: 0;
+  }
+
+  .profile-picture {
+    width: 220px;
   }
 }

@@ -14,7 +14,7 @@ const JSON_LD = {
   '@type': 'Person',
   name: 'Simon Amtoft Pedersen',
   url: 'https://amtoft.dev',
-  jobTitle: 'ML Engineer & Data Scientist',
+  jobTitle: 'AI Engineer & Consultant',
   sameAs: [
     'https://www.linkedin.com/in/simonamtoft/',
     'https://github.com/SimonAmtoft',

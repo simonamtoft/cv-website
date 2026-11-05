@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import '../styles/About.css';
-import ProfilePicture from '../assets/profile.jpg';
+import ProfilePicture from '../assets/profile-standing.jpg';
 import config from '../config';
 import aboutText from '../data/aboutText'
 import PageNav from './PageNav';
@@ -40,7 +40,7 @@ const About = () => {
         </div>
         <div className='about-content'>
           <div className='about-image'>
-            <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' loading="lazy"/>
+            <img src={ProfilePicture} alt={`${config.personalInfo.name} - ${config.personalInfo.title}`} className='profile-picture' width={684} height={1221} loading="lazy"/>
           </div>
           <div className='about-text'>
             {aboutText}

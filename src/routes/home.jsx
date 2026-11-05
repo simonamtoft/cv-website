@@ -3,7 +3,7 @@ import { buildMeta } from '../utils/meta';
 
 export function meta() {
   return buildMeta({
-    title: 'Simon Amtoft Pedersen - ML Engineer & Data Scientist | amtoft.dev',
+    title: 'Simon Amtoft Pedersen - AI Engineer & Consultant | amtoft.dev',
     path: '/',
   });
 }

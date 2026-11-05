@@ -9,10 +9,38 @@ const workExperience = [
     start: "2026 Mar",
     end: "Now",
     text: <>
-    At <a href="https://www.thetechcollective.eu/" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group's Digital Transformation practice - I combine hands-on engineering with AI advisory.
-    I build end-to-end AI solutions across the full stack, from data pipelines and model training to application layers, while advising clients on AI strategy: where it fits, what to prioritise, and how to move from idea to production.
+    At <a href="https://www.thetechcollective.eu/" target="_blank" rel="noopener noreferrer">The Tech Collective</a> - part of Implement Consulting Group's Digital Transformation practice - I help organisations decide where AI is worth using, and then build it.
+    I work with business leaders and product owners to identify and prioritise use cases, shape them into a roadmap and set realistic success metrics.
+    Then I take the solutions from proof of concept to production, with the governance needed to run them safely.
+    I also built Implement's Claude Code course and help teams adopt coding agents.
     </>,
-    icon: TTC_logo
+    icon: TTC_logo,
+    projects: [
+      {
+        name: "AI Roadmap and Use-Case PoCs for a Pension Provider",
+        years: "2026",
+        description: "Helped a pension provider identify, scope and prioritise AI use cases and turn them into a roadmap, then built proofs of concept for two of them. One transcribes and summarises calls and tags each by call type. The other helps claims handlers work through case files of more than 1,000 pages by summarising documents, building a timeline of events and removing duplicates.",
+        technologies: ["AI Roadmap", "Use-Case Prioritisation", "Speech-to-Text", "Document Summarisation", "Generative AI"]
+      },
+      {
+        name: "Evaluation Harness for Financial Services",
+        years: "2026",
+        description: "Led the design and build of a configurable harness that tests ranking and suggestion strategies against historical data. Its pre-launch metrics are aligned with real user experience, so changes can be gated before they reach production. It covers both a traditional ML approach and an agentic generative-AI approach.",
+        technologies: ["Evaluation", "Ranking & Recommendation", "ML", "Agentic AI"]
+      },
+      {
+        name: "CBAM Compliance Demo Platform",
+        years: "2026",
+        description: "Built a bilingual demo platform for EU carbon border adjustment (CBAM) reporting across a manufacturing supply chain in Asia. It orchestrates evidence collection, review and annual verification of embedded emissions across a multi-tier supplier network. It models the regulation end to end, from supplier responses to certificate-cost exposure and an exportable reporting dossier.",
+        technologies: ["Regulatory Modelling", "Supply Chain", "Workflow Orchestration", "Bilingual UI"]
+      },
+      {
+        name: "Claude Code Course, Implement AI Academy",
+        years: "2026",
+        description: "Created Implement Consulting Group's Claude Code course, with video lessons and Q&A, to teach colleagues across the company to use agentic coding tools in their daily work.",
+        technologies: ["Claude Code", "Agentic Engineering", "Course Design", "Teaching"]
+      }
+    ]
   },
   {
     jobTitle: "Senior Data Scientist",

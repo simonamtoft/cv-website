@@ -6,7 +6,7 @@
 
 const SITE = 'https://amtoft.dev';
 const DEFAULT_DESCRIPTION =
-  'ML engineer and data scientist specialising in production ML systems, MLOps, and applied AI. Based in Copenhagen.';
+  'ML and AI engineer and consultant in Copenhagen. I build production ML and agentic systems and help leadership teams decide where AI belongs in their processes and roadmap. Chair of IDA AI.';
 const DEFAULT_IMAGE = `${SITE}/profile.jpeg`;
 
 // path: route path beginning with "/" (e.g. "/", "/writing/agentic-engineering").
