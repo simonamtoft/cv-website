@@ -19,7 +19,10 @@ const publicationsEvents = [
     date: "2026 Nov",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-5-sikker-sandkasse-til-din-kodeagent-368803",
     venue: "IDA AI",
-    description: "Fifth session in the Agentic Coding series. Covers allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
+    description: "Fifth session in the Agentic Coding series. Covered allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
+    metrics: [
+      { icon: "fa-users", value: "149 participants" },
+    ],
   },
   {
     type: "webinar",
@@ -114,6 +117,10 @@ const publicationsEvents = [
     link: "https://umbraco-api.ida.dk/media/jvpjol0e/driving-it-2026-program.pdf",
     venue: "IDA",
     description: "Denmark's main IT conference. Hosted the main stage (Kongressalen), including the AI track.",
+    metrics: [
+      { icon: "fa-star", value: "8.6/10" },
+      { icon: "fa-users", value: "345 registered" },
+    ],
   },
   {
     type: "conference",
