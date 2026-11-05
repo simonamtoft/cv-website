@@ -15,13 +15,14 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
   text-decoration: none;
+  min-height: 44px;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-md);
   transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .page-nav-link:hover {
-  color: var(--accent-amber);
+  color: var(--accent-text);
   background-color: var(--color-surface);
 }
 

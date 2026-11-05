@@ -19,7 +19,10 @@ const publicationsEvents = [
     date: "2026 Nov",
     link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-5-sikker-sandkasse-til-din-kodeagent-368803",
     venue: "IDA AI",
-    description: "Fifth session in the Agentic Coding series. Covers allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
+    description: "Fifth session in the Agentic Coding series. Covered allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
+    metrics: [
+      { icon: "fa-users", value: "149 participants" },
+    ],
   },
   {
     type: "webinar",
@@ -94,6 +97,30 @@ const publicationsEvents = [
     link: "https://pro.ing.dk/datatech/holdning/ais-klimaaftryk-hvad-ved-vi-og-hvad-gaetter-vi-os-til",
     venue: "Ingeniøren",
     authors: ["Kasper Groes Albin Ludvigsen", "Danni Dromi", "Kenneth Enevoldsen", config.personalInfo.name],
+  },
+  {
+    type: "conference",
+    title: "IDA Youth Summit",
+    date: "2026 Oct",
+    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/ida-youth-summit-2026-367866",
+    venue: "IDA",
+    description: "Hosted the evening programme of IDA's summit for young volunteers together with Klara Nybo Fischer-Nielsen.",
+    metrics: [
+      { icon: "fa-star", value: "9.0/10" },
+      { icon: "fa-users", value: "68 participants" },
+    ],
+  },
+  {
+    type: "conference",
+    title: "Driving IT",
+    date: "2026 Nov",
+    link: "https://umbraco-api.ida.dk/media/jvpjol0e/driving-it-2026-program.pdf",
+    venue: "IDA",
+    description: "Denmark's main IT conference. Hosted the main stage (Kongressalen), including the AI track.",
+    metrics: [
+      { icon: "fa-star", value: "8.6/10" },
+      { icon: "fa-users", value: "345 registered" },
+    ],
   },
   {
     type: "conference",

@@ -4,14 +4,38 @@ import '../styles/PublicationsEvents.css';
 import '../styles/Article.css';
 import publicationsEvents from '../data/publicationsEvents';
 import essays from '../data/articles';
-import { formatDisplayDate } from '../utils/dateFormatter';
+import { formatDisplayDate, getComparableTime } from '../utils/dateFormatter';
 import useRevealOnScroll from '../utils/useRevealOnScroll';
-import WorkCardGrid from './WorkCardGrid';
 import PageNav from './PageNav';
+
+const toEntries = () => [
+  ...essays.map((essay) => ({
+    id: essay.slug,
+    kind: 'Essay',
+    icon: 'fa-pen-nib',
+    to: `/writing/${essay.slug}`,
+    title: essay.frontmatter.title,
+    blurb: essay.frontmatter.dek,
+    date: essay.frontmatter.lastUpdated,
+    meta: `Last updated ${formatDisplayDate(essay.frontmatter.lastUpdated)}`,
+  })),
+  ...publicationsEvents
+    .filter((item) => item.type === 'article')
+    .map((item) => ({
+      id: item.link,
+      kind: 'Article',
+      icon: 'fa-file-alt',
+      href: item.link,
+      title: item.title,
+      originalTitle: item.originalTitle,
+      date: item.date,
+      meta: [formatDisplayDate(item.date), item.venue].filter(Boolean).join(' · '),
+    })),
+].sort((a, b) => getComparableTime(b.date) - getComparableTime(a.date));
 
 const Writing = () => {
   const sectionRef = useRevealOnScroll();
-  const externalArticles = publicationsEvents.filter((item) => item.type === 'article');
+  const entries = toEntries();
 
   return (
     <>
@@ -19,22 +43,38 @@ const Writing = () => {
         <h2>Writing</h2>
 
         <div className="essays-list">
-          {essays.map((essay) => (
-            <Link key={essay.slug} to={`/writing/${essay.slug}`} className="essay-item">
-              <h3 className="essay-title">{essay.frontmatter.title}</h3>
-              <p className="essay-dek">{essay.frontmatter.dek}</p>
-              <p className="essay-meta">
-                Last updated {formatDisplayDate(essay.frontmatter.lastUpdated)}
-              </p>
-            </Link>
-          ))}
+          {entries.map((entry) => {
+            const content = (
+              <>
+                <div className="work-type-badge work-type-article">
+                  <i className={`fas ${entry.icon}`}></i>
+                  <span>{entry.kind}</span>
+                </div>
+                <h3 className="essay-title">{entry.title}</h3>
+                {entry.blurb && <p className="essay-dek">{entry.blurb}</p>}
+                {entry.originalTitle && (
+                  <p className="essay-dek essay-original">{entry.originalTitle}</p>
+                )}
+                <p className="essay-meta">{entry.meta}</p>
+              </>
+            );
+            return entry.to ? (
+              <Link key={entry.id} to={entry.to} className="essay-item">
+                {content}
+              </Link>
+            ) : (
+              <a
+                key={entry.id}
+                href={entry.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="essay-item"
+              >
+                {content}
+              </a>
+            );
+          })}
         </div>
-
-        <div className="section-divider">
-          <span>Also published elsewhere</span>
-        </div>
-
-        <WorkCardGrid items={externalArticles} />
       </section>
       <PageNav />
     </>

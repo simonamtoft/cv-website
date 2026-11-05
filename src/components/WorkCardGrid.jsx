@@ -128,8 +128,7 @@ const WorkCard = ({ item }) => {
   );
 };
 
-// Shared card grid used by both /talks and the "Also published elsewhere"
-// block on /writing. Renders items newest-first.
+// Card grid used by /talks. Renders items newest-first.
 const WorkCardGrid = ({ items }) => {
   const sorted = [...items].sort((a, b) => parseDate(b.date) - parseDate(a.date));
 

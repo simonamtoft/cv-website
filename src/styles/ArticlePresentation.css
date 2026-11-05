@@ -1,11 +1,11 @@
 /* Presentation / slide deck at /writing/:slug/present. A full-screen fixed
-   overlay (above the z-index:1000 Nav) that renders the article's authored
+   overlay (above the --z-nav) that renders the article's authored
    <Slide> blocks one at a time. Uses the shared warm-theme tokens from App.css. */
 
 .deck-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2000;
+  z-index: var(--z-presentation);
   background: var(--color-bg);
   color: var(--color-text);
 }
@@ -59,7 +59,7 @@
 
 .deck-slide-title {
   flex: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: clamp(1.5rem, 3.2vw, 2.4rem);
   line-height: 1.15;
@@ -97,7 +97,7 @@
 }
 
 .deck-slide-body blockquote {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-medium);
   font-size: clamp(1.3rem, 2.8vw, 2rem);
   line-height: 1.35;
@@ -124,12 +124,12 @@
   display: flex;
   flex-direction: column;
   line-height: 1.3;
-  z-index: 2002;
+  z-index: var(--z-presentation-chrome);
   pointer-events: none;
 }
 
 .deck-wm-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
@@ -148,12 +148,12 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  z-index: 2002;
+  z-index: var(--z-presentation-chrome);
 }
 
 .deck-nav,
 .deck-exit {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
@@ -201,7 +201,7 @@
   height: 4px;
   background: var(--accent-amber);
   transition: width 0.2s ease;
-  z-index: 2002;
+  z-index: var(--z-presentation-chrome);
 }
 
 @media (max-width: 620px) {

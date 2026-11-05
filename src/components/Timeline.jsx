@@ -162,7 +162,7 @@ const Timeline = () => {
                 </span>
                 <div className="timeline-content">
                   <p>{item.text}</p>
-                  {hasDetails && <span className="view-details-hint">Click to view details</span>}
+                  {hasDetails && <span className="view-details-hint">Details</span>}
                 </div>
               </div>
               <div className="timeline-icon-container">

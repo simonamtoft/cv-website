@@ -5,9 +5,9 @@ import { useSlideSteps } from '../../../components/articles/Slide';
 // Commits (+180%) are deliberately omitted: that figure is cumulative with
 // autocomplete, so it does not share these stages' baseline.
 const STAGES = [
-  { key: 'lines', label: 'Lines of code', increase: 958, color: '#d98b5f' },
-  { key: 'prs', label: 'Pull requests', increase: 86, color: '#c85a1a' },
-  { key: 'releases', label: 'Releases', increase: 20, color: '#7d7a3f' },
+  { key: 'lines', label: 'Lines of code', increase: 958, color: '#8b97ad' },
+  { key: 'prs', label: 'Pull requests', increase: 86, color: '#d93a12' },
+  { key: 'releases', label: 'Releases', increase: 20, color: '#4a5873' },
 ];
 const MAX_INCREASE = Math.max(...STAGES.map((stage) => stage.increase));
 const FILTERED = ['Deletions 12.2\u00d7 vs additions 7.0\u00d7', 'Branches +79%', 'More abandoned repositories'];
@@ -84,8 +84,8 @@ const SankeyCanvas = ({ orientation, isShown }) => {
       <svg viewBox={g.viewBox} aria-hidden="true">
         <defs>
           <linearGradient id={`${id}-lost`} x1="0" y1="0" {...across}>
-            <stop offset="0%" stopColor="#c85a1a" stopOpacity="0.26" />
-            <stop offset="100%" stopColor="#c85a1a" stopOpacity="0" />
+            <stop offset="0%" stopColor="#d93a12" stopOpacity="0.26" />
+            <stop offset="100%" stopColor="#d93a12" stopOpacity="0" />
           </linearGradient>
           {STAGES.slice(1).map((stage, j) => (
             <linearGradient key={stage.key} id={`${id}-kept-${j}`} x1="0" y1="0" {...along}>
