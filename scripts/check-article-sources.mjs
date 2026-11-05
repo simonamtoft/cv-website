@@ -232,9 +232,22 @@ async function requestSource(initialUrl, timeout) {
   throw new Error(`too many redirects (more than ${MAX_REDIRECTS})`);
 }
 
+const REQUEST_ATTEMPTS = 2;
+
+async function requestSourceWithRetry(url, timeout) {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      return await requestSource(url, timeout);
+    } catch (error) {
+      // Timeouts and dropped connections are transient; an HTTP status never reaches here.
+      if (attempt >= REQUEST_ATTEMPTS) throw error;
+    }
+  }
+}
+
 async function checkSource(source, timeout) {
   try {
-    const { response, finalUrl } = await requestSource(source.url, timeout);
+    const { response, finalUrl } = await requestSourceWithRetry(source.url, timeout);
 
     let status = 'unavailable';
     if (response.ok) status = 'ok';
