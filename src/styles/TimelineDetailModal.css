@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(61, 43, 26, 0.55);
+  background: rgba(11, 27, 58, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +28,7 @@
   background: var(--color-surface);
   border-radius: 8px;
   border: 1px solid var(--color-border);
-  box-shadow: 0 8px 32px rgba(61, 43, 26, 0.2);
+  box-shadow: 0 8px 32px rgba(11, 27, 58, 0.2);
   max-width: 800px;
   width: 100%;
   max-height: 90vh;
@@ -97,7 +97,7 @@
   margin: 0 0 8px 0;
   font-size: var(--font-size-3xl);
   color: var(--color-text);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
 }
 
 .modal-header h3 {
@@ -136,7 +136,7 @@
   color: var(--color-text);
   border-bottom: 2px solid var(--accent-amber);
   padding-bottom: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
 }
 
 .project-card {
@@ -150,7 +150,7 @@
 
 .project-card:hover {
   transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(61, 43, 26, 0.15);
+  box-shadow: 0 2px 8px rgba(11, 27, 58, 0.15);
 }
 
 .project-header {
@@ -166,7 +166,7 @@
   margin: 0;
   font-size: var(--font-size-lg);
   color: var(--color-text);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
 }
 
 .project-years {
@@ -189,7 +189,7 @@
 
 .tech-tag {
   display: inline-block;
-  background: rgba(200, 90, 26, 0.10);
+  background: rgba(217, 58, 18, 0.10);
   color: var(--accent-text);
   padding: 4px 12px;
   border-radius: 12px;
@@ -208,7 +208,7 @@
   color: var(--color-text);
   border-bottom: 2px solid var(--accent-amber);
   padding-bottom: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
 }
 
 .courses-table {
@@ -267,7 +267,7 @@
 }
 
 .courses-table tbody tr:hover {
-  background: rgba(200, 90, 26, 0.06);
+  background: rgba(217, 58, 18, 0.06);
 }
 
 .courses-table tbody tr:last-child td {

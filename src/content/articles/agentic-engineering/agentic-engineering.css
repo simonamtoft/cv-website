@@ -48,7 +48,7 @@
 
 .skill-tree-heading {
   padding: 0.2rem 0.9rem 0.7rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: 0.68rem;
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.09em;
@@ -278,7 +278,7 @@
 .hc-sign {
   fill: var(--color-text-muted);
   font-size: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
 }
 
 .hc-plant {
@@ -287,14 +287,14 @@
 }
 
 .hc-plant-name {
-  fill: #fdf6ec;
-  font-family: 'Poppins', sans-serif;
+  fill: #fbfbf9;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: 11px;
 }
 
 .hc-plant-sub {
-  fill: #fdf6ec;
+  fill: #fbfbf9;
   font-size: 6.5px;
   opacity: 0.85;
 }
@@ -329,7 +329,7 @@
 
 .hc-name {
   fill: var(--color-text);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: 8px;
 }
@@ -352,13 +352,13 @@
   gap: 0.4rem;
   align-items: baseline;
   background: var(--accent-amber);
-  color: #fdf6ec;
+  color: #fbfbf9;
   border-radius: 10px;
   padding: 0.5rem 0.8rem;
 }
 
 .harness-core-label {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
 }
 
@@ -387,7 +387,7 @@
 }
 
 .harness-lever-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
@@ -405,7 +405,7 @@
 }
 
 .harness-lever-detail h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   margin: 0 0 0.4rem;
   font-size: var(--font-size-lg);
   color: var(--accent-text);
@@ -457,7 +457,7 @@
   transform: translateY(-50%);
   background: var(--color-surface);
   padding: 0 0.5rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
   letter-spacing: 0.03em;
@@ -469,14 +469,14 @@
   flex-direction: column;
   gap: 0.15rem;
   background: var(--accent-amber);
-  color: #fdf6ec;
+  color: #fbfbf9;
   border-radius: 10px;
   padding: 0.7rem 0.9rem;
   margin-bottom: 1rem;
 }
 
 .aa-model-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-base);
 }
@@ -489,14 +489,14 @@
 .aa-harness-label {
   display: block;
   margin-bottom: 0.6rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .aa-harness-label em {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-normal);
   font-style: normal;
   font-size: var(--font-size-xs);
@@ -562,7 +562,7 @@
 }
 
 .aa-tool-label {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
@@ -591,7 +591,7 @@
 }
 
 .aa-box-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-xs);
   color: var(--color-text);
@@ -619,8 +619,8 @@
 /* Control tiers (shown for Claude Code): provider-set is amber like the fixed
    model, configured gold, authored olive. */
 .aa-tier-provider { --aa-tier: var(--accent-amber); }
-.aa-tier-configured { --aa-tier: #b5852f; }
-.aa-tier-authored { --aa-tier: #7d7a3f; }
+.aa-tier-configured { --aa-tier: #0b1b3a; }
+.aa-tier-authored { --aa-tier: #4a5873; }
 
 .aa-legend {
   display: flex;
@@ -641,7 +641,7 @@
 }
 
 .aa-legend-label {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
 }
@@ -657,7 +657,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1.2rem 0 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-lg);
 }
@@ -709,14 +709,14 @@
   align-items: baseline;
   gap: 0.4rem 0.7rem;
   background: var(--accent-amber);
-  color: #fdf6ec;
+  color: #fbfbf9;
   border-radius: 10px;
   padding: 0.6rem 0.9rem;
   margin-bottom: 0.9rem;
 }
 
 .prim-source-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
 }
@@ -792,14 +792,14 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.4rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .prim-tag {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-xs);
   letter-spacing: 0.03em;
@@ -853,7 +853,7 @@
   align-items: center;
   justify-content: center;
   writing-mode: vertical-rl;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
@@ -889,11 +889,11 @@
 .pyramid-tier.tier-0 { background: #f3e2ce; }
 .pyramid-tier.tier-1 { background: #e7bd97; }
 .pyramid-tier.tier-2 { background: #db9560; }
-.pyramid-tier.tier-3 { background: #c85a1a; }
+.pyramid-tier.tier-3 { background: #d93a12; }
 .pyramid-tier.tier-4 { background: #a8460f; }
 
 .pyramid-tier.tier-dark {
-  color: #fdf6ec;
+  color: #fbfbf9;
 }
 
 .pyramid-tier:hover {
@@ -905,7 +905,7 @@
 }
 
 .pyramid-tier-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
 }
@@ -957,10 +957,10 @@
 }
 
 .cw-band.cw-muted { --cw-accent: var(--color-text-muted); }
-.cw-band.cw-olive { --cw-accent: #7d7a3f; }
+.cw-band.cw-olive { --cw-accent: #4a5873; }
 .cw-band.cw-terra { --cw-accent: var(--accent-amber); }
-.cw-band.cw-light { --cw-accent: #d98b5f; }
-.cw-band.cw-gold { --cw-accent: #b5852f; }
+.cw-band.cw-light { --cw-accent: #8b97ad; }
+.cw-band.cw-gold { --cw-accent: #0b1b3a; }
 
 .cw-band.active {
   box-shadow: var(--shadow-md);
@@ -975,7 +975,7 @@
 
 .cw-label {
   display: inline-block;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--cw-accent);
@@ -1096,7 +1096,7 @@
   position: absolute;
   top: 0.4rem;
   transform: translateX(-50%);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
@@ -1226,7 +1226,7 @@
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 0.7rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.06em;
@@ -1280,10 +1280,10 @@
   transform: translateY(0);
 }
 
-.vl-level-1 { --vl-accent: #d98b5f; }
-.vl-level-2 { --vl-accent: #c85a1a; margin-bottom: 1.1rem; }
-.vl-level-3 { --vl-accent: #b5852f; margin-bottom: 2.2rem; }
-.vl-level-4 { --vl-accent: #7d7a3f; margin-bottom: 3.3rem; }
+.vl-level-1 { --vl-accent: #8b97ad; }
+.vl-level-2 { --vl-accent: #d93a12; margin-bottom: 1.1rem; }
+.vl-level-3 { --vl-accent: #0b1b3a; margin-bottom: 2.2rem; }
+.vl-level-4 { --vl-accent: #4a5873; margin-bottom: 3.3rem; }
 
 .vl-level-head {
   display: flex;
@@ -1299,10 +1299,10 @@
   height: 1.7rem;
   border-radius: 50%;
   background: var(--vl-accent);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: #fdf6ec;
+  color: #fbfbf9;
 }
 
 .vl-level-head svg {
@@ -1328,7 +1328,7 @@
 
 .vl-level h4 {
   margin: 0 0 0.35rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: var(--font-size-sm);
   line-height: 1.25;
   color: var(--color-text);
@@ -1476,7 +1476,7 @@
 }
 
 .sf-value {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: clamp(1.15rem, 3.2vw, 2.4rem);
   font-weight: var(--font-weight-bold);
   font-variant-numeric: tabular-nums;
@@ -1485,7 +1485,7 @@
 }
 
 .sf-label {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-muted);
@@ -1498,7 +1498,7 @@
   font-style: italic;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  color: color-mix(in srgb, #c85a1a 75%, var(--color-text));
+  color: color-mix(in srgb, #d93a12 75%, var(--color-text));
 }
 
 .sf-vertical .sf-sink {
@@ -1514,7 +1514,7 @@
 }
 
 .sf-filtered-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.06em;
@@ -1532,7 +1532,7 @@
 }
 
 .sf-filtered li {
-  border: 1px solid color-mix(in srgb, #c85a1a 40%, var(--color-border));
+  border: 1px solid color-mix(in srgb, #d93a12 40%, var(--color-border));
   border-radius: var(--radius-full);
   background: var(--color-bg);
   padding: 0.2rem 0.65rem;

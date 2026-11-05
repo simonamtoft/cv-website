@@ -1,157 +1,38 @@
-.header {
-  height: 100vh; /* fallback for older browsers */
-  height: 100dvh; /* tracks URL bar show/hide on mobile */
-  background: var(--color-bg);
-  color: var(--color-text);
+.home {
+  min-height: calc(100dvh - 64px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
+  padding: var(--space-2xl) clamp(20px, 5vw, 72px) var(--space-3xl);
+  background-image:
+    linear-gradient(rgba(11, 27, 58, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 27, 58, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-.header-content {
-  max-width: 800px;
-  margin-top: var(--space-3xl);
-  padding-top: var(--space-3xl);
+.home-statement {
+  max-width: 1100px;
+  margin: 0 0 var(--space-lg);
+  font-weight: var(--font-weight-normal);
+  font-size: clamp(2rem, 5vw, 4.4rem);
+  line-height: 1.12;
+  text-wrap: pretty;
 }
 
-.header h1 {
-  font-size: var(--font-size-4xl);
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-weight: var(--font-weight-bold);
+.home-statement a {
   color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-amber);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
 }
 
-.header-tagline {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-muted);
-  margin: var(--space-sm) auto var(--space-lg);
-  max-width: 600px;
-  line-height: var(--line-height-relaxed);
-  font-family: 'Inter', sans-serif;
+.home-statement a:hover {
+  color: var(--accent-text);
 }
 
-.header p.header-subtitle {
-  font-size: var(--font-size-lg);
-  margin: var(--space-xs) 0;
-  font-family: 'Inter', sans-serif;
-  color: var(--color-text-muted);
-}
-
-.header-cta {
-  display: inline-block;
-  margin-top: var(--space-md);
-  padding: 0.75rem 2rem;
-  background: var(--accent-text);
-  color: var(--color-bg);
-  font-family: 'Inter', sans-serif;
+.home-meta {
+  margin: 0;
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  transition: background var(--transition-fast), transform var(--transition-fast);
-}
-
-.header-cta:hover {
-  background: var(--accent-amber-active);
-  color: var(--color-bg);
-  transform: translateY(-2px);
-}
-
-.social-links {
-  display: flex;
-  gap: var(--space-lg);
-  margin-top: var(--space-lg);
-  justify-content: center;
-}
-
-.social-links a {
   color: var(--color-text-muted);
-  font-size: var(--font-size-3xl);
-  transition: color var(--transition-fast), transform var(--transition-fast);
-}
-
-.social-links a:hover {
-  color: var(--accent-text);
-  transform: scale(1.1);
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: var(--font-size-3xl);
-  }
-
-  .header-subtitle {
-    font-size: var(--font-size-base);
-  }
-
-  .header-tagline {
-    font-size: var(--font-size-base);
-    padding: 0 var(--space-sm);
-  }
-}
-
-@media (max-width: 480px) {
-  .header h1 {
-    font-size: var(--font-size-2xl);
-  }
-}
-
-/* Phone: top nav-pill is replaced by a fixed bottom tab bar.
-   Drop the top offset (no top nav to clear) and reserve room at the
-   bottom so social icons and the scroll hint don't sit under the bar. */
-@media (max-width: 640px) {
-  .header {
-    height: auto;
-    min-height: calc(100vh - 64px - env(safe-area-inset-bottom));
-    padding-bottom: var(--space-lg);
-  }
-
-  .header-content {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  .hero-scroll-hint {
-    display: none;
-  }
-}
-
-/* Character reveal */
-.char {
-  opacity: 0;
-}
-
-.char--visible {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .char { opacity: 1; }
-}
-
-/* Hero next-page hint — matches PageNav link style */
-.hero-scroll-hint {
-  position: absolute;
-  bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
-  right: calc(var(--space-lg) + env(safe-area-inset-right, 0px));
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  text-decoration: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-md);
-  transition: color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.hero-scroll-hint:hover {
-  color: var(--accent-text);
-  background-color: var(--color-surface);
 }

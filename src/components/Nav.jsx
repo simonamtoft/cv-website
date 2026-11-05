@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 import '../styles/Nav.css';
 import config from '../config';
 
@@ -83,14 +83,8 @@ const Nav = () => {
   return (
     <>
       <nav className={`nav-pill${isFixed ? ' nav-pill--fixed' : ''}`} aria-label="Primary">
+        <Link to="/" className="nav-brand">Simon Amtoft</Link>
         <ul>
-          {!isHome && (
-            <li className="nav-home-item">
-              <NavLink to="/" className="nav-link nav-home-link" title="Home">
-                <i className="fas fa-house" aria-hidden="true" />
-              </NavLink>
-            </li>
-          )}
           {navLinks}
         </ul>
       </nav>

@@ -59,7 +59,7 @@
 
 .deck-slide-title {
   flex: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-bold);
   font-size: clamp(1.5rem, 3.2vw, 2.4rem);
   line-height: 1.15;
@@ -97,7 +97,7 @@
 }
 
 .deck-slide-body blockquote {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-medium);
   font-size: clamp(1.3rem, 2.8vw, 2rem);
   line-height: 1.35;
@@ -129,7 +129,7 @@
 }
 
 .deck-wm-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   color: var(--color-text);
@@ -153,7 +153,7 @@
 
 .deck-nav,
 .deck-exit {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Tight', sans-serif;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
