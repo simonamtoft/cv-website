@@ -3,7 +3,7 @@ import config from '../config';
 const publicationsEvents = [
   // Example data structure - replace with actual content
   // {
-  //   type: "article",           // "article" or "conference"
+  //   type: "article",
   //   title: "Article Title",    // Required - English title
   //   originalTitle: "Titre Original", // Optional - original title if not in English
   //   date: "2024 Nov",          // Required - format: "YYYY MMM" or "MMM YYYY"
@@ -12,74 +12,6 @@ const publicationsEvents = [
   //   description: "Brief summary", // Optional
   //   authors: ["First Author", "Second Author"], // Optional - array of author names
   // }
-  {
-    type: "webinar",
-    title: "Agentic Coding (5): A Secure Sandbox for Your Coding Agent",
-    originalTitle: "Kod med AI (5): Sikker sandkasse til din kodeagent",
-    date: "2026 Nov",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-5-sikker-sandkasse-til-din-kodeagent-368803",
-    venue: "IDA AI",
-    description: "Fifth session in the Agentic Coding series. Covered allowlists, Docker, and dev containers to limit what a coding agent can access and do while working unattended.",
-    metrics: [
-      { icon: "fa-users", value: "149 participants" },
-    ],
-  },
-  {
-    type: "webinar",
-    title: "Agentic Coding (4): Harness Engineering",
-    originalTitle: "Kod med AI (4): Harness Engineering",
-    date: "2026 Aug",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-4-harness-engineering-367935",
-    venue: "IDA AI",
-    description: "Fourth session in the Agentic Coding series. Explored harness engineering: designing the prompts, tools, sandbox, permissions, and feedback loops around an AI model as one control system for building in a real codebase.",
-    metrics: [
-      { icon: "fa-star", value: "9.0/10" },
-      { icon: "fa-users", value: "58 participants" },
-    ],
-    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_3th7c91p",
-  },
-  {
-    type: "webinar",
-    title: "Agentic Coding (3): Autonomous Coding Agents",
-    originalTitle: "Kod med AI (3): Autonomous coding agents",
-    date: "2026 Jun",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-3-autonomous-coding-agents-366416",
-    venue: "IDA AI",
-    description: "Third session in the Agentic Coding series. Facilitated a discussion on autonomous agents running in the background - Ralph loops, orchestration strategies, and building systems that run unattended in production. The Kod med AI series set a new IDA record for participants in a technical webinar.",
-    metrics: [
-      { icon: "fa-star", value: "8.4/10" },
-      { icon: "fa-users", value: "440 participants" },
-    ],
-    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_dapgezhw",
-  },
-  {
-    type: "webinar",
-    title: "Agentic Coding (2): From Idea to Prototype",
-    originalTitle: "Kod med AI (2): Fra idé til prototype",
-    date: "2026 May",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-2-fra-ide-til-prototype-366415",
-    venue: "IDA AI",
-    description: "Second session in the Agentic Coding series. Facilitated a practical session on accelerating the journey from concept to working prototype using AI tools. Attendees specifically called out the facilitation as good at bringing audience questions into the conversation.",
-    metrics: [
-      { icon: "fa-star", value: "7.6/10" },
-      { icon: "fa-users", value: "250 participants" },
-    ],
-    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_vnb7u59n",
-  },
-  {
-    type: "webinar",
-    title: "Agentic Coding (1): Workflows That Actually Work",
-    originalTitle: "Kod med AI (1): Workflows That Actually Work",
-    date: "2026 May",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-1-workflows-that-actually-work-366414",
-    venue: "IDA AI",
-    description: "First session in the Agentic Coding series, hosted for IDA AI. Facilitated a session with speaker Jeppe Rasmussen covering practical AI-assisted coding workflows — context engineering, structured agent instructions, and concrete tooling.",
-    metrics: [
-      { icon: "fa-star", value: "8.7/10" },
-      { icon: "fa-users", value: "340 participants" },
-    ],
-    recording: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_e43bk1om",
-  },
   {
     type: "article",
     title: "Open source is a strategic necessity in AI: This is how we join the race",
@@ -97,65 +29,6 @@ const publicationsEvents = [
     link: "https://pro.ing.dk/datatech/holdning/ais-klimaaftryk-hvad-ved-vi-og-hvad-gaetter-vi-os-til",
     venue: "Ingeniøren",
     authors: ["Kasper Groes Albin Ludvigsen", "Danni Dromi", "Kenneth Enevoldsen", config.personalInfo.name],
-  },
-  {
-    type: "conference",
-    title: "IDA Youth Summit",
-    date: "2026 Oct",
-    link: "https://ida.dk/arrangementer-og-kurser/arrangementer/ida-youth-summit-2026-367866",
-    venue: "IDA",
-    description: "Hosted the evening programme of IDA's summit for young volunteers together with Klara Nybo Fischer-Nielsen.",
-    metrics: [
-      { icon: "fa-star", value: "9.0/10" },
-      { icon: "fa-users", value: "68 participants" },
-    ],
-  },
-  {
-    type: "conference",
-    title: "Driving IT",
-    date: "2026 Nov",
-    link: "https://umbraco-api.ida.dk/media/jvpjol0e/driving-it-2026-program.pdf",
-    venue: "IDA",
-    description: "Denmark's main IT conference. Hosted the main stage (Kongressalen), including the AI track.",
-    metrics: [
-      { icon: "fa-star", value: "8.6/10" },
-      { icon: "fa-users", value: "345 registered" },
-    ],
-  },
-  {
-    type: "conference",
-    title: "Driving AI",
-    date: "2026 May",
-    link: "https://ida.dk/driving-ai",
-    recording: "https://ida.dk/driving-ai/driving-ai-genoplev-aarets-oplaeg",
-    venue: "IDA",
-    description: "Co-organised this practitioner-focused AI conference. Recruited around a third of the speaker lineup — agreeing topics, scoping talks — and curated the technical programme around current models, practical case studies, and real-world deployment challenges.",
-    metrics: [
-      { icon: "fa-star", value: "9.0/10" },
-      { icon: "fa-users", value: "243 participants" },
-      { icon: "fa-microphone", value: "31 speakers" },
-    ],
-  },
-  {
-    type: "conference",
-    title: "Driving IT",
-    date: "2025 Nov",
-    recording: "https://videos.ida.dk/playlist/dedicated/1_dzazyzy3/1_bhfea5je",
-    venue: "IDA",
-    description: "Denmark's main IT conference, spanning software development, AI, security, UX, and sustainability. Served as session chair for the AI track and brought in a portion of the speakers for this 300+ attendee event.",
-    metrics: [
-      { icon: "fa-star", value: "9.0/10" },
-      { icon: "fa-users", value: "351 participants" },
-      { icon: "fa-microphone", value: "35 speakers" },
-    ]
-  },
-  {
-    type: "conference",
-    title: "Driving AI",
-    date: "2025 May",
-    recording: "https://videos.ida.dk/playlist/dedicated/1_i5sq6z3e/1_g71c2wiu",
-    venue: "IDA",
-    description: "Helped shape this inaugural practitioner-focused AI conference - sourcing close to half of the speaker lineup and chairing one of the technical tracks.",
   }
 ];
 

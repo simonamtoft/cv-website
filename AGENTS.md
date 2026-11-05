@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 Guidance for Claude Code (claude.ai/code) in this repository. The site is Simon Amtoft Pedersen's React professional hub, deployed to GitHub Pages at https://amtoft.dev. It evolved from a digital CV to establish Simon as a trusted data science and AI expert and generate inbound opportunities.
 
@@ -180,19 +180,26 @@ The app uses a multi-page routing architecture:
   close) and click-outside-to-close functionality.
 - **Writing.jsx**: Writing page (`/writing`) — lists the self-hosted essays
   (discovered from `src/data/articles.js`) as an editorial vertical stack linking
-  to `/writing/:slug`, then an "Also published elsewhere" divider above the
-  external op-eds (type `article`) rendered via `WorkCardGrid`.
+  to `/writing/:slug`, interleaved newest-first with the external op-eds
+  (type `article` in `src/data/publicationsEvents.js`) linking out.
 - **articles/ArticleReadingView.jsx**: Reading view for `/writing/:slug` — an
   editorial header (kicker meta line, title, dek) from frontmatter, the compiled
   MDX body, and a `Sources` section. Styles in `styles/Article.css`.
 - **articles/HarnessController.js**: The seven-lever interactive visual embedded
   inline in the flagship essay's MDX (React port of the throwaway prototype).
 - **articles/Sources.jsx**: Renders the `sources` frontmatter as an ordered list.
-- **Talks.jsx**: Talks page (`/talks`) — webinars and conferences (type
-  `webinar` / `conference`) rendered via `WorkCardGrid`.
-- **WorkCardGrid.jsx**: Shared card grid used by both `/talks` and `/writing`'s
-  external block. Takes an `items` array, sorts newest-first, and renders each
-  as a `.work-card`. Reveal-on-scroll fade-in is provided by the
+- **Talks.jsx**: Talks page (`/talks`) — renders `src/data/talks.js` in the
+  same `.essays-list` style as Writing, one row per entry, sorted by newest
+  event. A group (series or recurring conference) row shows its title and
+  general description, plus a "Conference website" link when the group has a
+  `link` (the recurring event's page, which shows the next edition) and a
+  "Watch all recordings" link when it has a `playlist`; an
+  `h3 > button[aria-expanded]` toggles an inline
+  accordion listing its events newest-first (date, venue, description,
+  metrics, and event, programme, and recording links). The event panel is always rendered
+  (`hidden` while closed) so it is in the prerendered HTML. A one-off talk is a
+  plain row linking out. Styles live in `PublicationsEvents.css`.
+  Reveal-on-scroll fade-in for Writing and Talks comes from the
   `useRevealOnScroll` hook (`src/utils/`).
 - **Contact.jsx**: Contact page (`/contact`) — "Let's Talk" heading, email and
   social links.
@@ -201,7 +208,7 @@ The app uses a multi-page routing architecture:
   gracefully.
 - **Data files** (`src/data/`): Content is separated from presentation logic in
   dedicated data files (workExperience.jsx, education.jsx, volunteering.jsx,
-  publicationsEvents.js)
+  publicationsEvents.js, talks.js)
 - **config.js**: Central configuration file containing personal information
   (name, title, email, LinkedIn, GitHub) and navigation items
 
@@ -283,8 +290,10 @@ To update site content:
    - Timeline items with these arrays will automatically become clickable and
      open a modal
 
-**Publications & Events** (publicationsEvents.js):
-- Edit `src/data/publicationsEvents.js` to add publications or speaking events
+**Publications & Talks** (publicationsEvents.js, talks.js):
+- Edit `src/data/publicationsEvents.js` to add external op-ed articles
+- Edit `src/data/talks.js` to add talks: append an event to an existing group's
+  `events`, add a new group, or add a one-off entry (no `events`)
 
 **New content types** (as migration progresses):
 - New data files and components will be added as sections are built

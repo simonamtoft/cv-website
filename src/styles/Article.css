@@ -32,8 +32,23 @@
   outline-offset: 2px;
 }
 
-.essay-item .work-type-badge {
-  margin-bottom: var(--space-md);
+.essay-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: 0.4rem;
+}
+
+.essay-heading .essay-title {
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* Centre the 1.5rem-tall badge on the title's first line, even when it wraps. */
+.essay-heading .work-type-badge {
+  flex: none;
+  margin-top: calc((var(--font-size-2xl) * 1.25 - 1.5rem) / 2);
 }
 
 .essay-title {

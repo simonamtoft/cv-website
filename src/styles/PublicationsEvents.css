@@ -25,106 +25,13 @@
   text-align: center;
 }
 
-.section-divider {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto var(--space-xl);
-  padding: 0 var(--space-lg);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.section-divider::before,
-.section-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--color-border);
-}
-
-.talks-divider {
-  margin-top: var(--space-2xl);
-}
-
-.publications-events-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: var(--space-lg);
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 var(--space-lg);
-}
-
-.work-card {
-  display: block;
-  background: var(--white);
-  padding: var(--space-lg);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border-left: 4px solid var(--medium-grey);
-  text-decoration: none;
-  color: inherit;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-  position: relative;
-}
-
-.work-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.work-card-link {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: 1;
-  text-indent: -9999px;
-  overflow: hidden;
-}
-
-.work-card-link:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-.work-card > *:not(.work-card-link) {
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.work-card .work-recording-link {
-  pointer-events: auto;
-}
-
-.work-card-article {
-  border-left-color: var(--color-text);
-}
-
-.work-card-conference {
-  border-left-color: var(--color-text);
-}
-
-.work-card-webinar {
-  border-left-color: var(--color-text);
-}
-
-.work-card-conference:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
 .work-metrics {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
 }
 
 .work-metric {
@@ -144,22 +51,11 @@
   opacity: 0.75;
 }
 
-.work-card-webinar .work-metric i {
-  color: var(--color-text);
-  opacity: 1;
-}
-
-.work-card-conference .work-metric i {
-  color: #4a5873;
-  opacity: 1;
-}
-
 .work-recording-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: var(--space-xs);
-  margin-bottom: var(--space-sm);
+  min-height: 44px;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--accent-text);
@@ -168,6 +64,147 @@
 
 .work-recording-link:hover {
   text-decoration: underline;
+}
+
+.work-recording-link:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- /talks groups (inline accordion in the essays list) ---------- */
+.talk-group {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.talk-group-header {
+  position: relative;
+  /* Pads a one-line title to a 44px target; shared with the badge offset below. */
+  --talk-toggle-inset: calc((44px - var(--font-size-2xl) * 1.25) / 2);
+}
+
+.talk-group-header .work-type-badge {
+  margin-top: calc((var(--font-size-2xl) * 1.25 - 1.5rem) / 2 + var(--talk-toggle-inset));
+}
+
+.talk-group-header .essay-dek:last-child {
+  margin-bottom: 0;
+}
+
+/* Sits above the stretched toggle overlay so the links open, not the accordion. */
+.talk-group-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-md);
+  width: fit-content;
+  margin-top: var(--space-xs);
+}
+
+.talk-toggle {
+  display: inline-block;
+  padding: var(--talk-toggle-inset) 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Stretch the toggle over the whole header so the description is clickable too. */
+.talk-toggle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.talk-toggle:focus-visible {
+  outline: none;
+}
+
+.talk-toggle:focus-visible::after {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.talk-group-header:hover .talk-toggle span {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-amber);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.talk-toggle-icon {
+  margin-left: var(--space-xs);
+  font-size: var(--font-size-base);
+  color: var(--accent-text);
+}
+
+.talk-group.is-open .talk-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.talk-events {
+  margin: var(--space-md) 0 0;
+  padding: 0 0 0 var(--space-md);
+  list-style: none;
+  border-left: 2px solid var(--color-border);
+}
+
+.talk-event + .talk-event {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.talk-event .essay-meta {
+  margin-bottom: var(--space-xs);
+}
+
+.talk-event-title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.talk-event-original {
+  margin: 4px 0 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.talk-event-description {
+  margin: var(--space-xs) 0 var(--space-sm);
+  max-width: 65ch;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.talk-event-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-md);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .talk-toggle-icon {
+    transition: transform 200ms ease-out;
+  }
+
+  .talk-group.is-open .talk-events {
+    animation: talk-events-enter 300ms ease-out;
+  }
+}
+
+@keyframes talk-events-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 .filter-bar {
@@ -201,13 +238,6 @@
   color: var(--white);
 }
 
-.work-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-md);
-}
-
 .work-type-badge {
   display: inline-flex;
   align-items: center;
@@ -228,98 +258,9 @@
   border: 1px solid rgba(11, 27, 58, 0.4);
 }
 
-.work-link-indicator {
-  color: var(--medium-grey);
-  font-size: var(--font-size-sm);
-  opacity: 0.6;
-  transition: opacity var(--transition-fast);
-}
-
-.work-card:hover .work-link-indicator {
-  opacity: 1;
-}
-
-.work-title-container {
-  margin-bottom: var(--space-sm);
-}
-
-.work-title {
-  font-size: var(--font-size-xl);
-  margin: 0 0 var(--space-xs) 0;
-  color: var(--dark-grey);
-  font-family: 'Inter Tight', sans-serif;
-  font-weight: var(--font-weight-semibold);
-  line-height: 1.4;
-}
-
-.work-original-title {
-  font-size: var(--font-size-base);
-  margin: 0;
-  color: var(--medium-grey);
-  font-style: italic;
-  line-height: 1.4;
-}
-
-.work-metadata {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
-  font-size: var(--font-size-sm);
-  color: var(--medium-grey);
-}
-
-.work-date {
-  font-weight: var(--font-weight-semibold);
-}
-
-.work-separator {
-  color: var(--color-border);
-}
-
-.work-venue {
-  font-style: italic;
-}
-
-.work-description {
-  font-size: var(--font-size-base);
-  color: var(--dark-grey);
-  line-height: 1.6;
-  margin-bottom: var(--space-sm);
-}
-
-.work-authors {
-  font-size: var(--font-size-sm);
-  color: var(--medium-grey);
-  margin-top: var(--space-sm);
-  font-style: italic;
-}
-
-.authors-label {
-  font-weight: var(--font-weight-semibold);
-  font-style: normal;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
-  .publications-events-container {
-    grid-template-columns: 1fr;
-    padding: 0 var(--space-md);
-  }
-
   .publications-events h2 {
     font-size: var(--font-size-3xl);
-  }
-
-  .work-title {
-    font-size: var(--font-size-lg);
-  }
-
-  .work-original-title {
-    font-size: var(--font-size-sm);
-  }
-
-  .work-card {
-    padding: var(--space-md);
   }
 }

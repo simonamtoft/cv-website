@@ -46,11 +46,13 @@ const Writing = () => {
           {entries.map((entry) => {
             const content = (
               <>
-                <div className="work-type-badge work-type-article">
-                  <i className={`fas ${entry.icon}`}></i>
-                  <span>{entry.kind}</span>
+                <div className="essay-heading">
+                  <h3 className="essay-title">{entry.title}</h3>
+                  <div className="work-type-badge work-type-article">
+                    <i className={`fas ${entry.icon}`}></i>
+                    <span>{entry.kind}</span>
+                  </div>
                 </div>
-                <h3 className="essay-title">{entry.title}</h3>
                 {entry.blurb && <p className="essay-dek">{entry.blurb}</p>}
                 {entry.originalTitle && (
                   <p className="essay-dek essay-original">{entry.originalTitle}</p>
