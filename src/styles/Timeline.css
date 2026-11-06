@@ -7,34 +7,6 @@
   margin: var(--space-xl) 0 var(--space-xl);
 }
 
-.timeline-filter {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
-  flex-wrap: wrap;
-}
-
-.timeline-filter-btn {
-  padding: 5px 18px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  background: transparent;
-  color: var(--medium-grey);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.timeline-filter-btn:hover,
-.timeline-filter-btn.active {
-  background: var(--accent-orange);
-  color: #fff;
-  border-color: var(--accent-orange);
-}
-
 .timeline {
   position: relative;
   padding: var(--space-xl) 0 var(--space-lg);
@@ -77,53 +49,55 @@
   z-index: 2;
 }
 
-.timeline-dot {
+/* Year label on the centre line, at the earliest-starting item of each year */
+.timeline-year-marker {
   position: absolute;
-  top: 5px; /* Adjusted to align vertically with date */
+  top: 2px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--color-text);
-  border-radius: var(--radius-full);
   z-index: 3;
-  width: 12px;
-  height: 12px;
+  padding: 2px 0;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Fixed-height frame keeps badge snug below logo regardless of logo aspect ratio */
-.timeline-icon-frame {
-  height: 72px;
+/* Logo sits beside the date/title block on the side away from the centre line,
+   so the header reads logo, text, line */
+.timeline-item-header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-lg);
+}
+
+.timeline-item.text-left .timeline-item-header {
+  flex-direction: row-reverse;
+}
+
+.timeline-header-text {
+  min-width: 0;
+}
+
+/* Fixed-height frame keeps rows aligned regardless of logo aspect ratio */
+.timeline-icon-frame {
+  flex: none;
+  width: 112px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .timeline-icon {
-  height: 72px;
   width: auto;
-  max-width: 240px;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
-}
-
-/* Category badge */
-.timeline-category-badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  margin-top: var(--space-xs);
-  margin-bottom: var(--space-xs);
-}
-
-.category-work,
-.category-education,
-.category-community {
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid rgba(11, 27, 58, 0.4);
 }
 
 .timeline-item {
@@ -181,23 +155,12 @@
   margin-top: 2px;
 }
 
-.timeline-item .timeline-icon-container {
-    grid-row: 1;
-    display: flex;
-    justify-content: center; /* Center icon horizontally within its container */
-    z-index: 1;
-    align-self: start; /* Align icon container to the top of its grid row */
-    min-width: 0; /* Allow container to shrink in grid */
-    height: auto;
-    min-height: 0;
-}
-
 .timeline-content {
   text-align: left;
   text-wrap: pretty;
 }
 
-.timeline-item.right .timeline-content {
+.timeline-item.text-left .timeline-content {
   text-align: left;
 }
 
@@ -238,40 +201,28 @@
   color: var(--medium-grey);
 }
 
-/* Styles for items on the right side */
-.timeline-item.right .timeline-date-text-container {
+/* Work and education: text left of the centre line, logo right */
+.timeline-item.text-left .timeline-date-text-container {
   grid-column: 1; /* Date and text on the left */
   padding-right: var(--space-lg); /* Add padding to the right to create space from central column */
   text-align: right;
 }
 
-.timeline-item.right .timeline-number {
+.timeline-item.text-left .timeline-number {
   text-align: right; /* Ensure date is right-aligned */
 }
 
-.timeline-item.right .timeline-icon-container {
-  grid-column: 3; /* Icon on the right */
-  justify-self: start; /* Align icon container to the start (left) of grid cell */
-  margin-left: var(--space-xs); /* Add margin to push away from central column */
-  padding-left: 0; /* Ensure no left padding interfering */
-}
 
-/* Styles for items on the left side */
-.timeline-item.left .timeline-date-text-container {
+/* Community: text right of the centre line, logo left */
+.timeline-item.text-right .timeline-date-text-container {
   grid-column: 3; /* Date and text on the right */
   padding-left: var(--space-lg); /* Add padding to the left to create space from central column */
 }
 
-.timeline-item.left .timeline-number {
+.timeline-item.text-right .timeline-number {
   text-align: left; /* Ensure date is left-aligned */
 }
 
-.timeline-item.left .timeline-icon-container {
-  grid-column: 1; /* Icon on the left */
-  justify-self: end; /* Align icon container to the end (right) of grid cell */
-  margin-right: var(--space-xs); /* Add margin to push away from central column */
-  padding-right: 0; /* Ensure no right padding interfering */
-}
 
 .timeline-item:last-child::after {
   content: '';
@@ -285,6 +236,42 @@
   border-right: 8px solid transparent;
   border-top: 8px solid var(--color-border); /* Downward pointing triangle */
   z-index: 2;
+}
+
+/* Packed layout (wide screens): usePackedTimeline sets data-layout, each item's top and the
+   container height. Each item occupies only its half; the centre column is 40px wide, so a half is
+   50% minus 20px and the centre line runs 20px beyond each item's inner edge. */
+.timeline[data-layout='packed'] {
+  display: block;
+}
+
+.timeline[data-layout='packed'] .timeline-item {
+  position: absolute;
+  width: calc(50% - 20px);
+  margin: 0;
+  display: block;
+}
+
+.timeline[data-layout='packed'] .timeline-item.text-left {
+  left: 0;
+}
+
+.timeline[data-layout='packed'] .timeline-item.text-right {
+  right: 0;
+}
+
+.timeline[data-layout='packed'] .timeline-item.text-left .timeline-year-marker {
+  left: auto;
+  right: -20px;
+  transform: translateX(50%);
+}
+
+.timeline[data-layout='packed'] .timeline-item.text-right .timeline-year-marker {
+  left: -20px;
+}
+
+.timeline[data-layout='packed'] .timeline-item:last-child::after {
+  display: none;
 }
 
 /* Media query for smaller screens */
@@ -307,7 +294,7 @@
     background: var(--color-border);
     z-index: 0;
     display: block;
-    right: 90px; /* Position line to the left of the icon area */
+    right: 16px;
   }
 
   .timeline::after {
@@ -321,21 +308,15 @@
     align-items: flex-start; /* Align items to the top */
     margin-top: var(--space-lg);
     margin-bottom: var(--space-lg);
-    padding-right: 100px; /* Space for icon (80px) + line clearance */
-    position: relative; /* Needed for absolute positioning of dot and icon */
+    padding-right: var(--space-xl); /* Clearance for the line and its year labels */
+    position: relative; /* Needed for absolute positioning of the year label */
   }
 
-  .timeline-dot {
-    position: absolute; /* Position absolutely relative to timeline-item */
-    top: 5px; /* Align dot to the top of the item */
-    transform: none;
-    background: var(--color-text);
-    border-radius: var(--radius-full);
-    z-index: 3;
-    width: 12px;
-    height: 12px;
+  .timeline-year-marker {
     left: auto;
-    right: 85px; /* Center dot on the line at right: 90px */
+    right: 17px; /* Centre of the 2px line at right: 16px */
+    transform: translateX(50%);
+    font-size: var(--font-size-xs);
   }
 
   .timeline-left-content-group {
@@ -361,44 +342,22 @@
     text-align: left;
   }
 
-  .timeline-icon-container {
-    position: absolute; /* Position absolutely relative to timeline-item */
-    top: 5px; /* Align icon container to the top of the item */
-    margin: 0;
-    padding: 0;
-    z-index: 3; /* Ensure icon is above the line */
-    right: 0; /* Position icon container at the right edge of the timeline item */
-    display: flex; /* Use flexbox to center the image */
-    align-items: flex-start; /* Align items to the top */
-    justify-content: center; /* Center content horizontally */
-    height: auto;
-    width: 80px;
-  }
-
-  .timeline-category-badge {
-    font-size: var(--font-size-xs);
-    padding: 1px 6px;
+  .timeline-item.text-right .timeline-item-header {
+    flex-direction: row-reverse;
   }
 
   .timeline-icon-frame {
-    height: 40px;
+    width: 64px;
+    height: 48px;
   }
 
-  .timeline-icon {
-    height: 40px;
-    width: auto;
-    max-width: 70px;
-    object-fit: contain;
-    object-position: center;
-  }
+
 
   /* Remove specific left/right styles in mobile view */
-  .timeline-item.right .timeline-date-text-container,
-  .timeline-item.left .timeline-date-text-container,
-  .timeline-item.right .timeline-number,
-  .timeline-item.left .timeline-number,
-  .timeline-item.right .timeline-icon-container,
-  .timeline-item.left .timeline-icon-container {
+  .timeline-item.text-left .timeline-date-text-container,
+  .timeline-item.text-right .timeline-date-text-container,
+  .timeline-item.text-left .timeline-number,
+  .timeline-item.text-right .timeline-number {
     grid-column: 1;
     padding: 0;
     margin: 0;

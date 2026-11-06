@@ -4,8 +4,12 @@ import PageNav from './PageNav';
 import workExperience from '../data/workExperience';
 import education from '../data/education';
 import volunteering from '../data/volunteering';
-import { formatDisplayRange, getComparableTime } from '../utils/dateFormatter';
+import { formatDisplayRange, getComparableTime, parseFlexibleDate } from '../utils/dateFormatter';
 import TimelineDetailModal from './TimelineDetailModal';
+import usePackedTimeline from '../hooks/usePackedTimeline';
+
+const isCommunity = item => item.category === 'community';
+const startYear = item => parseFlexibleDate(item.start ?? item.startYear)?.getFullYear();
 
 const Timeline = () => {
 
@@ -25,15 +29,9 @@ const Timeline = () => {
     []
   );
 
-  const [activeFilter, setActiveFilter] = useState('all');
-
-  const filteredItems = useMemo(
-    () => activeFilter === 'all' ? timelineItems : timelineItems.filter(item => item.category === activeFilter),
-    [timelineItems, activeFilter]
-  );
-
   const containerRef = useRef(null);
   const itemRefs = useRef([]);
+  usePackedTimeline(containerRef, itemRefs, timelineItems, isCommunity);
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -98,76 +96,48 @@ const Timeline = () => {
       });
       observer.disconnect();
     };
-  }, [filteredItems]); // Re-run effect if displayed items change
-
-  // Reset visibility state when filter changes so IntersectionObserver re-fires cleanly
-  useEffect(() => {
-    setVisibleItems(new Set());
-  }, [activeFilter]);
-
-  const categoryLabel = {
-    work: 'Work',
-    education: 'Education',
-    community: 'Community',
-  };
-
-  const filters = [
-    { value: 'all', label: 'All' },
-    { value: 'work', label: 'Work' },
-    { value: 'education', label: 'Education' },
-    { value: 'community', label: 'Community' },
-  ];
+  }, [timelineItems]);
 
   return (
     <>
       <h2 className="timeline-heading">Background</h2>
-      <div className="timeline-filter" role="group" aria-label="Filter by category">
-        {filters.map(f => (
-          <button
-            key={f.value}
-            className={`timeline-filter-btn${f.value !== 'all' ? ` filter-${f.value}` : ''}${activeFilter === f.value ? ' active' : ''}`}
-            onClick={() => setActiveFilter(f.value)}
-            aria-pressed={activeFilter === f.value}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
       <div className="timeline" ref={containerRef}>
-        {filteredItems.map((item, index) => {
+        {timelineItems.map((item, index) => {
           const hasDetails = (item.projects?.length > 0) || (item.courses?.length > 0);
           const title = item.jobTitle || item.degree;
           const org = item.companyName || item.institution;
           return (
             <div
               key={`${item.start ?? item.startYear}-${item.companyName || item.institution || item.text?.toString().substring(0, 20)}`}
-              className={`timeline-item ${index % 2 === 0 ? 'right' : 'left'} ${visibleItems.has(index) ? 'is-visible' : ''} ${hasDetails ? 'has-details' : ''}`}
+              className={`timeline-item ${isCommunity(item) ? 'text-right' : 'text-left'} ${visibleItems.has(index) ? 'is-visible' : ''} ${hasDetails ? 'has-details' : ''}`}
               ref={el => itemRefs.current[index] = el}
               onClick={hasDetails ? () => handleItemClick(item) : undefined}
               style={{ cursor: hasDetails ? 'pointer' : 'default' }}
             >
-              <div className="timeline-dot"></div>
+              {/* Newest first, so the last item of a year in the list is that year's earliest start. */}
+              {(index === timelineItems.length - 1 || startYear(item) !== startYear(timelineItems[index + 1])) && (
+                <div className="timeline-year-marker">{startYear(item)}</div>
+              )}
               <div className="timeline-date-text-container">
-                <div className="timeline-number">
-                  {formatDisplayRange(item.start ?? item.startYear, item.end ?? item.endYear)}
-                </div>
-                {(title || org) && (
-                  <div className="timeline-title-block">
-                    {title && <div className="timeline-job-title">{title}</div>}
-                    {org && <div className="timeline-org-name">{org}</div>}
+                <div className="timeline-item-header">
+                  <div className="timeline-header-text">
+                    <div className="timeline-number">
+                      {formatDisplayRange(item.start ?? item.startYear, item.end ?? item.endYear)}
+                    </div>
+                    {(title || org) && (
+                      <div className="timeline-title-block">
+                        {title && <div className="timeline-job-title">{title}</div>}
+                        {org && <div className="timeline-org-name">{org}</div>}
+                      </div>
+                    )}
                   </div>
-                )}
-                <span className={`timeline-category-badge category-${item.category}`}>
-                  {categoryLabel[item.category]}
-                </span>
+                  <div className="timeline-icon-frame">
+                    <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
+                  </div>
+                </div>
                 <div className="timeline-content">
                   <p>{item.text}</p>
                   {hasDetails && <span className="view-details-hint">Details</span>}
-                </div>
-              </div>
-              <div className="timeline-icon-container">
-                <div className="timeline-icon-frame">
-                  <img src={item.icon} alt={org || 'Icon'} className="timeline-icon" loading="lazy" />
                 </div>
               </div>
             </div>
