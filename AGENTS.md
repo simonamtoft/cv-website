@@ -73,7 +73,7 @@ the wrong application. Set `PLAYWRIGHT_PORT` to override the configured port.
 **What to check after style changes:**
 - Correct background, text, and accent colors on all pages
 - Nav pill renders with correct glassmorphism and active link color
-- Timeline center line, dots, and category badges look correct
+- Timeline center line and dots look correct
 - Modal: correct surface color, backdrop, and tech tag tints
 - No layout breakage — check mobile too with `setViewportSize({ width: 390, height: 844 })`
 
@@ -173,7 +173,7 @@ The app uses a multi-page routing architecture:
   chronological data from three sources (work experience, education,
   volunteering). Renders clickable timeline items that can open modals when they
   contain detailed information. Cards display inline `.timeline-job-title` and
-  `.timeline-org-name`, plus category badges (Work / Education / Community).
+  `.timeline-org-name`.
 - **TimelineDetailModal.jsx**: Modal component that displays detailed information
   for timeline items, including key projects (for work experience) and
   coursework tables (for education). Supports keyboard navigation (Escape to
