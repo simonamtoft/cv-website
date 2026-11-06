@@ -144,6 +144,10 @@ const Talks = () => {
     <>
       <section className="publications-events" ref={sectionRef}>
         <h2>Talks</h2>
+        <p className="talks-intro">
+          I organise and host IDA AI&rsquo;s Kod med AI webinar series and help organise IDA&rsquo;s
+          Driving AI and Driving IT conferences.
+        </p>
         <div className="essays-list">
           {entries.map((entry) =>
             entry.events ? (

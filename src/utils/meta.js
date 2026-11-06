@@ -7,7 +7,7 @@
 const SITE = 'https://amtoft.dev';
 const DEFAULT_DESCRIPTION =
   'ML and AI engineer and consultant in Copenhagen. I build production ML and agentic systems and help leadership teams decide where AI belongs in their processes and roadmap. Chair of IDA AI.';
-const DEFAULT_IMAGE = `${SITE}/profile.jpeg`;
+const DEFAULT_IMAGE = `${SITE}/og-image.jpg`;
 
 // path: route path beginning with "/" (e.g. "/", "/writing/agentic-engineering").
 export function buildMeta({

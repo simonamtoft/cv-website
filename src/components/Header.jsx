@@ -7,10 +7,11 @@ const Header = () => (
   <main className="home" id="main-content">
     <a href="#main-content" className="skip-link">Skip to main content</a>
     <h1 className="home-statement">
-      I&rsquo;m Simon. I build machine learning systems that{' '}
-      <Link to="/writing">survive production</Link>, advise teams on where AI{' '}
-      <Link to="/about">actually fits</Link>, and help run an engineering community for{' '}
-      <Link to="/talks">AI</Link>. See my path in{' '}
+      I&rsquo;m Simon. I build ML and{' '}
+      <Link to="/writing/agentic-engineering">agentic AI systems</Link> that hold up in production,
+      help leadership teams decide where AI belongs in their business and{' '}
+      <Link to="/about">in what order</Link>, and chair the{' '}
+      <Link to="/talks">AI community</Link> of Denmark&rsquo;s largest engineering association. See my path in{' '}
       <Link to="/background">the background</Link>; if you have a problem worth solving,{' '}
       <Link to="/contact">say hello</Link>.
     </h1>

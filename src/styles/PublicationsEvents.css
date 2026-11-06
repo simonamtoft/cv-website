@@ -25,6 +25,16 @@
   text-align: center;
 }
 
+.talks-intro {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 0 var(--space-xl);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
 .work-metrics {
   display: flex;
   flex-wrap: wrap;

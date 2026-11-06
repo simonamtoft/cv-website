@@ -43,7 +43,15 @@ I also prefer one focused task per session. When the context grows too large, Pi
 
 I now keep large reference reads out of the parent context when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, currently pinned to a cheaper model, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
 
-This is a redirect, not an automatic hand-off. In a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of 200 sessions started September 13–24, 2026, the hook redirected 102 of 3,664 parent `read` calls (2.8%). That counts attempted broad reads blocked by the hook, not worker dispatches or all opportunities for useful extraction. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents; search output is outside the gate too. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code. In a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9%. Applying parent-model prices to those measured tokens and the worker's reported cost yielded an estimated 80–84% saving in combined parent-and-worker cost, not an observed production saving. That is not a general benchmark: I measure parent-context reduction, combined cost, latency, and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern, not a result I claim for this setup.
+The hook only redirects; the parent still decides whether to delegate. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents, and search output is outside the gate. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code.
+
+What I have measured so far:
+
+- **Redirects:** in a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of 200 sessions started September 13–24, 2026, the hook redirected 102 of 3,664 parent `read` calls (2.8%). That counts broad reads the hook blocked, not worker dispatches or every opportunity for useful extraction.
+- **Parent context:** in a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9%.
+- **Cost:** applying parent-model prices to those measured tokens and the worker's reported cost gives an estimated 80–84% saving in combined parent-and-worker cost. This is an estimate, not an observed production saving.
+
+None of these is a general benchmark, and I measure latency and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern; I do not claim it for this setup.
 
 ## Isolated execution with worktrees
 
@@ -55,7 +63,7 @@ Independent Backlog tasks can run in separate Git worktrees. Dependent work stay
 
 </Slide>
 
-The goal is not to maximise the number of tickets. It is to keep the backlog current and the important reasoning close to the code, where Git makes completed work searchable without creating another system that can drift from the implementation.
+The aim is a current backlog with the important reasoning close to the code, where Git makes completed work searchable without creating another system that can drift from the implementation.
 
 ## One setup across harnesses
 

@@ -9,7 +9,7 @@ const talks = [
     title: "Agentic Coding",
     originalTitle: "Kod med AI",
     playlist: "https://videos.ida.dk/playlist/dedicated/1_0rn33omh/1_e43bk1om",
-    description: "A webinar series for IDA AI on building software with AI coding agents, from everyday workflows and prototyping to autonomous agents, harness engineering, and sandboxing. The series set a new IDA record for participants in a technical webinar.",
+    description: "A webinar series I organise, host and facilitate for IDA AI on building software with AI coding agents, from everyday workflows and prototyping to autonomous agents, harness engineering, and sandboxing. The series set a new IDA record for participants in a technical webinar.",
     events: [
       {
         title: "Session 5: A Secure Sandbox for Your Coding Agent",
@@ -91,6 +91,7 @@ const talks = [
         metrics: [
           { icon: "fa-star", value: "8.6/10" },
           { icon: "fa-users", value: "345 registered" },
+          { icon: "fa-microphone", value: "29 speakers" }
         ],
       },
       {

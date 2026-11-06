@@ -71,8 +71,8 @@ const Contact = () => {
           what's feasible, what's not, and where to start.
         </p>
         <p>
-          Whether you're scoping a new initiative, evaluating technical approaches, or looking
-          for a speaker or collaborator - reach out.
+          That could be an AI roadmap, an ML system that needs to reach production, a team
+          adopting coding agents, or a speaker or collaborator for an event. Reach out.
         </p>
         <div className="contact-info">
           <p>

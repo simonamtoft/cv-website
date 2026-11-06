@@ -8,8 +8,8 @@ const education = [
     institution: "Technical University of Denmark (DTU)",
     text: <>
     MSc at the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>,
-    specialising in machine learning for computer vision and latent variable models. As an honorary student under <a href="https://www.dtu.dk/person/ole-winther?id=10167&entity=profile" target="_blank" rel="noopener noreferrer">Ole Winther</a>,
-    I took three research-level courses (30 ECTS), earning top grades (12/A) in all. I worked closely with Giorgio Giannone throughout, gaining hands-on experience in advanced probabilistic modelling and deep generative models.
+    specialising in machine learning for computer vision and latent variable models. As an honours student under <a href="https://www.dtu.dk/person/ole-winther?id=10167&entity=profile" target="_blank" rel="noopener noreferrer">Ole Winther</a>,
+    I took three research-level courses (30 ECTS), earning top grades (12/A) in all. I worked closely with Giorgio Giannone throughout on probabilistic modelling and deep generative models.
     My master's thesis developed optimisation techniques to accelerate inference in denoising diffusion probabilistic models for image generation.
     </>,
     start: "2020 Aug",
@@ -24,7 +24,7 @@ const education = [
       {
         number: "02460",
         name: "Advanced Machine Learning",
-        description: "Advanced course covering current research topics in generative modeling, deep generative models, geometric representations, and graph neural networks with focus on theoretical foundations"
+        description: "Advanced course covering current research topics in generative modelling, deep generative models, geometric representations, and graph neural networks with focus on theoretical foundations"
       },
       {
         number: "02514",
@@ -44,7 +44,7 @@ const education = [
       {
         number: "42101",
         name: "Introduction to Operations Research",
-        description: "Mathematical optimization methods for decision-making, with emphasis on linear programming, the Simplex method, integer programming, transportation and assignment problems, and sensitivity analysis"
+        description: "Mathematical optimisation methods for decision-making, with emphasis on linear programming, the Simplex method, integer programming, transportation and assignment problems, and sensitivity analysis"
       },
       {
         number: "02180",
@@ -54,17 +54,17 @@ const education = [
       {
         number: "S01",
         name: "Recurrence and Attention in Latent Variable Models",
-        description: "Independent study course on recurrent architectures and attention mechanisms in latent variable models for sequential data (honorary student work with Ole Winther)"
+        description: "Independent study course on recurrent architectures and attention mechanisms in latent variable models for sequential data (honours student work with Ole Winther)"
       },
       {
         number: "02458",
         name: "Cognitive Modelling",
-        description: "Probabilistic models of cognitive processes with proficiency in analyzing behavioral psychophysical experiments using signal detection theory and Bayesian modeling frameworks"
+        description: "Probabilistic models of cognitive processes with proficiency in analysing behavioural psychophysical experiments using signal detection theory and Bayesian modelling frameworks"
       },
       {
         number: "02805",
         name: "Social Graphs and Interactions",
-        description: "Accessing and analyzing user-generated data and text, analyzing and modeling social relations using network theory and graph analysis techniques"
+        description: "Accessing and analysing user-generated data and text, analysing and modelling social relations using network theory and graph analysis techniques"
       },
       {
         number: "02807",
@@ -74,7 +74,7 @@ const education = [
       {
         number: "S01",
         name: "Convergence in Deep Generative Models",
-        description: "Independent study course on convergence properties and theoretical foundations of deep generative models (honorary student work with Ole Winther)"
+        description: "Independent study course on convergence properties and theoretical foundations of deep generative models (honours student work with Ole Winther)"
       },
       {
         number: "01617",
@@ -84,7 +84,7 @@ const education = [
       {
         number: "02456",
         name: "Deep Learning",
-        description: "Statistical machine learning, feed-forward and convolutional neural networks, error back-propagation, sequence modeling with Transformers, and practical deep learning with PyTorch"
+        description: "Statistical machine learning, feed-forward and convolutional neural networks, error back-propagation, sequence modelling with Transformers, and practical deep learning with PyTorch"
       },
       {
         number: "02502",
@@ -94,19 +94,19 @@ const education = [
       {
         number: "02614",
         name: "High-Performance Computing",
-        description: "Working with large-scale problems in mathematical modeling and their implementation on high-performance computers, covering compiler optimization, tuning, and OpenMP parallel programming"
+        description: "Working with large-scale problems in mathematical modelling and their implementation on high-performance computers, covering compiler optimisation, tuning, and OpenMP parallel programming"
       },
       {
         number: "42490",
         name: "Technology, Economics, Management & Organization",
-        description: "Intersection of technology, economics, management and organizational models, developing solutions for implementing technological innovation strategies in companies and public authorities"
+        description: "Intersection of technology, economics, management and organisational models, developing solutions for implementing technological innovation strategies in companies and public authorities"
       }
     ]
   }, {
     degree: "Exchange Semester",
     institution: "University of Maryland, College Park",
     text: <>
-    Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>, where I took my first machine learning course - the one that pulled me toward AI and data science. I finished the semester with academic honors.
+    Exchange semester at the <a href="https://umd.edu/" target="_blank" rel="noopener noreferrer">University of Maryland, College Park</a>, where I took my first machine learning course - the one that pulled me toward AI and data science. I finished the semester with academic honours.
     </>,
     start: "2019 Sep",
     end: "2019 Dec",
@@ -135,9 +135,9 @@ const education = [
     institution: "Technical University of Denmark (DTU)",
     text: <>
     BSc in Electrical Engineering from the <a href="https://www.dtu.dk/english/" target="_blank" rel="noopener noreferrer">Technical University of Denmark (DTU)</a>.
-    During my studies, I developed a strong foundation in physics and engineering principles and was introduced to programming,
-    a field that quickly captured my interest. I served as a teaching assistant in engineering mathematics for one year, an experience that
-    enriched my understanding and ability to communicate complex technical concepts. My bachelor's thesis focused on the design and implementation of Chora, a web-based instruction set simulator
+    The degree gave me a foundation in physics and engineering, and it was where I first learned to program, which I liked straight away.
+    I was a teaching assistant in engineering mathematics for a year, which taught me to explain technical concepts clearly.
+    My bachelor's thesis designed and implemented Chora, a web-based instruction set simulator
     for <a href="https://backend.orbit.dtu.dk/ws/portalfiles/portal/145805464/patmos.pdf" target="_blank" rel="noopener noreferrer">patmos</a>.
     </>,
     start: "2017 Aug",
@@ -182,7 +182,7 @@ const education = [
       {
         number: "31300",
         name: "Applied Control Engineering",
-        description: "Fundamental control engineering covering PID control, system modeling, stability analysis, and MATLAB/Simulink."
+        description: "Fundamental control engineering covering PID control, system modelling, stability analysis, and MATLAB/Simulink."
       },
       {
         number: "31605",
@@ -197,7 +197,7 @@ const education = [
       {
         number: "02155",
         name: "Computer Architecture and Engineering",
-        description: "In-depth study of processor organization, pipelines, cache memory, and runtime optimization."
+        description: "In-depth study of processor organisation, pipelines, cache memory, and runtime optimisation."
       },
       {
         number: "02633",

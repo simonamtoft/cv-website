@@ -23,13 +23,22 @@ const volunteering = [
     </>,
     icon: IDA_logo
   }, {
-    jobTitle: "Chairman of the Board",
-    companyName: "IDA AI",
+    jobTitle: "Conference Organiser",
+    companyName: "IDA IT",
     start: "2025 Jan",
     end: "Now",
     text: <>
-    Part of the team organising the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and <a href="https://ida.dk/driving-it" target="_blank" rel="noopener noreferrer">Driving IT</a> conferences within <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-it" target="_blank" rel="noopener noreferrer">IDA IT</a> since January 2025.
-    I joined the Steering Committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a> in December 2025 and have since taken over as chair of its board.
+    Since January 2025 I have helped organise the <a href="https://ida.dk/driving-ai" target="_blank" rel="noopener noreferrer">Driving AI</a> and <a href="https://ida.dk/driving-it" target="_blank" rel="noopener noreferrer">Driving IT</a> conferences within <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-it" target="_blank" rel="noopener noreferrer">IDA IT</a>: recruiting speakers, chairing tracks and hosting the main stage.
+    </>,
+    icon: IDA_logo
+  }, {
+    jobTitle: "Chair of the Board",
+    companyName: "IDA AI",
+    start: "2025 Dec",
+    end: "Now",
+    text: <>
+    I joined the steering committee of <a href="https://ida.dk/faellesskaber-og-frivillige/faglige-faellesskaber/it-tele-og-elektronik/ida-ai" target="_blank" rel="noopener noreferrer">IDA AI</a>, the AI community within IDA, in December 2025 and later became chair of its board.
+    I organise and host its Kod med AI webinar series.
     </>,
     icon: IDA_AI_logo
   }

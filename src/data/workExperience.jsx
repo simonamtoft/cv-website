@@ -69,7 +69,7 @@ const workExperience = [
       {
         name: "ML Infrastructure Modernisation",
         years: "2025",
-        description: "Architected a platform blueprint standardizing feature management, model registry, CI/CD, and Terraform-based cloud templates to shorten POC-to-production cycles and improve reproducibility across teams.",
+        description: "Architected a platform blueprint standardising feature management, model registry, CI/CD, and Terraform-based cloud templates to shorten POC-to-production cycles and improve reproducibility across teams.",
         technologies: ["MLflow", "Terraform", "CI/CD", "Azure", "Feature Store"]
       }
     ]
@@ -95,7 +95,7 @@ const workExperience = [
       {
         name: "AI-Driven Mapping Automation",
         years: "2023-2025",
-        description: "Developed semantic modeling solution using fine-tuned transformer embeddings to automatically identify attribute alignments across data sources, delivering real-time recommendations that reduced manual mapping work and accelerated onboarding.",
+        description: "Developed semantic modelling solution using fine-tuned transformer embeddings to automatically identify attribute alignments across data sources, delivering real-time recommendations that reduced manual mapping work and accelerated onboarding.",
         technologies: ["Transformer Embeddings", "Fine-tuning", "Semantic Matching", "Real-time Inference"]
       },
       {
@@ -107,7 +107,7 @@ const workExperience = [
       {
         name: "Unsupervised Industry Standards Classification",
         years: "2024-2025",
-        description: "Architected an agentic classification capability mapping products to industry taxonomies (ETIM/ECLASS) using transformer embeddings with human-in-the-loop review, enabling standards alignment without labeled data.",
+        description: "Architected an agentic classification capability mapping products to industry taxonomies (ETIM/ECLASS) using transformer embeddings with human-in-the-loop review, enabling standards alignment without labelled data.",
         technologies: ["Agentic AI", "Human-in-the-loop", "Industry Taxonomies", "Unsupervised Learning"]
       },
       {
@@ -131,7 +131,7 @@ const workExperience = [
     text: <>
     I started my career in <a href="https://www.terma.com/" target="_blank" rel="noopener noreferrer">Terma</a>'s AI team, working on projects that blended data engineering, visualisation, and machine learning.
     I built ETL pipelines for anomaly detection in maritime surveillance systems, designed GIS-integrated dashboards to visualise live ship positions, and deployed computer vision models on embedded edge devices for real-time detection under tight resource constraints.
-    It was where I first learned what it takes to move an AI idea from concept to something that actually runs in the field.
+    It was where I first learned what it takes to move an AI idea from concept to something that runs in the field.
     </>,
     icon: Terma_logo
   }

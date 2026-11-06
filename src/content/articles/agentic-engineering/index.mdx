@@ -102,7 +102,7 @@ import './agentic-engineering.css';
     prose stays outside <Slide> - reading-only. Visuals render inline in the
     reading essay; selected ones also appear full-screen on their slides. */}
 
-When a coding agent disappoints is usually to wait for a better model. But the model is only one part of the system. LangChain raised a fixed model's Terminal Bench 2.0 score from 52.8 to 66.5 by changing only the harness around it. The weights stayed the same; the environment, tools, and feedback loop changed.
+The usual response when a coding agent disappoints is to wait for a better model. But the model is only one part of the system. LangChain raised a fixed model's Terminal Bench 2.0 score from 52.8 to 66.5 by changing only the harness around it. The weights stayed the same; the environment, tools, and feedback loop changed.
 
 That matters because agentic code quality cannot be prompted into existence. It has to be engineered through the context the model receives and the machinery that plans, constrains, and verifies its work. Together, I think of those disciplines as agentic engineering.
 
@@ -190,9 +190,9 @@ So "engineer the harness" does not mean the same thing in every tool. The first 
 
 That choice is also an agency decision. A neutral, locally owned harness can keep sessions, instructions, tools, and workflows under the user's control while allowing proprietary and open-weight models to be compared or replaced. You may not own the weights, but you can own the interaction layer instead of rebuilding your working method inside each provider's application.
 
-This is not just a naming exercise. Some apparent model failures are failures of the system around it.
+The distinction matters because some apparent model failures are failures of the system around it.
 
-A harness is concrete, not an abstract layer in a diagram. The reason for each component becomes clearer if you start with what a raw model cannot do.
+The reason for each part of a harness becomes clearer if you start with what a raw model cannot do.
 
 A raw model invocation is text in, text out, with no persistent state. A filesystem and Git provide a workspace, memory, and history; tools let it act. When the work is deterministic, have it invoke an inspectable, testable program rather than produce the answer probabilistically.
 
@@ -237,11 +237,11 @@ Two authoring habits matter. Give the agent scripts to run instead of repeatedly
 
 As the harness accumulates corrections, a skill file can become a poor substitute for its own history. It tells the agent what to do, but not which failures justified each rule, which alternatives were tried, or whether they worked. Keep the active procedure separate from the evidence behind it: raw traces, recurring patterns, and a record of proposed changes and their outcomes. That keeps the skill short and usable while retaining rejected ideas for the next revision.
 
-This is an emerging pattern, not a finished recipe. WikiSkill used small validation splits; its strict immediate-improvement gate can discard useful stepping stones, and its knowledge base still needs a way to prune itself as it grows.
+The pattern is still emerging. WikiSkill used small validation splits; its strict immediate-improvement gate can discard useful stepping stones, and its knowledge base still needs a way to prune itself as it grows.
 
 <SkillExplorer />
 
-Rails contain the OS-level security model and answer the poisoned-`AGENTS.md` problem. A coding agent usually inherits the permissions of the person who launched it. Cloud credentials, SSH keys, and registry tokens may all be one command away. Hostile instructions can arrive through a repository, pull request, dependency, or context file, and an apparently safe command can start a subprocess the application no longer sees.
+Rails are where the OS-level security model lives, and they answer the poisoned-`AGENTS.md` problem. A coding agent usually inherits the permissions of the person who launched it. Cloud credentials, SSH keys, and registry tokens may all be one command away. Hostile instructions can arrive through a repository, pull request, dependency, or context file, and an apparently safe command can start a subprocess the application no longer sees.
 
 The hard boundary therefore belongs below the application. A sandbox is not advice about which commands to avoid. It is a limit the process cannot negotiate with: writes confined to the project and a scratch directory, network access denied by default, and individual hosts approved when needed. The operating system enforces those rules across subprocesses in a way command-string matching cannot.
 
@@ -257,7 +257,7 @@ These principles shape my own setup: durable planning artifacts, isolated worktr
 
 So far this is a single-player setup: one engineer, one agent, one repository. Most of these practices work well at that scale. Multiplayer is less settled: organisations have to support many engineers, agents, and repositories without prematurely forcing everyone onto one tool. Coordinating concurrent changes to the same codebase remains harder still.
 
-### The organizational harness
+### The organisational harness
 
 An organisation does not need every team to use the same agent. Zalando's experience across more than 250 teams points to a narrower standard: centralise model access, authentication, protected MCP ingress, reference configurations, and observability. Let teams choose their own tools, and share the skills that prove useful.
 
