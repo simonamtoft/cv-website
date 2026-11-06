@@ -47,6 +47,7 @@ export function Layout({ children }) {
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
         {/* Per-route meta and links exports render here. */}
         <Meta />

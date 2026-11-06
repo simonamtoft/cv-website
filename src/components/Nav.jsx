@@ -83,7 +83,10 @@ const Nav = () => {
   return (
     <>
       <nav className={`nav-pill${isFixed ? ' nav-pill--fixed' : ''}`} aria-label="Primary">
-        <Link to="/" className="nav-brand">Simon Amtoft</Link>
+        <Link to="/" className="nav-brand">
+          <img src="/favicon.svg" alt="" width="26" height="26" className="nav-brand-mark" />
+          Simon Amtoft
+        </Link>
         <ul>
           {navLinks}
         </ul>

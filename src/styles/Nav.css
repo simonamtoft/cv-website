@@ -206,6 +206,13 @@ body .nav-pill.nav-pill--fixed {
   font-size: var(--font-size-lg);
   color: var(--color-text);
   padding: var(--space-xs) 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-brand-mark {
+  flex-shrink: 0;
 }
 
 .nav-brand:hover {
