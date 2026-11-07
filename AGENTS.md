@@ -96,11 +96,13 @@ Routes:
 | `/background` | `<Timeline />` | Background |
 | `/writing` | `<Writing />` | Writing |
 | `/writing/:slug` | `<ArticleReadingView />` | - |
-| `/talks` | `<Talks />` | Talks |
+| `/events` | `<Events />` | Events |
 | `/contact` | `<Contact />` | Contact |
 
 Unknown paths redirect to `/` via a catch-all route module
 (`src/routes/catchall.jsx`) whose `clientLoader` throws `redirect("/")`.
+The former `/talks` path redirects to `/events` the same way
+(`src/routes/talks.jsx`) and stays prerendered so old links keep working.
 
 All routes are prerendered to static HTML at build time, so deep links load
 directly and social scrapers get per-route meta. The fixed routes are listed in
@@ -156,14 +158,14 @@ The app uses a multi-page routing architecture:
 - **Nav.jsx**: Fixed pill navigation bar — uses `NavLink` for active-link
   highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
   on all other routes always fixed. Links: About (`/about`) / Background
-  (`/background`) / Writing (`/writing`) / Talks (`/talks`) / Contact
+  (`/background`) / Writing (`/writing`) / Events (`/events`) / Contact
   (`/contact`). Nav order is driven by `config.navigation`; the fixed pill
   centres via `margin:auto` + `width:fit-content` (not `left:50%`, which capped
   its width at half the viewport and wrapped the links).
 - **PageNav.jsx**: Prev/next navigation rendered at the bottom of each sub-page.
   Derives prev/next from `config.navigation` order by matching the current
   `pathname`. About has next only; Contact has prev only; Background, Writing,
-  and Talks have both.
+  and Events have both.
 - **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
 - **Header.jsx**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
   link. Rendered only at the root route.
@@ -188,18 +190,19 @@ The app uses a multi-page routing architecture:
 - **articles/HarnessController.js**: The seven-lever interactive visual embedded
   inline in the flagship essay's MDX (React port of the throwaway prototype).
 - **articles/Sources.jsx**: Renders the `sources` frontmatter as an ordered list.
-- **Talks.jsx**: Talks page (`/talks`) — renders `src/data/talks.js` in the
+- **Events.jsx**: Events page (`/events`) — renders `src/data/events.js` in the
   same `.essays-list` style as Writing, one row per entry, sorted by newest
   event. A group (series or recurring conference) row shows its title and
-  general description, plus a "Conference website" link when the group has a
+  general description, a meta line with the facts shared by its events (venue,
+  event count, date span), plus a "Conference website" link when the group has a
   `link` (the recurring event's page, which shows the next edition) and a
   "Watch all recordings" link when it has a `playlist`; an
   `h3 > button[aria-expanded]` toggles an inline
   accordion listing its events newest-first (date, venue, description,
   metrics, and event, programme, and recording links). The event panel is always rendered
-  (`hidden` while closed) so it is in the prerendered HTML. A one-off talk is a
+  (`hidden` while closed) so it is in the prerendered HTML. A one-off event is a
   plain row linking out. Styles live in `PublicationsEvents.css`.
-  Reveal-on-scroll fade-in for Writing and Talks comes from the
+  Reveal-on-scroll fade-in for Writing and Events comes from the
   `useRevealOnScroll` hook (`src/utils/`).
 - **Contact.jsx**: Contact page (`/contact`) — "Let's Talk" heading, email and
   social links.
@@ -208,7 +211,7 @@ The app uses a multi-page routing architecture:
   gracefully.
 - **Data files** (`src/data/`): Content is separated from presentation logic in
   dedicated data files (workExperience.jsx, education.jsx, volunteering.jsx,
-  publicationsEvents.js, talks.js)
+  publicationsEvents.js, events.js)
 - **config.js**: Central configuration file containing personal information
   (name, title, email, LinkedIn, GitHub) and navigation items
 
@@ -290,9 +293,9 @@ To update site content:
    - Timeline items with these arrays will automatically become clickable and
      open a modal
 
-**Publications & Talks** (publicationsEvents.js, talks.js):
+**Publications & Events** (publicationsEvents.js, events.js):
 - Edit `src/data/publicationsEvents.js` to add external op-ed articles
-- Edit `src/data/talks.js` to add talks: append an event to an existing group's
+- Edit `src/data/events.js` to add events: append an event to an existing group's
   `events`, add a new group, or add a one-off entry (no `events`)
 
 **New content types** (as migration progresses):

@@ -19,7 +19,7 @@ export const config = {
     { label: "About", href: "/about" },
     { label: "Background", href: "/background" },
     { label: "Writing", href: "/writing" },
-    { label: "Talks", href: "/talks" },
+    { label: "Events", href: "/events" },
     { label: "Contact", href: "/contact" }
   ]
 };

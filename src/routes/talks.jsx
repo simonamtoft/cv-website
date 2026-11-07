@@ -1,19 +1,10 @@
-import { useLocation } from 'react-router';
-import Talks from '../components/Talks';
-import PageTransition from '../components/PageTransition';
-import { buildMeta } from '../utils/meta';
+import { redirect } from 'react-router';
 
-export function meta() {
-  return buildMeta({ title: 'Talks | Simon Amtoft Pedersen', path: '/talks' });
+// /talks was renamed to /events; keep old links working.
+export function clientLoader() {
+  throw redirect('/events');
 }
 
-export default function TalksRoute() {
-  const location = useLocation();
-  return (
-    <PageTransition key={location.key}>
-      <main className="main-content page-content" id="main-content">
-        <Talks />
-      </main>
-    </PageTransition>
-  );
+export default function TalksRedirect() {
+  return null;
 }

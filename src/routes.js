@@ -8,6 +8,7 @@ export default [
   route('writing', 'routes/writing.jsx'),
   route('writing/:slug', 'routes/article.jsx'),
   route('writing/:slug/present', 'routes/present.jsx'),
+  route('events', 'routes/events.jsx'),
   route('talks', 'routes/talks.jsx'),
   route('contact', 'routes/contact.jsx'),
   // Unknown client-side paths redirect home (former <Navigate to="/" replace />).

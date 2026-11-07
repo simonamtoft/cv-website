@@ -25,6 +25,7 @@ export default {
     '/about',
     '/background',
     '/writing',
+    '/events',
     '/talks',
     '/contact',
     ...articleRoutes,

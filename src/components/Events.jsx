@@ -1,14 +1,14 @@
 import React, { useId, useState } from 'react';
 import '../styles/PublicationsEvents.css';
 import '../styles/Article.css';
-import talkEntries from '../data/talks';
-import { formatDisplayDate, getComparableTime } from '../utils/dateFormatter';
+import eventEntries from '../data/events';
+import { formatDisplayDate, formatDisplayRange, getComparableTime } from '../utils/dateFormatter';
 import useRevealOnScroll from '../utils/useRevealOnScroll';
 import PageNav from './PageNav';
 
 const typeDetails = {
-  webinar: { icon: 'fa-video', label: 'Webinar', seriesLabel: 'Webinar series' },
-  conference: { icon: 'fa-chalkboard-teacher', label: 'Conference', seriesLabel: 'Conference' },
+  webinar: { icon: 'fa-video', label: 'Webinar', seriesLabel: 'Webinar series', eventNoun: 'session' },
+  conference: { icon: 'fa-chalkboard-teacher', label: 'Conference', seriesLabel: 'Conference', eventNoun: 'edition' },
 };
 
 const newestFirst = (a, b) => getComparableTime(b.date) - getComparableTime(a.date);
@@ -18,6 +18,15 @@ const latestDate = (entry) =>
 
 const formatMeta = ({ date, venue }) =>
   [formatDisplayDate(date), venue].filter(Boolean).join(' · ');
+
+const formatGroupMeta = ({ type, venue, events }) => {
+  const dates = events.map((event) => event.date).sort(
+    (a, b) => getComparableTime(a) - getComparableTime(b)
+  );
+  const noun = typeDetails[type].eventNoun;
+  const count = `${events.length} ${noun}${events.length === 1 ? '' : 's'}`;
+  return [venue, count, formatDisplayRange(dates[0], dates.at(-1))].filter(Boolean).join(' · ');
+};
 
 const TypeBadge = ({ type, label }) => (
   <div className={`work-type-badge work-type-${type}`}>
@@ -38,19 +47,19 @@ const Metrics = ({ metrics }) =>
     </ul>
   );
 
-const OneOffTalk = ({ talk }) => (
-  <a href={talk.link} target="_blank" rel="noopener noreferrer" className="essay-item">
+const OneOffEvent = ({ entry }) => (
+  <a href={entry.link} target="_blank" rel="noopener noreferrer" className="essay-item">
     <div className="essay-heading">
-      <h3 className="essay-title">{talk.title}</h3>
-      <TypeBadge type={talk.type} label={typeDetails[talk.type].label} />
+      <h3 className="essay-title">{entry.title}</h3>
+      <TypeBadge type={entry.type} label={typeDetails[entry.type].label} />
     </div>
-    <p className="essay-dek">{talk.description}</p>
-    <Metrics metrics={talk.metrics} />
-    <p className="essay-meta">{formatMeta(talk)}</p>
+    <p className="essay-dek">{entry.description}</p>
+    <Metrics metrics={entry.metrics} />
+    <p className="essay-meta">{formatMeta(entry)}</p>
   </a>
 );
 
-const TalkEvent = ({ event }) => (
+const GroupEvent = ({ event }) => (
   <li className="talk-event">
     <p className="essay-meta">{formatMeta(event)}</p>
     <h4 className="talk-event-title">{event.title}</h4>
@@ -84,7 +93,7 @@ const TalkEvent = ({ event }) => (
 
 // The event panel is always rendered (hidden while closed) so its content is
 // part of the prerendered HTML.
-const TalkGroup = ({ group }) => {
+const EventGroup = ({ group }) => {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -108,6 +117,7 @@ const TalkGroup = ({ group }) => {
         </div>
         {group.originalTitle && <p className="essay-dek essay-original">{group.originalTitle}</p>}
         <p className="essay-dek">{group.description}</p>
+        <p className="essay-meta">{formatGroupMeta(group)}</p>
         {(group.link || group.playlist) && (
           <div className="talk-group-links">
             {group.link && (
@@ -127,23 +137,23 @@ const TalkGroup = ({ group }) => {
       </div>
       <ol id={panelId} className="talk-events" hidden={!open}>
         {[...group.events].sort(newestFirst).map((event) => (
-          <TalkEvent key={event.title} event={event} />
+          <GroupEvent key={event.title} event={event} />
         ))}
       </ol>
     </div>
   );
 };
 
-const Talks = () => {
+const Events = () => {
   const sectionRef = useRevealOnScroll();
-  const entries = [...talkEntries].sort(
+  const entries = [...eventEntries].sort(
     (a, b) => getComparableTime(latestDate(b)) - getComparableTime(latestDate(a))
   );
 
   return (
     <>
       <section className="publications-events" ref={sectionRef}>
-        <h2>Talks</h2>
+        <h2>Events</h2>
         <p className="talks-intro">
           I organise and host IDA AI&rsquo;s Kod med AI webinar series and help organise IDA&rsquo;s
           Driving AI and Driving IT conferences.
@@ -151,9 +161,9 @@ const Talks = () => {
         <div className="essays-list">
           {entries.map((entry) =>
             entry.events ? (
-              <TalkGroup key={entry.title} group={entry} />
+              <EventGroup key={entry.title} group={entry} />
             ) : (
-              <OneOffTalk key={entry.title} talk={entry} />
+              <OneOffEvent key={entry.title} entry={entry} />
             )
           )}
         </div>
@@ -163,4 +173,4 @@ const Talks = () => {
   );
 };
 
-export default Talks;
+export default Events;
