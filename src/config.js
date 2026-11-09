@@ -9,6 +9,7 @@ export const config = {
     subtitle: "AI Engineer & Consultant",
     email: "simon@amtoft.dev",
     workEmail: "siap@thetechcollective.eu",
+    idaEmail: "siam@m.ida.dk",
     linkedIn: {
       url: "https://www.linkedin.com/in/simonamtoft/",
       handle: "simonamtoft"

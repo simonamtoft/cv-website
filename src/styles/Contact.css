@@ -63,6 +63,25 @@
   overflow-wrap: anywhere;
 }
 
+.contact-email {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contact-label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  line-height: 1.2;
+  margin-top: var(--space-xs);
+}
+
+.contact-info .contact-email a {
+  min-height: 32px;
+}
+
 .copy-btn {
   display: inline-flex;
   align-items: center;

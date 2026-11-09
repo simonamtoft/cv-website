@@ -75,14 +75,16 @@ const Contact = () => {
           adopting coding agents, or a speaker or collaborator for an event. Reach out.
         </p>
         <div className="contact-info">
-          <p>
-            <i className="fas fa-envelope" aria-label="Email"></i> <a href={`mailto:${config.personalInfo.email}`}>{config.personalInfo.email}</a>
-            <CopyButton text={config.personalInfo.email} />
-          </p>
-          <p>
-            <i className="fas fa-envelope" aria-label="Work Email"></i> <a href={`mailto:${config.personalInfo.workEmail}`}>{config.personalInfo.workEmail}</a>
-            <CopyButton text={config.personalInfo.workEmail} />
-          </p>
+          {emails.map(({ label, address }) => (
+            <p key={address}>
+              <i className="fas fa-envelope" aria-hidden="true"></i>
+              <span className="contact-email">
+                <span className="contact-label">{label}</span>
+                <a href={`mailto:${address}`}>{address}</a>
+              </span>
+              <CopyButton text={address} />
+            </p>
+          ))}
           <p>
             <i className="fab fa-linkedin" aria-label="LinkedIn"></i> <a href={config.personalInfo.linkedIn.url} target="_blank" rel="noopener noreferrer">linkedin.com/in/{config.personalInfo.linkedIn.handle}</a>
           </p>
@@ -92,5 +94,11 @@ const Contact = () => {
     </>
   );
 };
+
+const emails = [
+  { label: 'Personal', address: config.personalInfo.email },
+  { label: 'Work (The Tech Collective)', address: config.personalInfo.workEmail },
+  { label: 'IDA', address: config.personalInfo.idaEmail },
+];
 
 export default Contact;

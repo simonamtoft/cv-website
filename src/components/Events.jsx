@@ -5,6 +5,7 @@ import eventEntries from '../data/events';
 import { formatDisplayDate, formatDisplayRange, getComparableTime } from '../utils/dateFormatter';
 import useRevealOnScroll from '../utils/useRevealOnScroll';
 import PageNav from './PageNav';
+import config from '../config';
 
 const typeDetails = {
   webinar: { icon: 'fa-video', label: 'Webinar', seriesLabel: 'Webinar series', eventNoun: 'session' },
@@ -156,7 +157,8 @@ const Events = () => {
         <h2>Events</h2>
         <p className="talks-intro">
           I organise and host IDA AI&rsquo;s Kod med AI webinar series and help organise IDA&rsquo;s
-          Driving AI and Driving IT conferences.
+          Driving AI and Driving IT conferences. For IDA-related enquiries, email{' '}
+          <a href={`mailto:${config.personalInfo.idaEmail}`}>{config.personalInfo.idaEmail}</a>.
         </p>
         <div className="essays-list">
           {entries.map((entry) =>
