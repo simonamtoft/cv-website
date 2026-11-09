@@ -19,8 +19,10 @@ const events = [
         link: "https://ida.dk/arrangementer-og-kurser/arrangementer/kod-med-ai-5-sikker-sandkasse-til-din-kodeagent-368803",
         description: "Allowlists, Docker, and dev containers to limit what a coding agent can access and do while it works unattended.",
         metrics: [
-          { icon: "fa-users", value: "149 participants" },
+          { icon: "fa-star", value: "9.1/10" },
+          { icon: "fa-users", value: "147 participants" },
         ],
+        recording: "https://videos.ida.dk/media/Kod+med+AI+%285%29%3A+Sikker+sandkasse+til+din+kodeagent/1_hgq2ug22",
       },
       {
         title: "Session 4: Harness Engineering",
