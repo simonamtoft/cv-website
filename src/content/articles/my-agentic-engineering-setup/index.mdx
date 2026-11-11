@@ -1,31 +1,31 @@
 ---
 title: "My Agentic Engineering Setup"
-dek: "The planning artifacts, worktrees, and cross-harness resources I use to keep coding-agent work effective across sessions."
+dek: "The planning artifacts, guardrails, worktrees, and feedback loops I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-10-06"
+lastUpdated: "2026-11-10"
 sources:
   - title: "Backlog.md"
     url: "https://github.com/MrLesk/Backlog.md"
     note: "Git-native task management for durable tickets and dependencies"
-  - title: "Anthropic - Run parallel Claude Code sessions with Git worktrees"
-    url: "https://code.claude.com/docs/en/worktrees"
-    note: "built-in worktree isolation for parallel sessions and subagents"
-  - title: "Pedersen, S. A. - pi-worktree-agents"
-    url: "https://github.com/simonamtoft/pi-worktree-agents"
-    note: "interactive Pi worktree sessions with isolated ports and guarded merge and cleanup commands"
+  - title: "Paseo"
+    url: "https://paseo.sh/"
+    note: "desktop and mobile control plane that runs Pi sessions and owns their worktrees"
   - title: "Pedersen, S. A. - coding-harness"
     url: "https://github.com/simonamtoft/coding-harness"
-    note: "the canonical cross-harness repository for the configuration boundaries, Pi package manifest, and operating practices described in this article"
+    note: "the canonical repository for the configuration boundaries, sandbox, verification loop, decision ledger, and operating practices described in this article"
   - title: "Mazmanov, D. (Spotify) - Portal by Spotify Cut My Claude Code Token Usage by 90%"
     url: "https://engineering.atspotify.com/2026/09/portal-by-spotify-cut-my-claude-code-token-usage-by-90/"
     note: "the hook-to-skill-to-cheaper-worker pattern that informed the bulk-read route; its reported savings are not treated as a result for this setup"
 ---
 
 import WorktreeMap from './WorktreeMap';
+import GuardrailLayers from './GuardrailLayers';
+import RoutingEvidence from './RoutingEvidence';
+import FeedbackLoops from './FeedbackLoops';
 import './my-agentic-engineering-setup.css';
 
-[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve.
+[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve. Since the first version, [Pi](https://pi.dev/) has become my only actively developed harness, and I run most sessions through [Paseo](https://paseo.sh/).
 
 ## Planning work across sessions
 
@@ -33,9 +33,19 @@ When work is too uncertain for one session, I sometimes use a [Wayfinder](https:
 
 For larger efforts, Backlog tasks keep the record of scope, dependencies, decisions, and progress across sessions. They replace a single monolithic plan. Tickets coordinate the work, and each ticket's plan should be no more detailed than the work requires.
 
+Decisions the code cannot explain go into a [decision ledger](https://github.com/simonamtoft/coding-harness/blob/main/DECISIONS.md): one file per area, where each entry records what was refused, why, and when to revisit it. Agents read the area they touch before proposing a change. This stops them from re-proposing approaches I have already rejected, such as the output-compression rules from Caveman that I turned down after review and measurement.
+
 ## Operational guardrails
 
-Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. Pi's sandbox generally confines writes to the current project or a private session workspace, with limited exceptions for my plugin checkouts. Reads outside that scope may require approval; its Bash protections are lexical, not an OS-enforced sandbox. That keeps assumptions visible and the agent's operating context narrow.
+Before I start, I make important choices explicit and inspect the repository before asking questions it can answer. Pi's sandbox then works in layers, because each layer leaves a gap that the next one covers. Pi's tool-call guard checks every call before it runs, but its checks are lexical. On macOS, every shell command the agent runs therefore also executes under a kernel-enforced Seatbelt profile, and its network traffic goes through a proxy that admits an allowlist of hostnames. Pi's own tools stay outside that profile, so when I need a harder boundary I run the whole process in [paseo-box](https://github.com/simonamtoft/coding-harness/blob/main/paseo/box/README.md), a container on Colima, or in confidential mode against a local model. That keeps assumptions visible and the agent's operating context narrow.
+
+<Slide title="Each guardrail covers the last one's gap">
+
+<GuardrailLayers />
+
+</Slide>
+
+Some commands are allowed, but not silently. SSH and state-changing Terraform commands are often legitimate, so they ask me rather than fail. Requests that put an email address in a `User-Agent` or `From` header are denied, and a separate guard replaces the values of secret-like environment variables in tool output before it reaches the model.
 
 I also prefer one focused task per session. When the context grows too large, Pi's `/ctx-monitor` shows what is consuming it and `/handoff` carries the decisions and state into a fresh session.
 
@@ -45,17 +55,17 @@ I now keep large reference reads out of the parent context when the task is fact
 
 The hook only redirects; the parent still decides whether to delegate. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents, and search output is outside the gate. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code.
 
-What I have measured so far:
+<Slide title="What read routing has shown so far">
 
-- **Redirects:** in a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of 200 sessions started September 13–24, 2026, the hook redirected 102 of 3,664 parent `read` calls (2.8%). That counts broad reads the hook blocked, not worker dispatches or every opportunity for useful extraction.
-- **Parent context:** in a controlled two-file comparison, the route cut parent-context tokens by 95.8–95.9%.
-- **Cost:** applying parent-model prices to those measured tokens and the worker's reported cost gives an estimated 80–84% saving in combined parent-and-worker cost. This is an estimate, not an observed production saving.
+<RoutingEvidence />
 
-None of these is a general benchmark, and I measure latency and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern; I do not claim it for this setup.
+</Slide>
+
+The redirect rate comes from a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of sessions started September 13–24, 2026. It counts broad reads the hook blocked, not worker dispatches or every opportunity for useful extraction. The cost figure applies parent-model prices to the measured tokens and the worker's reported cost, so it is an estimate, not an observed production saving. I measure latency and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern; I do not claim it for this setup.
 
 ## Isolated execution with worktrees
 
-Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential. Claude Code supports this through [`--worktree` sessions and worktree-isolated subagents](https://code.claude.com/docs/en/worktrees). In Pi, I use [pi-worktree-agents](https://github.com/simonamtoft/pi-worktree-agents) for the same approach.
+Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential. [Paseo](https://paseo.sh/) creates and cleans up the worktrees, and each session in one loads the same Pi setup as a terminal session. Because the `backlog/` folder is untracked, a setup hook in the project's `paseo.json` links every new worktree to the main checkout's tracker, so all worktrees edit the same backlog. An agent may read the other worktrees of its repository but edit only its own.
 
 <Slide title="Tickets coordinate; worktrees isolate">
 
@@ -65,8 +75,26 @@ Independent Backlog tasks can run in separate Git worktrees. Dependent work stay
 
 The aim is a current backlog with the important reasoning close to the code, where Git makes completed work searchable without creating another system that can drift from the implementation.
 
+## Feedback loops
+
+Three loops keep the agent's work honest before I read the diff.
+
+<Slide title="Checks run before I read the diff">
+
+<FeedbackLoops />
+
+</Slide>
+
+Verification runs automatically. Pi's `verify-turn` extension looks for the project's `.agent/verify.sh`, or a `verify` task in a Taskfile, and runs it after any turn that changed project content. While it works, the agent runs only narrow checks and leaves the full suite to this loop. Because the verifier is repository code the agent can edit, a changed verifier is first read by a separate reviewer agent and runs only if that reviewer clears it.
+
+Review is proportional to risk. A correctness reviewer checks changes to persistence, public APIs, lifecycle behaviour, or anything spanning modules, and a security reviewer joins only for security-relevant changes. Each review starts from a stated intent, the requested outcome and its acceptance criteria, rather than from the diff alone. Reviewers must also say what they covered. The reviewers, like the other subagent roles, are short definitions in [`pi/agent/agents/`](https://github.com/simonamtoft/coding-harness/tree/main/pi/agent/agents), each owned by one skill or extension. Their transcripts land in the session workspace, so I can follow a run while it works.
+
+The third loop improves the harness itself. When the sandbox, an instruction, or a tool gets in the way, the agent logs a papercut to one untracked file. I review that file periodically and turn recurring entries into tasks or ledger entries.
+
 ## One setup across harnesses
 
-My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains user-authored resources both harnesses can use: `AGENTS.md`, skills, and command-safety and read-routing regression contracts. Pi keeps its own extensions, prompts, and agents. Claude Code keeps its own hooks, settings, themes, and agents. Credentials, sessions, caches, provider configuration, and generated state remain local.
+My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains user-authored resources any harness can use: `AGENTS.md`, skills, and command-safety and read-routing regression contracts. Pi keeps its own extensions, prompts, and agents. Claude Code's hooks, settings, and agents are still there, but I parked that harness in November 2026. Its files stay linked and their tests still run, but new work goes into Pi only, so Claude Code lacks Pi's newer protections such as kernel command confinement. Credentials, sessions, caches, provider configuration, and generated state remain local.
 
-A link script installs the shared resources into both [Pi](https://pi.dev/) and Claude Code without maintaining copies. Its optional package step installs the Pi packages listed in the version-controlled manifest. These are currently `pi-worktree-agents` and `pi-status-footer`. Local Pi settings record what is installed on a given machine. I added and removed the artifacts in response to observed failure modes. Keeping the shared layer small means another harness can join later without moving its source of truth.
+A link script installs the shared resources without maintaining copies and links Paseo's daemon configuration. Its optional package step installs the Pi packages listed in the version-controlled manifest, currently just `pi-status-footer`. A pre-commit hook starts Pi without a model call to check that every extension, skill, and prompt still loads from the checkout. Local Pi settings record what is installed on a given machine. I added and removed the artifacts in response to observed failure modes. Keeping the shared layer small means another harness can join later without moving its source of truth.
+
+Skills follow the same rule: each answers one question and arrives when a gap shows up. Recent additions include `threat-model`, `check-packages` for registry and advisory lookups before adding a dependency, `ui-design`, `record-decision`, `zoom-out` for reframing an approach before committing to it, and `cleanse` for tidying a repository before handover. Not every experiment earns a place in daily use. `local-models/` holds playgrounds for small local models such as Bonsai and Gemma, and a paid evaluation suite for instruction changes is parked until its results are reliable enough to act on.
