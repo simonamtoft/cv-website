@@ -463,6 +463,19 @@
 }
 
 /* Routing evidence */
+.rn-group + .rn-group {
+  margin-top: 1.2rem;
+}
+
+.rn-group-title {
+  margin: 0 0 0.6rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
 .rn-metrics {
   display: grid;
   gap: 0.9rem;
@@ -494,17 +507,12 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.rn-kind-observed {
-  background: var(--accent-amber);
-  color: #fff;
-}
-
-.rn-kind-controlled {
+.rn-kind-modelled {
   border: 1px solid var(--accent-amber);
   color: var(--accent-text);
 }
 
-.rn-kind-estimate {
+.rn-kind-untested {
   border: 1px dashed var(--color-text-muted);
   color: var(--color-text-muted);
 }
