@@ -3,24 +3,14 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 const CHANGE_LOOP = {
   eyebrow: 'Every change',
   steps: [
-    { title: 'Turn changes project content', note: 'Markdown-only, aborted, and committing turns skip' },
+    { title: 'Turn changes project content', note: 'Read-only, Markdown-only, and committed runs skip' },
     { title: 'Verifier changed?', note: 'A read-only reviewer must return CLEAR first' },
     { title: 'Run .agent/verify.sh', note: 'Or the Taskfile verify task' },
     { title: 'Release deferred review', note: 'Reviewers check the stated intent and report coverage' },
-    { title: 'Commit locally', note: 'Verified edits only, never pushed' },
+    { title: 'Commit locally', note: "The session's own edits, never pushed" },
     { title: 'Final report', note: 'Summary, checks run, findings fixed or dismissed' },
   ],
   loop: { from: 2, to: 0, label: 'Fails: repair turn' },
-};
-
-const HARNESS_LOOP = {
-  eyebrow: 'The harness itself',
-  steps: [
-    { title: 'Friction in any session', note: 'A sandbox denial, unclear rule, or tool error' },
-    { title: 'report_papercut', note: 'Appends to one untracked file' },
-    { title: 'Periodic review', note: 'Recurring entries only' },
-    { title: 'Task or ledger entry', note: 'Fix the harness, or record why not' },
-  ],
 };
 
 // Distance the return line keeps from the step boxes, in px.
@@ -80,7 +70,7 @@ const ReturnLoop = ({ geometry, label: text }) => {
   );
 };
 
-const Lane = ({ eyebrow, steps, loop }) => {
+export const Lane = ({ eyebrow, steps, loop }) => {
   const trackRef = useRef(null);
   const stepRefs = useRef([]);
   const [geometry, setGeometry] = useState(null);
@@ -135,10 +125,9 @@ const Lane = ({ eyebrow, steps, loop }) => {
 const FeedbackLoops = () => (
   <figure className="feedback-loops" aria-labelledby="feedback-loops-caption">
     <Lane {...CHANGE_LOOP} />
-    <Lane {...HARNESS_LOOP} />
     <figcaption id="feedback-loops-caption">
-      Verification and review run inside each task without me. The harness loop runs
-      across sessions and changes the setup the other two depend on.
+      Verification and review both run inside each task without me. A failing check
+      returns to the agent as a repair turn.
     </figcaption>
   </figure>
 );
