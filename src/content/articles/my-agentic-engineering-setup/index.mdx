@@ -27,7 +27,11 @@ import FeedbackLoops from './FeedbackLoops';
 import HarnessImprovement from './HarnessImprovement';
 import './my-agentic-engineering-setup.css';
 
-[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve. Since the first version, [Pi](https://pi.dev/) has become my only actively developed harness, and I run most sessions through [Paseo](https://paseo.sh/). Underneath both, most of my work runs through [Backlog.md](https://github.com/MrLesk/Backlog.md) tickets.
+[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today, and it will change as harnesses and models improve.
+
+One idea holds the setup together: a session is disposable. The plan, the decisions, the checks, and what I learn about the harness live in tickets, the repository, and the harness configuration, so the next session starts from them rather than from a transcript. The sections follow one piece of work through that setup: the ticket, the worktree it runs in, the guardrails around the agent, the context it reads, the checks before I see the result, and the slower loop that improves the harness itself.
+
+[Pi](https://pi.dev/) is my only actively developed harness, I run most sessions through [Paseo](https://paseo.sh/), and most of my work runs through [Backlog.md](https://github.com/MrLesk/Backlog.md) tickets. Several pieces started as someone else's skill, post, or configuration that I adapted to how I work. Don't be afraid to engineer your own harness the same way: take skills and patterns you find online, change them until they fit your workflow and preferences, and publish what you build so others can do the same.
 
 ## Backlog.md tickets as the unit of work
 
@@ -39,13 +43,25 @@ A Backlog.md task is a Markdown file in the repository's `backlog/` folder, so i
 
 </Slide>
 
-I prefer one focused task per session, because the next session starts from the ticket anyway. When the context grows too large, Pi's `/ctx-monitor` shows what is consuming it and `/skill:handoff` carries the decisions and state into a fresh session.
+I prefer one focused task per session, because the next session starts from the ticket anyway.
 
 Larger efforts become several tasks with dependencies instead of one monolithic plan, and each ticket's plan is no more detailed than its work requires.
 
 When work is too uncertain to cut into tickets yet, I sometimes use a [Wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map: a parent Backlog task with child investigations that resolve important decisions one at a time. I use it selectively. Once the route is clear, conventional implementation tickets are enough.
 
 Design decisions in a project become Backlog decisions next to its tasks, and longer reference material becomes Backlog documents.
+
+## Isolated execution with worktrees
+
+Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential, which the task dependencies make explicit. [Paseo](https://paseo.sh/) creates and cleans up the worktrees, and each session in one loads the same Pi setup as a terminal session. In most of my projects the `backlog/` folder is tracked, so task updates travel with each worktree's branch and merge with the code. Where it is untracked, a setup hook in the project's `paseo.json` links every new worktree to the main checkout's tracker, so all worktrees edit the same backlog. Pi's file tools may read the other worktrees of a repository but not write to them, and on macOS the kernel command profile described below also stops shell commands from writing there. The shared `backlog/` link is the deliberate exception, and only for a command that is just a `backlog` invocation.
+
+<Slide title="Tickets coordinate; worktrees isolate">
+
+<WorktreeMap />
+
+</Slide>
+
+The aim is a backlog that stays current and keeps the important reasoning next to the code. Git makes completed work searchable, and there is no separate system to drift from the implementation.
 
 ## Operational guardrails
 
@@ -63,9 +79,11 @@ The agent's web access takes a separate, approval-gated path rather than a gap i
 
 Some commands are allowed, but not silently. SSH and state-changing Terraform commands are often legitimate, so they ask me rather than fail. Requests that put an email address in a `User-Agent` or `From` header are denied, and a separate guard replaces the values of secret-like environment variables in tool output before it reaches the model. Git hooks also scan for secrets: the pre-commit hook fails if a known secret-token format appears in the staged additions, and a pre-push hook scans the outgoing commits again.
 
-## Routing bulk reads
+## Keeping the parent context lean
 
-I now keep large reference reads out of the parent context when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, pinned to a cheaper model than the parent, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
+The parent session's context is where the agent reasons, and everything in it is sent again with every turn. Following the context-engineering principles in [Agentic Engineering](/writing/agentic-engineering), I keep it for decisions and evidence rather than raw reference material. When a session's context grows too large anyway, Pi's `/ctx-monitor` shows what is consuming it and `/skill:handoff` carries the decisions and state into a fresh session.
+
+Large reference reads are the main thing I keep out of the parent context, when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, pinned to a cheaper model than the parent, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
 
 The hook only redirects; the parent still decides whether to delegate. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents, and search output is outside the gate. The parent can still inspect source directly for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code.
 
@@ -76,18 +94,6 @@ The hook only redirects; the parent still decides whether to delegate. Bounded r
 </Slide>
 
 The redirect rate comes from a [Pi usage audit](https://github.com/simonamtoft/coding-harness/blob/main/pi/agent/extensions/read-routing/README.md#recent-pi-usage-and-cost-model-audit-2026-09-24) of sessions started September 13–24, 2026. It counts broad reads the hook blocked, not worker dispatches or every opportunity for useful extraction. The cost figure applies parent-model prices to the measured tokens and the worker's reported cost, so it is an estimate, not an observed production saving. I measure latency and extraction accuracy separately. Spotify's roughly 90% figure motivated the pattern; I do not claim it for this setup.
-
-## Isolated execution with worktrees
-
-Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential, which the task dependencies make explicit. [Paseo](https://paseo.sh/) creates and cleans up the worktrees, and each session in one loads the same Pi setup as a terminal session. In most of my projects the `backlog/` folder is tracked, so task updates travel with each worktree's branch and merge with the code. Where it is untracked, a setup hook in the project's `paseo.json` links every new worktree to the main checkout's tracker, so all worktrees edit the same backlog. Pi's file tools may read the other worktrees of a repository but not write to them, and on macOS the kernel profile also stops shell commands from writing there. The shared `backlog/` link is the deliberate exception, and only for a command that is just a `backlog` invocation.
-
-<Slide title="Tickets coordinate; worktrees isolate">
-
-<WorktreeMap />
-
-</Slide>
-
-The aim is a backlog that stays current and keeps the important reasoning next to the code. Git makes completed work searchable, and there is no separate system to drift from the implementation.
 
 ## Feedback loops
 
@@ -128,3 +134,7 @@ My [coding harness](https://github.com/simonamtoft/coding-harness) is public and
 A link script installs the shared resources without maintaining copies and links Paseo's daemon configuration. Its optional package step installs the Pi packages listed in the version-controlled manifest, currently just `pi-status-footer`. When a commit touches Pi runtime inputs (shared `AGENTS.md` or skills, Pi agents, extensions, prompts, MCP config, or the package manifest), a pre-commit hook starts Pi without a model call to check that every extension, skill, and prompt still loads from the checkout. Local Pi settings record what is installed on a given machine. Keeping the shared layer small means another harness can join later without moving its source of truth.
 
 Skills follow the same rule: each answers one question and arrives when a gap shows up. Recent additions include `threat-model`, `check-packages` for registry and advisory lookups before adding a dependency, `ui-design`, `record-decision`, `zoom-out` for reframing an approach before committing to it, and `cleanse` for tidying a repository before handover. Not every experiment earns a place in daily use. `local-models/` holds playgrounds for small local models such as Bonsai and Gemma, and a paid evaluation suite for instruction changes is parked until its results are reliable enough to act on.
+
+## Build your own
+
+Most of this setup grew piece by piece, in response to failures I hit and friction agents reported, and the details will keep changing faster than this article. The idea from the start stays the same: keep what matters in tickets, the repository, and the harness, so any session can pick it up. If you build your own harness, start from what others have published, bend it to your workflow, and make yours public too. Mine is in [coding-harness](https://github.com/simonamtoft/coding-harness), and its decision ledger records what I tried and turned down.
