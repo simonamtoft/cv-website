@@ -17,7 +17,8 @@ const HarnessImprovement = () => (
   <figure className="feedback-loops" aria-labelledby="harness-improvement-caption">
     <Lane {...HARNESS_LOOP} />
     <figcaption id="harness-improvement-caption">
-      The agent reports friction as it works; I decide what each recurring entry becomes.
+      Agents report friction as they work, and my own finds join at the review. I decide
+      what each one becomes.
     </figcaption>
   </figure>
 );

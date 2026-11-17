@@ -105,13 +105,15 @@ Review is proportional to risk. A correctness reviewer checks changes to persist
 
 ## Improving the harness
 
-The harness itself improves on a slower cycle. When the sandbox, an instruction, a skill, or a tool gets in the way, the agent calls `report_papercut`, which appends the friction to an untracked `PAPERCUTS.md` in the harness checkout from any project's session. I review that file periodically and turn recurring entries into a Backlog task that fixes the harness, a decision-ledger entry that records why not, or a tool reminder that steers agents until the fix lands.
+The harness itself improves on a slower cycle with two inputs. The first is self-reporting: when the sandbox, an instruction, a skill, or a tool gets in the way, the agent calls `report_papercut`, which appends the friction to an untracked `PAPERCUTS.md` in the harness checkout from any project's session. I review that file periodically and turn recurring entries into a Backlog task that fixes the harness, a decision-ledger entry that records why not, or a tool reminder that steers agents until the fix lands.
 
 <Slide title="Friction becomes a fix, a decision, or a reminder">
 
 <HarnessImprovement />
 
 </Slide>
+
+The second input is mine: friction I run into myself, and skills, tools, and patterns I come across on Hacker News, LinkedIn, from colleagues, and in other people's setups. These go through the same review rather than straight into the setup. Spotify's Portal post shaped the bulk-read route, and the `analyze-sessions` query scripts are adapted from another engineer's Pi configuration. Others I turn down, and the ledger records why.
 
 The [decision ledger](https://github.com/simonamtoft/coding-harness/blob/main/DECISIONS.md) holds what the code cannot explain: one file per area, where each entry records what was refused, why, and when to revisit it. Agents read the area they touch before proposing a change. This stops them from re-proposing approaches I have already rejected, such as the output-compression rules from Caveman that I turned down after review and measurement.
 
