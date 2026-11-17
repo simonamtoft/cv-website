@@ -31,7 +31,7 @@ import './my-agentic-engineering-setup.css';
 
 ## Backlog.md tickets as the unit of work
 
-A Backlog.md task is a Markdown file in the repository's `backlog/` folder, so it sits next to the code it describes. I triage and pick the next ready task on its terminal board or in its browser UI. Agents touch tasks only through the `backlog` CLI, never by editing the files, which keeps metadata, dependencies, and history consistent. Instead of carrying their own task workflow, my instructions point agents to Backlog's guides for creating, executing, and finalizing tasks, and they read a guide only when a turn touches tracked work.
+A Backlog.md task is a Markdown file in the repository's `backlog/` folder, so it sits next to the code it describes. I triage and pick the next ready task on its terminal board or in its browser UI. Agents touch tasks only through the `backlog` CLI, never by editing the files, which keeps metadata, dependencies, and history consistent. My instructions point agents to Backlog's own guides for creating, executing, and finalizing tasks, and agents read a guide only when a turn touches tracked work.
 
 <Slide title="A ticket outlives the session">
 
@@ -49,7 +49,7 @@ Design decisions in a project become Backlog decisions next to its tasks, and lo
 
 ## Operational guardrails
 
-Before acting, the agent inspects the repository instead of asking questions it can answer, and it asks me when an open choice would change scope or behaviour.
+Before acting, the agent answers what it can from the repository and asks me when an open choice would change scope or behaviour.
 
 Pi's sandbox works in layers, because each layer leaves a gap that the next one covers. Pi's tool-call guard checks every call before it runs, but its checks are lexical. On macOS, every shell command the agent runs therefore also executes under a kernel-enforced Seatbelt profile, and its network traffic goes through a proxy that admits an allowlist of hostnames. The same profile covers my own `!` shell commands, which keep open network access, and Paseo-driven and subagent sessions. Pi's own tools stay outside that profile, so when I need a harder boundary I run the whole process in [paseo-box](https://github.com/simonamtoft/coding-harness/blob/main/paseo/box/README.md), a container on Colima, or in confidential mode against a local model.
 
@@ -67,7 +67,7 @@ Some commands are allowed, but not silently. SSH and state-changing Terraform co
 
 I now keep large reference reads out of the parent context when the task is fact extraction rather than direct reasoning. A Pi hook blocks an unbounded read of a regular file above 16 KiB and points the parent to a shared skill. The skill dispatches a read-only `bulk-reader` subagent, pinned to a cheaper model than the parent, with the file paths and question; it returns cited findings, coverage gaps, and uncertainty in at most 600 words.
 
-The hook only redirects; the parent still decides whether to delegate. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents, and search output is outside the gate. That preserves direct source inspection for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code.
+The hook only redirects; the parent still decides whether to delegate. Bounded reads of up to 350 lines remain available, as do full reads of governing instructions and native documents, and search output is outside the gate. The parent can still inspect source directly for debugging, editing, architecture, safety-critical reasoning, and decisions that need exact evidence. The threshold is based on bytes rather than lines because my measurements found bytes to be a more stable proxy for token cost across prose and code.
 
 <Slide title="What read routing has shown so far">
 
@@ -87,7 +87,7 @@ Independent Backlog tasks can run in separate Git worktrees. Dependent work stay
 
 </Slide>
 
-The aim is a current backlog with the important reasoning close to the code, where Git makes completed work searchable without creating another system that can drift from the implementation.
+The aim is a backlog that stays current and keeps the important reasoning next to the code. Git makes completed work searchable, and there is no separate system to drift from the implementation.
 
 ## Feedback loops
 
@@ -99,9 +99,9 @@ Two loops run inside each task and keep the agent's work honest before I read th
 
 </Slide>
 
-Verification runs automatically. Pi's `verify-turn` extension looks for the project's `.agent/verify.sh`, or a `verify` task in a Taskfile, and runs it after any model run that changed project content. Read-only, commit-only, Markdown-only, and edit-then-commit runs skip it, but a change that mixes Markdown and code is still verified. While it works, the agent runs only narrow checks and leaves the full suite to this loop. Because the verifier is repository code the agent can edit, a changed verifier is first read by a separate reviewer agent and runs only if that reviewer clears it. After a run passes verification with no deferred review pending, or after a later run that needs no verification, such as a Markdown-only edit, `verify-turn` runs the `quick-commit` skill on the files that the session's own edit and write tools changed, asks first if the commit plan has warnings, and does not offer the same unchanged files a second time. It never commits changes made through shell commands, by subagents, by me, or by other sessions, and it never pushes; `git reset --soft HEAD~<n>` undoes the last n commits.
+Verification runs automatically. Pi's `verify-turn` extension looks for the project's `.agent/verify.sh`, or a `verify` task in a Taskfile, and runs it after any model run that changed project content. Read-only, commit-only, Markdown-only, and edit-then-commit runs skip it, but a change that mixes Markdown and code is still verified. While it works, the agent runs only narrow checks and leaves the full suite to this loop. Because the verifier is repository code the agent can edit, a changed verifier is first read by a separate reviewer agent and runs only if that reviewer clears it. Once a run passes verification with no deferred review pending, or a later run needs no verification (a Markdown-only edit, say), `verify-turn` runs the `quick-commit` skill on the files that the session's own edit and write tools changed. It asks first if the commit plan has warnings and does not offer the same unchanged files a second time. It never commits changes made through shell commands, by subagents, by me, or by other sessions, and it never pushes; `git reset --soft HEAD~<n>` undoes the last n commits.
 
-Review is proportional to risk. A correctness reviewer checks changes to persistence, public APIs, lifecycle behaviour, or anything spanning modules, and a security reviewer joins only for security-relevant changes. Before a security review, the reviewer receives the established guards from earlier security fixes that match the change, recorded in `SECURITY_CONTEXT.md`, so it can check that the change does not weaken them. Each review starts from a stated intent, the requested outcome and its acceptance criteria, rather than from the diff alone. Reviewers must also say what they covered. The reviewers, like the other subagent roles, are short definitions in [`pi/agent/agents/`](https://github.com/simonamtoft/coding-harness/tree/main/pi/agent/agents), each owned by one skill or extension. Their transcripts land in the session workspace, so I can follow a run while it works.
+Review is proportional to risk. A correctness reviewer checks changes to persistence, public APIs, lifecycle behaviour, or anything spanning modules, and a security reviewer joins only for security-relevant changes. Before a security review, the reviewer receives the established guards from earlier security fixes that match the change, recorded in `SECURITY_CONTEXT.md`, so it can check that the change does not weaken them. Each review starts from a stated intent (the requested outcome and its acceptance criteria), not from the diff alone. Reviewers must also say what they covered. The reviewers, like the other subagent roles, are short definitions in [`pi/agent/agents/`](https://github.com/simonamtoft/coding-harness/tree/main/pi/agent/agents), each owned by one skill or extension. Their transcripts land in the session workspace, so I can follow a run while it works.
 
 ## Improving the harness
 
@@ -119,11 +119,11 @@ The [decision ledger](https://github.com/simonamtoft/coding-harness/blob/main/DE
 
 [`tool-reminders`](https://github.com/simonamtoft/coding-harness/tree/main/pi/agent/extensions/tool-reminders) covers the time between a reviewed papercut and its fix. It refuses the first matching tool call in a session with a reminder as the reason, and the retried call runs. Each rule cites the papercuts behind it and names the change that retires it. Terraform was an early case: provider plugins could not start inside the command sandbox, so `validate` and `plan` failed, and a rule backed by four papercuts told agents to hand those commands to me. The cause, a session temp path too long for the plugins' Unix sockets, had six papercuts behind it. Once [SBX-62](https://github.com/simonamtoft/coding-harness/blob/main/decisions/sandbox.md) shortened the path, I deleted the rule.
 
-I added and removed the harness's artifacts in response to observed failure modes like these. Papercuts capture the friction an agent notices; for the rest, I run retrospectives on finished sessions with the `analyze-sessions` skill and usage audits over session history, such as the read-routing audit above.
+I added and removed pieces of the harness in response to observed failures like these. Papercuts capture the friction an agent notices; for the rest, I run retrospectives on finished sessions with the `analyze-sessions` skill and usage audits over session history, such as the read-routing audit above.
 
 ## One setup across harnesses
 
-My [coding harness](https://github.com/simonamtoft/coding-harness) is a public example of this split. The shared layer contains user-authored resources any harness can use: `AGENTS.md`, skills, and command-safety and read-routing regression contracts. Pi keeps its own extensions, prompts, and agents. Claude Code's hooks, settings, and agents are still there, but I parked that harness in November 2026. Its files stay linked and their tests still run, but new work goes into Pi only, so Claude Code lacks Pi's newer protections such as kernel command confinement. Credentials, sessions, caches, provider configuration, and generated state remain local.
+My [coding harness](https://github.com/simonamtoft/coding-harness) is public and splits into a shared layer and per-harness parts. The shared layer contains user-authored resources any harness can use: `AGENTS.md`, skills, and command-safety and read-routing regression contracts. Pi keeps its own extensions, prompts, and agents. Claude Code's hooks, settings, and agents are still there, but I parked that harness in November 2026. Its files stay linked and their tests still run, but new work goes into Pi only, so Claude Code lacks Pi's newer protections such as kernel command confinement. Credentials, sessions, caches, provider configuration, and generated state remain local.
 
 A link script installs the shared resources without maintaining copies and links Paseo's daemon configuration. Its optional package step installs the Pi packages listed in the version-controlled manifest, currently just `pi-status-footer`. When a commit touches Pi runtime inputs (shared `AGENTS.md` or skills, Pi agents, extensions, prompts, MCP config, or the package manifest), a pre-commit hook starts Pi without a model call to check that every extension, skill, and prompt still loads from the checkout. Local Pi settings record what is installed on a given machine. Keeping the shared layer small means another harness can join later without moving its source of truth.
 
