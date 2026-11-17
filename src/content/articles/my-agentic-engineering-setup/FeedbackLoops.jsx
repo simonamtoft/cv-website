@@ -7,6 +7,7 @@ const CHANGE_LOOP = {
     { title: 'Verifier changed?', note: 'A read-only reviewer must return CLEAR first' },
     { title: 'Run .agent/verify.sh', note: 'Or the Taskfile verify task' },
     { title: 'Release deferred review', note: 'Reviewers check the stated intent and report coverage' },
+    { title: 'Commit locally', note: 'Verified edits only, never pushed' },
     { title: 'Final report', note: 'Summary, checks run, findings fixed or dismissed' },
   ],
   loop: { from: 2, to: 0, label: 'Fails: repair turn' },
