@@ -3,31 +3,56 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 const CHANGE_LOOP = {
   eyebrow: 'Every change',
   steps: [
-    { title: 'Turn changes project content', note: 'Read-only, Markdown-only, and committed runs skip' },
-    { title: 'Verifier changed?', note: 'A read-only reviewer must return CLEAR first' },
-    { title: 'Run .agent/verify.sh', note: 'Or the Taskfile verify task' },
-    { title: 'Release deferred review', note: 'Reviewers check the stated intent and report coverage' },
-    { title: 'Commit locally', note: "The session's own edits, never pushed" },
-    { title: 'Final report', note: 'Summary, checks run, findings fixed or dismissed' },
+    { title: 'Turn', note: 'I prompt; the agent works and runs targeted checks' },
+    {
+      title: 'Settle gate',
+      note: 'Runs on uncommitted non-Markdown changes; read-only, Markdown-only, and commit-only runs skip',
+    },
+    {
+      title: 'Verifier changed?',
+      note: 'CLEAR runs it; otherwise I accept the edit or send it back',
+      agents: [{ name: 'verifier-change-reviewer' }],
+    },
+    { title: 'Run .agent/verify.sh', note: 'Or the Taskfile verify task; after 3 repairs, a last failure is reported' },
+    {
+      title: 'Deferred review',
+      note: 'Runs once after a pass, if requested',
+      agents: [
+        { name: 'correctness-reviewer' },
+        { name: 'security-reviewer', condition: 'if security-relevant' },
+      ],
+    },
+    { title: 'Commit locally', note: "quick-commit on the session's own edits, never pushed" },
+    { title: 'Back to me', note: 'I steer the next turn' },
   ],
-  loop: { from: 2, to: 0, label: 'Fails: repair turn' },
+  paths: [
+    { from: 3, to: 0, lane: 0, label: 'Fails: repair turn, up to 3' },
+    { from: 4, to: 0, lane: 1, label: 'Findings: fix, re-verify' },
+    { from: 5, to: 6, lane: 0, label: 'Waits if unfinished', branch: true },
+  ],
 };
 
-// Distance the return line keeps from the step boxes, in px.
-const LOOP_OFFSET = 18;
+// Distance the innermost side path keeps from the step boxes, in px.
+const PATH_OFFSET = 18;
+// Distance between stacked side-path lanes, in px; matches --fb-lane-gap.
+const LANE_GAP = 26;
+// Outer lanes meet their target box further from its centre so lanes never cross.
+const ENTRY_SPREAD = 14;
 
-// The steps reflow from a row (wide) to a column (narrow), so the return line is
+// The steps reflow from a row (wide) to a column (narrow), so side paths are
 // routed from measured box positions: under the row, or down the left gutter.
-const loopGeometry = (track, fromEl, toEl) => {
+const pathGeometry = (track, fromEl, toEl, lane) => {
   const origin = track.getBoundingClientRect();
   const from = fromEl.getBoundingClientRect();
   const to = toEl.getBoundingClientRect();
-  const stacked = from.top >= to.bottom;
+  const stacked = from.top >= to.bottom || to.top >= from.bottom;
+  const offset = PATH_OFFSET + lane * LANE_GAP;
+  const entryShift = lane * ENTRY_SPREAD;
 
   if (stacked) {
-    const x = Math.min(from.left, to.left) - origin.left - LOOP_OFFSET;
+    const x = Math.min(from.left, to.left) - origin.left - offset;
     const fromY = from.top + from.height / 2 - origin.top;
-    const toY = to.top + to.height / 2 - origin.top;
+    const toY = to.top + to.height / 2 - origin.top - entryShift;
     const fromX = from.left - origin.left;
     const toX = to.left - origin.left;
     return {
@@ -38,9 +63,9 @@ const loopGeometry = (track, fromEl, toEl) => {
     };
   }
 
-  const y = Math.max(from.bottom, to.bottom) - origin.top + LOOP_OFFSET;
+  const y = Math.max(from.bottom, to.bottom) - origin.top + offset;
   const fromX = from.left + from.width / 2 - origin.left;
-  const toX = to.left + to.width / 2 - origin.left;
+  const toX = to.left + to.width / 2 - origin.left - entryShift;
   const fromY = from.bottom - origin.top;
   const toY = to.bottom - origin.top;
   return {
@@ -51,7 +76,7 @@ const loopGeometry = (track, fromEl, toEl) => {
   };
 };
 
-const ReturnLoop = ({ geometry, label: text }) => {
+const SidePath = ({ geometry, label: text, branch }) => {
   const { path, arrow, label, stacked } = geometry;
 
   return (
@@ -64,39 +89,57 @@ const ReturnLoop = ({ geometry, label: text }) => {
         textAnchor="middle"
         transform={label.rotate ? `rotate(-90 ${label.x} ${label.y})` : undefined}
       >
-        &#8634; {text}
+        {branch ? '\u21B7' : '\u21BA'} {text}
       </text>
     </svg>
   );
 };
 
-export const Lane = ({ eyebrow, steps, loop }) => {
+const StepAgents = ({ agents }) => (
+  <ul className="fb-agents" aria-label="Subagents">
+    {agents.map(({ name, condition }) => (
+      <li key={name} className={condition ? 'is-optional' : undefined}>
+        <span className="fb-agent-name">{name}</span>
+        {condition && <small> {condition}</small>}
+      </li>
+    ))}
+  </ul>
+);
+
+export const Lane = ({ eyebrow, steps, paths = [] }) => {
   const trackRef = useRef(null);
   const stepRefs = useRef([]);
-  const [geometry, setGeometry] = useState(null);
+  const [geometries, setGeometries] = useState(null);
+  const laneCount = paths.length ? Math.max(...paths.map((p) => p.lane)) + 1 : 0;
 
-  // Measured here rather than in ReturnLoop: a child's layout effect runs before
+  // Measured here rather than in SidePath: a child's layout effect runs before
   // this component's refs are attached.
   useLayoutEffect(() => {
     const track = trackRef.current;
-    if (!loop || !track) return undefined;
+    if (!paths.length || !track) return undefined;
     const measure = () => {
-      const fromEl = stepRefs.current[loop.from];
-      const toEl = stepRefs.current[loop.to];
       // A hidden presentation slide has no layout; wait until it is shown.
       if (track.offsetWidth === 0) return;
-      setGeometry(loopGeometry(track, fromEl, toEl));
+      setGeometries(
+        paths.map((p) =>
+          pathGeometry(track, stepRefs.current[p.from], stepRefs.current[p.to], p.lane),
+        ),
+      );
     };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(track);
     return () => observer.disconnect();
-  }, [loop]);
+  }, [paths]);
 
   return (
     <section className="fb-lane" aria-label={eyebrow}>
       <span className="fb-eyebrow">{eyebrow}</span>
-      <div className={`fb-track${loop ? ' has-loop' : ''}`} ref={trackRef}>
+      <div
+        className={`fb-track${laneCount ? ' has-loop' : ''}`}
+        style={laneCount ? { '--fb-lanes': laneCount } : undefined}
+        ref={trackRef}
+      >
         <ol className="fb-steps">
           {steps.map((step, index) => (
             <li
@@ -108,15 +151,21 @@ export const Lane = ({ eyebrow, steps, loop }) => {
             >
               <strong>{step.title}</strong>
               <small>{step.note}</small>
-              {loop?.from === index && (
-                <span className="fb-sr-only">
-                  {loop.label}, back to: {steps[loop.to].title}
-                </span>
-              )}
+              {step.agents && <StepAgents agents={step.agents} />}
+              {paths
+                .filter((p) => p.from === index)
+                .map((p) => (
+                  <span className="fb-sr-only" key={p.label}>
+                    {p.label}, {p.branch ? 'skips to' : 'back to'}: {steps[p.to].title}
+                  </span>
+                ))}
             </li>
           ))}
         </ol>
-        {loop && geometry && <ReturnLoop geometry={geometry} label={loop.label} />}
+        {geometries &&
+          paths.map((p, i) => (
+            <SidePath key={p.label} geometry={geometries[i]} label={p.label} branch={p.branch} />
+          ))}
       </div>
     </section>
   );

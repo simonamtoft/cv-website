@@ -10,7 +10,7 @@ const HARNESS_LOOP = {
     { title: 'Task, ledger entry, or reminder', note: 'Fix it, record why not, or warn at the call' },
     { title: 'Fix lands', note: 'Its reminder is retired' },
   ],
-  loop: { from: 4, to: 0, label: 'The next papercut' },
+  paths: [{ from: 4, to: 0, lane: 0, label: 'The next papercut' }],
 };
 
 const HarnessImprovement = () => (
