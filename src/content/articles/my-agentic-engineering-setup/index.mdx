@@ -1,9 +1,9 @@
 ---
 title: "My Agentic Engineering Setup"
-dek: "The planning artifacts, guardrails, worktrees, and feedback loops I use to keep coding-agent work effective across sessions."
+dek: "The Backlog.md tickets, guardrails, worktrees, and feedback loops I use to keep coding-agent work effective across sessions."
 slug: "my-agentic-engineering-setup"
 series: "Agentic Engineering"
-lastUpdated: "2026-11-10"
+lastUpdated: "2026-11-17"
 sources:
   - title: "Backlog.md"
     url: "https://github.com/MrLesk/Backlog.md"
@@ -19,21 +19,30 @@ sources:
     note: "the hook-to-skill-to-cheaper-worker pattern that informed the bulk-read route; its reported savings are not treated as a result for this setup"
 ---
 
+import TicketLifecycle from './TicketLifecycle';
 import WorktreeMap from './WorktreeMap';
 import GuardrailLayers from './GuardrailLayers';
 import RoutingEvidence from './RoutingEvidence';
 import FeedbackLoops from './FeedbackLoops';
 import './my-agentic-engineering-setup.css';
 
-[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve. Since the first version, [Pi](https://pi.dev/) has become my only actively developed harness, and I run most sessions through [Paseo](https://paseo.sh/).
+[Agentic Engineering](/writing/agentic-engineering) sets out the principles. This companion article covers the tools and habits I use to apply them today. It will change as the harnesses and models improve. Since the first version, [Pi](https://pi.dev/) has become my only actively developed harness, and I run most sessions through [Paseo](https://paseo.sh/). Underneath both, most of my work runs through [Backlog.md](https://github.com/MrLesk/Backlog.md) tickets.
 
-## Planning work across sessions
+## Backlog.md tickets as the unit of work
 
-When work is too uncertain for one session, I sometimes use a [Wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map. It is a parent [Backlog.md](https://github.com/MrLesk/Backlog.md) task with child investigations that resolve important decisions one at a time. I use it selectively. Once the route is clear, conventional implementation tickets are enough.
+A Backlog.md task is a Markdown file in the repository's `backlog/` folder, so it sits next to the code it describes. I triage and pick the next ready task on its terminal board or in its browser UI. Agents touch tasks only through the `backlog` CLI, never by editing the files, which keeps metadata, dependencies, and history consistent. Instead of carrying their own task workflow, my instructions point agents to Backlog's guides for creating, executing, and finalizing tasks, and they read a guide only when a turn touches tracked work.
 
-For larger efforts, Backlog tasks keep the record of scope, dependencies, decisions, and progress across sessions. They replace a single monolithic plan. Tickets coordinate the work, and each ticket's plan should be no more detailed than the work requires.
+<Slide title="A ticket outlives the session">
 
-Decisions the code cannot explain go into a [decision ledger](https://github.com/simonamtoft/coding-harness/blob/main/DECISIONS.md): one file per area, where each entry records what was refused, why, and when to revisit it. Agents read the area they touch before proposing a change. This stops them from re-proposing approaches I have already rejected, such as the output-compression rules from Caveman that I turned down after review and measurement.
+<TicketLifecycle />
+
+</Slide>
+
+Larger efforts become several tasks with dependencies instead of one monolithic plan, and each ticket's plan is no more detailed than its work requires.
+
+When work is too uncertain to cut into tickets yet, I sometimes use a [Wayfinder](https://github.com/simonamtoft/coding-harness/blob/main/shared/skills/wayfinder/SKILL.md) map: a parent Backlog task with child investigations that resolve important decisions one at a time. I use it selectively. Once the route is clear, conventional implementation tickets are enough.
+
+Design decisions in a project become Backlog decisions next to its tasks, and longer reference material becomes Backlog documents. For the harness itself, decisions the code cannot explain go into a [decision ledger](https://github.com/simonamtoft/coding-harness/blob/main/DECISIONS.md): one file per area, where each entry records what was refused, why, and when to revisit it. Agents read the area they touch before proposing a change. This stops them from re-proposing approaches I have already rejected, such as the output-compression rules from Caveman that I turned down after review and measurement.
 
 ## Operational guardrails
 
@@ -65,7 +74,7 @@ The redirect rate comes from a [Pi usage audit](https://github.com/simonamtoft/c
 
 ## Isolated execution with worktrees
 
-Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential. [Paseo](https://paseo.sh/) creates and cleans up the worktrees, and each session in one loads the same Pi setup as a terminal session. Because the `backlog/` folder is untracked, a setup hook in the project's `paseo.json` links every new worktree to the main checkout's tracker, so all worktrees edit the same backlog. An agent may read the other worktrees of its repository but edit only its own.
+Independent Backlog tasks can run in separate Git worktrees. Dependent work stays sequential, which the task dependencies make explicit. [Paseo](https://paseo.sh/) creates and cleans up the worktrees, and each session in one loads the same Pi setup as a terminal session. In most of my projects the `backlog/` folder is tracked, so task updates travel with each worktree's branch and merge with the code. Where it is untracked, a setup hook in the project's `paseo.json` links every new worktree to the main checkout's tracker, so all worktrees edit the same backlog. An agent may read the other worktrees of its repository but edit only its own.
 
 <Slide title="Tickets coordinate; worktrees isolate">
 
@@ -89,7 +98,7 @@ Verification runs automatically. Pi's `verify-turn` extension looks for the proj
 
 Review is proportional to risk. A correctness reviewer checks changes to persistence, public APIs, lifecycle behaviour, or anything spanning modules, and a security reviewer joins only for security-relevant changes. Each review starts from a stated intent, the requested outcome and its acceptance criteria, rather than from the diff alone. Reviewers must also say what they covered. The reviewers, like the other subagent roles, are short definitions in [`pi/agent/agents/`](https://github.com/simonamtoft/coding-harness/tree/main/pi/agent/agents), each owned by one skill or extension. Their transcripts land in the session workspace, so I can follow a run while it works.
 
-The third loop improves the harness itself. When the sandbox, an instruction, or a tool gets in the way, the agent logs a papercut to one untracked file. I review that file periodically and turn recurring entries into tasks or ledger entries.
+The third loop improves the harness itself. When the sandbox, an instruction, or a tool gets in the way, the agent logs a papercut to one untracked file. I review that file periodically and turn recurring entries into Backlog tasks or ledger entries.
 
 ## One setup across harnesses
 

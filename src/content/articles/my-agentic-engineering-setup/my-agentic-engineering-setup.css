@@ -157,7 +157,8 @@
   display: none;
 }
 
-/* Shared frame for the guardrail, feedback, and routing-evidence figures. */
+/* Shared frame for the ticket, guardrail, feedback, and routing-evidence figures. */
+.article-body > .ticket-lifecycle,
 .article-body > .guardrail-layers,
 .article-body > .feedback-loops,
 .article-body > .routing-evidence {
@@ -166,6 +167,7 @@
   width: 100%;
 }
 
+.ticket-lifecycle,
 .guardrail-layers,
 .feedback-loops,
 .routing-evidence {
@@ -176,6 +178,7 @@
   padding: 1.1rem;
 }
 
+.ticket-lifecycle figcaption,
 .guardrail-layers figcaption,
 .feedback-loops figcaption,
 .routing-evidence figcaption {
@@ -186,6 +189,7 @@
   color: var(--color-text-muted);
 }
 
+.tl-eyebrow,
 .gl-eyebrow,
 .fb-eyebrow,
 .gl-detail-label {
@@ -311,11 +315,28 @@
   margin-bottom: 0.2rem;
 }
 
+/* Ticket lifecycle */
+.tl-writes {
+  font-weight: var(--font-weight-semibold);
+  color: var(--accent-text);
+}
+
+.tl-sessions {
+  margin: 0.8rem 0 0;
+  text-align: center;
+  border: 1px dashed var(--accent-amber);
+  border-radius: 9px;
+  padding: 0.45rem 0.7rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
 /* Feedback loops */
 .fb-lane + .fb-lane {
   margin-top: 1rem;
 }
 
+.tl-steps,
 .fb-steps {
   display: grid;
   grid-auto-columns: minmax(0, 1fr);
@@ -326,6 +347,7 @@
   list-style: none;
 }
 
+.tl-step,
 .fb-step {
   position: relative;
   display: flex;
@@ -338,6 +360,7 @@
   font-size: var(--font-size-xs);
 }
 
+.tl-step + .tl-step::before,
 .fb-step + .fb-step::before {
   content: '\2192';
   position: absolute;
@@ -348,6 +371,7 @@
   color: var(--accent-text);
 }
 
+.tl-step small,
 .fb-step small {
   color: var(--color-text-muted);
 }
@@ -486,6 +510,7 @@
     grid-template-columns: 1fr;
   }
 
+  .tl-steps,
   .fb-steps {
     grid-auto-flow: row;
     gap: 1.3rem;
@@ -496,6 +521,7 @@
     padding-left: 2.1rem;
   }
 
+  .tl-step + .tl-step::before,
   .fb-step + .fb-step::before {
     content: '\2193';
     top: -1.15rem;
@@ -513,6 +539,7 @@
   }
 }
 
+.deck-slide-body .ticket-lifecycle,
 .deck-slide-body .guardrail-layers,
 .deck-slide-body .feedback-loops,
 .deck-slide-body .routing-evidence {
@@ -521,6 +548,7 @@
   padding: clamp(1rem, 2vw, 1.8rem);
 }
 
+.deck-slide-body .ticket-lifecycle figcaption,
 .deck-slide-body .guardrail-layers figcaption,
 .deck-slide-body .feedback-loops figcaption,
 .deck-slide-body .routing-evidence figcaption {
@@ -531,7 +559,13 @@
   cursor: default;
 }
 
+.deck-slide-body .tl-sessions {
+  margin-top: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+}
+
 .deck-slide-body .gl-layer-text,
+.deck-slide-body .tl-step,
 .deck-slide-body .fb-step {
   font-size: clamp(0.95rem, 1.3vw, 1.15rem);
 }
