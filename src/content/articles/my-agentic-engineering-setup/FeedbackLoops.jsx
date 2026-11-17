@@ -98,7 +98,8 @@ const SidePath = ({ geometry, label: text, branch }) => {
 const StepAgents = ({ agents }) => (
   <ul className="fb-agents" aria-label="Subagents">
     {agents.map(({ name, condition }) => (
-      <li key={name} className={condition ? 'is-optional' : undefined}>
+      <li key={name} className={condition ? 'is-optional' : undefined} title="Subagent">
+        <i className="fas fa-robot fb-agent-icon" aria-hidden="true"></i>
         <span className="fb-agent-name">{name}</span>
         {condition && <small> {condition}</small>}
       </li>
