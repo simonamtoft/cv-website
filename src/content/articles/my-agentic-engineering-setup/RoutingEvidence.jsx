@@ -71,9 +71,8 @@ const RoutingEvidence = () => (
       ))}
     </div>
     <figcaption id="routing-evidence-caption">
-      Solid to the low end, light to the high end of each range. Only the $1,492
-      main-agent spend is observed; every saving is a modelled upper bound, not
-      quality-matched. 551 Pi sessions, 2026-09-27 to 2026-11-17.
+      Solid to the low end, light to the high end of each range. Savings are
+      modelled upper bounds from my own Pi sessions, not quality-matched.
     </figcaption>
   </figure>
 );
