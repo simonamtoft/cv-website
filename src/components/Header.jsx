@@ -11,8 +11,9 @@ const Header = () => (
       <Link to="/writing/agentic-engineering">agentic AI systems</Link> that hold up in production,
       help leadership teams decide where AI belongs in their business and{' '}
       <Link to="/about">in what order</Link>, and chair the{' '}
-      <Link to="/events">AI community</Link> of Denmark&rsquo;s largest engineering association. See my path in{' '}
-      <Link to="/background">the background</Link>; if you have a problem worth solving,{' '}
+      <Link to="/events">AI community</Link> of Denmark&rsquo;s largest engineering association. See{' '}
+      <Link to="/work">what I&rsquo;ve built</Link> and{' '}
+      <Link to="/background">the path that got me here</Link>; if you have a problem worth solving,{' '}
       <Link to="/contact">say hello</Link>.
     </h1>
     <p className="home-meta">{config.personalInfo.title}</p>
