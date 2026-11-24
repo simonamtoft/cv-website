@@ -121,7 +121,7 @@ const ArticlePresentationView = ({ article }) => {
       <div className="deck-watermark">
         <span className="deck-wm-name">{config.personalInfo.name}</span>
         <span className="deck-wm-meta">
-          {frontmatter.title} &middot; amtoft.dev
+          {frontmatter.title} - amtoft.dev
         </span>
       </div>
 

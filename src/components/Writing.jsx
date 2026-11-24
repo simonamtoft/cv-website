@@ -29,7 +29,7 @@ const toEntries = () => [
       title: item.title,
       originalTitle: item.originalTitle,
       date: item.date,
-      meta: [formatDisplayDate(item.date), item.venue].filter(Boolean).join(' · '),
+      meta: [formatDisplayDate(item.date), item.venue].filter(Boolean).join(' - '),
     })),
 ].sort((a, b) => getComparableTime(b.date) - getComparableTime(a.date));
 

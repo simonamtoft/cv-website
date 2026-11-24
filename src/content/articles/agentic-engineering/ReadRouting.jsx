@@ -67,7 +67,7 @@ function TransferDiagram({ delegated, index }) {
           <text y="5">Gate</text>
           <text className="rr-subtitle" y="46">Redirect ≠ dispatch</text>
         </g>
-        <Agent x={185} y={218} label="Worker" subtitle="Isolated · read-only" active={index === 3 || index === 4} />
+        <Agent x={185} y={218} label="Worker" subtitle="Isolated, read-only" active={index === 3 || index === 4} />
       </>}
     </svg>
   );

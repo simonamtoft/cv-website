@@ -18,7 +18,7 @@ const latestDate = (entry) =>
   entry.events ? [...entry.events].sort(newestFirst)[0].date : entry.date;
 
 const formatMeta = ({ date, venue }) =>
-  [formatDisplayDate(date), venue].filter(Boolean).join(' · ');
+  [formatDisplayDate(date), venue].filter(Boolean).join(' - ');
 
 const formatGroupMeta = ({ type, venue, events }) => {
   const dates = events.map((event) => event.date).sort(
@@ -26,7 +26,7 @@ const formatGroupMeta = ({ type, venue, events }) => {
   );
   const noun = typeDetails[type].eventNoun;
   const count = `${events.length} ${noun}${events.length === 1 ? '' : 's'}`;
-  return [venue, count, formatDisplayRange(dates[0], dates.at(-1))].filter(Boolean).join(' · ');
+  return [venue, count, formatDisplayRange(dates[0], dates.at(-1))].filter(Boolean).join(' - ');
 };
 
 const TypeBadge = ({ type, label }) => (
