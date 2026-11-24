@@ -14,6 +14,7 @@ export function meta({ params }) {
     title: `${title} | Simon Amtoft Pedersen`,
     description: summary,
     path: `/work/${slug}`,
+    imagePath: `/og/work/${slug}.png`,
     type: 'article',
   });
 }

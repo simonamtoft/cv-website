@@ -13,7 +13,9 @@ App).
 # Start the Vite dev server (runs on localhost:4317)
 npm start          # alias: npm run dev
 
-# Build production bundle (output goes to build/)
+# Build production bundle (output goes to build/), then render the
+# link-preview images into it. Needs Playwright's Chromium:
+# npx playwright install chromium
 npm run build
 
 # Preview the production build locally (localhost:4317)
@@ -119,6 +121,24 @@ Per-route `<head>` tags (title, description, OG/Twitter) come from each route
 module's `meta()` export, built via the shared `buildMeta()` helper
 (`src/utils/meta.js`); `root.jsx`'s shell holds no OG/description literals so
 per-route (and per-article) tags are authoritative and not duplicated.
+
+### Link-preview images
+
+`npm run build` ends by running `scripts/og/generate.mjs`, which renders the
+`og:image` cards with Playwright into `build/client/og/`. Nothing is committed;
+the deploy workflow installs Chromium for this step.
+
+- `og/site.jpg` is the default for every route (`buildMeta()`): portrait,
+  name, role and one line of positioning. The portrait is
+  `scripts/og/portrait.jpg`, and the line is `SITE_LINE` in the script.
+- `og/work/<slug>.png` is the card for `/work/:slug`: industry, title and the
+  project's `cover.svg`. A new project gets one with no further wiring. The
+  build fails if a title is too long to fit the card.
+- `scripts/og/card.html` holds the layout of both cards and loads the fonts
+  from `scripts/og/fonts/`.
+
+Articles use the site card. Scrapers do not render SVG, which is why the cards
+are rasterised.
 
 ### Article system (self-hosted essays)
 
