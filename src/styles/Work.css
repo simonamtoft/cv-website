@@ -1,0 +1,92 @@
+/* The /work card grid and the /work/:slug project page. Cards build on
+   .essay-item and the project page on .article-reading (both in Article.css). */
+
+.case-intro {
+  align-self: flex-start;
+  max-width: 65ch;
+  margin: 0 0 var(--space-xl);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-xl);
+  align-self: flex-start;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 0 var(--space-2xl);
+  border-top: 2px solid var(--color-text);
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Covers are decorative schematics (empty alt); the title carries the meaning. */
+.case-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin-bottom: var(--space-sm);
+}
+
+.case-study .case-cover {
+  margin: var(--space-lg) 0 0;
+}
+
+.case-card .essay-meta {
+  margin-bottom: var(--space-xs);
+}
+
+.case-card .essay-title {
+  text-wrap: balance;
+}
+
+.case-card .essay-dek {
+  margin-bottom: var(--space-sm);
+}
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Pin the tags to the card's bottom edge so they line up across a row. */
+.case-card .case-tags {
+  margin-top: auto;
+}
+
+.case-tags li {
+  padding: 2px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.case-study .case-tags {
+  margin-top: var(--space-md);
+}
+
+/* Article bodies start hidden and reveal on scroll once the title has typed
+   out. A project page has no typed title, so its body is visible at once. */
+.case-study .article-body > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .case-grid {
+    grid-template-columns: 1fr;
+  }
+}

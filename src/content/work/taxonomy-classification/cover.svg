@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none">
+  <rect width="640" height="360" fill="#f1f2f0"/>
+  <g stroke="#0b1b3a" stroke-width="2" stroke-linejoin="round">
+    <path d="M320 74V110H140V148"/>
+    <path d="M320 74V148"/>
+    <path d="M140 172V216H80V260"/>
+    <path d="M140 216H200V260"/>
+    <path d="M320 172V260"/>
+    <path d="M320 216H260V260"/>
+    <path d="M320 216H380V260"/>
+    <path d="M500 216H560V260"/>
+  </g>
+  <g stroke="#d93a12" stroke-width="3" stroke-linejoin="round">
+    <path d="M320 74V110H500V148"/>
+    <path d="M500 172V216H440V260"/>
+  </g>
+  <g fill="#fbfbf9" stroke="#0b1b3a" stroke-width="2">
+    <rect x="116" y="148" width="48" height="24" rx="4"/>
+    <rect x="296" y="148" width="48" height="24" rx="4"/>
+    <rect x="62" y="260" width="36" height="20" rx="4"/>
+    <rect x="182" y="260" width="36" height="20" rx="4"/>
+    <rect x="242" y="260" width="36" height="20" rx="4"/>
+    <rect x="302" y="260" width="36" height="20" rx="4"/>
+    <rect x="362" y="260" width="36" height="20" rx="4"/>
+    <rect x="542" y="260" width="36" height="20" rx="4"/>
+  </g>
+  <g fill="#d93a12">
+    <rect x="292" y="46" width="56" height="28" rx="4"/>
+    <rect x="475" y="147" width="50" height="26" rx="4"/>
+    <rect x="421" y="259" width="38" height="22" rx="4"/>
+  </g>
+</svg>

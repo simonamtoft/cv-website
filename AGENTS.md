@@ -93,6 +93,8 @@ Routes:
 |---|---|---|
 | `/` | `<Header />` (hero only) | - |
 | `/about` | `<About />` | About |
+| `/work` | `<Work />` | Work |
+| `/work/:slug` | `<WorkDetailView />` | - |
 | `/background` | `<Timeline />` | Background |
 | `/writing` | `<Writing />` | Writing |
 | `/writing/:slug` | `<ArticleReadingView />` | - |
@@ -108,7 +110,9 @@ All routes are prerendered to static HTML at build time, so deep links load
 directly and social scrapers get per-route meta. The fixed routes are listed in
 `react-router.config.js`; article routes (`/writing/:slug`) are appended to the
 prerender list by enumerating the MDX filenames in `src/content/articles/` (each
-article's frontmatter `slug` must equal its filename). `public/404.html` is
+article's frontmatter `slug` must equal its filename). Work project routes
+(`/work/:slug`) are appended the same way from `src/content/work/`.
+`public/404.html` is
 retained only as a fallback for non-prerendered paths on GitHub Pages.
 
 Per-route `<head>` tags (title, description, OG/Twitter) come from each route
@@ -144,6 +148,33 @@ interactive React components).
   stack (title, dek, "`<series>` - Living doc - Updated `<month year>`") above
   the "Also published elsewhere" external op-eds.
 
+### Work system (anonymised project showcase)
+
+`/work` presents selected projects without client or employer names. Each
+project is tagged with an industry and described by its problem and the
+engineering. Do not add a client name, an employer name, or a detail that
+identifies either to this section; the Background timeline is where employers
+are named.
+
+- Content lives in bundles at `src/content/work/<slug>/index.mdx`. Frontmatter
+  schema: `title`, `summary`, `slug`, `industry`, `period`, `order`,
+  `technologies: [string]`. The slug must match the bundle directory.
+- Each bundle also needs a `cover.svg`: a 640x360 schematic of the project's
+  mechanism, shown on the card and at the top of the project page. Covers use
+  shapes only, no text (an `<img>` SVG cannot load the site fonts), and the
+  hard-coded site palette: `#0b1b3a`, `#4a5873`, `#c9cfd9`, `#fbfbf9` on a
+  `#f1f2f0` background, with `#d93a12` for the one thing the drawing is about.
+- `src/data/work.js` discovers the bundles via `import.meta.glob` (eager), sorts
+  them by `order` ascending, and exposes `getProjectBySlug`.
+- `Work.jsx` renders the cards in a two-column grid (one column below 768px).
+  `work/WorkDetailView.jsx` renders the project page: header from frontmatter,
+  then the MDX body. Styles are in `styles/Work.css`, on top of the
+  `.essay-item` and `.article-reading` styles in `Article.css`.
+- A project page hosts a live demo the way an article hosts a visual: put the
+  React component in the project's bundle folder and import it in the MDX. Give
+  it `grid-column: 1 / -1` to span the full width. A demo must run on synthetic
+  data, never on client code or data.
+
 ### Component Structure
 
 The app uses a multi-page routing architecture:
@@ -157,15 +188,17 @@ The app uses a multi-page routing architecture:
   page.
 - **Nav.jsx**: Fixed pill navigation bar — uses `NavLink` for active-link
   highlighting. On `/` starts absolute then transitions to fixed on scroll >60px;
-  on all other routes always fixed. Links: About (`/about`) / Background
+  on all other routes always fixed. Links: About (`/about`) / Work (`/work`) / Background
   (`/background`) / Writing (`/writing`) / Events (`/events`) / Contact
   (`/contact`). Nav order is driven by `config.navigation`; the fixed pill
   centres via `margin:auto` + `width:fit-content` (not `left:50%`, which capped
-  its width at half the viewport and wrapped the links).
+  its width at half the viewport and wrapped the links). The phone tab bar
+  takes its icon and label from `ROUTE_META`; Background is labelled "Career"
+  there because seven tabs leave no room for the longer word.
 - **PageNav.jsx**: Prev/next navigation rendered at the bottom of each sub-page.
   Derives prev/next from `config.navigation` order by matching the current
-  `pathname`. About has next only; Contact has prev only; Background, Writing,
-  and Events have both.
+  `pathname`. About has next only; Contact has prev only; Work, Background,
+  Writing, and Events have both.
 - **ScrollToTop.js**: Fires `window.scrollTo(0, 0)` on every route change.
 - **Header.jsx**: Hero page (`/`) — tagline, CTA "Let's Talk" button, LinkedIn
   link. Rendered only at the root route.
@@ -235,7 +268,8 @@ Each item in the data files should have:
 **Work Experience specific fields:**
 - `jobTitle`: Job position title
 - `companyName`: Company/organization name
-- `projects` (optional): Array of project objects with:
+- `projects` (optional; currently unused, because projects are presented on
+  `/work` instead and must not be duplicated here): Array of project objects with:
   - `name`: Project name
   - `years`: Project timeline (string)
   - `description`: Project description
@@ -288,10 +322,17 @@ To update site content:
    automatically
 4. For current/ongoing items, use `end: "now"` to display "Now" in the timeline
 5. To add detailed modal content:
-   - For work experience: add a `projects` array with project details
+   - For work experience: do not add a `projects` array; add the project to
+     `/work` instead (see "Work projects" below)
    - For education: add a `courses` array with course information
    - Timeline items with these arrays will automatically become clickable and
      open a modal
+
+**Work projects** (`src/content/work/`):
+- Add a folder `src/content/work/<slug>/` with a `cover.svg` and an `index.mdx`
+  that follows the frontmatter schema in "Work system". The card and the page appear with no
+  further wiring.
+- Remove a project by deleting its folder.
 
 **Publications & Events** (publicationsEvents.js, events.js):
 - Edit `src/data/publicationsEvents.js` to add external op-ed articles

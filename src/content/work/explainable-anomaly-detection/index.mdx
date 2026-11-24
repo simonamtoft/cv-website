@@ -1,0 +1,21 @@
+---
+title: "Explainable anomaly detection for data quality"
+summary: "Outlier detection for master data that says why a record was flagged, using quantile-based flagging and SHAP explanations."
+slug: "explainable-anomaly-detection"
+industry: "Enterprise data management"
+period: "2024-2026"
+order: 7
+technologies:
+  - "SHAP"
+  - "Quantile Methods"
+  - "FastAPI"
+  - "Model Explainability"
+---
+
+## The problem
+
+Master data contains records that are wrong without being obviously wrong. A flag alone is not much help to the person reviewing the record, who also needs to know which values made it look unusual.
+
+## What I built
+
+I designed and implemented an anomaly detection system for master data. It flags outliers with quantile-based methods and explains each flag with SHAP values, and it handles records that mix different feature types.

@@ -11,6 +11,11 @@ const articleRoutes = readdirSync('src/content/articles', { withFileTypes: true 
     return [`/writing/${slug}`, `/writing/${slug}/present`];
   });
 
+// Work projects follow the same bundle-folder convention (see src/data/work.js).
+const workRoutes = readdirSync('src/content/work', { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => `/work/${entry.name}`);
+
 // React Router v8 framework-mode config.
 // SPA mode (ssr:false): routes are prerendered to static HTML at build time so
 // GitHub Pages (static-only) serves per-route HTML with correct meta/OG for
@@ -19,15 +24,17 @@ export default {
   ssr: false,
   appDirectory: 'src',
   buildDirectory: 'build',
-  // Every route is prerendered: the fixed pages plus one per discovered article.
+  // Every route is prerendered: the fixed pages plus one per discovered article and work project.
   prerender: [
     '/',
     '/about',
+    '/work',
     '/background',
     '/writing',
     '/events',
     '/talks',
     '/contact',
     ...articleRoutes,
+    ...workRoutes,
   ],
 };

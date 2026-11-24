@@ -4,6 +4,8 @@ import { index, route } from '@react-router/dev/routes';
 export default [
   index('routes/home.jsx'),
   route('about', 'routes/about.jsx'),
+  route('work', 'routes/work.jsx'),
+  route('work/:slug', 'routes/workProject.jsx'),
   route('background', 'routes/background.jsx'),
   route('writing', 'routes/writing.jsx'),
   route('writing/:slug', 'routes/article.jsx'),

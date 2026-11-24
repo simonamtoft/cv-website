@@ -1,0 +1,23 @@
+---
+title: "Evaluation harness for ranking and suggestions"
+summary: "A configurable harness that replays historical data against ranking and suggestion strategies, so a change is measured before it reaches users."
+slug: "evaluation-harness"
+industry: "Financial services"
+period: "2026"
+order: 1
+technologies:
+  - "Evaluation"
+  - "Ranking & Recommendation"
+  - "ML"
+  - "Agentic AI"
+---
+
+## The problem
+
+A team that ships ranking and suggestion features needs to know whether a change helps before users see it. Offline metrics are cheap to compute, but they are only useful when they move in the same direction as what users experience in the product.
+
+## What I built
+
+I led the design and build of a harness that tests ranking and suggestion strategies against historical data. Strategies are configured rather than hard-coded, so a traditional ML approach and an agentic generative-AI approach run through the same evaluation and can be compared directly.
+
+The pre-launch metrics are aligned with real user experience, so they can gate a change before it reaches production.

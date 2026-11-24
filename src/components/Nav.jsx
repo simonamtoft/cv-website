@@ -6,7 +6,8 @@ import config from '../config';
 const ROUTE_META = {
   '/': { icon: 'fa-house', mobileLabel: 'Home' },
   '/about': { icon: 'fa-user', mobileLabel: 'About' },
-  '/background': { icon: 'fa-briefcase', mobileLabel: 'Background' },
+  '/work': { icon: 'fa-diagram-project', mobileLabel: 'Work' },
+  '/background': { icon: 'fa-briefcase', mobileLabel: 'Career' },
   '/writing': { icon: 'fa-feather', mobileLabel: 'Writing' },
   '/events': { icon: 'fa-microphone', mobileLabel: 'Events' },
   '/contact': { icon: 'fa-envelope', mobileLabel: 'Contact' },
